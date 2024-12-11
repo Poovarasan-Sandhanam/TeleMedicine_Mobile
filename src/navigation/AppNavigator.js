@@ -1,0 +1,138 @@
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoginScreen from '../screens/authentication/LoginScreen';
+import SignupScreen from '../screens/authentication/SignupScreen';
+import HomeScreen from '../screens/dashboard/HomeScreen';
+import ProfileScreen from '../screens/profile/ProfileScreen';
+import ConsultScreen from '../screens/consult/ConsultScreen';
+import { login, logout } from '../redux/actions/authActions'; // Adjust the path as needed
+import { View, Text, StyleSheet } from 'react-native';
+
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+
+const TabNavigator = () => (
+  <Tab.Navigator
+    screenOptions={{
+      headerShown: false,
+      tabBarStyle: { backgroundColor: '#007BFF' }, // Custom tab bar style
+      tabBarActiveTintColor: '#fff',              // Active tab color
+      tabBarInactiveTintColor: '#ddd',           // Inactive tab color
+    }}
+  >
+    <Tab.Screen name="Home" component={HomeScreen} />
+    <Tab.Screen name="Profile" component={ProfileScreen} />
+    <Tab.Screen name="Consult" component={ConsultScreen} />
+    <Tab.Screen name="Update" component={ConsultScreen} />
+  </Tab.Navigator>
+);
+
+const CustomDrawerContent = (props) => {
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('token'); // Remove token from storage
+    dispatch(logout());                     // Dispatch the logout action
+    props.navigation.navigate('Login');    // Navigate to Login screen
+  };
+
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItem
+        label="Home"
+        onPress={() => props.navigation.navigate('Tabs')}
+      />
+      <DrawerItem
+        label="Profile"
+        onPress={() => props.navigation.navigate('Profile')}
+      />
+      <DrawerItem
+        label="Consult"
+        onPress={() => props.navigation.navigate('Consult')}
+      />
+      <DrawerItem
+        label="Logout"
+        onPress={handleLogout}
+        style={styles.logoutButton}
+        labelStyle={styles.logoutText}
+      />
+    </DrawerContentScrollView>
+  );
+};
+
+const DrawerNavigator = () => (
+  <Drawer.Navigator
+    drawerContent={(props) => <CustomDrawerContent {...props} />}
+    screenOptions={{
+      drawerStyle: { backgroundColor: '#f8f9fa', width: 250 },
+    }}
+  >
+    <Drawer.Screen name="Tabs" component={TabNavigator} options={{ title: 'Dashboard' }} />
+    <Drawer.Screen name="Profile" component={ProfileScreen} />
+    <Drawer.Screen name="Consult" component={ConsultScreen} />
+  </Drawer.Navigator>
+);
+
+const AppNavigator = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = await AsyncStorage.getItem('token');
+      if (token) {
+        dispatch(login(token)); // Use token to fetch user details if needed
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    };
+
+    checkAuth();
+  }, [dispatch]);
+
+  if (isAuthenticated === null) {
+    return null; // You can return a loading spinner here while checking auth
+  }
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName={isAuthenticated ? 'Home' : 'Login'}>
+        <Stack.Screen
+          name="Home"
+          component={DrawerNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={SignupScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+const styles = StyleSheet.create({
+  logoutButton: {
+    marginTop: 20,
+  },
+  logoutText: {
+    color: 'red',
+    fontWeight: 'bold',
+  },
+});
+
+export default AppNavigator;
