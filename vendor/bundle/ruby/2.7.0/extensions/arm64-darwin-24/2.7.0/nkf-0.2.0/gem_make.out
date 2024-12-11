@@ -1,0 +1,15 @@
+current directory: /Users/poovarasan/Documents/Repo/TeleMedicine_Mobile/vendor/bundle/ruby/2.7.0/gems/nkf-0.2.0/ext/nkf
+/Users/poovarasan/.rbenv/versions/2.7.6/bin/ruby -I /Users/poovarasan/.rbenv/versions/2.7.6/lib/ruby/2.7.0 -r ./siteconf20241211-25469-1e3no48.rb extconf.rb
+creating Makefile
+
+current directory: /Users/poovarasan/Documents/Repo/TeleMedicine_Mobile/vendor/bundle/ruby/2.7.0/gems/nkf-0.2.0/ext/nkf
+make "DESTDIR=" clean
+
+current directory: /Users/poovarasan/Documents/Repo/TeleMedicine_Mobile/vendor/bundle/ruby/2.7.0/gems/nkf-0.2.0/ext/nkf
+make "DESTDIR="
+compiling nkf.c
+linking shared-object nkf.bundle
+
+current directory: /Users/poovarasan/Documents/Repo/TeleMedicine_Mobile/vendor/bundle/ruby/2.7.0/gems/nkf-0.2.0/ext/nkf
+make "DESTDIR=" install
+/opt/homebrew/bin/ginstall -c -m 0755 nkf.bundle ./.gem.20241211-25469-1iaf6at
