@@ -1,0 +1,7 @@
+/Users/poovarasan/Library/Android/sdk/cmake/3.22.1/bin/ninja \
+  -C \
+  /Users/poovarasan/Documents/Development/TeleMedicine_Mobile/android/app/.cxx/Debug/425g1z3b/armeabi-v7a \
+  appmodules \
+  react_codegen_rnpicker \
+  react_codegen_rnscreens \
+  react_codegen_safeareacontext

@@ -24,27 +24,37 @@ const setError = (error) => ({
 export const login = (email, password) => async (dispatch) => {
   dispatch(setLoading(true));
   dispatch(setError(null)); // Clear previous errors
+
   try {
     const response = await api.post('/auth/login', { email, password });
-    const { token } = response.data.data;
-    const { user } = response.data;
+    const { token, fullName, email: userEmail, isDoctor } = response.data.data;
 
-    console.log("Login Response:", response.data);
-    console.log("Token:", token); // Log the token
+    console.log('Login successful:', response.data);
 
-    // Store token in AsyncStorage
+    // Construct the user object to store in Redux and AsyncStorage
+    const user = {
+      email: userEmail,
+      fullName,
+      isDoctor,
+      token,
+    };
+
+    // Store token and user data in AsyncStorage
     await AsyncStorage.setItem('token', token);
-    // Dispatch login success with user data
+    await AsyncStorage.setItem('user', JSON.stringify(user));
+
+    // Dispatch login success
     dispatch({ type: LOGIN, payload: user });
-  
   } catch (error) {
     const errorMessage = error.response?.data?.message || error.message || 'Login failed.';
+    console.log('Login Error:', errorMessage);
     dispatch(setError(errorMessage));
-    console.log('Login Error:', errorMessage); // Log error
   } finally {
     dispatch(setLoading(false));
   }
 };
+
+
 
 
 export const signup = (data) => async (dispatch) => {

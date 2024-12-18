@@ -7,6 +7,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  Platform
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import useValidation from '../../utilis/useValidation';
@@ -73,14 +74,15 @@ const SignupScreen = ({navigation}) => {
     // Ensure fields are validated
     if (validateFields({ email, password, name, contactNumber, gender, dob })) {
       console.log("Validation passed");
-  
+
+     
       if (password === confirmPassword) {
         console.log("Passwords match");
-  
+        const formattedDob = dob.toISOString().split('T')[0];
         // Prepare user data for request
         const userData = {
           fullName: name,
-          dob: dob.toISOString(), // Convert Date to ISO format
+          dob:formattedDob , // Convert Date to ISO format
           contactNo: parseInt(contactNumber, 10),
           email,
           password,
@@ -132,17 +134,20 @@ const SignupScreen = ({navigation}) => {
           {dob ? dob.toLocaleDateString('en-GB') : 'Date of Birth'}
         </Text>
       </TouchableOpacity>
-      {showDatePicker && (
-        <DateTimePicker
-          value={dob || new Date()} // Use current date if dob is null
-          mode="date"
-          display="default"
-          onChange={(event, selectedDate) => {
-            setShowDatePicker(false);
-            if (selectedDate) setDob(selectedDate);
-          }}
-        />
-      )}
+     
+
+{showDatePicker && (
+  <DateTimePicker
+    value={dob || new Date()}
+    mode="date"
+    display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
+    onChange={(event, selectedDate) => {
+      setShowDatePicker(false);
+      if (event.type !== "dismissed") setDob(selectedDate);
+    }}
+  />
+)}
+
 
       {/* Contact Number */}
       <TextInput

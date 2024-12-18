@@ -1,0 +1,1 @@
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/android/app/build/intermediates/cxx/Debug/425g1z3b/obj/armeabi-v7a

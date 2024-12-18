@@ -1,0 +1,698 @@
+ninja: Entering directory `/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/android/app/.cxx/Debug/425g1z3b/x86'
+[0/2] Re-checking globbed directories...
+[1/2] Re-running CMake...
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/poovarasan/Documents/Development/TeleMedicine_Mobile/android/app/.cxx/Debug/425g1z3b/x86
+[0/2] Re-checking globbed directories...
+[1/70] Building CXX object rnasyncstorage_autolinked_build/CMakeFiles/react_codegen_rnasyncstorage.dir/react/renderer/components/rnasyncstorage/Props.cpp.o
+[2/70] Building CXX object rnasyncstorage_autolinked_build/CMakeFiles/react_codegen_rnasyncstorage.dir/react/renderer/components/rnasyncstorage/ComponentDescriptors.cpp.o
+[3/70] Building CXX object rnasyncstorage_autolinked_build/CMakeFiles/react_codegen_rnasyncstorage.dir/react/renderer/components/rnasyncstorage/States.cpp.o
+[4/70] Building CXX object rnasyncstorage_autolinked_build/CMakeFiles/react_codegen_rnasyncstorage.dir/react/renderer/components/rnasyncstorage/ShadowNodes.cpp.o
+[5/70] Building CXX object rnasyncstorage_autolinked_build/CMakeFiles/react_codegen_rnasyncstorage.dir/react/renderer/components/rnasyncstorage/EventEmitters.cpp.o
+[6/70] Building CXX object CMakeFiles/appmodules.dir/OnLoad.cpp.o
+[7/70] Building CXX object rnasyncstorage_autolinked_build/CMakeFiles/react_codegen_rnasyncstorage.dir/react/renderer/components/rnasyncstorage/rnasyncstorageJSI-generated.cpp.o
+[8/70] Building CXX object rnasyncstorage_autolinked_build/CMakeFiles/react_codegen_rnasyncstorage.dir/rnasyncstorage-generated.cpp.o
+[9/70] Building CXX object RNDateTimePickerCGen_autolinked_build/CMakeFiles/react_codegen_RNDateTimePickerCGen.dir/RNDateTimePickerCGen-generated.cpp.o
+[10/70] Building CXX object RNDateTimePickerCGen_autolinked_build/CMakeFiles/react_codegen_RNDateTimePickerCGen.dir/react/renderer/components/RNDateTimePickerCGen/States.cpp.o
+[11/70] Building CXX object RNDateTimePickerCGen_autolinked_build/CMakeFiles/react_codegen_RNDateTimePickerCGen.dir/react/renderer/components/RNDateTimePickerCGen/EventEmitters.cpp.o
+[12/70] Building CXX object RNDateTimePickerCGen_autolinked_build/CMakeFiles/react_codegen_RNDateTimePickerCGen.dir/react/renderer/components/RNDateTimePickerCGen/ShadowNodes.cpp.o
+[13/70] Building CXX object RNDateTimePickerCGen_autolinked_build/CMakeFiles/react_codegen_RNDateTimePickerCGen.dir/react/renderer/components/RNDateTimePickerCGen/ComponentDescriptors.cpp.o
+[14/70] Building CXX object RNDateTimePickerCGen_autolinked_build/CMakeFiles/react_codegen_RNDateTimePickerCGen.dir/react/renderer/components/RNDateTimePickerCGen/RNDateTimePickerCGenJSI-generated.cpp.o
+[15/70] Building CXX object RNDateTimePickerCGen_autolinked_build/CMakeFiles/react_codegen_RNDateTimePickerCGen.dir/react/renderer/components/RNDateTimePickerCGen/Props.cpp.o
+[16/70] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/RNCAndroidDialogPickerShadowNode.cpp.o
+[17/70] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/RNCAndroidDropdownPickerMeasurementsManager.cpp.o
+[18/70] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/RNCAndroidDialogPickerMeasurementsManager.cpp.o
+[19/70] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/RNCAndroidDialogPickerState.cpp.o
+[20/70] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/RNCAndroidDropdownPickerState.cpp.o
+[21/70] Building CXX object 'rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/States.cpp.o'
+[22/70] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/rnpicker.cpp.o
+[23/70] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/RNCAndroidDropdownPickerShadowNode.cpp.o
+[24/70] Building CXX object 'rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp.o'
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:16:60: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNCAndroidDialogPickerEventEmitter::onSelect(OnSelect $event) const {
+                                                           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:17:31: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("topSelect", [$event=std::move($event)](jsi::Runtime &runtime) {
+                              ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:17:48: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("topSelect", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                               ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:18:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:19:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "position", $event.position);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:19:47: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "position", $event.position);
+                                              ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:20:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:25:58: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNCAndroidDialogPickerEventEmitter::onFocus(OnFocus $event) const {
+                                                         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:27:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:29:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:34:56: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNCAndroidDialogPickerEventEmitter::onBlur(OnBlur $event) const {
+                                                       ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:36:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:38:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:43:62: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNCAndroidDropdownPickerEventEmitter::onSelect(OnSelect $event) const {
+                                                             ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:44:31: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("topSelect", [$event=std::move($event)](jsi::Runtime &runtime) {
+                              ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:44:48: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("topSelect", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                               ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:45:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:46:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "position", $event.position);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:46:47: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "position", $event.position);
+                                              ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:47:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:52:60: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNCAndroidDropdownPickerEventEmitter::onFocus(OnFocus $event) const {
+                                                           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:54:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:56:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:61:58: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNCAndroidDropdownPickerEventEmitter::onBlur(OnBlur $event) const {
+                                                         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:63:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:65:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:70:47: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNCPickerEventEmitter::onChange(OnChange $event) const {
+                                              ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:71:28: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("change", [$event=std::move($event)](jsi::Runtime &runtime) {
+                           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:71:45: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("change", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                            ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:72:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:73:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "newValue", jsi::valueFromDynamic(runtime, $event.newValue));
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:73:78: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "newValue", jsi::valueFromDynamic(runtime, $event.newValue));
+                                                                             ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:74:1: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "newIndex", $event.newIndex);
+^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:74:43: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "newIndex", $event.newIndex);
+                                          ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp:75:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+35 warnings generated.
+[25/70] Building CXX object 'rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/rnpickerJSI-generated.cpp.o'
+[26/70] Building CXX object 'rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/ComponentDescriptors.cpp.o'
+[27/70] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/react/renderer/components/rngesturehandler_codegen/EventEmitters.cpp.o
+[28/70] Building CXX object 'rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/ShadowNodes.cpp.o'
+[29/70] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/react/renderer/components/rngesturehandler_codegen/States.cpp.o
+[30/70] Building CXX object 'rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/generated/source/codegen/jni/react/renderer/components/rnpicker/Props.cpp.o'
+[31/70] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/react/renderer/components/rngesturehandler_codegen/ShadowNodes.cpp.o
+[32/70] Linking CXX shared library /Users/poovarasan/Documents/Development/TeleMedicine_Mobile/android/app/build/intermediates/cxx/Debug/425g1z3b/obj/x86/libreact_codegen_rnpicker.so
+[33/70] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/react/renderer/components/rngesturehandler_codegen/rngesturehandler_codegenJSI-generated.cpp.o
+[34/70] Building CXX object rnreanimated_autolinked_build/CMakeFiles/react_codegen_rnreanimated.dir/react/renderer/components/rnreanimated/ComponentDescriptors.cpp.o
+[35/70] Building CXX object rnreanimated_autolinked_build/CMakeFiles/react_codegen_rnreanimated.dir/react/renderer/components/rnreanimated/EventEmitters.cpp.o
+[36/70] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/rngesturehandler_codegen-generated.cpp.o
+[37/70] Building CXX object CMakeFiles/appmodules.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o
+[38/70] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/react/renderer/components/rngesturehandler_codegen/ComponentDescriptors.cpp.o
+[39/70] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/react/renderer/components/rngesturehandler_codegen/Props.cpp.o
+[40/70] Building CXX object rnreanimated_autolinked_build/CMakeFiles/react_codegen_rnreanimated.dir/react/renderer/components/rnreanimated/States.cpp.o
+[41/70] Building CXX object rnreanimated_autolinked_build/CMakeFiles/react_codegen_rnreanimated.dir/react/renderer/components/rnreanimated/Props.cpp.o
+[42/70] Building CXX object rnreanimated_autolinked_build/CMakeFiles/react_codegen_rnreanimated.dir/react/renderer/components/rnreanimated/ShadowNodes.cpp.o
+[43/70] Building CXX object rnreanimated_autolinked_build/CMakeFiles/react_codegen_rnreanimated.dir/react/renderer/components/rnreanimated/rnreanimatedJSI-generated.cpp.o
+[44/70] Building CXX object safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp.o
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:16:69: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNCSafeAreaProviderEventEmitter::onInsetsChange(OnInsetsChange $event) const {
+                                                                    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:17:34: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("insetsChange", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                 ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:17:51: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("insetsChange", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                                  ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:18:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:21:38: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  insets.setProperty(runtime, "top", $event.insets.top);
+                                     ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:22:40: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  insets.setProperty(runtime, "right", $event.insets.right);
+                                       ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:23:41: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  insets.setProperty(runtime, "bottom", $event.insets.bottom);
+                                        ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:24:39: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  insets.setProperty(runtime, "left", $event.insets.left);
+                                      ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:25:3: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  $payload.setProperty(runtime, "insets", insets);
+  ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:29:35: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  frame.setProperty(runtime, "x", $event.frame.x);
+                                  ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:30:35: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  frame.setProperty(runtime, "y", $event.frame.y);
+                                  ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:31:39: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  frame.setProperty(runtime, "width", $event.frame.width);
+                                      ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:32:40: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  frame.setProperty(runtime, "height", $event.frame.height);
+                                       ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:33:3: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  $payload.setProperty(runtime, "frame", frame);
+  ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp:35:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+15 warnings generated.
+[45/70] Building CXX object rnreanimated_autolinked_build/CMakeFiles/react_codegen_rnreanimated.dir/rnreanimated-generated.cpp.o
+[46/70] Building CXX object safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/States.cpp.o
+[47/70] Building CXX object safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/common/cpp/react/renderer/components/safeareacontext/RNCSafeAreaViewState.cpp.o
+[48/70] Building CXX object safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/common/cpp/react/renderer/components/safeareacontext/RNCSafeAreaViewShadowNode.cpp.o
+[49/70] Building CXX object safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/Props.cpp.o
+[50/70] Building CXX object safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/safeareacontextJSI-generated.cpp.o
+[51/70] Building CXX object safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/ShadowNodes.cpp.o
+[52/70] Building CXX object safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/ComponentDescriptors.cpp.o
+[53/70] Building CXX object safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/safeareacontext-generated.cpp.o
+[54/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/common/cpp/react/renderer/components/rnscreens/RNSScreenStackHeaderConfigState.cpp.o
+[55/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/common/cpp/react/renderer/components/rnscreens/RNSModalScreenShadowNode.cpp.o
+[56/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/common/cpp/react/renderer/components/rnscreens/RNSScreenShadowNode.cpp.o
+[57/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/common/cpp/react/renderer/components/rnscreens/RNSScreenStackHeaderConfigShadowNode.cpp.o
+[58/70] Linking CXX shared library /Users/poovarasan/Documents/Development/TeleMedicine_Mobile/android/app/build/intermediates/cxx/Debug/425g1z3b/obj/x86/libreact_codegen_safeareacontext.so
+[59/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/common/cpp/react/renderer/components/rnscreens/RNSScreenStackHeaderSubviewState.cpp.o
+[60/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/common/cpp/react/renderer/components/rnscreens/RNSScreenStackHeaderSubviewShadowNode.cpp.o
+[61/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/common/cpp/react/renderer/components/rnscreens/RNSScreenState.cpp.o
+[62/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/rnscreens.cpp.o
+[63/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/States.cpp.o
+[64/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/rnscreensJSI-generated.cpp.o
+[65/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/ShadowNodes.cpp.o
+[66/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/Props.cpp.o
+[67/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp.o
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:17:52: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSModalScreenEventEmitter::onAppear(OnAppear $event) const {
+                                                   ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:19:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:21:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:26:58: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSModalScreenEventEmitter::onDisappear(OnDisappear $event) const {
+                                                         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:28:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:30:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:35:58: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSModalScreenEventEmitter::onDismissed(OnDismissed $event) const {
+                                                         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:36:31: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("dismissed", [$event=std::move($event)](jsi::Runtime &runtime) {
+                              ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:36:48: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("dismissed", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                               ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:37:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:38:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "dismissCount", $event.dismissCount);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:38:51: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "dismissCount", $event.dismissCount);
+                                                  ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:39:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:44:84: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSModalScreenEventEmitter::onNativeDismissCancelled(OnNativeDismissCancelled $event) const {
+                                                                                   ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:45:44: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("nativeDismissCancelled", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:45:61: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("nativeDismissCancelled", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                                            ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:46:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:47:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "dismissCount", $event.dismissCount);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:47:51: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "dismissCount", $event.dismissCount);
+                                                  ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:48:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:53:60: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSModalScreenEventEmitter::onWillAppear(OnWillAppear $event) const {
+                                                           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:55:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:57:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:62:66: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSModalScreenEventEmitter::onWillDisappear(OnWillDisappear $event) const {
+                                                                 ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:64:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:66:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:71:76: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSModalScreenEventEmitter::onHeaderHeightChange(OnHeaderHeightChange $event) const {
+                                                                           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:72:40: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("headerHeightChange", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                       ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:72:57: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("headerHeightChange", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                                        ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:73:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:74:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "headerHeight", $event.headerHeight);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:74:51: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "headerHeight", $event.headerHeight);
+                                                  ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:75:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:80:76: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSModalScreenEventEmitter::onTransitionProgress(OnTransitionProgress $event) const {
+                                                                           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:81:40: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("transitionProgress", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                       ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:81:57: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("transitionProgress", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                                        ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:82:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:83:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "progress", $event.progress);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:83:47: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "progress", $event.progress);
+                                              ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:84:1: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "closing", $event.closing);
+^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:84:42: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "closing", $event.closing);
+                                         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:85:1: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "goingForward", $event.goingForward);
+^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:85:47: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "goingForward", $event.goingForward);
+                                              ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:86:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:91:66: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSModalScreenEventEmitter::onGestureCancel(OnGestureCancel $event) const {
+                                                                 ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:93:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:95:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:100:86: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSModalScreenEventEmitter::onHeaderBackButtonClicked(OnHeaderBackButtonClicked $event) const {
+                                                                                     ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:102:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:104:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:109:76: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSModalScreenEventEmitter::onSheetDetentChanged(OnSheetDetentChanged $event) const {
+                                                                           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:110:40: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("sheetDetentChanged", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                       ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:110:57: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("sheetDetentChanged", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                                        ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:111:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:112:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "index", $event.index);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:112:44: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "index", $event.index);
+                                           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:113:1: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "isStable", $event.isStable);
+^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:113:43: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "isStable", $event.isStable);
+                                          ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:114:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:122:47: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenEventEmitter::onAppear(OnAppear $event) const {
+                                              ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:124:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:126:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:131:53: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenEventEmitter::onDisappear(OnDisappear $event) const {
+                                                    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:133:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:135:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:140:53: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenEventEmitter::onDismissed(OnDismissed $event) const {
+                                                    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:141:31: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("dismissed", [$event=std::move($event)](jsi::Runtime &runtime) {
+                              ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:141:48: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("dismissed", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                               ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:142:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:143:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "dismissCount", $event.dismissCount);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:143:51: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "dismissCount", $event.dismissCount);
+                                                  ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:144:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:149:79: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenEventEmitter::onNativeDismissCancelled(OnNativeDismissCancelled $event) const {
+                                                                              ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:150:44: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("nativeDismissCancelled", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:150:61: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("nativeDismissCancelled", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                                            ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:151:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:152:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "dismissCount", $event.dismissCount);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:152:51: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "dismissCount", $event.dismissCount);
+                                                  ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:153:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:158:55: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenEventEmitter::onWillAppear(OnWillAppear $event) const {
+                                                      ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:160:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:162:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:167:61: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenEventEmitter::onWillDisappear(OnWillDisappear $event) const {
+                                                            ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:169:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:171:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:176:71: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenEventEmitter::onHeaderHeightChange(OnHeaderHeightChange $event) const {
+                                                                      ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:177:40: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("headerHeightChange", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                       ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:177:57: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("headerHeightChange", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                                        ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:178:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:179:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "headerHeight", $event.headerHeight);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:179:51: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "headerHeight", $event.headerHeight);
+                                                  ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:180:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:185:71: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenEventEmitter::onTransitionProgress(OnTransitionProgress $event) const {
+                                                                      ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:186:40: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("transitionProgress", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                       ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:186:57: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("transitionProgress", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                                        ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:187:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:188:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "progress", $event.progress);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:188:47: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "progress", $event.progress);
+                                              ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:189:1: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "closing", $event.closing);
+^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:189:42: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "closing", $event.closing);
+                                         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:190:1: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "goingForward", $event.goingForward);
+^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:190:47: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "goingForward", $event.goingForward);
+                                              ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:191:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:196:61: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenEventEmitter::onGestureCancel(OnGestureCancel $event) const {
+                                                            ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:198:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:200:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:205:81: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenEventEmitter::onHeaderBackButtonClicked(OnHeaderBackButtonClicked $event) const {
+                                                                                ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:207:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:209:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:214:71: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenEventEmitter::onSheetDetentChanged(OnSheetDetentChanged $event) const {
+                                                                      ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:215:40: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("sheetDetentChanged", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                       ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:215:57: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("sheetDetentChanged", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                                        ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:216:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:217:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "index", $event.index);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:217:44: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "index", $event.index);
+                                           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:218:1: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "isStable", $event.isStable);
+^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:218:43: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+$payload.setProperty(runtime, "isStable", $event.isStable);
+                                          ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:219:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:225:68: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenStackHeaderConfigEventEmitter::onAttached(OnAttached $event) const {
+                                                                   ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:227:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:229:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:234:68: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenStackHeaderConfigEventEmitter::onDetached(OnDetached $event) const {
+                                                                   ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:236:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:238:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:244:78: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSScreenStackEventEmitter::onFinishTransitioning(OnFinishTransitioning $event) const {
+                                                                             ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:246:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:248:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:253:60: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSSearchBarEventEmitter::onSearchFocus(OnSearchFocus $event) const {
+                                                           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:255:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:257:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:262:58: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSSearchBarEventEmitter::onSearchBlur(OnSearchBlur $event) const {
+                                                         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:264:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:266:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:271:72: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSSearchBarEventEmitter::onSearchButtonPress(OnSearchButtonPress $event) const {
+                                                                       ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:272:39: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("searchButtonPress", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                      ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:272:56: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("searchButtonPress", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                                       ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:273:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:274:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "text", $event.text);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:274:43: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "text", $event.text);
+                                          ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:275:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:280:72: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSSearchBarEventEmitter::onCancelButtonPress(OnCancelButtonPress $event) const {
+                                                                       ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:282:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:284:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:289:58: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSSearchBarEventEmitter::onChangeText(OnChangeText $event) const {
+                                                         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:290:32: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("changeText", [$event=std::move($event)](jsi::Runtime &runtime) {
+                               ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:290:49: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+  dispatchEvent("changeText", [$event=std::move($event)](jsi::Runtime &runtime) {
+                                                ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:291:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:292:5: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "text", $event.text);
+    ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:292:43: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    $payload.setProperty(runtime, "text", $event.text);
+                                          ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:293:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:298:48: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSSearchBarEventEmitter::onClose(OnClose $event) const {
+                                               ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:300:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:302:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:307:46: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+void RNSSearchBarEventEmitter::onOpen(OnOpen $event) const {
+                                             ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:309:10: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    auto $payload = jsi::Object(runtime);
+         ^
+/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/EventEmitters.cpp:311:12: warning: '$' in identifier [-Wdollar-in-identifier-extension]
+    return $payload;
+           ^
+156 warnings generated.
+[68/70] Building CXX object rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir/Users/poovarasan/Documents/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/generated/source/codegen/jni/react/renderer/components/rnscreens/ComponentDescriptors.cpp.o
+[69/70] Linking CXX shared library /Users/poovarasan/Documents/Development/TeleMedicine_Mobile/android/app/build/intermediates/cxx/Debug/425g1z3b/obj/x86/libreact_codegen_rnscreens.so
+[70/70] Linking CXX shared library /Users/poovarasan/Documents/Development/TeleMedicine_Mobile/android/app/build/intermediates/cxx/Debug/425g1z3b/obj/x86/libappmodules.so

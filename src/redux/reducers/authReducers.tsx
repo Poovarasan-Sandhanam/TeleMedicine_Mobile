@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SIGNUP, SET_ERROR, SET_LOADING } from '../actions/authActions';
+import { LOGIN, LOGOUT, SET_ERROR, SET_LOADING } from '../actions/authActions';
 
 const initialState = {
   user: null,
@@ -9,25 +9,24 @@ const initialState = {
 export default function authReducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN:
-    case SIGNUP:
       return {
         ...state,
-        user: action.payload,
-        error: null, // Clear errors on success
-        loading: false, // Ensure loading is false on success
+        user: action.payload, // Updated user structure
+        error: null,
+        loading: false,
       };
     case LOGOUT:
       return {
         ...state,
         user: null,
-        error: null, // Clear errors on logout
+        error: null,
         loading: false,
       };
     case SET_ERROR:
       return {
         ...state,
         error: action.payload,
-        loading: false, // Ensure loading is false when an error occurs
+        loading: false,
       };
     case SET_LOADING:
       return {

@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/actions/authActions';
-import { SafeAreaView, View, TextInput, Text, TouchableOpacity } from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+} from 'react-native';
 import useValidation from '../../utilis/useValidation';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import PasswordVisibilityToggle from '../../components/PasswordVisibilityToggle';
@@ -29,7 +38,6 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
-  // Navigate to Home instantly when the user state is updated
   useEffect(() => {
     if (user) {
       navigation.reset({
@@ -41,45 +49,53 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <LoadingSpinner visible={loading || reduxLoading} />
-      <Text style={styles.title}>Login</Text>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+      >
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <LoadingSpinner visible={loading || reduxLoading} />
+          <Text style={styles.title}>Login</Text>
 
-      <TextInput
-        style={[styles.input, errors.email ? styles.inputError : null]}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-      />
-      {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+          <TextInput
+            style={[styles.input, errors.email ? styles.inputError : null]}
+            placeholder="Email"
+            placeholderTextColor="#999"
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+          />
+          {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
 
-      <View style={styles.passwordContainer}>
-        <TextInput
-          style={[
-            styles.passwordInput,
-            errors.password ? styles.inputError : null,
-          ]}
-          placeholder="Password"
-          placeholderTextColor="#aaa"
-          secureTextEntry={!showPassword}
-          value={password}
-          onChangeText={setPassword}
-        />
-        <PasswordVisibilityToggle
-          isVisible={showPassword}
-          onToggle={() => setShowPassword(!showPassword)}
-        />
-      </View>
-      {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
-      {error && <Text style={styles.errorText}>{error}</Text>}
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={[
+                styles.passwordInput,
+                errors.password ? styles.inputError : null,
+              ]}
+              placeholder="Password"
+              placeholderTextColor="#999"
+              secureTextEntry={!showPassword}
+              value={password}
+              onChangeText={setPassword}
+            />
+            <PasswordVisibilityToggle
+              isVisible={showPassword}
+              onToggle={() => setShowPassword(!showPassword)}
+            />
+          </View>
+          {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+          {error && <Text style={styles.errorText}>{error}</Text>}
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-        <Text style={styles.contentText}>New user? Go to Signup</Text>
-      </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+            <Text style={styles.contentText}>New user? Go to Signup</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
