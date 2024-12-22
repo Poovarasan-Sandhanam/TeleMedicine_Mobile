@@ -1,310 +1,370 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet,
-  Text,
   View,
-  Image,
-  ScrollView,
+  Text,
   TextInput,
   Button,
+  Image,
+  ScrollView,
+  StyleSheet,
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProfile, updateProfile } from '../../redux/actions/profileActions';
+import { launchImageLibrary } from 'react-native-image-picker';
 
-const DoctorProfileScreen = () => {
-  const [doctorProfile, setDoctorProfile] = useState({
-    image: 'https://via.placeholder.com/100',
-    name: 'Dr. Jane Doe',
-    gender: 'Female',
-    specialized: null,
-    clinicAddress: '123 Health Street, Cityville',
-    age: null,
-    experience: null,
-    consultationTiming: '9:00 AM - 5:00 PM',
-    contactNumber: '+1234567890',
-    emailId: 'dr.jane@example.com',
+const ProfileScreen = () => {
+  const dispatch = useDispatch();
+  const { profile, error } = useSelector((state) => state.profile);
+
+  const [formData, setFormData] = useState({
+    name: '',
+    age: '',
+    gender: '',
+    email: '',
+    contactNumber: '',
+    address: '',
+    bloodGroup: '',
+    weight: '',
+    height: '',
+    ongoingTreatment: '',
+    healthIssues: '',
+    specialized: '',
+    experience: '',
+    consultationTiming: '',
+    profileImage: null,
   });
 
-  const [isEditing, setIsEditing] = useState(false);
-  
-  const specializationOptions = [
-    { label: 'Cardiologist', value: 'Cardiologist' },
-    { label: 'Dermatologist', value: 'Dermatologist' },
-    { label: 'Neurologist', value: 'Neurologist' },
-    { label: 'Pediatrician', value: 'Pediatrician' },
-    { label: 'Psychiatrist', value: 'Psychiatrist' },
-    { label: 'Orthopedic Surgeon', value: 'Orthopedic Surgeon' },
-    { label: 'General Physician', value: 'General Physician' },
-    { label: 'Ophthalmologist', value: 'Ophthalmologist' },
-    { label: 'Gynecologist', value: 'Gynecologist' },
-    { label: 'ENT Specialist', value: 'ENT Specialist' },
-  ];
-  
+  const [editMode, setEditMode] = useState(false);
 
-  // Dropdown options
-  const genderOptions = [
-    { label: 'Male', value: 'Male' },
-    { label: 'Female', value: 'Female' },
-    { label: 'Other', value: 'Other' },
-  ];
-  const ageOptions = Array.from({ length: 80 }, (_, i) => ({ label: `${20 + i}`, value: `${20 + i}` }));
-  const experienceOptions = Array.from({ length: 51 }, (_, i) => ({ label: `${i} years`, value: `${i} years` }));
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, [dispatch]);
 
-  // Handle input changes
-  const handleChange = (field, value) => {
-    setDoctorProfile({ ...doctorProfile, [field]: value });
+  useEffect(() => {
+    if (profile) {
+      setFormData({
+        name: profile.fullName || '',
+        age: profile.age?.toString() || '',
+        gender: profile.gender || '',
+        email: profile.email || '',
+        contactNumber: profile.contactNo?.toString() || '',
+        address: profile.address || '',
+        bloodGroup: profile.bloodGroup || '',
+        weight: profile.weight?.toString() || '',
+        height: profile.height?.toString() || '',
+        ongoingTreatment: profile.ongoingTreatment || '',
+        healthIssues: profile.healthIssues || '',
+        specialized: profile.specialized || '',
+        experience: profile.experience?.toString() || '',
+        consultationTiming: profile.consultationTiming || '',
+        profileImage: profile.profileImage || null,
+      });
+    }
+  }, [profile]);
+
+  const handleInputChange = (key, value) => {
+    setFormData({ ...formData, [key]: value });
   };
 
-  const handleSave = () => {
-    setIsEditing(false);
-    Alert.alert('Profile Updated', 'Your changes have been saved successfully!');
+  const validateInputs = () => {
+    if (!formData.name || !formData.email || !formData.contactNumber) {
+      Alert.alert('Validation Error', 'Name, Email, and Contact Number are required.');
+      return false;
+    }
+    if (isNaN(formData.age) || formData.age <= 0) {
+      Alert.alert('Validation Error', 'Age must be a positive number.');
+      return false;
+    }
+    if (formData.contactNumber.length < 10) {
+      Alert.alert('Validation Error', 'Contact Number must be at least 10 digits.');
+      return false;
+    }
+    return true;
   };
+
+  const handleImagePicker = () => {
+    launchImageLibrary({ mediaType: 'photo' }, (response) => {
+      if (response.assets && response.assets.length > 0) {
+        const selectedImage = response.assets[0];
+        setFormData({
+          ...formData,
+          profileImage: {
+            uri: selectedImage.uri,
+            type: selectedImage.type,
+            name: selectedImage.fileName,
+          },
+        });
+      }
+    });
+  };
+
+  const handleSubmit = async () => {
+    if (!validateInputs()) return;
+
+    try {
+      const data = new FormData();
+      Object.keys(formData).forEach((key) => {
+        if (key === 'profileImage' && formData.profileImage) {
+          data.append('image', formData.profileImage);
+        } else {
+          data.append(key, formData[key]);
+        }
+      });
+
+      const response = await dispatch(updateProfile(data));
+      if (response.status) {
+        Alert.alert('Success', 'Profile updated successfully.');
+        setEditMode(false);
+      } else {
+        Alert.alert('Error', response.message || 'Failed to update profile.');
+      }
+    } catch (err) {
+      console.error('Error updating profile:', err);
+      Alert.alert('Error', 'An unexpected error occurred.');
+    }
+  };
+
+  if (error) {
+    return <Text style={styles.error}>Error: {error}</Text>;
+  }
+
+  if (!profile) {
+    return <Text style={styles.loading}>Loading...</Text>;
+  }
 
   return (
-    <ScrollView style={styles.container}>
-      {/* Profile Image */}
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: doctorProfile.image }} style={styles.profileImage} />
-        <TouchableOpacity style={styles.editImageButton}>
-          <Text style={styles.editImageText}>Edit Image</Text>
-        </TouchableOpacity>
-      </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Image
+        source={{
+          uri: formData.profileImage?.uri || profile.profileImage || 'https://via.placeholder.com/150',
+        }}
+        style={styles.profileImage}
+      />
+      {editMode && <Button title="Change Image" onPress={handleImagePicker} />}
 
-      {/* Profile Details */}
-      <View style={styles.detailsContainer}>
-        {/* Name */}
-        <View style={styles.detailRow}>
-          <Text style={styles.label}>Name:</Text>
-          {isEditing ? (
-            <TextInput
-              style={styles.input}
-              value={doctorProfile.name}
-              onChangeText={(value) => handleChange('name', value)}
-            />
-          ) : (
-            <Text style={styles.value}>{doctorProfile.name}</Text>
-          )}
-        </View>
-
-        {/* Gender Dropdown */}
-        <View style={styles.detailRow}>
-          <Text style={styles.label}>Gender:</Text>
-          {isEditing ? (
-            <Dropdown
-              style={styles.dropdown}
-              data={genderOptions}
-              labelField="label"
-              valueField="value"
-              value={doctorProfile.gender}
-              onChange={(item) => handleChange('gender', item.value)}
-              placeholder="Select Gender"
-            />
-          ) : (
-            <Text style={styles.value}>{doctorProfile.gender}</Text>
-          )}
-        </View>
-
-        {/* Specialized */}
-      {/* Specialization Dropdown */}
-<View style={styles.detailRow}>
-  <Text style={styles.label}>Specialized:</Text>
-  {isEditing ? (
-    <Dropdown
-      style={styles.dropdown}
-      data={specializationOptions}
-      labelField="label"
-      valueField="value"
-      value={doctorProfile.specialized}
-      onChange={(item) => handleChange('specialized', item.value)}
-      placeholder="Select Specialization"
-    />
-  ) : (
-    <Text style={styles.value}>{doctorProfile.specialized}</Text>
-  )}
-</View>
-
-
-        {/* Clinic Address */}
-        <View style={styles.detailRow}>
-          <Text style={styles.label}>Clinic Address:</Text>
-          {isEditing ? (
-            <TextInput
-              style={[styles.input]}
-              value={doctorProfile.clinicAddress}
-              onChangeText={(value) => handleChange('clinicAddress', value)}
-             
-              numberOfLines={2}
-            />
-          ) : (
-            <Text style={styles.value}>{doctorProfile.clinicAddress}</Text>
-          )}
-        </View>
-
-        {/* Age Dropdown */}
-        <View style={styles.detailRow}>
-          <Text style={styles.label}>Age:</Text>
-          {isEditing ? (
-            <Dropdown
-              style={styles.dropdown}
-              data={ageOptions}
-              labelField="label"
-              valueField="value"
-              value={doctorProfile.age}
-              onChange={(item) => handleChange('age', item.value)}
-              placeholder="Select Age"
-            />
-          ) : (
-            <Text style={styles.value}>{doctorProfile.age || '-'}</Text>
-          )}
-        </View>
-
-        {/* Experience Dropdown */}
-        <View style={styles.detailRow}>
-          <Text style={styles.label}>Experience:</Text>
-          {isEditing ? (
-            <Dropdown
-              style={styles.dropdown}
-              data={experienceOptions}
-              labelField="label"
-              valueField="value"
-              value={doctorProfile.experience}
-              onChange={(item) => handleChange('experience', item.value)}
-              placeholder="Select Experience"
-            />
-          ) : (
-            <Text style={styles.value}>{doctorProfile.experience || '-'}</Text>
-          )}
-        </View>
-
-        {/* Consultation Timing */}
-        <View style={styles.detailRow}>
-          <Text style={styles.label}>Consultation Timing:</Text>
-          {isEditing ? (
-            <TextInput
-              style={styles.input}
-              value={doctorProfile.consultationTiming}
-              onChangeText={(value) => handleChange('consultationTiming', value)}
-            />
-          ) : (
-            <Text style={styles.value}>{doctorProfile.consultationTiming}</Text>
-          )}
-        </View>
-
-        {/* Contact Number */}
-        <View style={styles.detailRow}>
-          <Text style={styles.label}>Contact Number:</Text>
-          {isEditing ? (
-            <TextInput
-              style={styles.input}
-              value={doctorProfile.contactNumber}
-              onChangeText={(value) => handleChange('contactNumber', value)}
-            />
-          ) : (
-            <Text style={styles.value}>{doctorProfile.contactNumber}</Text>
-          )}
-        </View>
-
-        {/* Email ID */}
-        <View style={styles.detailRow}>
-          <Text style={styles.label}>Email ID:</Text>
-          {isEditing ? (
-            <TextInput
-              style={styles.input}
-              value={doctorProfile.emailId}
-              onChangeText={(value) => handleChange('emailId', value)}
-            />
-          ) : (
-            <Text style={styles.value}>{doctorProfile.emailId}</Text>
-          )}
-        </View>
-      </View>
-
-      {/* Buttons */}
-      <View style={styles.buttonContainer}>
-        {isEditing ? (
-          <Button title="Save" onPress={handleSave} color="#4CAF50" />
+      <View style={styles.infoContainer}>
+        <Text style={styles.label}>Full Name:</Text>
+        {editMode ? (
+          <TextInput
+            style={styles.input}
+            value={formData.name}
+            onChangeText={(value) => handleInputChange('name', value)}
+          />
         ) : (
-          <Button title="Edit Profile" onPress={() => setIsEditing(true)} color="#2196F3" />
+          <Text style={styles.value}>{formData.name}</Text>
         )}
       </View>
+
+      <View style={styles.infoContainer}>
+        <Text style={styles.label}>Contact No:</Text>
+        {editMode ? (
+          <TextInput
+            style={styles.input}
+            value={formData.contactNumber}
+            onChangeText={(value) => handleInputChange('contactNumber', value)}
+          />
+        ) : (
+          <Text style={styles.value}>{formData.contactNumber}</Text>
+        )}
+      </View>
+
+      <View style={styles.infoContainer}>
+        <Text style={styles.label}>Email:</Text>
+        {editMode ? (
+          <TextInput
+            style={styles.input}
+            value={formData.email}
+            onChangeText={(value) => handleInputChange('email', value)}
+          />
+        ) : (
+          <Text style={styles.value}>{formData.email}</Text>
+        )}
+      </View>
+
+      <View style={styles.infoContainer}>
+        <Text style={styles.label}>DOB (Age):</Text>
+        {editMode ? (
+          <TextInput
+            style={styles.input}
+            value={formData.age}
+            keyboardType="numeric"
+            onChangeText={(value) => handleInputChange('age', value)}
+          />
+        ) : (
+          <Text style={styles.value}>{formData.age}</Text>
+        )}
+      </View>
+
+      <View style={styles.infoContainer}>
+        <Text style={styles.label}>Gender:</Text>
+        {editMode ? (
+          <TextInput
+            style={styles.input}
+            value={formData.gender}
+            onChangeText={(value) => handleInputChange('gender', value)}
+          />
+        ) : (
+          <Text style={styles.value}>{formData.gender}</Text>
+        )}
+      </View>
+
+      <View style={styles.infoContainer}>
+        <Text style={styles.label}>Address:</Text>
+        {editMode ? (
+          <TextInput
+            style={styles.input}
+            value={formData.address}
+            onChangeText={(value) => handleInputChange('address', value)}
+          />
+        ) : (
+          <Text style={styles.value}>{formData.address}</Text>
+        )}
+      </View>
+
+      {profile.isDoctor ? (
+        <>
+          <View style={styles.infoContainer}>
+            <Text style={styles.label}>Specialized:</Text>
+            {editMode ? (
+              <TextInput
+                style={styles.input}
+                value={formData.specialized}
+                onChangeText={(value) => handleInputChange('specialized', value)}
+              />
+            ) : (
+              <Text style={styles.value}>{formData.specialized}</Text>
+            )}
+          </View>
+
+          <View style={styles.infoContainer}>
+            <Text style={styles.label}>Experience:</Text>
+            {editMode ? (
+              <TextInput
+                style={styles.input}
+                value={formData.experience}
+                keyboardType="numeric"
+                onChangeText={(value) => handleInputChange('experience', value)}
+              />
+            ) : (
+              <Text style={styles.value}>{formData.experience} years</Text>
+            )}
+          </View>
+
+          <View style={styles.infoContainer}>
+            <Text style={styles.label}>Consultation Timing:</Text>
+            {editMode ? (
+              <TextInput
+                style={styles.input}
+                value={formData.consultationTiming}
+                onChangeText={(value) => handleInputChange('consultationTiming', value)}
+              />
+            ) : (
+              <Text style={styles.value}>{formData.consultationTiming}</Text>
+            )}
+          </View>
+        </>
+      ) : (
+        <>
+          <View style={styles.infoContainer}>
+            <Text style={styles.label}>Blood Group:</Text>
+            {editMode ? (
+              <TextInput
+                style={styles.input}
+                value={formData.bloodGroup}
+                onChangeText={(value) => handleInputChange('bloodGroup', value)}
+              />
+            ) : (
+              <Text style={styles.value}>{formData.bloodGroup}</Text>
+            )}
+          </View>
+
+          <View style={styles.infoContainer}>
+            <Text style={styles.label}>Weight:</Text>
+            {editMode ? (
+              <TextInput
+                style={styles.input}
+                value={formData.weight}
+                keyboardType="numeric"
+                onChangeText={(value) => handleInputChange('weight', value)}
+              />
+            ) : (
+              <Text style={styles.value}>{formData.weight} kg</Text>
+            )}
+          </View>
+
+          <View style={styles.infoContainer}>
+            <Text style={styles.label}>Height:</Text>
+            {editMode ? (
+              <TextInput
+                style={styles.input}
+                value={formData.height}
+                keyboardType="numeric"
+                onChangeText={(value) => handleInputChange('height', value)}
+              />
+            ) : (
+              <Text style={styles.value}>{formData.height} cm</Text>
+            )}
+          </View>
+
+          <View style={styles.infoContainer}>
+            <Text style={styles.label}>Ongoing Treatment:</Text>
+            {editMode ? (
+              <TextInput
+                style={styles.input}
+                value={formData.ongoingTreatment}
+                onChangeText={(value) => handleInputChange('ongoingTreatment', value)}
+              />
+            ) : (
+              <Text style={styles.value}>{formData.ongoingTreatment}</Text>
+            )}
+          </View>
+
+          <View style={styles.infoContainer}>
+            <Text style={styles.label}>Health Issues:</Text>
+            {editMode ? (
+              <TextInput
+                style={styles.input}
+                value={formData.healthIssues}
+                onChangeText={(value) => handleInputChange('healthIssues', value)}
+              />
+            ) : (
+              <Text style={styles.value}>{formData.healthIssues}</Text>
+            )}
+          </View>
+        </>
+      )}
+
+      {editMode ? (
+        <Button title="Save Changes" onPress={handleSubmit} />
+      ) : (
+        <TouchableOpacity style={styles.editButton} onPress={() => setEditMode(true)}>
+          <Text style={styles.editButtonText}>Edit Profile</Text>
+        </TouchableOpacity>
+      )}
     </ScrollView>
   );
 };
 
-export default DoctorProfileScreen;
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f9f9f9',
-    padding: 20,
-  },
-  imageContainer: {
+  container: { padding: 20 },
+  profileImage: { width: 150, height: 150, borderRadius: 75, marginBottom: 20 },
+  infoContainer: { marginBottom: 15 },
+  label: { fontWeight: 'bold', marginBottom: 5 },
+  value: { fontSize: 16 },
+  input: { borderWidth: 1, borderColor: '#ccc', padding: 10, borderRadius: 5 },
+  editButton: {
+    backgroundColor: '#007bff',
+    padding: 10,
     alignItems: 'center',
-    marginBottom: 20,
-  },
-  profileImage: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-  },
-  editImageButton: {
-    marginTop: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    backgroundColor: '#2196F3',
+    marginTop: 20,
     borderRadius: 5,
   },
-  editImageText: {
-    color: '#fff',
-    fontSize: 14,
-  },
-  detailsContainer: {
-    padding: 15,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  detailRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  label: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    width: '40%',
-  },
-  value: {
-    fontSize: 16,
-    color: '#555',
-    flex: 1,
-  },
-  input: {
-    fontSize: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    flex: 1,
-    paddingVertical: 2,
-    color: '#000',
-  },
-  textArea: {
-    height: 80,
-    textAlignVertical: 'top',
-  },
-  dropdown: {
-    flex: 1,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    paddingVertical: 5,
-  },
-  buttonContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
+  editButtonText: { color: '#fff', fontWeight: 'bold' },
+  loading: { textAlign: 'center', marginTop: 50 },
+  error: { color: 'red', textAlign: 'center', marginTop: 50 },
 });
+
+export default ProfileScreen;
+

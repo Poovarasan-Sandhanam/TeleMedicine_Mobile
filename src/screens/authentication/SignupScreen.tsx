@@ -7,7 +7,8 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Platform
+  Platform,
+  Alert
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import useValidation from '../../utilis/useValidation';
@@ -95,8 +96,8 @@ const SignupScreen = ({navigation}) => {
   
         // Dispatch signup action with user data
         dispatch(signup(userData)).then(() => {
-          console.log("Signup successful, navigating to Home...");
-          navigation.navigate('Home'); // Redirect to Home on success
+        Alert.alert("Signup successful");
+          navigation.navigate('Login'); // Redirect to Home on success
         }).catch((error) => {
           console.error("Signup failed:", error);
         });

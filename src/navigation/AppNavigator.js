@@ -10,28 +10,42 @@ import SignupScreen from '../screens/authentication/SignupScreen';
 import HomeScreen from '../screens/dashboard/HomeScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import ConsultScreen from '../screens/consult/ConsultScreen';
+import PatientListScreen from '../screens/role/DoctorSearchScreen';
+import DoctorSearchScreen from '../screens/role/DoctorSearchScreen';
 import { login, logout } from '../redux/actions/authActions'; // Adjust the path as needed
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
-const TabNavigator = () => (
-  <Tab.Navigator
-    screenOptions={{
-      headerShown: false,
-      tabBarStyle: { backgroundColor: '#007BFF' }, // Custom tab bar style
-      tabBarActiveTintColor: '#fff',              // Active tab color
-      tabBarInactiveTintColor: '#ddd',           // Inactive tab color
-    }}
-  >
-    <Tab.Screen name="Home" component={HomeScreen} />
-    <Tab.Screen name="Profile" component={ProfileScreen} />
-    <Tab.Screen name="Consult" component={ConsultScreen} />
-    <Tab.Screen name="Update" component={ConsultScreen} />
-  </Tab.Navigator>
-);
+
+const TabNavigator = () => {
+  const { user } = useSelector((state) => state.auth); // Access user from Redux state
+
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: { backgroundColor: '#007BFF' }, // Custom tab bar style
+        tabBarActiveTintColor: '#fff',              // Active tab color
+        tabBarInactiveTintColor: '#ddd',           // Inactive tab color
+      }}
+    >
+      <Tab.Screen name="Home" component={HomeScreen} />
+
+      {/* Conditional Tabs Based on User Role */}
+      {user?.isDoctor ? (
+        <Tab.Screen name="Patients" component={PatientListScreen} />
+      ) : (
+        <Tab.Screen name="Doctors" component={DoctorSearchScreen} />
+      )}
+      <Tab.Screen name="Consult" component={ConsultScreen} />
+    </Tab.Navigator>
+  );
+};
+
+
 
 const CustomDrawerContent = (props) => {
   const dispatch = useDispatch();
