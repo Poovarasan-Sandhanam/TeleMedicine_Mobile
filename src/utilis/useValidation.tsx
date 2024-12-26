@@ -35,7 +35,7 @@ const useValidation = () => {
       newErrors.password = 'Password is required';
     } else if (!validatePassword(password)) {
       newErrors.password =
-        'Password must be at least 8 characters, contain uppercase, lowercase, number, and special character';
+        'Password must be at least 6 characters, contain uppercase, lowercase, number, and special character';
     }
 
     setErrors(newErrors);

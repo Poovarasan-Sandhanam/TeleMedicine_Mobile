@@ -5,6 +5,7 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@rea
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/MaterialIcons'; // Vector Icon for toggling
 import LoginScreen from '../screens/authentication/LoginScreen';
 import SignupScreen from '../screens/authentication/SignupScreen';
 import HomeScreen from '../screens/dashboard/HomeScreen';
@@ -13,39 +14,43 @@ import ConsultScreen from '../screens/consult/ConsultScreen';
 import PatientListScreen from '../screens/role/DoctorSearchScreen';
 import DoctorSearchScreen from '../screens/role/DoctorSearchScreen';
 import { login, logout } from '../redux/actions/authActions'; // Adjust the path as needed
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
-
-const TabNavigator = () => {
+const TabNavigator = ({ navigation }) => {
   const { user } = useSelector((state) => state.auth); // Access user from Redux state
 
   return (
     <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: { backgroundColor: '#007BFF' }, // Custom tab bar style
-        tabBarActiveTintColor: '#fff',              // Active tab color
-        tabBarInactiveTintColor: '#ddd',           // Inactive tab color
-      }}
-    >
-      <Tab.Screen name="Home" component={HomeScreen} />
-
-      {/* Conditional Tabs Based on User Role */}
-      {user?.isDoctor ? (
-        <Tab.Screen name="Patients" component={PatientListScreen} />
-      ) : (
-        <Tab.Screen name="Doctors" component={DoctorSearchScreen} />
-      )}
-      <Tab.Screen name="Consult" component={ConsultScreen} />
-    </Tab.Navigator>
+    screenOptions={{
+      headerShown: true,
+      headerStyle: { backgroundColor: '#000' },
+      headerTintColor: '#fff',
+      headerTitle: '', // Removes the header title
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <Icon name="menu" size={28} color="#fff" style={{ marginLeft: 15 }} />
+        </TouchableOpacity>
+      ),
+      tabBarStyle: { backgroundColor: '#000' },
+      tabBarActiveTintColor: '#fff',
+      tabBarInactiveTintColor: 'green',
+    }}
+  >
+    <Tab.Screen name="Home" component={HomeScreen} />
+    {user?.isDoctor ? (
+      <Tab.Screen name="Patients" component={PatientListScreen} />
+    ) : (
+      <Tab.Screen name="Doctors" component={DoctorSearchScreen} />
+    )}
+    <Tab.Screen name="Consult" component={ConsultScreen} />
+  </Tab.Navigator>
+  
   );
 };
-
-
 
 const CustomDrawerContent = (props) => {
   const dispatch = useDispatch();
@@ -53,7 +58,7 @@ const CustomDrawerContent = (props) => {
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token'); // Remove token from storage
     dispatch(logout());                     // Dispatch the logout action
-    props.navigation.navigate('Login');    // Navigate to Login screen
+    props.navigation.navigate('Login');     // Navigate to Login screen
   };
 
   return (
@@ -61,14 +66,17 @@ const CustomDrawerContent = (props) => {
       <DrawerItem
         label="Home"
         onPress={() => props.navigation.navigate('Tabs')}
+        labelStyle={styles.drawerText}
       />
       <DrawerItem
         label="Profile"
         onPress={() => props.navigation.navigate('Profile')}
+        labelStyle={styles.drawerText}
       />
       <DrawerItem
         label="Consult"
         onPress={() => props.navigation.navigate('Consult')}
+        labelStyle={styles.drawerText}
       />
       <DrawerItem
         label="Logout"
@@ -84,10 +92,11 @@ const DrawerNavigator = () => (
   <Drawer.Navigator
     drawerContent={(props) => <CustomDrawerContent {...props} />}
     screenOptions={{
-      drawerStyle: { backgroundColor: '#f8f9fa', width: 250 },
+      drawerStyle: { backgroundColor: '#fffacd', width: 250 },
+      headerShown: false,
     }}
   >
-    <Drawer.Screen name="Tabs" component={TabNavigator} options={{ title: 'Dashboard' }} />
+    <Drawer.Screen name="Tabs" component={TabNavigator} />
     <Drawer.Screen name="Profile" component={ProfileScreen} />
     <Drawer.Screen name="Consult" component={ConsultScreen} />
   </Drawer.Navigator>
@@ -145,6 +154,10 @@ const styles = StyleSheet.create({
   },
   logoutText: {
     color: 'red',
+    fontWeight: 'bold',
+  },
+  drawerText: {
+    color: '#000',
     fontWeight: 'bold',
   },
 });

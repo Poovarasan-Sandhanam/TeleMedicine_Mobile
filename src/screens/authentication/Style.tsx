@@ -3,25 +3,23 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    padding: 20,
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor:'#fffacd',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    textAlign: 'center',
     marginBottom: 20,
-    color: '#333',
+    color: '#000',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
+    height:50,
+    borderWidth: 1.5,
+    borderColor: '#000',
     padding: 10,
     marginVertical: 8,
     borderRadius: 5,
-    backgroundColor: '#fff',
+    backgroundColor: '#F3F3F3',
   },
   inputError: {
     borderColor: 'red',
@@ -29,13 +27,10 @@ export default StyleSheet.create({
   errorText: {
     color: 'red',
     fontSize: 12,
-    marginTop: -5,
-    marginBottom: 10,
-    paddingHorizontal: 2,
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#000',
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
@@ -46,29 +41,27 @@ export default StyleSheet.create({
     fontWeight: '600',
     fontSize: 16,
   },
-  linkText: {
-    color: '#4A90E2',
-    fontSize: 14,
-    textAlign: 'center',
-    marginTop: 15,
-  },
-  passwordContainer: {
+  passwordContainer: { 
+    height:50,
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ddd',
+    borderWidth: 1.5,
+    borderColor: '#000',
     paddingHorizontal: 10,
     borderRadius: 5,
     marginVertical: 8,
-    backgroundColor: '#fff',
+    backgroundColor:"#F3F3F3",
   },
   passwordInput: {
-    flex: 1,
+    flex: 1
   },
   contentText:{
     textAlign:"center",
     marginTop:20,
-    color:"black"
+    color:"#007BFF",
+    fontSize:15,
+    fontWeight: 'bold',
+
   }
 });

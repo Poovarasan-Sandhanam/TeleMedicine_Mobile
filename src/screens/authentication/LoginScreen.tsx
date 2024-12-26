@@ -20,6 +20,7 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false); // Local loading state
+  
   const dispatch = useDispatch();
   const { user, error, loading: reduxLoading } = useSelector((state) => state.auth);
   const { errors, validateFields } = useValidation();
@@ -53,7 +54,7 @@ const LoginScreen = ({ navigation }) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}
       >
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1,justifyContent:"center",margin:15 }}>
           <LoadingSpinner visible={loading || reduxLoading} />
           <Text style={styles.title}>Login</Text>
 

@@ -1,21 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   View,
   SafeAreaView,
+  ScrollView,
   TextInput,
   Text,
   StyleSheet,
   TouchableOpacity,
   Platform,
-  Alert
+  Alert,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import useValidation from '../../utilis/useValidation';
 import PasswordVisibilityToggle from '../../components/PasswordVisibilityToggle';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { signup } from '../../redux/actions/authActions'; // Adjust the path as needed
-
+import {signup} from '../../redux/actions/authActions'; // Adjust the path as needed
 
 const RadioButtonGroup = ({options, selectedValue, onSelect}) => {
   return (
@@ -51,239 +50,233 @@ const SignupScreen = ({navigation}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [doctorType, setDoctorType] = useState('');
+  const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
   const {error, loading} = useSelector(state => state.auth);
-  const {errors, validateFields} = useValidation();
+
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+  const validateFields = () => {
+    const newErrors = {};
+    if (!name) newErrors.name = 'Name is required.';
+    if (!dob) newErrors.dob = 'Date of Birth is required.';
+    if (!gender) newErrors.gender = 'Gender is required.';
+    if (!contactNumber || !/^\d{10}$/.test(contactNumber))
+      newErrors.contactNumber = 'Valid contact number is required.';
+    if (!email || !/^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Z]{2,}$/i.test(email))
+      newErrors.email = 'Valid email is required.';
+    if (!password || !passwordRegex.test(password)) 
+      newErrors.password = 'Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character.';
+    if (password !== confirmPassword)
+      newErrors.confirmPassword = 'Passwords do not match.';
+    if (userType === 'Doctor' && !doctorType)
+      newErrors.doctorType = 'Doctor specialization is required.';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSignup = () => {
-    console.log("Signup button clicked");
-  
-    // Log current state values
-    console.log("Current Form Values: ", {
-      name,
-      dob,
-      contactNumber,
-      email,
-      password,
-      confirmPassword,
-      gender,
-      userType,
-      doctorType,
-    });
-  
-    // Ensure fields are validated
-    if (validateFields({ email, password, name, contactNumber, gender, dob })) {
-      console.log("Validation passed");
+    if (validateFields()) {
+      const formattedDob = dob.toISOString().split('T')[0];
+      const userData = {
+        fullName: name,
+        dob: formattedDob,
+        contactNo: parseInt(contactNumber, 10),
+        email,
+        password,
+        isDoctor: userType === 'Doctor',
+        doctorType: userType === 'Doctor' ? doctorType : '',
+        gender,
+      };
 
-     
-      if (password === confirmPassword) {
-        console.log("Passwords match");
-        const formattedDob = dob.toISOString().split('T')[0];
-        // Prepare user data for request
-        const userData = {
-          fullName: name,
-          dob:formattedDob , // Convert Date to ISO format
-          contactNo: parseInt(contactNumber, 10),
-          email,
-          password,
-          isDoctor: userType === 'Doctor',
-          doctorType: userType === 'Doctor' ? doctorType : "patient", // Use actual specialization input
-          gender,
-        };
-  
-        console.log("Prepared User Data: ", userData);
-  
-        // Dispatch signup action with user data
-        dispatch(signup(userData)).then(() => {
-        Alert.alert("Signup successful");
-          navigation.navigate('Login'); // Redirect to Home on success
-        }).catch((error) => {
-          console.error("Signup failed:", error);
+      dispatch(signup(userData))
+        .then(() => {
+          Alert.alert('Signup successful');
+          navigation.navigate('Login');
+        })
+        .catch(err => {
+          console.error('Signup failed:', err);
         });
-      } else {
-        console.error("Passwords don't match");
-        alert("Passwords don't match");
-      }
     } else {
-      console.error("Validation failed");
+      console.error('Validation failed:', errors);
     }
   };
-  
-  
-  
+
   return (
     <SafeAreaView style={styles.container}>
-      <LoadingSpinner visible={loading} />
-      <Text style={styles.title}>Sign Up</Text>
+      <ScrollView
+        contentContainerStyle={{flexGrow: 1, justifyContent: 'center', margin: 15}}>
+        <LoadingSpinner visible={loading} />
+        <Text style={styles.title}>Sign Up</Text>
 
-      {/* Name */}
-      <TextInput
-        style={[styles.input, errors.name ? styles.inputError : null]}
-        placeholder="Name"
-        placeholderTextColor="#aaa"
-        value={name}
-        onChangeText={setName}
-      />
-      {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
-
-      {/* Date of Birth */}
-      <TouchableOpacity
-        onPress={() => setShowDatePicker(true)}
-        style={styles.input}>
-        <Text style={dob ? styles.inputTextDate : styles.placeholderText}>
-          {dob ? dob.toLocaleDateString('en-GB') : 'Date of Birth'}
-        </Text>
-      </TouchableOpacity>
-     
-
-{showDatePicker && (
-  <DateTimePicker
-    value={dob || new Date()}
-    mode="date"
-    display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
-    onChange={(event, selectedDate) => {
-      setShowDatePicker(false);
-      if (event.type !== "dismissed") setDob(selectedDate);
-    }}
-  />
-)}
-
-
-      {/* Contact Number */}
-      <TextInput
-        style={[styles.input, errors.contactNumber ? styles.inputError : null]}
-        placeholder="Contact Number"
-        placeholderTextColor="#aaa"
-        value={contactNumber}
-        onChangeText={setContactNumber}
-        keyboardType="phone-pad"
-      />
-      {errors.contactNumber && (
-        <Text style={styles.errorText}>{errors.contactNumber}</Text>
-      )}
-
-      {/* Email */}
-      <TextInput
-        style={[styles.input, errors.email ? styles.inputError : null]}
-        placeholder="Email"
-        placeholderTextColor="#aaa"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-      />
-      {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
-
-      {/* Doctor/Patient Radio Buttons */}
-      <Text style={styles.label}>Who are you?</Text>
-      <RadioButtonGroup
-        options={[
-          {label: 'Patient', value: 'Patient'},
-          {label: 'Doctor', value: 'Doctor'},
-        ]}
-        selectedValue={userType}
-        onSelect={setUserType}
-      />
-      {userType === 'Doctor' && (
+        {/* Name */}
         <TextInput
-          style={[styles.input, errors.doctorType ? styles.inputError : null]}
-          placeholder="Specialization (e.g., Cardiologist)"
+          style={[styles.input, errors.name ? styles.inputError : null]}
+          placeholder="User Name"
           placeholderTextColor="#aaa"
-          value={doctorType}
-          onChangeText={setDoctorType}
+          value={name}
+          onChangeText={setName}
         />
-      )}
-      {errors.doctorType && (
-        <Text style={styles.errorText}>{errors.doctorType}</Text>
-      )}
+        {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
 
-      {/* Gender Radio Buttons */}
-      <Text style={styles.label}>Gender</Text>
-      <RadioButtonGroup
-        options={[
-          {label: 'Male', value: 'Male'},
-          {label: 'Female', value: 'Female'},
-          {label: 'Other', value: 'Other'},
-        ]}
-        selectedValue={gender}
-        onSelect={setGender}
-      />
-      {errors.gender && <Text style={styles.errorText}>{errors.gender}</Text>}
+        {/* Date of Birth */}
+        <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.input}>
+          <Text style={dob ? styles.inputTextDate : styles.placeholderText}>
+            {dob ? dob.toLocaleDateString('en-GB') : 'Date of Birth'}
+          </Text>
+        </TouchableOpacity>
+        {errors.dob && <Text style={styles.errorText}>{errors.dob}</Text>}
+        {showDatePicker && (
+          <DateTimePicker
+            value={dob || new Date()}
+            mode="date"
+            display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
+            onChange={(event, selectedDate) => {
+              setShowDatePicker(false);
+              if (event.type !== 'dismissed') setDob(selectedDate);
+            }}
+          />
+        )}
 
-      {/* Password */}
-      <View style={styles.passwordContainer}>
+        {/* Contact Number */}
         <TextInput
-          style={[
-            styles.passwordInput,
-            errors.password ? styles.inputError : null,
+          style={[styles.input, errors.contactNumber ? styles.inputError : null]}
+          placeholder="Contact Number"
+          placeholderTextColor="#aaa"
+          value={contactNumber}
+          onChangeText={setContactNumber}
+          keyboardType="phone-pad"
+        />
+        {errors.contactNumber && (
+          <Text style={styles.errorText}>{errors.contactNumber}</Text>
+        )}
+
+        {/* Email */}
+        <TextInput
+          style={[styles.input, errors.email ? styles.inputError : null]}
+          placeholder="Email"
+          placeholderTextColor="#aaa"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          keyboardType="email-address"
+        />
+        {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+
+        {/* Radio Buttons */}
+        <Text style={styles.label}>Who are you?</Text>
+        <RadioButtonGroup
+          options={[
+            {label: 'Patient', value: 'Patient'},
+            {label: 'Doctor', value: 'Doctor'},
           ]}
-          placeholder="Password"
-          placeholderTextColor="#aaa"
-          secureTextEntry={!showPassword}
-          value={password}
-          onChangeText={setPassword}
+          selectedValue={userType}
+          onSelect={setUserType}
         />
-        <PasswordVisibilityToggle
-          isVisible={showPassword}
-          onToggle={() => setShowPassword(!showPassword)}
-        />
-      </View>
-      {errors.password && (
-        <Text style={styles.errorText}>{errors.password}</Text>
-      )}
+        {userType === 'Doctor' && (
+          <TextInput
+            style={[styles.input, errors.doctorType ? styles.inputError : null]}
+            placeholder="Specialization (e.g., Cardiologist)"
+            placeholderTextColor="#aaa"
+            value={doctorType}
+            onChangeText={setDoctorType}
+          />
+        )}
+        {errors.doctorType && (
+          <Text style={styles.errorText}>{errors.doctorType}</Text>
+        )}
 
-      {/* Confirm Password */}
-      <View style={styles.passwordContainer}>
-        <TextInput
-          style={[
-            styles.passwordInput,
-            errors.password ? styles.inputError : null,
+        {/* Gender */}
+        <Text style={styles.label}>Gender</Text>
+        <RadioButtonGroup
+          options={[
+            {label: 'Male', value: 'Male'},
+            {label: 'Female', value: 'Female'},
+            {label: 'Other', value: 'Other'},
           ]}
-          placeholder="Confirm Password"
-          placeholderTextColor="#aaa"
-          secureTextEntry={!showConfirmPassword}
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
+          selectedValue={gender}
+          onSelect={setGender}
         />
-        <PasswordVisibilityToggle
-          isVisible={showConfirmPassword}
-          onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
-        />
-      </View>
+        {errors.gender && <Text style={styles.errorText}>{errors.gender}</Text>}
 
-      {error && <Text style={styles.errorText}>{error}</Text>}
+        {/* Password */}
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={[
+              styles.passwordInput,
+              errors.password ? styles.inputError : null,
+            ]}
+            placeholder="Password"
+            placeholderTextColor="#aaa"
+            secureTextEntry={!showPassword}
+            value={password}
+            onChangeText={setPassword}
+          />
+          <PasswordVisibilityToggle
+            isVisible={showPassword}
+            onToggle={() => setShowPassword(!showPassword)}
+          />
+        </View>
+        {errors.password && (
+          <Text style={styles.errorText}>{errors.password}</Text>
+        )}
 
-      {/* Submit */}
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
+        {/* Confirm Password */}
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={[
+              styles.passwordInput,
+              errors.confirmPassword ? styles.inputError : null,
+            ]}
+            placeholder="Confirm Password"
+            placeholderTextColor="#aaa"
+            secureTextEntry={!showConfirmPassword}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+          />
+          <PasswordVisibilityToggle
+            isVisible={showConfirmPassword}
+            onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
+          />
+        </View>
+        {errors.confirmPassword && (
+          <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+        )}
 
-      {/* Navigation to Login */}
-      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.contentText}>
-          Already have an account? Go to Login
-        </Text>
-      </TouchableOpacity>
+        {/* Submit */}
+        <TouchableOpacity style={styles.button} onPress={handleSignup}>
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
+
+        {/* Navigation to Login */}
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.contentText}>
+            Already have an account? Go to Login
+          </Text>
+        </TouchableOpacity>
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: '#fff', padding: 20},
+  container: {flex: 1, backgroundColor:'#fffacd'},
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: 'center',
+    
   },
   input: {
     height: 50,
-    borderColor: '#ccc',
+    borderColor: '#000',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
     marginVertical: 8,
+    backgroundColor: '#F3F3F3',
   },
   inputError: {borderColor: 'red'},
   inputText: {color: '#000'},
@@ -301,34 +294,37 @@ const styles = StyleSheet.create({
     width: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: '#ccc',
+    borderColor: '#000',
     marginRight: 10,
   },
-  radioSelected: {backgroundColor: '#007BFF', borderColor: '#007BFF'},
+  radioSelected: {backgroundColor: '#191970', borderColor: '#fff'},
   radioLabel: {fontSize: 16, color: '#000', marginLeft: 5},
   errorText: {color: 'red', fontSize: 12, marginBottom: 5},
+
   passwordContainer: {
+    height: 50,
+    borderColor: '#000',
+    borderWidth: 1,
+    borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 8,
+     backgroundColor: '#F3F3F3',
   },
   passwordInput: {
     flex: 1,
     height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#000',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
     marginVertical: 10,
   },
   buttonText: {color: '#fff', fontSize: 16, fontWeight: 'bold'},
-  contentText: {textAlign: 'center', color: '#007BFF', marginTop: 10},
+  contentText: {textAlign: 'center', color: '#007BFF', marginTop: 10,fontWeight:"bold"},
   placeholderText: {
     color: '#aaa',
     marginTop: 15,

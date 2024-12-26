@@ -9,14 +9,17 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  SafeAreaView,
 } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProfile, updateProfile } from '../../redux/actions/profileActions';
+import { fetchDoctorTypes } from '../../redux/actions/doctorTypeActions';
 import { launchImageLibrary } from 'react-native-image-picker';
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
-  const { profile, error } = useSelector((state) => state.profile);
+  const { profile, error, doctorTypes } = useSelector((state) => state.profile);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -40,7 +43,9 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     dispatch(fetchProfile());
+    dispatch(fetchDoctorTypes());
   }, [dispatch]);
+
 
   useEffect(() => {
     if (profile) {
@@ -135,29 +140,32 @@ const ProfileScreen = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image
-        source={{
-          uri: formData.profileImage?.uri || profile.profileImage || 'https://via.placeholder.com/150',
-        }}
-        style={styles.profileImage}
-      />
-      {editMode && <Button title="Change Image" onPress={handleImagePicker} />}
-
-      <View style={styles.infoContainer}>
-        <Text style={styles.label}>Full Name:</Text>
-        {editMode ? (
-          <TextInput
-            style={styles.input}
-            value={formData.name}
-            onChangeText={(value) => handleInputChange('name', value)}
-          />
-        ) : (
-          <Text style={styles.value}>{formData.name}</Text>
-        )}
+    <SafeAreaView style={{flex:1,backgroundColor:"grey"}}>
+      <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.profileContainer}>
+        <Image
+          source={{
+            uri: formData.profileImage?.uri || profile.profileImage || 'https://via.placeholder.com/150',
+          }}
+          style={styles.profileImage}
+        />
+        {editMode && <Button title="Change Image" onPress={handleImagePicker} />}
+        
       </View>
-
-      <View style={styles.infoContainer}>
+      <View style={styles.card}>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>User Name</Text>
+          {editMode ? (
+            <TextInput
+              style={styles.input}
+              value={formData.name}
+              onChangeText={(value) => handleInputChange('name', value)}
+            />
+          ) : (
+            <Text style={styles.value}>{formData.name}</Text>
+          )}
+        </View>
+        <View style={styles.infoContainer}>
         <Text style={styles.label}>Contact No:</Text>
         {editMode ? (
           <TextInput
@@ -184,7 +192,7 @@ const ProfileScreen = () => {
       </View>
 
       <View style={styles.infoContainer}>
-        <Text style={styles.label}>DOB (Age):</Text>
+        <Text style={styles.label}>Age:</Text>
         {editMode ? (
           <TextInput
             style={styles.input}
@@ -226,17 +234,29 @@ const ProfileScreen = () => {
       {profile.isDoctor ? (
         <>
           <View style={styles.infoContainer}>
-            <Text style={styles.label}>Specialized:</Text>
-            {editMode ? (
-              <TextInput
-                style={styles.input}
-                value={formData.specialized}
-                onChangeText={(value) => handleInputChange('specialized', value)}
-              />
-            ) : (
-              <Text style={styles.value}>{formData.specialized}</Text>
-            )}
-          </View>
+  <Text style={styles.label}>Specialized:</Text>
+  {editMode ? (
+    <View style={styles.dropdown}>
+    {doctorTypes ? (
+      <Picker
+        selectedValue={formData.specialized}
+        onValueChange={(value) => handleInputChange('specialized', value)}
+      >
+        <Picker.Item label="Select Specialization" value="" />
+        {doctorTypes.map((type, index) => (
+          <Picker.Item key={index} label={type} value={type} />
+        ))}
+      </Picker>
+    ) : (
+      <Text>Loading Specializations...</Text>
+    )}
+  </View>
+  
+  ) : (
+    <Text style={styles.value}>{formData.specialized}</Text>
+  )}
+</View>
+
 
           <View style={styles.infoContainer}>
             <Text style={styles.label}>Experience:</Text>
@@ -248,7 +268,13 @@ const ProfileScreen = () => {
                 onChangeText={(value) => handleInputChange('experience', value)}
               />
             ) : (
-              <Text style={styles.value}>{formData.experience} years</Text>
+             <View style={{flex:0.6,flexDirection:"row"}}>
+               <Text style={{fontSize:18, color: '#505',fontWeight:"600"}}>{formData.experience}</Text>
+               {formData.experience? <Text style={{fontSize:18, color: '#505',fontWeight:"600"}}> years</Text>:null}
+             </View>
+
+
+              
             )}
           </View>
 
@@ -343,28 +369,64 @@ const ProfileScreen = () => {
           <Text style={styles.editButtonText}>Edit Profile</Text>
         </TouchableOpacity>
       )}
+      </View>
+      
     </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
-  profileImage: { width: 150, height: 150, borderRadius: 75, marginBottom: 20 },
-  infoContainer: { marginBottom: 15 },
-  label: { fontWeight: 'bold', marginBottom: 5 },
-  value: { fontSize: 16 },
-  input: { borderWidth: 1, borderColor: '#ccc', padding: 10, borderRadius: 5 },
+  container: { marginTop:40 },
+  profileContainer: { alignItems: 'center', marginBottom: 20 },
+  profileImage: { 
+    width: 150, 
+    height: 150, 
+    borderRadius: 15, 
+    borderWidth: 1.5, 
+    borderColor: '#000' },
   editButton: {
     backgroundColor: '#007bff',
     padding: 10,
     alignItems: 'center',
-    marginTop: 20,
     borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
   },
   editButtonText: { color: '#fff', fontWeight: 'bold' },
+  card: {
+    backgroundColor: '#fffacd',
+    borderRadius: 10,
+    padding: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    marginBottom: 15,
+  },
+  infoContainer: { flex:1,marginBottom: 15,flexDirection:"row" },
+  label: { flex:0.4,fontSize: 16, fontWeight: 'bold'},
+  value: { flex:0.6,fontSize:18, color: '#505',fontWeight:"600", },
+  input: {
+    flex:0.7,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    padding: 10,
+    fontSize: 16,
+  },
   loading: { textAlign: 'center', marginTop: 50 },
   error: { color: 'red', textAlign: 'center', marginTop: 50 },
+  dropdown: {
+    flex: 0.7,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    padding: 10,
+  },
+  
 });
 
 export default ProfileScreen;
-
