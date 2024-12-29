@@ -62,8 +62,8 @@ const SignupScreen = ({navigation}) => {
     if (!name) newErrors.name = 'Name is required.';
     if (!dob) newErrors.dob = 'Date of Birth is required.';
     if (!gender) newErrors.gender = 'Gender is required.';
-    if (!contactNumber || !/^\d{10}$/.test(contactNumber))
-      newErrors.contactNumber = 'Valid contact number is required.';
+    if (!contactNumber)
+      newErrors.contactNumber='Validation Error', 'Contact Number must be exactly 10 digits.';
     if (!email || !/^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Z]{2,}$/i.test(email))
       newErrors.email = 'Valid email is required.';
     if (!password || !passwordRegex.test(password)) 
@@ -142,13 +142,23 @@ const SignupScreen = ({navigation}) => {
 
         {/* Contact Number */}
         <TextInput
-          style={[styles.input, errors.contactNumber ? styles.inputError : null]}
-          placeholder="Contact Number"
-          placeholderTextColor="#aaa"
-          value={contactNumber}
-          onChangeText={setContactNumber}
-          keyboardType="phone-pad"
-        />
+        style={[styles.input, errors.contactNumber ? styles.inputError : null]}
+        placeholder="Contact Number"
+        placeholderTextColor="#aaa"
+        value={contactNumber}
+        onChangeText={(text) => {
+    // Allow only numeric input
+       const numericValue = text.replace(/[^0-9]/g, '');
+    // Update state only if input length is within limit
+       if (numericValue.length <= 10) {
+       setContactNumber(numericValue);
+    }
+  }}
+       keyboardType="numeric" // Ensures numeric keyboard is displayed
+      maxLength={10} // Limits input to 10 characters
+      />
+
+
         {errors.contactNumber && (
           <Text style={styles.errorText}>{errors.contactNumber}</Text>
         )}

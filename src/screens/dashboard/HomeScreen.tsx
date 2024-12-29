@@ -1,14 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet,SafeAreaView,Text, View, ScrollView } from 'react-native'
 import React from 'react'
 
-const HomeScreen = () => {
+const AppointmentBooking = () => {
   return (
-    <View>
-      <Text>HomeScreen</Text>
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
-export default HomeScreen
+export default AppointmentBooking
 
 const styles = StyleSheet.create({})

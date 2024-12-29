@@ -11,52 +11,71 @@ import SignupScreen from '../screens/authentication/SignupScreen';
 import HomeScreen from '../screens/dashboard/HomeScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import ConsultScreen from '../screens/consult/ConsultScreen';
-import PatientListScreen from '../screens/role/DoctorSearchScreen';
+import PatientListScreen from '../screens/role/PatientListScreen';
 import DoctorSearchScreen from '../screens/role/DoctorSearchScreen';
 import { login, logout } from '../redux/actions/authActions'; // Adjust the path as needed
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 const TabNavigator = ({ navigation }) => {
-  const { user } = useSelector((state) => state.auth); // Access user from Redux state
+  const [isDoctor, setIsDoctor] = useState(null); // State to store `isDoctor` value
+
+  // Fetch `isDoctor` from AsyncStorage
+  useEffect(() => {
+    const fetchIsDoctor = async () => {
+      try {
+        const storedValue = await AsyncStorage.getItem('isDoctor');
+        setIsDoctor(JSON.parse(storedValue)); // Parse boolean from string
+      } catch (error) {
+        console.error('Error fetching isDoctor:', error);
+      }
+    };
+
+    fetchIsDoctor();
+  }, []);
+
+  if (isDoctor === null) {
+    return null; // Optionally show a loading spinner here while fetching data
+  }
 
   return (
     <Tab.Navigator
-    screenOptions={{
-      headerShown: true,
-      headerStyle: { backgroundColor: '#000' },
-      headerTintColor: '#fff',
-      headerTitle: '', // Removes the header title
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Icon name="menu" size={28} color="#fff" style={{ marginLeft: 15 }} />
-        </TouchableOpacity>
-      ),
-      tabBarStyle: { backgroundColor: '#000' },
-      tabBarActiveTintColor: '#fff',
-      tabBarInactiveTintColor: 'green',
-    }}
-  >
-    <Tab.Screen name="Home" component={HomeScreen} />
-    {user?.isDoctor ? (
-      <Tab.Screen name="Patients" component={PatientListScreen} />
-    ) : (
-      <Tab.Screen name="Doctors" component={DoctorSearchScreen} />
-    )}
-    <Tab.Screen name="Consult" component={ConsultScreen} />
-  </Tab.Navigator>
-  
+      screenOptions={{
+        headerShown: true,
+        headerStyle: { backgroundColor: '#000' },
+        headerTintColor: '#fff',
+        headerTitle: '', // Removes the header title
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Icon name="menu" size={28} color="#fff" style={{ marginLeft: 15 }} />
+          </TouchableOpacity>
+        ),
+        tabBarStyle: { backgroundColor: '#000' },
+        tabBarActiveTintColor: '#fff',
+        tabBarInactiveTintColor: 'green',
+      }}
+    >
+      <Tab.Screen name="Home" component={HomeScreen} />
+      {isDoctor ? (
+        <Tab.Screen name="Patients" component={PatientListScreen} />
+      ) : (
+        <Tab.Screen name="Doctors" component={DoctorSearchScreen} />
+      )}
+      <Tab.Screen name="Consult" component={ConsultScreen} />
+    </Tab.Navigator>
   );
 };
+
 
 const CustomDrawerContent = (props) => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token'); // Remove token from storage
+    await AsyncStorage.removeItem('user');  // Remove user data from storage
     dispatch(logout());                     // Dispatch the logout action
     props.navigation.navigate('Login');     // Navigate to Login screen
   };
@@ -110,8 +129,11 @@ const AppNavigator = () => {
   useEffect(() => {
     const checkAuth = async () => {
       const token = await AsyncStorage.getItem('token');
-      if (token) {
-        dispatch(login(token)); // Use token to fetch user details if needed
+      const userData = await AsyncStorage.getItem('user'); // Retrieve the user data
+
+      if (token && userData) {
+        const parsedUser = JSON.parse(userData);
+        dispatch(login(parsedUser.email, parsedUser.password)); // Dispatch login action with credentials
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);

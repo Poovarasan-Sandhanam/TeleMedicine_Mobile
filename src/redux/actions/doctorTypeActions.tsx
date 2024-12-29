@@ -6,19 +6,18 @@ export const FETCH_DOCTOR_TYPES_REQUEST = 'FETCH_DOCTOR_TYPES_REQUEST';
 export const FETCH_DOCTOR_TYPES_SUCCESS = 'FETCH_DOCTOR_TYPES_SUCCESS';
 export const FETCH_DOCTOR_TYPES_FAILURE = 'FETCH_DOCTOR_TYPES_FAILURE';
 
-// Fetch doctor types
+// Fetch doctor types action
 export const fetchDoctorTypes = () => async (dispatch) => {
   dispatch({ type: FETCH_DOCTOR_TYPES_REQUEST });
   try {
-    const token = await AsyncStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
-    const response = await api.get('/profile/get-doctor-types', { headers });
-    console.log("Doctor-type",response.data.data);
+    const token = await AsyncStorage.getItem('token'); // Get token from async storage
+    const headers = { Authorization: `Bearer ${token}` }; // Set Authorization header
+    const response = await api.get('/profile/get-doctor-types', { headers }); // API call
 
     if (response?.data?.data) {
       dispatch({
         type: FETCH_DOCTOR_TYPES_SUCCESS,
-        payload: response.data.data,
+        payload: response.data.data, // Dispatch success action with the data
       });
     } else {
       throw new Error('Invalid response format');

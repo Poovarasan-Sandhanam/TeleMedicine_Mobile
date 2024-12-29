@@ -31,16 +31,20 @@ export const login = (email, password) => async (dispatch) => {
 
     console.log('Login successful:', response.data);
 
+    console.log("isDoctor",response.data.data.isDoctor);
+    
+
     // Construct the user object to store in Redux and AsyncStorage
     const user = {
       email: userEmail,
       fullName,
-      isDoctor,
       token,
+      isDoctor,
     };
 
     // Store token and user data in AsyncStorage
     await AsyncStorage.setItem('token', token);
+    await AsyncStorage.setItem('isDoctor', JSON.stringify(isDoctor));
     await AsyncStorage.setItem('user', JSON.stringify(user));
 
     // Dispatch login success

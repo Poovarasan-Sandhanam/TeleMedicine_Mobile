@@ -1,47 +1,40 @@
+// reducers/appointmentReducer.js
+
 import {
-    GET_DOCTOR_TYPES,
-    GET_DOCTORS,
-    GET_AVAILABLE_SLOTS,
-    BOOK_APPOINTMENT,
-    SET_LOADING,
-    SET_ERROR,
-  } from '../actions/appointmentsActions';
-  
-  const initialState = {
-    doctorTypes: [],
-    doctors: [],
-    availableSlots: [],
-    selectedDoctor: null,
-    selectedSlot: null,
-    patientName: '',
-    loading: false,
-    error: null,
-  };
-  
-  const appointmentReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case GET_DOCTOR_TYPES:
-        return { ...state, doctorTypes: action.payload };
-      case GET_DOCTORS:
-        return { ...state, doctors: action.payload };
-      case GET_AVAILABLE_SLOTS:
-        return { ...state, availableSlots: action.payload };
-      case BOOK_APPOINTMENT:
-        return {
-          ...state,
-          selectedDoctor: null,
-          availableSlots: [],
-          patientName: '',
-          selectedSlot: null,
-        };
-      case SET_LOADING:
-        return { ...state, loading: action.payload };
-      case SET_ERROR:
-        return { ...state, error: action.payload };
+  BOOK_APPOINTMENT_REQUEST,
+  BOOK_APPOINTMENT_SUCCESS,
+  BOOK_APPOINTMENT_FAILURE,
+} from '../actions/appointmentsActions';
+
+const initialState = {
+  loading: false,
+  appointment: null,
+  error: null,
+};
+
+export const appointmentReducer = (state = initialState, action) => {
+  switch (action.type) {
+      case BOOK_APPOINTMENT_REQUEST:
+          return {
+              ...state,
+              loading: true,
+              error: null,
+          };
+      case BOOK_APPOINTMENT_SUCCESS:
+          return {
+              ...state,
+              loading: false,
+              appointment: action.payload,
+              error: null,
+          };
+      case BOOK_APPOINTMENT_FAILURE:
+          return {
+              ...state,
+              loading: false,
+              appointment: null,
+              error: action.payload,
+          };
       default:
-        return state;
-    }
-  };
-  
-  export default appointmentReducer;
-  
+          return state;
+  }
+};
