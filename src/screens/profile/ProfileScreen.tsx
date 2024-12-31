@@ -16,6 +16,7 @@ import { fetchDoctorTypes } from '../../redux/actions/doctorTypeActions';
 import { launchImageLibrary } from 'react-native-image-picker';
 import CustomDropdown from '../../components/CustomDropdown';
 import { GenderEnum,MedicalConditionsEnum, BloodGroupEnum, OngoingTreatmentEnum,ConsultEnum, WeightEnum } from '../../utilis/enums';
+import COLORS from '../../utilis/colors';
 
 
 const ProfileScreen = () => {
@@ -160,7 +161,7 @@ const ProfileScreen = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor:'#fff'}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor:COLORS.white}}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.profileContainer}>
          {formData.profileImage?.uri || profile.profileImage? <Image
@@ -430,10 +431,10 @@ const styles = StyleSheet.create({
     marginTop:20
   },
   saveButton:{
-    backgroundColor: '#007bff',
-    padding: 10,
+    backgroundColor:COLORS.black,
+    padding:15,
     alignItems: 'center',
-    borderRadius: 5,
+    borderRadius:15,
     width:"50%",
     marginTop:20,
     alignSelf:"center",
@@ -441,25 +442,25 @@ const styles = StyleSheet.create({
   },
   editButtonText: { color: '#fff', fontWeight: 'bold' },
   card: {
-    backgroundColor:'#87cefa',
+    backgroundColor:COLORS.primary,
     borderRadius:25
   },
   infoContainer: { 
     flex: 1,
     marginLeft:20,
-    marginTop:20,
-    
+    marginTop:20,  
   },
   label: { 
     flex:0.3,
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom:10   
+    marginBottom:10,
+    color:COLORS.white  
   },
   value: { 
     flex:0.7,
     fontSize: 18,
-    color: '#505',
+    color:COLORS.white,
     fontWeight: '600',
     marginLeft:20
   },
@@ -469,7 +470,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 16,
     width:"90%",
-    height:40,
+    height:45,
     paddingLeft: 10, 
     backgroundColor:"#fff"
   },

@@ -1,20 +1,21 @@
 // styles/styles.js
 import { StyleSheet } from 'react-native';
+import COLORS from '../../utilis/colors';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#fffacd',
+    backgroundColor:COLORS.white,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom:10,
     color: '#000',
   },
   input: {
     height:50,
-    borderWidth: 1.5,
+    borderWidth:1,
     borderColor: '#000',
     padding: 10,
     marginVertical: 8,
@@ -30,11 +31,11 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#000',
+    backgroundColor:COLORS.primary,
     padding: 15,
-    borderRadius: 5,
+    borderRadius:20,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop:30,
   },
   buttonText: {
     color: '#fff',
@@ -46,7 +47,7 @@ export default StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: '#000',
     paddingHorizontal: 10,
     borderRadius: 5,
@@ -59,7 +60,7 @@ export default StyleSheet.create({
   contentText:{
     textAlign:"center",
     marginTop:20,
-    color:"#007BFF",
+    color:"#000",
     fontSize:15,
     fontWeight: 'bold',
 

@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons'; // Vector Icon for toggling
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // For tab icons
 import LoginScreen from '../screens/authentication/LoginScreen';
 import SignupScreen from '../screens/authentication/SignupScreen';
 import HomeScreen from '../screens/dashboard/HomeScreen';
@@ -15,6 +16,7 @@ import PatientListScreen from '../screens/role/PatientListScreen';
 import DoctorSearchScreen from '../screens/role/DoctorSearchScreen';
 import { login, logout } from '../redux/actions/authActions'; // Adjust the path as needed
 import { StyleSheet, TouchableOpacity } from 'react-native';
+import COLORS from '../utilis/colors';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,30 +44,53 @@ const TabNavigator = ({ navigation }) => {
   }
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: true,
-        headerStyle: { backgroundColor: '#000' },
-        headerTintColor: '#fff',
-        headerTitle: '', // Removes the header title
-        headerLeft: () => (
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <Icon name="menu" size={28} color="#fff" style={{ marginLeft: 15 }} />
-          </TouchableOpacity>
+<Tab.Navigator
+  screenOptions={({navigation}) => ({
+    headerShown: true,
+    headerStyle: { backgroundColor:COLORS.primary },
+    headerTintColor: '#fff',
+    headerTitle: '',
+    headerLeft: () => (
+      <TouchableOpacity onPress={() => navigation.openDrawer()}>
+        <Icon name="menu" size={28} color="#fff" style={{ marginLeft: 15 }} />
+      </TouchableOpacity>
+    ),
+    tabBarStyle: { backgroundColor:COLORS.primary },
+    tabBarActiveTintColor:COLORS.black,
+    tabBarInactiveTintColor:COLORS.white
+  })}
+>
+  {isDoctor ? (
+    <Tab.Screen 
+      name="Patients" 
+      component={PatientListScreen}
+      options={{
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="account-group" color={color} size={size} />
         ),
-        tabBarStyle: { backgroundColor: '#000' },
-        tabBarActiveTintColor: '#fff',
-        tabBarInactiveTintColor: 'green',
       }}
-    >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      {isDoctor ? (
-        <Tab.Screen name="Patients" component={PatientListScreen} />
-      ) : (
-        <Tab.Screen name="Doctors" component={DoctorSearchScreen} />
-      )}
-      <Tab.Screen name="Consult" component={ConsultScreen} />
-    </Tab.Navigator>
+    />
+  ) : (
+    <Tab.Screen 
+      name="Doctors" 
+      component={DoctorSearchScreen}
+      options={{
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="stethoscope" color={color} size={size} />
+        ),
+      }}
+    />
+  )}
+  <Tab.Screen 
+    name="Consult" 
+    component={ConsultScreen}
+    options={{
+      tabBarIcon: ({ color, size }) => (
+        <MaterialCommunityIcons name="message-video" color={color} size={size} />
+      ),
+    }}
+  />
+</Tab.Navigator>
   );
 };
 
@@ -111,7 +136,7 @@ const DrawerNavigator = () => (
   <Drawer.Navigator
     drawerContent={(props) => <CustomDrawerContent {...props} />}
     screenOptions={{
-      drawerStyle: { backgroundColor: '#fffacd', width: 250 },
+      drawerStyle: { backgroundColor: COLORS.primary, width: 250 },
       headerShown: false,
     }}
   >
@@ -175,11 +200,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   logoutText: {
-    color: 'red',
+    color: 'Red',
     fontWeight: 'bold',
   },
   drawerText: {
-    color: '#000',
+    color:COLORS.white,
     fontWeight: 'bold',
   },
 });

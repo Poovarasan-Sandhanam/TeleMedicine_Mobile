@@ -15,6 +15,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import PasswordVisibilityToggle from '../../components/PasswordVisibilityToggle';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import {signup} from '../../redux/actions/authActions'; // Adjust the path as needed
+import COLORS from '../../utilis/colors';
 
 const RadioButtonGroup = ({options, selectedValue, onSelect}) => {
   return (
@@ -109,7 +110,7 @@ const SignupScreen = ({navigation}) => {
       <ScrollView
         contentContainerStyle={{flexGrow: 1, justifyContent: 'center', margin: 15}}>
         <LoadingSpinner visible={loading} />
-        <Text style={styles.title}>Sign Up</Text>
+        <Text style={styles.title}>Create an account</Text>
 
         {/* Name */}
         <TextInput
@@ -272,11 +273,13 @@ const SignupScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor:'#fffacd'},
+  container: {flex: 1,
+    backgroundColor:COLORS.white
+  },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom:10,
     
   },
   input: {
@@ -322,20 +325,26 @@ const styles = StyleSheet.create({
      backgroundColor: '#F3F3F3',
   },
   passwordInput: {
-    flex: 1,
+    flex:0.95,
     height: 50,
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: '#000',
+    backgroundColor:COLORS.primary,
     padding: 15,
-    borderRadius: 8,
+    borderRadius:20,
     alignItems: 'center',
     marginVertical: 10,
   },
   buttonText: {color: '#fff', fontSize: 16, fontWeight: 'bold'},
-  contentText: {textAlign: 'center', color: '#007BFF', marginTop: 10,fontWeight:"bold"},
-  placeholderText: {
+  contentText: {
+    textAlign: 'center',
+    color:COLORS.black,
+    marginTop: 10,
+    fontWeight:"bold",
+    fontSize:15,
+  },
+    placeholderText: {
     color: '#aaa',
     marginTop: 15,
   },
