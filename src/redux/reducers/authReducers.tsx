@@ -1,39 +1,22 @@
-import { LOGIN, LOGOUT, SET_ERROR, SET_LOADING } from '../actions/authActions';
+import {
+  BOOK_APPOINTMENT_SUCCESS,
+  BOOK_APPOINTMENT_ERROR,
+} from '../actions/appointmentsActions';
 
 const initialState = {
-  user: null,
+  appointment: null,
   error: null,
-  loading: false,
 };
 
-export default function authReducer(state = initialState, action) {
+const appointmentReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN:
-      return {
-        ...state,
-        user: action.payload, // Updated user structure
-        error: null,
-        loading: false,
-      };
-    case LOGOUT:
-      return {
-        ...state,
-        user: null,
-        error: null,
-        loading: false,
-      };
-    case SET_ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
-      };
-    case SET_LOADING:
-      return {
-        ...state,
-        loading: action.payload,
-      };
-    default:
-      return state;
+      case BOOK_APPOINTMENT_SUCCESS:
+          return { ...state, appointment: action.payload, error: null };
+      case BOOK_APPOINTMENT_ERROR:
+          return { ...state, error: action.payload };
+      default:
+          return state;
   }
-}
+};
+
+export default appointmentReducer;

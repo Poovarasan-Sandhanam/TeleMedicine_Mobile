@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'; // Vector Icon for t
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // For tab icons
 import LoginScreen from '../screens/authentication/LoginScreen';
 import SignupScreen from '../screens/authentication/SignupScreen';
-import HomeScreen from '../screens/dashboard/HomeScreen';
+import AppointmentBooking from '../screens/booking/AppointmentBooking';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import ConsultScreen from '../screens/consult/ConsultScreen';
 import PatientListScreen from '../screens/role/PatientListScreen';
@@ -188,6 +188,11 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Signup"
           component={SignupScreen}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name="AppointmentBooking"
+          component={AppointmentBooking}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
