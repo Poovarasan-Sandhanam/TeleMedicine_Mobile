@@ -1,22 +1,49 @@
-import {
-  BOOK_APPOINTMENT_SUCCESS,
-  BOOK_APPOINTMENT_ERROR,
-} from '../actions/appointmentsActions';
+import { LOGIN, LOGOUT, SIGNUP, SET_ERROR, SET_LOADING } from '../actions/authActions';
 
 const initialState = {
-  appointment: null,
+  user: null,
+  token: null,
+  isDoctor: null,
+  loading: false,
   error: null,
 };
 
-const appointmentReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
-      case BOOK_APPOINTMENT_SUCCESS:
-          return { ...state, appointment: action.payload, error: null };
-      case BOOK_APPOINTMENT_ERROR:
-          return { ...state, error: action.payload };
-      default:
-          return state;
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case SET_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case LOGIN:
+      return {
+        ...state,
+        user: action.payload,
+        token: action.payload.token,
+        isDoctor: action.payload.isDoctor,
+        error: null, // Clear any existing errors
+      };
+    case SIGNUP:
+      return {
+        ...state,
+        // You might add logic here to handle additional signup state changes, if necessary
+        error: null,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        user: null,
+        token: null,
+        isDoctor: null,
+      };
+    default:
+      return state;
   }
 };
 
-export default appointmentReducer;
+export default authReducer;
