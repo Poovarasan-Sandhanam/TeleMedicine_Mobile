@@ -1,0 +1,22 @@
+/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home/bin/java \
+  --class-path \
+  /Users/poovarasan/.gradle/caches/modules-2/files-2.1/com.google.prefab/cli/2.1.0/aa32fec809c44fa531f01dcfb739b5b3304d3050/cli-2.1.0-all.jar \
+  com.google.prefab.cli.AppKt \
+  --build-system \
+  cmake \
+  --platform \
+  android \
+  --abi \
+  arm64-v8a \
+  --os-version \
+  24 \
+  --stl \
+  c++_shared \
+  --ndk-version \
+  26 \
+  --output \
+  /var/folders/tx/j7jmc6l93bg96hn4nn_wctk40000gn/T/agp-prefab-staging9376304871667643470/staged-cli-output \
+  /Users/poovarasan/.gradle/caches/8.10.2/transforms/95f6f58ffe80f07573bbc4f1f4f0ecd0/transformed/jetified-react-android-0.76.5-debug/prefab \
+  /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/build/intermediates/cxx/refs/react-native-reanimated/371qg1l2 \
+  /Users/poovarasan/.gradle/caches/8.10.2/transforms/21c6b49705e49a41ef5c758d51f62eb8/transformed/jetified-hermes-android-0.76.5-debug/prefab \
+  /Users/poovarasan/.gradle/caches/8.10.2/transforms/0b396a6571faea36ef3e81439b17aeab/transformed/jetified-fbjni-0.6.0/prefab

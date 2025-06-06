@@ -7,23 +7,28 @@
  */
 
 #include "autolinking.h"
+#include <RNVectorIconsSpec.h>
 #include <rnasyncstorage.h>
 #include <RNDateTimePickerCGen.h>
 #include <rnpicker.h>
 #include <react/renderer/components/rnpicker/ComponentDescriptors.h>
 #include <rngesturehandler_codegen.h>
 #include <react/renderer/components/rngesturehandler_codegen/ComponentDescriptors.h>
+#include <RNImagePickerSpec.h>
 #include <rnreanimated.h>
 #include <safeareacontext.h>
 #include <react/renderer/components/safeareacontext/ComponentDescriptors.h>
 #include <rnscreens.h>
 #include <react/renderer/components/rnscreens/ComponentDescriptors.h>
-#include <RNVectorIconsSpec.h>
 
 namespace facebook {
 namespace react {
 
 std::shared_ptr<TurboModule> autolinking_ModuleProvider(const std::string moduleName, const JavaTurboModule::InitParams &params) {
+auto module_RNVectorIconsSpec = RNVectorIconsSpec_ModuleProvider(moduleName, params);
+if (module_RNVectorIconsSpec != nullptr) {
+return module_RNVectorIconsSpec;
+}
 auto module_rnasyncstorage = rnasyncstorage_ModuleProvider(moduleName, params);
 if (module_rnasyncstorage != nullptr) {
 return module_rnasyncstorage;
@@ -40,6 +45,10 @@ auto module_rngesturehandler_codegen = rngesturehandler_codegen_ModuleProvider(m
 if (module_rngesturehandler_codegen != nullptr) {
 return module_rngesturehandler_codegen;
 }
+auto module_RNImagePickerSpec = RNImagePickerSpec_ModuleProvider(moduleName, params);
+if (module_RNImagePickerSpec != nullptr) {
+return module_RNImagePickerSpec;
+}
 auto module_rnreanimated = rnreanimated_ModuleProvider(moduleName, params);
 if (module_rnreanimated != nullptr) {
 return module_rnreanimated;
@@ -51,10 +60,6 @@ return module_safeareacontext;
 auto module_rnscreens = rnscreens_ModuleProvider(moduleName, params);
 if (module_rnscreens != nullptr) {
 return module_rnscreens;
-}
-auto module_RNVectorIconsSpec = RNVectorIconsSpec_ModuleProvider(moduleName, params);
-if (module_RNVectorIconsSpec != nullptr) {
-return module_RNVectorIconsSpec;
 }
   return nullptr;
 }

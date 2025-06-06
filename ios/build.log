@@ -1,0 +1,6 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -workspace ios/TeleMedicine_Mobile.xcworkspace -scheme TeleMedicine_Mobile -configuration Debug -destination id=6C1AF88E-0D2F-401A-8808-9E458FFEA0A2 clean build
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+

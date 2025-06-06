@@ -57,7 +57,7 @@
                     }
                 },
                 {
-                    "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/1ae2c2bcce3cae52224b57e1fa01bdc7/transformed/react-android-0.76.5-debug/res/values-ro/values-ro.xml",
+                    "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/95f6f58ffe80f07573bbc4f1f4f0ecd0/transformed/jetified-react-android-0.76.5-debug/res/values-ro/values-ro.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

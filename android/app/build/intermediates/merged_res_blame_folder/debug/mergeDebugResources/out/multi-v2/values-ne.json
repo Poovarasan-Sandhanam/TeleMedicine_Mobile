@@ -4,23 +4,6 @@
             "outputFile": "com.telemedicine_mobile.app-mergeDebugResources-40:/values-ne/values-ne.xml",
             "map": [
                 {
-                    "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/1ae2c2bcce3cae52224b57e1fa01bdc7/transformed/react-android-0.76.5-debug/res/values-ne/values-ne.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "55,132,200,279,347,414,484",
-                        "endColumns": "76,67,78,67,66,69,68",
-                        "endOffsets": "127,195,274,342,409,479,548"
-                    },
-                    "to": {
-                        "startLines": "37,41,42,44,57,93,94",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "3408,3713,3781,3921,4909,7873,7943",
-                        "endColumns": "76,67,78,67,66,69,68",
-                        "endOffsets": "3480,3776,3855,3984,4971,7938,8007"
-                    }
-                },
-                {
                     "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/43dcf2fbc3f4bceaedda06ddd15b04b6/transformed/core-1.9.0/res/values-ne/values-ne.xml",
                     "from": {
                         "startLines": "2",
@@ -71,6 +54,23 @@
                         "endLines": "5,33,34,35,36,38,39,40,43,45,46,47,48,49,50,51,52,53,54,55,56,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91",
                         "endColumns": "12,81,101,109,86,65,95,65,60,104,71,57,73,61,53,112,59,60,58,77,123,80,84,105,80,82,82,66,65,76,78,87,68,75,80,67,90,77,92,96,73,78,97,59,65,87,87,61,67,62,104,117,94,119,83",
                         "endOffsets": "262,3104,3206,3316,3403,3546,3642,3708,3916,4089,4161,4219,4293,4355,4409,4522,4582,4643,4702,4780,4904,5052,5137,5243,5324,5407,5490,5557,5623,5700,5779,5867,5936,6012,6093,6161,6252,6330,6423,6520,6594,6673,6771,6831,6897,6985,7073,7135,7203,7266,7371,7489,7584,7704,7788"
+                    }
+                },
+                {
+                    "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/95f6f58ffe80f07573bbc4f1f4f0ecd0/transformed/jetified-react-android-0.76.5-debug/res/values-ne/values-ne.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,132,200,279,347,414,484",
+                        "endColumns": "76,67,78,67,66,69,68",
+                        "endOffsets": "127,195,274,342,409,479,548"
+                    },
+                    "to": {
+                        "startLines": "37,41,42,44,57,93,94",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "3408,3713,3781,3921,4909,7873,7943",
+                        "endColumns": "76,67,78,67,66,69,68",
+                        "endOffsets": "3480,3776,3855,3984,4971,7938,8007"
                     }
                 }
             ]
