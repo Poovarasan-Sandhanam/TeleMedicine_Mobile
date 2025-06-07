@@ -17,8 +17,8 @@ export const BloodGroupEnum = [
 
 export const ConsultEnum = [
     { label: '6 AM - 2 PM (Morning)', value: '6 AM - 2 PM (Morning)' },
-    { label: '3 PM - 10 PM (Afternoon)', value: '3 PM - 10 PM (Afternoon)' },
-    { label: '11 PM - 6 AM (Night)', value: '11 PM - 6 AM (Night)' },
+    { label: '2 PM - 10 PM (Afternoon)', value: '3 PM - 10 PM (Afternoon)' },
+    { label: '10 PM - 6 AM (Night)', value: '11 PM - 6 AM (Night)' },
   ];
   
 

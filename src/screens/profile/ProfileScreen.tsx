@@ -241,6 +241,12 @@ const ProfileScreen = () => {
               data={GenderEnum}
               selectedValue={formData.gender}
               onValueChange={(value) => handleInputChange('gender', value)}
+              dropdownStyle={{
+                borderColor: '#000',
+                borderWidth:1,
+                borderRadius:5,
+                width:"90%"
+              }}
             />
             
             ) : (
@@ -269,7 +275,14 @@ const ProfileScreen = () => {
                   <CustomDropdown
                     data={doctorTypes}
                     selectedValue={formData.specialized}
-                    onValueChange={(value) => handleInputChange('specialized', value)}/>
+                    onValueChange={(value) => handleInputChange('specialized', value)} 
+                    dropdownStyle={{
+                      borderColor: '#000',
+                      borderWidth:1,
+                      borderRadius:5,
+                      width:"90%"
+                    }}
+                    />
                 ) : (
                   <Text style={styles.value}>{formData.specialized}</Text>
                 )}
@@ -299,7 +312,14 @@ const ProfileScreen = () => {
                   <CustomDropdown
                   data={ConsultEnum}
                   selectedValue={formData.consultationTiming}
-                  onValueChange={(value) => handleInputChange('consultationTiming', value)}/>
+                  onValueChange={(value) => handleInputChange('consultationTiming', value)} 
+                  dropdownStyle={{
+                    borderColor: '#000',
+                    borderWidth:1,
+                    borderRadius:5,
+                    width:"90%"
+                  }}
+                  />
                  
                 ) : (
                   <Text style={styles.value}>{formData.consultationTiming}</Text>
@@ -315,6 +335,12 @@ const ProfileScreen = () => {
                   data={BloodGroupEnum}
                   selectedValue={formData.bloodGroup}
                   onValueChange={(value) => handleInputChange('bloodGroup', value)}
+                  dropdownStyle={{
+                    borderColor: '#000',
+                    borderWidth:1,
+                    borderRadius:5,
+                    width:"90%"
+                  }}
                 />
                 
                 ) : (
@@ -326,22 +352,22 @@ const ProfileScreen = () => {
               <View style={[styles.infoContainer, !editMode && { flexDirection: 'row' }]}>
               <Text style={styles.label}>Weight :</Text>
                 {editMode ? (
-                  // <TextInput
-                  //   style={styles.input}
-                  //   value={formData.weight}
-                  //   keyboardType="numeric"
-                  //   onChangeText={(value) => handleInputChange('weight', value)}
-                  // />
+               
 
                   <CustomDropdown
                   data={WeightEnum}
                   selectedValue={formData.weight}
                   onValueChange={(value) => handleInputChange('weight', value)}
+                  dropdownStyle={{
+                    borderColor: '#000',
+                    borderWidth:1,
+                    borderRadius:5,
+                    width:"90%"
+                  }}
                 />
                 ) : (
                   <View style={{flex:0.6}}>
                     <Text style={[styles.value,{flex:0.15}]}>{formData.weight}
-                   { formData.weight?<Text style={[styles.value,{flex:0.85}]}> Kg</Text>:null}
                    </Text>
                   </View>
                 )}
@@ -371,6 +397,12 @@ const ProfileScreen = () => {
                   data={OngoingTreatmentEnum}
                   selectedValue={formData.ongoingTreatment}
                   onValueChange={(value) => handleInputChange('ongoingTreatment', value)}
+                  dropdownStyle={{
+                    borderColor: '#000',
+                    borderWidth:1,
+                    borderRadius:5,
+                    width:"90%"
+                  }}
                 />
                 
                 ) : (
@@ -385,6 +417,12 @@ const ProfileScreen = () => {
                   data={MedicalConditionsEnum}
                   selectedValue={formData.healthIssues}
                   onValueChange={(value) => handleInputChange('healthIssues', value)}
+                  dropdownStyle={{
+                    borderColor: '#000',
+                    borderWidth:1,
+                    borderRadius:5,
+                    width:"90%"
+                  }}
                 />
 
                 ) : (

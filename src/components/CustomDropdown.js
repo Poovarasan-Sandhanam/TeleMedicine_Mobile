@@ -1,29 +1,45 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, FlatList, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+  FlatList,
+  SafeAreaView,
+} from 'react-native';
 
-const CustomDropdown = ({ data, selectedValue, onValueChange, label }) => {
+const CustomDropdown = ({
+  data,
+  selectedValue,
+  onValueChange,
+  label,
+  dropdownStyle,
+}) => {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
-console.log(selectedValue,"selectedValue");
-  // Normalize data to ensure it has `label` and `value` properties
+
+  // Normalize data to ensure consistency
   const normalizedData = data.map((item) =>
     typeof item === 'string' ? { label: item, value: item } : item
   );
 
   const handleSelectItem = (item) => {
-    onValueChange(item.value); // Pass the selected value
-    setIsModalVisible(false); // Close the modal
+    onValueChange(item.value); // Set selected value
+    setIsModalVisible(false); // Close modal
   };
+
+  const selectedLabel =
+    normalizedData.find((item) => item.value === selectedValue)?.label ||
+    'Select an option';
 
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
       <TouchableOpacity
-        style={styles.dropdown}
+        style={[styles.dropdown, dropdownStyle]} // Merge styles dynamically
         onPress={() => setIsModalVisible(true)}
       >
-        <Text style={styles.selectedValue}>
-          {selectedValue || 'Select an option'}
-        </Text>
+        <Text style={styles.selectedValue}>{selectedLabel}</Text>
       </TouchableOpacity>
 
       <Modal
@@ -44,7 +60,7 @@ console.log(selectedValue,"selectedValue");
                   <Text style={styles.itemText}>{item.label}</Text>
                 </TouchableOpacity>
               )}
-              keyExtractor={(item) => item.value}
+              keyExtractor={(item) => item.value.toString()}
             />
             <TouchableOpacity
               style={styles.closeButton}
@@ -59,23 +75,29 @@ console.log(selectedValue,"selectedValue");
   );
 };
 
+export default CustomDropdown;
 const styles = StyleSheet.create({
+  container: {
+    marginVertical: 10,
+    width: '100%',
+  },
   label: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
+    color: '#333',
   },
   dropdown: {
-    padding: 10,
+    padding: 12,
     borderWidth: 1,
-    borderRadius: 5,
-    borderColor: '#000',
+    borderRadius: 8,
+    borderColor: '#ccc',
     backgroundColor: '#fff',
-    width: '90%',
+    width: '100%',
   },
   selectedValue: {
     fontSize: 16,
-    color: '#000',
+    color: '#555',
   },
   modalContainer: {
     flex: 1,
@@ -85,31 +107,30 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: '#fff',
-    width: '80%',
+    width: '90%',
     borderRadius: 10,
     padding: 20,
   },
   item: {
-    padding: 10,
-    backgroundColor:"lightgrey",
-    marginTop:10,
-    borderRadius:5
+    padding: 12,
+    backgroundColor: '#f9f9f9',
+    marginVertical: 5,
+    borderRadius: 5,
   },
   itemText: {
     fontSize: 16,
-    color: '#000',
+    color: '#333',
   },
   closeButton: {
     marginTop: 15,
     backgroundColor: '#007bff',
-    padding: 10,
+    padding: 12,
     alignItems: 'center',
     borderRadius: 5,
   },
   closeButtonText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontSize: 16,
   },
 });
-
-export default CustomDropdown;

@@ -1,5 +1,7 @@
 PODS:
   - boost (1.84.0)
+  - BVLinearGradient (2.8.3):
+    - React-Core
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.76.5)
   - fmt (9.1.0)
@@ -1242,6 +1244,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-html-to-pdf (0.12.0):
+    - React-Core
   - react-native-image-picker (7.2.3):
     - DoubleConversion
     - glog
@@ -1816,11 +1820,116 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNShare (12.0.11):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - SocketRocket (0.7.1)
+  - Stripe (24.14.0):
+    - StripeApplePay (= 24.14.0)
+    - StripeCore (= 24.14.0)
+    - StripePayments (= 24.14.0)
+    - StripePaymentsUI (= 24.14.0)
+    - StripeUICore (= 24.14.0)
+  - stripe-react-native (0.47.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Stripe (~> 24.14.0)
+    - stripe-react-native/NewArch (= 0.47.1)
+    - StripeApplePay (~> 24.14.0)
+    - StripeFinancialConnections (~> 24.14.0)
+    - StripePayments (~> 24.14.0)
+    - StripePaymentSheet (~> 24.14.0)
+    - StripePaymentsUI (~> 24.14.0)
+    - Yoga
+  - stripe-react-native/NewArch (0.47.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Stripe (~> 24.14.0)
+    - StripeApplePay (~> 24.14.0)
+    - StripeFinancialConnections (~> 24.14.0)
+    - StripePayments (~> 24.14.0)
+    - StripePaymentSheet (~> 24.14.0)
+    - StripePaymentsUI (~> 24.14.0)
+    - Yoga
+  - StripeApplePay (24.14.0):
+    - StripeCore (= 24.14.0)
+  - StripeCore (24.14.0)
+  - StripeFinancialConnections (24.14.0):
+    - StripeCore (= 24.14.0)
+    - StripeUICore (= 24.14.0)
+  - StripePayments (24.14.0):
+    - StripeCore (= 24.14.0)
+    - StripePayments/Stripe3DS2 (= 24.14.0)
+  - StripePayments/Stripe3DS2 (24.14.0):
+    - StripeCore (= 24.14.0)
+  - StripePaymentSheet (24.14.0):
+    - StripeApplePay (= 24.14.0)
+    - StripeCore (= 24.14.0)
+    - StripePayments (= 24.14.0)
+    - StripePaymentsUI (= 24.14.0)
+  - StripePaymentsUI (24.14.0):
+    - StripeCore (= 24.14.0)
+    - StripePayments (= 24.14.0)
+    - StripeUICore (= 24.14.0)
+  - StripeUICore (24.14.0):
+    - StripeCore (= 24.14.0)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
+  - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
@@ -1857,6 +1966,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
+  - react-native-html-to-pdf (from `../node_modules/react-native-html-to-pdf`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -1894,15 +2004,27 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNShare (from `../node_modules/react-native-share`)
+  - "stripe-react-native (from `../node_modules/@stripe/stripe-react-native`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
     - SocketRocket
+    - Stripe
+    - StripeApplePay
+    - StripeCore
+    - StripeFinancialConnections
+    - StripePayments
+    - StripePaymentSheet
+    - StripePaymentsUI
+    - StripeUICore
 
 EXTERNAL SOURCES:
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
+  BVLinearGradient:
+    :path: "../node_modules/react-native-linear-gradient"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   FBLazyVector:
@@ -1972,6 +2094,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   React-microtasksnativemodule:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
+  react-native-html-to-pdf:
+    :path: "../node_modules/react-native-html-to-pdf"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
   react-native-safe-area-context:
@@ -2046,11 +2170,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNShare:
+    :path: "../node_modules/react-native-share"
+  stripe-react-native:
+    :path: "../node_modules/@stripe/stripe-react-native"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
   boost: 1dca942403ed9342f98334bf4c3621f011aa7946
+  BVLinearGradient: cb006ba232a1f3e4f341bb62c42d1098c284da70
   DoubleConversion: f16ae600a246532c4020132d54af21d0ddb2a385
   FBLazyVector: 1bf99bb46c6af9a2712592e707347315f23947aa
   fmt: 10c6e61f4be25dc963c36bd73fc7b1705fe975be
@@ -2085,6 +2214,7 @@ SPEC CHECKSUMS:
   React-logger: ae95f0effa7e1791bd6f7283caddca323d4fbc1e
   React-Mapbuffer: 7eb5d69e1154e7743487ef0c8d7261e5b59afb32
   React-microtasksnativemodule: 01dd998649ff5f8814846b7eee84c4d57f5d3671
+  react-native-html-to-pdf: 7a49e6c58ac5221bcc093027b195f4b214f27a9d
   react-native-image-picker: 91f4e8dd458db2acdb278479e960bc224cbf0217
   react-native-safe-area-context: f145b8906585d648f9f9c7dfa3885bac54f38fcc
   react-native-splash-screen: 95994222cc95c236bd3cdc59fe45ed5f27969594
@@ -2122,7 +2252,17 @@ SPEC CHECKSUMS:
   RNGestureHandler: e1dcb274c17ca0680a04d7ff357e35e37c384185
   RNReanimated: d8d0ab232099005d87384858de082ae021e7387c
   RNScreens: 06e1f09654d2da4ff95dee6621b2b13b033e9c5a
+  RNShare: fa0ef6111517a2355e9f667f73b349fbd5fcb7c6
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
+  Stripe: 6d254bcbf0706a656fb5d9d84cd77365c8b3c9f6
+  stripe-react-native: 3657398dced6deab7242306ab45511e8b969ce12
+  StripeApplePay: 4b1ef56530fb97ed699ec1d9120cdcbf3013748f
+  StripeCore: 16957868cac857937324a7cf4c9380ca1eda7e38
+  StripeFinancialConnections: ccaa2b1a77f8f617d16e51f7410a0d59d7a87346
+  StripePayments: 861a570434090ec08f8ba62e211fd03813b2a2f4
+  StripePaymentSheet: e4ae294f0e09b296a7dfc2c702e26ee30fe088a5
+  StripePaymentsUI: a8480e78da13266ce2d94e4ed0990258583a9cab
+  StripeUICore: 86c852985d9aece3658420f28ff73b27310e4249
   Yoga: fcc198acd4a55599b3468cfb6ebc526baff5f06e
 
 PODFILE CHECKSUM: 5eb44ce152f6d70bf9440afb9b712217319d32fb

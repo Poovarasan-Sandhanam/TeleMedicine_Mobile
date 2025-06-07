@@ -1,0 +1,6 @@
+module Pods_TeleMedicine_Mobile {
+  umbrella header "Pods-TeleMedicine_Mobile-umbrella.h"
+
+  export *
+  module * { export * }
+}

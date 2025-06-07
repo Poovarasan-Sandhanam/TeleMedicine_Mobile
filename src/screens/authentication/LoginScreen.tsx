@@ -16,6 +16,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import PasswordVisibilityToggle from '../../components/PasswordVisibilityToggle';
 import styles from './Style';
 
+
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -7,13 +7,21 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons'; // Vector Icon for toggling
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // For tab icons
+import FontAwesome from 'react-native-vector-icons/FontAwesome5'; // For tab icons
+import SplashScreen from "../utilis/splash";
+import OnboardScreen from "../utilis/onboard";
 import LoginScreen from '../screens/authentication/LoginScreen';
 import SignupScreen from '../screens/authentication/SignupScreen';
 import AppointmentBooking from '../screens/booking/AppointmentBooking';
+import MyBooking from "../screens/booking/MyBooking";
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import ConsultScreen from '../screens/consult/ConsultScreen';
 import PatientListScreen from '../screens/role/PatientListScreen';
 import DoctorSearchScreen from '../screens/role/DoctorSearchScreen';
+import DoctorPrescriptionScreen from "../screens/prescription/DoctorPrescriptionScreen";
+import DoctorPayment from "../screens/payment/doctorPayment";
+import PaitentPayment from "../screens/payment/paitentPayment";
+import PaitentPrescriptionScreen from "../screens/prescription/PaitentPrescriptionScreen";
 import { login, logout } from '../redux/actions/authActions'; // Adjust the path as needed
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import COLORS from '../utilis/colors';
@@ -70,6 +78,7 @@ const TabNavigator = ({ navigation }) => {
         ),
       }}
     />
+    
   ) : (
     <Tab.Screen 
       name="Doctors" 
@@ -81,6 +90,8 @@ const TabNavigator = ({ navigation }) => {
       }}
     />
   )}
+
+
   <Tab.Screen 
     name="Consult" 
     component={ConsultScreen}
@@ -90,19 +101,69 @@ const TabNavigator = ({ navigation }) => {
       ),
     }}
   />
+
+{isDoctor ? (
+    <Tab.Screen 
+      name="Payment" 
+      component={DoctorPayment}
+      options={{
+        tabBarIcon: ({ color, size }) => (
+          <Icon name="payment" color={color} size={size} />
+        ),
+      }}
+    />
+    
+  ) : null
+    
+  }
+ {!isDoctor ? <Tab.Screen 
+        name="MyBooking"
+        component={MyBooking}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="bookmark-border" color={color} size={30} />
+          ),
+        }}
+      />:null}
+
+{!isDoctor&&(
+    <Tab.Screen 
+    name="Prescription" 
+    component={PaitentPrescriptionScreen}
+    options={{
+      tabBarIcon: ({ color, size }) => (
+        <FontAwesome name="notes-medical" color={color} size={size} />
+      ),
+    }}
+  />
+  )
+}
 </Tab.Navigator>
   );
 };
 
-
 const CustomDrawerContent = (props) => {
   const dispatch = useDispatch();
+  const [isDoctor, setIsDoctor] = useState(false);
+
+  useEffect(() => {
+    const fetchIsDoctor = async () => {
+      try {
+        const storedValue = await AsyncStorage.getItem('isDoctor');
+        setIsDoctor(JSON.parse(storedValue));
+      } catch (error) {
+        console.error('Error fetching isDoctor:', error);
+      }
+    };
+
+    fetchIsDoctor();
+  }, []);
 
   const handleLogout = async () => {
-    await AsyncStorage.removeItem('token'); // Remove token from storage
-    await AsyncStorage.removeItem('user');  // Remove user data from storage
-    dispatch(logout());                     // Dispatch the logout action
-    props.navigation.navigate('Login');     // Navigate to Login screen
+    await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('user');
+    dispatch(logout());
+    props.navigation.navigate('Login');
   };
 
   return (
@@ -117,6 +178,13 @@ const CustomDrawerContent = (props) => {
         onPress={() => props.navigation.navigate('Profile')}
         labelStyle={styles.drawerText}
       />
+      {!isDoctor ?(
+        <DrawerItem
+          label="My Booking"
+          onPress={() => props.navigation.navigate('MyBooking')}
+          labelStyle={styles.drawerText}
+        />
+      ):null}
       <DrawerItem
         label="Consult"
         onPress={() => props.navigation.navigate('Consult')}
@@ -143,6 +211,7 @@ const DrawerNavigator = () => (
     <Drawer.Screen name="Tabs" component={TabNavigator} />
     <Drawer.Screen name="Profile" component={ProfileScreen} />
     <Drawer.Screen name="Consult" component={ConsultScreen} />
+    <Drawer.Screen name="MyBooking" component={MyBooking} />
   </Drawer.Navigator>
 );
 
@@ -174,29 +243,56 @@ const AppNavigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={isAuthenticated ? 'Home' : 'Login'}>
-        <Stack.Screen
-          name="Home"
-          component={DrawerNavigator}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Signup"
-          component={SignupScreen}
-          options={{ headerShown: false }}
-        />
-         <Stack.Screen
-          name="AppointmentBooking"
-          component={AppointmentBooking}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator initialRouteName="Splash">
+      <Stack.Screen
+        name="Splash"
+        component={SplashScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Onboard"
+        component={OnboardScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={DrawerNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={SignupScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AppointmentBooking"
+        component={AppointmentBooking}
+        options={{ headerShown: false }}
+      />
+     <Stack.Screen
+        name="MyBooking"
+        component={MyBooking}
+        options={{ headerShown: false }}
+      />
+
+    <Stack.Screen
+      name="Payment" 
+      component={PaitentPayment}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+    name="Prescription" 
+    component={DoctorPrescriptionScreen}
+    options={{ headerShown: false }}
+  />
+
+    </Stack.Navigator>
+  </NavigationContainer>
   );
 };
 

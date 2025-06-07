@@ -20,6 +20,7 @@ const setError = (error) => ({
   payload: error,
 });
 
+
 // Login Action
 export const login = (email, password) => async (dispatch) => {
   dispatch(setLoading(true));
