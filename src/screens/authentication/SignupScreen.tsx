@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   View,
   SafeAreaView,
@@ -10,14 +10,15 @@ import {
   TouchableOpacity,
   Platform,
   Alert,
+  KeyboardAvoidingView
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import PasswordVisibilityToggle from '../../components/PasswordVisibilityToggle';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import {signup} from '../../redux/actions/authActions'; // Adjust the path as needed
+import { signup } from '../../redux/actions/authActions'; // Adjust the path as needed
 import COLORS from '../../utilis/colors';
 
-const RadioButtonGroup = ({options, selectedValue, onSelect}) => {
+const RadioButtonGroup = ({ options, selectedValue, onSelect }) => {
   return (
     <View style={styles.radioGroup}>
       {options.map(option => (
@@ -38,7 +39,7 @@ const RadioButtonGroup = ({options, selectedValue, onSelect}) => {
   );
 };
 
-const SignupScreen = ({navigation}) => {
+const SignupScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [dob, setDob] = useState(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -54,7 +55,7 @@ const SignupScreen = ({navigation}) => {
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
-  const {error, loading} = useSelector(state => state.auth);
+  const { error, loading } = useSelector(state => state.auth);
 
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -64,10 +65,10 @@ const SignupScreen = ({navigation}) => {
     if (!dob) newErrors.dob = 'Date of Birth is required.';
     if (!gender) newErrors.gender = 'Gender is required.';
     if (!contactNumber)
-      newErrors.contactNumber='Validation Error', 'Contact Number must be exactly 10 digits.';
+      newErrors.contactNumber = 'Validation Error', 'Contact Number must be exactly 10 digits.';
     if (!email || !/^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Z]{2,}$/i.test(email))
       newErrors.email = 'Valid email is required.';
-    if (!password || !passwordRegex.test(password)) 
+    if (!password || !passwordRegex.test(password))
       newErrors.password = 'Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character.';
     if (password !== confirmPassword)
       newErrors.confirmPassword = 'Passwords do not match.';
@@ -106,181 +107,193 @@ const SignupScreen = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-        contentContainerStyle={{flexGrow: 1, justifyContent: 'center', margin: 15}}>
-        <LoadingSpinner visible={loading} />
-        <Text style={styles.title}>Create an account</Text>
+  <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1, margin:20  }}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0} // Adjust as needed
+    >
+      <LoadingSpinner visible={loading} />
 
-        {/* Name */}
-        <TextInput
-          style={[styles.input, errors.name ? styles.inputError : null]}
-          placeholder="User Name"
-          placeholderTextColor="#aaa"
-          value={name}
-          onChangeText={setName}
-        />
-        {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
+      <SafeAreaView style={styles.container}>
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={styles.scrollContainer}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <Text style={styles.title}>Create an account :)</Text>
 
-        {/* Date of Birth */}
-        <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.input}>
-          <Text style={dob ? styles.inputTextDate : styles.placeholderText}>
-            {dob ? dob.toLocaleDateString('en-GB') : 'Date of Birth'}
-          </Text>
-        </TouchableOpacity>
-        {errors.dob && <Text style={styles.errorText}>{errors.dob}</Text>}
-        {showDatePicker && (
-          <DateTimePicker
-            value={dob || new Date()}
-            mode="date"
-            display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
-            onChange={(event, selectedDate) => {
-              setShowDatePicker(false);
-              if (event.type !== 'dismissed') setDob(selectedDate);
+          {/* Name */}
+          <TextInput
+            style={[styles.input, errors.name ? styles.inputError : null]}
+            placeholder="User Name"
+            placeholderTextColor="#aaa"
+            value={name}
+            onChangeText={setName}
+          />
+          {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
+
+          {/* Date of Birth */}
+          <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.input}>
+            <Text style={dob ? styles.inputTextDate : styles.placeholderText}>
+              {dob ? dob.toLocaleDateString('en-GB') : 'Date of Birth'}
+            </Text>
+          </TouchableOpacity>
+          {errors.dob && <Text style={styles.errorText}>{errors.dob}</Text>}
+          {showDatePicker && (
+            <DateTimePicker
+              value={dob || new Date()}
+              mode="date"
+              display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
+              onChange={(event, selectedDate) => {
+                setShowDatePicker(false);
+                if (event.type !== 'dismissed') setDob(selectedDate);
+              }}
+            />
+          )}
+
+          {/* Contact Number */}
+          <TextInput
+            style={[styles.input, errors.contactNumber ? styles.inputError : null]}
+            placeholder="Contact Number"
+            placeholderTextColor="#aaa"
+            value={contactNumber}
+            onChangeText={(text) => {
+              // Allow only numeric input
+              const numericValue = text.replace(/[^0-9]/g, '');
+              // Update state only if input length is within limit
+              if (numericValue.length <= 10) {
+                setContactNumber(numericValue);
+              }
             }}
+            keyboardType="numeric" // Ensures numeric keyboard is displayed
+            maxLength={10} // Limits input to 10 characters
           />
-        )}
-
-        {/* Contact Number */}
-        <TextInput
-        style={[styles.input, errors.contactNumber ? styles.inputError : null]}
-        placeholder="Contact Number"
-        placeholderTextColor="#aaa"
-        value={contactNumber}
-        onChangeText={(text) => {
-    // Allow only numeric input
-       const numericValue = text.replace(/[^0-9]/g, '');
-    // Update state only if input length is within limit
-       if (numericValue.length <= 10) {
-       setContactNumber(numericValue);
-    }
-  }}
-       keyboardType="numeric" // Ensures numeric keyboard is displayed
-      maxLength={10} // Limits input to 10 characters
-      />
 
 
-        {errors.contactNumber && (
-          <Text style={styles.errorText}>{errors.contactNumber}</Text>
-        )}
+          {errors.contactNumber && (
+            <Text style={styles.errorText}>{errors.contactNumber}</Text>
+          )}
 
-        {/* Email */}
-        <TextInput
-          style={[styles.input, errors.email ? styles.inputError : null]}
-          placeholder="Email"
-          placeholderTextColor="#aaa"
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-          keyboardType="email-address"
-        />
-        {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
-
-        {/* Radio Buttons */}
-        <Text style={styles.label}>Who are you?</Text>
-        <RadioButtonGroup
-          options={[
-            {label: 'Patient', value: 'Patient'},
-            {label: 'Doctor', value: 'Doctor'},
-          ]}
-          selectedValue={userType}
-          onSelect={setUserType}
-        />
-        {userType === 'Doctor' && (
+          {/* Email */}
           <TextInput
-            style={[styles.input, errors.doctorType ? styles.inputError : null]}
-            placeholder="Specialization (e.g., Cardiologist)"
+            style={[styles.input, errors.email ? styles.inputError : null]}
+            placeholder="Email"
             placeholderTextColor="#aaa"
-            value={doctorType}
-            onChangeText={setDoctorType}
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            keyboardType="email-address"
           />
-        )}
-        {errors.doctorType && (
-          <Text style={styles.errorText}>{errors.doctorType}</Text>
-        )}
+          {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
 
-        {/* Gender */}
-        <Text style={styles.label}>Gender</Text>
-        <RadioButtonGroup
-          options={[
-            {label: 'Male', value: 'Male'},
-            {label: 'Female', value: 'Female'},
-            {label: 'Other', value: 'Other'},
-          ]}
-          selectedValue={gender}
-          onSelect={setGender}
-        />
-        {errors.gender && <Text style={styles.errorText}>{errors.gender}</Text>}
-
-        {/* Password */}
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={[
-              styles.passwordInput,
-              errors.password ? styles.inputError : null,
+          {/* Radio Buttons */}
+          <Text style={styles.label}>Who are you?</Text>
+          <RadioButtonGroup
+            options={[
+              { label: 'Patient', value: 'Patient' },
+              { label: 'Doctor', value: 'Doctor' },
             ]}
-            placeholder="Password"
-            placeholderTextColor="#aaa"
-            secureTextEntry={!showPassword}
-            value={password}
-            onChangeText={setPassword}
+            selectedValue={userType}
+            onSelect={setUserType}
           />
-          <PasswordVisibilityToggle
-            isVisible={showPassword}
-            onToggle={() => setShowPassword(!showPassword)}
-          />
-        </View>
-        {errors.password && (
-          <Text style={styles.errorText}>{errors.password}</Text>
-        )}
+          {userType === 'Doctor' && (
+            <TextInput
+              style={[styles.input, errors.doctorType ? styles.inputError : null]}
+              placeholder="Specialization (e.g., Cardiologist)"
+              placeholderTextColor="#aaa"
+              value={doctorType}
+              onChangeText={setDoctorType}
+            />
+          )}
+          {errors.doctorType && (
+            <Text style={styles.errorText}>{errors.doctorType}</Text>
+          )}
 
-        {/* Confirm Password */}
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={[
-              styles.passwordInput,
-              errors.confirmPassword ? styles.inputError : null,
+          {/* Gender */}
+          <Text style={styles.label}>Gender</Text>
+          <RadioButtonGroup
+            options={[
+              { label: 'Male', value: 'Male' },
+              { label: 'Female', value: 'Female' },
+              { label: 'Other', value: 'Other' },
             ]}
-            placeholder="Confirm Password"
-            placeholderTextColor="#aaa"
-            secureTextEntry={!showConfirmPassword}
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
+            selectedValue={gender}
+            onSelect={setGender}
           />
-          <PasswordVisibilityToggle
-            isVisible={showConfirmPassword}
-            onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
-          />
-        </View>
-        {errors.confirmPassword && (
-          <Text style={styles.errorText}>{errors.confirmPassword}</Text>
-        )}
+          {errors.gender && <Text style={styles.errorText}>{errors.gender}</Text>}
 
-        {/* Submit */}
-        <TouchableOpacity style={styles.button} onPress={handleSignup}>
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
+          {/* Password */}
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={[
+                styles.passwordInput,
+                errors.password ? styles.inputError : null,
+              ]}
+              placeholder="Password"
+              placeholderTextColor="#aaa"
+              secureTextEntry={!showPassword}
+              value={password}
+              onChangeText={setPassword}
+            />
+            <PasswordVisibilityToggle
+              isVisible={showPassword}
+              onToggle={() => setShowPassword(!showPassword)}
+            />
+          </View>
+          {errors.password && (
+            <Text style={styles.errorText}>{errors.password}</Text>
+          )}
 
-        {/* Navigation to Login */}
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.contentText}>
-            Already have an account? Go to Login
-          </Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </SafeAreaView>
+          {/* Confirm Password */}
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={[
+                styles.passwordInput,
+                errors.confirmPassword ? styles.inputError : null,
+              ]}
+              placeholder="Confirm Password"
+              placeholderTextColor="#aaa"
+              secureTextEntry={!showConfirmPassword}
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+            />
+            <PasswordVisibilityToggle
+              isVisible={showConfirmPassword}
+              onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
+            />
+          </View>
+          {errors.confirmPassword && (
+            <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+          )}
+
+          {/* Submit */}
+          <TouchableOpacity style={styles.button} onPress={handleSignup}>
+            <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
+
+          {/* Navigation to Login */}
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.contentText}>
+              Already have an account? Go to Login
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1,
-    backgroundColor:COLORS.white
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.white
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom:10,
-    
+   marginVertical:30
+
   },
   input: {
     height: 50,
@@ -291,10 +304,10 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     backgroundColor: '#F3F3F3',
   },
-  inputError: {borderColor: 'red'},
-  inputText: {color: '#000'},
-  label: {fontSize: 16, fontWeight: 'bold', marginVertical: 10},
-  radioGroup: {flexDirection: 'row'},
+  inputError: { borderColor: 'red' },
+  inputText: { color: '#000' },
+  label: { fontSize: 16, fontWeight: 'bold', marginVertical: 10 },
+  radioGroup: { flexDirection: 'row' },
   radioOption: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -310,9 +323,9 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     marginRight: 10,
   },
-  radioSelected: {backgroundColor: '#191970', borderColor: '#fff'},
-  radioLabel: {fontSize: 16, color: '#000', marginLeft: 5},
-  errorText: {color: 'red', fontSize: 12, marginBottom: 5},
+  radioSelected: { backgroundColor: '#191970', borderColor: '#fff' },
+  radioLabel: { fontSize: 16, color: '#000', marginLeft: 5 },
+  errorText: { color: 'red', fontSize: 12, marginBottom: 5 },
 
   passwordContainer: {
     height: 50,
@@ -322,29 +335,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 8,
-     backgroundColor: '#F3F3F3',
+    backgroundColor: '#F3F3F3',
   },
   passwordInput: {
-    flex:0.95,
+    flex: 0.95,
     height: 50,
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor:COLORS.primary,
+    backgroundColor: COLORS.primary,
     padding: 15,
-    borderRadius:20,
+    borderRadius: 20,
     alignItems: 'center',
     marginVertical: 10,
   },
-  buttonText: {color: '#fff', fontSize: 16, fontWeight: 'bold'},
+  buttonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
   contentText: {
     textAlign: 'center',
-    color:COLORS.black,
+    color: COLORS.black,
     marginTop: 10,
-    fontWeight:"bold",
-    fontSize:15,
+    fontWeight: "bold",
+    fontSize: 15,
   },
-    placeholderText: {
+  placeholderText: {
     color: '#aaa',
     marginTop: 15,
   },

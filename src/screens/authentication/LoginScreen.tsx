@@ -57,7 +57,7 @@ const LoginScreen = ({ navigation }) => {
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1,justifyContent:"center",margin:15 }}>
           <LoadingSpinner visible={loading || reduxLoading} />
-          <Text style={styles.title}>Login your account</Text>
+          <Text style={styles.title}>Login your account :)</Text>
 
           <TextInput
             style={[styles.input, errors.email ? styles.inputError : null]}
