@@ -8,6 +8,7 @@
     "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/CMakeLists.txt",
     "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt",
     "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-screens/android/src/main/jni/CMakeLists.txt",
+    "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/CMakeLists.txt",
     "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/CMakeLists.txt",
     "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native/ReactAndroid/cmake-utils/default-app-setup/CMakeLists.txt"
   ],
@@ -41,9 +42,9 @@
       "abi": "x86",
       "output": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/build/intermediates/cxx/Debug/3v2926x1/obj/x86/libreact_codegen_safeareacontext.so",
       "runtimeFiles": [
-        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/0b396a6571faea36ef3e81439b17aeab/transformed/jetified-fbjni-0.6.0/prefab/modules/fbjni/libs/android.x86/libfbjni.so",
-        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/95f6f58ffe80f07573bbc4f1f4f0ecd0/transformed/jetified-react-android-0.76.5-debug/prefab/modules/jsi/libs/android.x86/libjsi.so",
-        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/95f6f58ffe80f07573bbc4f1f4f0ecd0/transformed/jetified-react-android-0.76.5-debug/prefab/modules/reactnative/libs/android.x86/libreactnative.so"
+        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/599bd3f273fb6bafcc8e4a1dc7254107/transformed/jetified-fbjni-0.6.0/prefab/modules/fbjni/libs/android.x86/libfbjni.so",
+        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/prefab/modules/jsi/libs/android.x86/libjsi.so",
+        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/prefab/modules/reactnative/libs/android.x86/libreactnative.so"
       ]
     },
     "react_codegen_rngesturehandler_codegen::@39f233abcd2c728bc6ec": {
@@ -61,9 +62,9 @@
       "abi": "x86",
       "output": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/build/intermediates/cxx/Debug/3v2926x1/obj/x86/libreact_codegen_rnscreens.so",
       "runtimeFiles": [
-        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/95f6f58ffe80f07573bbc4f1f4f0ecd0/transformed/jetified-react-android-0.76.5-debug/prefab/modules/reactnative/libs/android.x86/libreactnative.so",
-        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/95f6f58ffe80f07573bbc4f1f4f0ecd0/transformed/jetified-react-android-0.76.5-debug/prefab/modules/jsi/libs/android.x86/libjsi.so",
-        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/0b396a6571faea36ef3e81439b17aeab/transformed/jetified-fbjni-0.6.0/prefab/modules/fbjni/libs/android.x86/libfbjni.so"
+        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/prefab/modules/reactnative/libs/android.x86/libreactnative.so",
+        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/prefab/modules/jsi/libs/android.x86/libjsi.so",
+        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/599bd3f273fb6bafcc8e4a1dc7254107/transformed/jetified-fbjni-0.6.0/prefab/modules/fbjni/libs/android.x86/libfbjni.so"
       ]
     },
     "react_codegen_RNDateTimePickerCGen::@59b70ddc31ba2f8ef1d2": {
@@ -79,10 +80,15 @@
         "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/build/intermediates/cxx/Debug/3v2926x1/obj/x86/libreact_codegen_rnpicker.so",
         "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/build/intermediates/cxx/Debug/3v2926x1/obj/x86/libreact_codegen_safeareacontext.so",
         "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/build/intermediates/cxx/Debug/3v2926x1/obj/x86/libreact_codegen_rnscreens.so",
-        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/0b396a6571faea36ef3e81439b17aeab/transformed/jetified-fbjni-0.6.0/prefab/modules/fbjni/libs/android.x86/libfbjni.so",
-        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/95f6f58ffe80f07573bbc4f1f4f0ecd0/transformed/jetified-react-android-0.76.5-debug/prefab/modules/jsi/libs/android.x86/libjsi.so",
-        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/95f6f58ffe80f07573bbc4f1f4f0ecd0/transformed/jetified-react-android-0.76.5-debug/prefab/modules/reactnative/libs/android.x86/libreactnative.so"
+        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/599bd3f273fb6bafcc8e4a1dc7254107/transformed/jetified-fbjni-0.6.0/prefab/modules/fbjni/libs/android.x86/libfbjni.so",
+        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/prefab/modules/jsi/libs/android.x86/libjsi.so",
+        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/prefab/modules/reactnative/libs/android.x86/libreactnative.so"
       ]
+    },
+    "react_codegen_RNShareSpec::@e6c4c2b5aedb2ea213b7": {
+      "artifactName": "react_codegen_RNShareSpec",
+      "abi": "x86",
+      "runtimeFiles": []
     },
     "react_codegen_rnasyncstorage::@1596841e19ec5b9eeffe": {
       "artifactName": "react_codegen_rnasyncstorage",
@@ -94,9 +100,9 @@
       "abi": "x86",
       "output": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/build/intermediates/cxx/Debug/3v2926x1/obj/x86/libreact_codegen_rnpicker.so",
       "runtimeFiles": [
-        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/95f6f58ffe80f07573bbc4f1f4f0ecd0/transformed/jetified-react-android-0.76.5-debug/prefab/modules/reactnative/libs/android.x86/libreactnative.so",
-        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/95f6f58ffe80f07573bbc4f1f4f0ecd0/transformed/jetified-react-android-0.76.5-debug/prefab/modules/jsi/libs/android.x86/libjsi.so",
-        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/0b396a6571faea36ef3e81439b17aeab/transformed/jetified-fbjni-0.6.0/prefab/modules/fbjni/libs/android.x86/libfbjni.so"
+        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/prefab/modules/reactnative/libs/android.x86/libreactnative.so",
+        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/prefab/modules/jsi/libs/android.x86/libjsi.so",
+        "/Users/poovarasan/.gradle/caches/8.10.2/transforms/599bd3f273fb6bafcc8e4a1dc7254107/transformed/jetified-fbjni-0.6.0/prefab/modules/fbjni/libs/android.x86/libfbjni.so"
       ]
     }
   }

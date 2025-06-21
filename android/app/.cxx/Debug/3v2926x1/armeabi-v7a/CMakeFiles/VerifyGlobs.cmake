@@ -263,6 +263,31 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/.cxx/Debug/3v2926x1/armeabi-v7a/CMakeFiles/cmake.verify_globs")
 endif()
 
+# react_codegen_SRCS at /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/CMakeLists.txt:9 (file)
+file(GLOB NEW_GLOB LIST_DIRECTORIES true "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/*.cpp")
+set(OLD_GLOB
+  "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/RNShareSpec-generated.cpp"
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/.cxx/Debug/3v2926x1/armeabi-v7a/CMakeFiles/cmake.verify_globs")
+endif()
+
+# react_codegen_SRCS at /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/CMakeLists.txt:9 (file)
+file(GLOB NEW_GLOB LIST_DIRECTORIES true "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/react/renderer/components/RNShareSpec/*.cpp")
+set(OLD_GLOB
+  "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/react/renderer/components/RNShareSpec/ComponentDescriptors.cpp"
+  "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/react/renderer/components/RNShareSpec/EventEmitters.cpp"
+  "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/react/renderer/components/RNShareSpec/Props.cpp"
+  "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/react/renderer/components/RNShareSpec/RNShareSpecJSI-generated.cpp"
+  "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/react/renderer/components/RNShareSpec/ShadowNodes.cpp"
+  "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/react/renderer/components/RNShareSpec/States.cpp"
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/.cxx/Debug/3v2926x1/armeabi-v7a/CMakeFiles/cmake.verify_globs")
+endif()
+
 # react_codegen_SRCS at /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/CMakeLists.txt:9 (file)
 file(GLOB NEW_GLOB LIST_DIRECTORIES true "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/*.cpp")
 set(OLD_GLOB

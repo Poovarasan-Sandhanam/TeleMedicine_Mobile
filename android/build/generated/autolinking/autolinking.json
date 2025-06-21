@@ -153,6 +153,30 @@
         }
       }
     },
+    "react-native-html-to-pdf": {
+      "root": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-html-to-pdf",
+      "name": "react-native-html-to-pdf",
+      "platforms": {
+        "ios": {
+          "podspecPath": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-html-to-pdf/react-native-html-to-pdf.podspec",
+          "version": "0.12.0",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-html-to-pdf/android",
+          "packageImportPath": "import com.christopherdro.htmltopdf.RNHTMLtoPDFPackage;",
+          "packageInstance": "new RNHTMLtoPDFPackage()",
+          "buildTypes": [],
+          "componentDescriptors": [],
+          "cmakeListsPath": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-html-to-pdf/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    },
     "react-native-image-picker": {
       "root": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker",
       "name": "react-native-image-picker",
@@ -171,6 +195,30 @@
           "libraryName": "RNImagePickerSpec",
           "componentDescriptors": [],
           "cmakeListsPath": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    },
+    "react-native-linear-gradient": {
+      "root": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-linear-gradient",
+      "name": "react-native-linear-gradient",
+      "platforms": {
+        "ios": {
+          "podspecPath": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-linear-gradient/BVLinearGradient.podspec",
+          "version": "2.8.3",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-linear-gradient/android",
+          "packageImportPath": "import com.BV.LinearGradient.LinearGradientPackage;",
+          "packageInstance": "new LinearGradientPackage()",
+          "buildTypes": [],
+          "componentDescriptors": [],
+          "cmakeListsPath": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -261,6 +309,31 @@
             "RNSModalScreenComponentDescriptor"
           ],
           "cmakeListsPath": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-screens/android/src/main/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    },
+    "react-native-share": {
+      "root": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share",
+      "name": "react-native-share",
+      "platforms": {
+        "ios": {
+          "podspecPath": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/RNShare.podspec",
+          "version": "12.0.11",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android",
+          "packageImportPath": "import cl.json.RNSharePackage;",
+          "packageInstance": "new RNSharePackage()",
+          "buildTypes": [],
+          "libraryName": "RNShareSpec",
+          "componentDescriptors": [],
+          "cmakeListsPath": "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,

@@ -4,7 +4,7 @@
             "outputFile": "com.telemedicine_mobile.app-mergeDebugResources-40:/values-v22/values-v22.xml",
             "map": [
                 {
-                    "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/0b4a480b1f44b17c3f9ac0e44ed4f1ba/transformed/appcompat-1.6.1/res/values-v22/values-v22.xml",
+                    "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/ce0eadde3c2aad94442ae27f09f089b0/transformed/appcompat-1.6.1/res/values-v22/values-v22.xml",
                     "from": {
                         "startLines": "2,3,4,9",
                         "startColumns": "4,4,4,4",

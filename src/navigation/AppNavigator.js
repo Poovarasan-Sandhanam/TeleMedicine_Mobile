@@ -19,8 +19,8 @@ import ConsultScreen from '../screens/consult/ConsultScreen';
 import PatientListScreen from '../screens/role/PatientListScreen';
 import DoctorSearchScreen from '../screens/role/DoctorSearchScreen';
 import DoctorPrescriptionScreen from "../screens/prescription/DoctorPrescriptionScreen";
-import DoctorPayment from "../screens/payment/doctorPayment";
-import PaitentPayment from "../screens/payment/paitentPayment";
+import DoctorPayment from "../screens/payment/DoctorPayment";
+import PaitentPayment from "../screens/payment/PaitentPayment";
 import PaitentPrescriptionScreen from "../screens/prescription/PaitentPrescriptionScreen";
 import { login, logout } from '../redux/actions/authActions'; // Adjust the path as needed
 import { StyleSheet, TouchableOpacity } from 'react-native';

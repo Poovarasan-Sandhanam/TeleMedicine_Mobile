@@ -12,10 +12,13 @@ add_subdirectory("/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_
 
 add_subdirectory("/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/src/main/jni/" rnpicker_autolinked_build)
 add_subdirectory("/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-gesture-handler/android/build/generated/source/codegen/jni/" rngesturehandler_codegen_autolinked_build)
+
 add_subdirectory("/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/" RNImagePickerSpec_autolinked_build)
+
 add_subdirectory("/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/" rnreanimated_autolinked_build)
 add_subdirectory("/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/src/main/jni/" safeareacontext_autolinked_build)
 add_subdirectory("/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-screens/android/src/main/jni/" rnscreens_autolinked_build)
+add_subdirectory("/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/generated/source/codegen/jni/" RNShareSpec_autolinked_build)
 
 
 set(AUTOLINKED_LIBRARIES
@@ -25,9 +28,12 @@ set(AUTOLINKED_LIBRARIES
   
   react_codegen_rnpicker
   react_codegen_rngesturehandler_codegen
+  
   react_codegen_RNImagePickerSpec
+  
   react_codegen_rnreanimated
   react_codegen_safeareacontext
   react_codegen_rnscreens
+  react_codegen_RNShareSpec
   
 )
