@@ -53,6 +53,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/.cxx/Debug/3v2926x1/x86/rnreanimated_autolinked_build/cmake_install.cmake")
   include("/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/.cxx/Debug/3v2926x1/x86/safeareacontext_autolinked_build/cmake_install.cmake")
   include("/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/.cxx/Debug/3v2926x1/x86/rnscreens_autolinked_build/cmake_install.cmake")
+  include("/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/.cxx/Debug/3v2926x1/x86/RNShareSpec_autolinked_build/cmake_install.cmake")
 
 endif()
 

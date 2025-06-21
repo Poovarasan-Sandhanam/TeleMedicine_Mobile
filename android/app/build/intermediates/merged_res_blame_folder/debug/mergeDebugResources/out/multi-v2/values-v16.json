@@ -4,7 +4,7 @@
             "outputFile": "com.telemedicine_mobile.app-mergeDebugResources-40:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/43dcf2fbc3f4bceaedda06ddd15b04b6/transformed/core-1.9.0/res/values-v16/values-v16.xml",
+                    "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/0b4a480b1f44b17c3f9ac0e44ed4f1ba/transformed/appcompat-1.6.1/res/values-v16/values-v16.xml",
+                    "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/ce0eadde3c2aad94442ae27f09f089b0/transformed/appcompat-1.6.1/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

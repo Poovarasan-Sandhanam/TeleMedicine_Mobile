@@ -2,9 +2,9 @@
   "enabled": true,
   "prefabPath": "/Users/poovarasan/.gradle/caches/modules-2/files-2.1/com.google.prefab/cli/2.1.0/aa32fec809c44fa531f01dcfb739b5b3304d3050/cli-2.1.0-all.jar",
   "packages": [
-    "/Users/poovarasan/.gradle/caches/8.10.2/transforms/95f6f58ffe80f07573bbc4f1f4f0ecd0/transformed/jetified-react-android-0.76.5-debug/prefab",
+    "/Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/prefab",
     "/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-reanimated/android/build/intermediates/prefab_package/debug/prefab",
-    "/Users/poovarasan/.gradle/caches/8.10.2/transforms/21c6b49705e49a41ef5c758d51f62eb8/transformed/jetified-hermes-android-0.76.5-debug/prefab",
-    "/Users/poovarasan/.gradle/caches/8.10.2/transforms/0b396a6571faea36ef3e81439b17aeab/transformed/jetified-fbjni-0.6.0/prefab"
+    "/Users/poovarasan/.gradle/caches/8.10.2/transforms/06fb36c4cea55540d6efecbd866b8f61/transformed/jetified-hermes-android-0.76.5-debug/prefab",
+    "/Users/poovarasan/.gradle/caches/8.10.2/transforms/599bd3f273fb6bafcc8e4a1dc7254107/transformed/jetified-fbjni-0.6.0/prefab"
   ]
 }
