@@ -1,26 +1,94 @@
-// screens/Login/LoginStyles.js
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
+import { COLORS } from '../constants/colors'; // Assuming you import your theme here
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fffacd',
+    backgroundColor: COLORS.background,
   },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'center',
-    margin: 15,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#000',
+    marginBottom: 25,
+    color: COLORS.primary,
+    textAlign: 'center',
+  },
+  input: {
+    height: 50,
+    borderColor: COLORS.border,
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    marginBottom: 12,
+    color: COLORS.text,
+    backgroundColor: COLORS.white,
+    shadowColor: COLORS.shadow,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2, // Android shadow
+  },
+  inputError: {
+    borderColor: COLORS.error,
   },
   errorText: {
-    color: 'red',
+    color: COLORS.error,
     fontSize: 12,
+    marginBottom: 10,
     textAlign: 'center',
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: COLORS.border,
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginBottom: 12,
+    backgroundColor: COLORS.white,
+    shadowColor: COLORS.shadow,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  passwordInput: {
+    flex: 1,
+    height: 50,
+    fontSize: 16,
+    color: COLORS.text,
+  },
+  button: {
+    backgroundColor: COLORS.primary,
+    paddingVertical: 15,
+    borderRadius: 8,
+    marginTop: 10,
+    marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: COLORS.primary,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  buttonText: {
+    color: COLORS.white,
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  contentText: {
+    color: COLORS.primary,
+    textAlign: 'center',
+    fontSize: 16,
+    textDecorationLine: 'underline',
   },
   linkButton: {
     backgroundColor: 'transparent',

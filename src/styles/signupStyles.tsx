@@ -1,40 +1,121 @@
 // screens/Signup/SignupStyles.js
 import { StyleSheet } from 'react-native';
+import { COLORS } from '../constants/colors';
 
-export default StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fffacd',
+    backgroundColor: COLORS.background,
   },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: 15,
+    padding: 20,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#000',
+    fontSize: 24,
+    fontWeight: '700',
+    color: COLORS.primary,
+    marginBottom: 30,
+    textAlign: 'center',
+  },
+  input: {
+    backgroundColor: COLORS.light,
+    color: COLORS.textDark,
+    fontSize: 16,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: COLORS.light,
+  },
+  inputTextDate: {
+    color: COLORS.textDark,
+    fontSize: 16,
+  },
+  placeholderText: {
+    color: COLORS.textLight,
+    fontSize: 16,
+  },
+  inputError: {
+    borderColor: COLORS.error,
+  },
+  errorText: {
+    color: COLORS.error,
+    marginBottom: 10,
+    fontSize: 13,
   },
   label: {
-    fontSize: 16,
-    marginTop: 15,
+    color: COLORS.textDark,
+    marginTop: 10,
     marginBottom: 5,
-    color: '#000',
+    fontSize: 16,
+    fontWeight: '600',
   },
-  checkboxContainer: {
+  radioGroup: {
+    flexDirection: 'row',
+    marginBottom: 15,
+    flexWrap: 'wrap',
+  },
+  radioOption: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
+    marginRight: 20,
+    marginBottom: 5,
   },
-  checkboxText: {
+  radioButton: {
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: COLORS.primary,
+    marginRight: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  radioSelected: {
+    backgroundColor: COLORS.primary,
+  },
+  radioLabel: {
+    fontSize: 16,
+    color: COLORS.textDark,
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.light,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: COLORS.light,
+    marginBottom: 10,
+    paddingHorizontal: 15,
+  },
+  passwordInput: {
+    flex: 1,
+    color: COLORS.textDark,
+    fontSize: 16,
+    paddingVertical: 12,
+  },
+  button: {
+    backgroundColor: COLORS.primary,
+    paddingVertical: 15,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 15,
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: COLORS.light,
+    fontWeight: '700',
+    fontSize: 18,
+  },
+  contentText: {
+    color: COLORS.textDark,
     fontSize: 14,
-    color: '#000',
-  },
-  linkText: {
-    color: '#007BFF',
-    fontWeight: 'bold',
-    textDecorationLine: 'underline',
+    textAlign: 'center',
+    marginTop: 15,
   },
 });
+
+export default styles;

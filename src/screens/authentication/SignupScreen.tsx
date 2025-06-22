@@ -1,370 +1,322 @@
+// src/screens/SignupScreen.js
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  View,
-  SafeAreaView,
-  ScrollView,
-  TextInput,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Platform,
-  Alert,
-  KeyboardAvoidingView
+import { 
+  View, 
+  SafeAreaView, 
+  ScrollView, 
+  TextInput, 
+  Text, 
+  TouchableOpacity, 
+  Platform, 
+  KeyboardAvoidingView 
 } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Formik } from 'formik';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import Toast from 'react-native-toast-message';
+
+import SignupSchema from '../../validation/signupSchema';
 import PasswordVisibilityToggle from '../../components/PasswordVisibilityToggle';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { signup } from '../../redux/actions/authActions'; // Adjust the path as needed
-import COLORS from '../../utilis/colors';
+import { signup } from '../../redux/actions/authActions';
+import styles from '../../styles/signupStyles';
 
-const RadioButtonGroup = ({ options, selectedValue, onSelect }) => {
-  return (
-    <View style={styles.radioGroup}>
-      {options.map(option => (
-        <TouchableOpacity
-          key={option.value}
-          style={styles.radioOption}
-          onPress={() => onSelect(option.value)}>
-          <View
-            style={[
-              styles.radioButton,
-              selectedValue === option.value && styles.radioSelected,
-            ]}
-          />
-          <Text style={styles.radioLabel}>{option.label}</Text>
-        </TouchableOpacity>
-      ))}
-    </View>
-  );
-};
+const RadioButtonGroup = ({ options, selectedValue, onSelect }) => (
+  <View style={styles.radioGroup}>
+    {options.map(option => (
+      <TouchableOpacity
+        key={option.value}
+        style={styles.radioOption}
+        onPress={() => onSelect(option.value)}
+      >
+        <View
+          style={[
+            styles.radioButton,
+            selectedValue === option.value && styles.radioSelected,
+          ]}
+        />
+        <Text style={styles.radioLabel}>{option.label}</Text>
+      </TouchableOpacity>
+    ))}
+  </View>
+);
 
 const SignupScreen = ({ navigation }) => {
-  const [name, setName] = useState('');
-  const [dob, setDob] = useState(null);
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [gender, setGender] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
-  const [userType, setUserType] = useState('Patient'); // Default to Patient
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [doctorType, setDoctorType] = useState('');
-  const [errors, setErrors] = useState({});
-
   const dispatch = useDispatch();
   const { error, loading } = useSelector(state => state.auth);
 
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const validateFields = () => {
-    const newErrors = {};
-    if (!name) newErrors.name = 'Name is required.';
-    if (!dob) newErrors.dob = 'Date of Birth is required.';
-    if (!gender) newErrors.gender = 'Gender is required.';
-    if (!contactNumber)
-      newErrors.contactNumber = 'Validation Error', 'Contact Number must be exactly 10 digits.';
-    if (!email || !/^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Z]{2,}$/i.test(email))
-      newErrors.email = 'Valid email is required.';
-    if (!password || !passwordRegex.test(password))
-      newErrors.password = 'Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character.';
-    if (password !== confirmPassword)
-      newErrors.confirmPassword = 'Passwords do not match.';
-    if (userType === 'Doctor' && !doctorType)
-      newErrors.doctorType = 'Doctor specialization is required.';
+  const handleSignup = async (values, { resetForm }) => {
+    try {
+      const formattedDob = values.dob.toISOString().split('T')[0];
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSignup = () => {
-    if (validateFields()) {
-      const formattedDob = dob.toISOString().split('T')[0];
       const userData = {
-        fullName: name,
+        fullName: values.name,
         dob: formattedDob,
-        contactNo: parseInt(contactNumber, 10),
-        email,
-        password,
-        isDoctor: userType === 'Doctor',
-        doctorType: userType === 'Doctor' ? doctorType : '',
-        gender,
+        contactNo: parseInt(values.contactNumber, 10),
+        email: values.email,
+        password: values.password,
+        isDoctor: values.userType === 'Doctor',
+        doctorType: values.userType === 'Doctor' ? values.doctorType : '',
+        gender: values.gender,
       };
 
-      dispatch(signup(userData))
-        .then(() => {
-          Alert.alert('Signup successful');
-          navigation.navigate('Login');
-        })
-        .catch(err => {
-          console.error('Signup failed:', err);
-        });
-    } else {
-      console.error('Validation failed:', errors);
+      await dispatch(signup(userData));
+
+      Toast.show({
+        type: 'success',
+        text1: 'Signup Successful 🎉',
+        text2: 'Welcome aboard!',
+      });
+
+      resetForm();
+      navigation.navigate('Login');
+    } catch (err) {
+      Toast.show({
+        type: 'error',
+        text1: 'Signup Failed',
+        text2: err.message || 'Please try again later.',
+      });
     }
   };
 
   return (
-  <KeyboardAvoidingView
+    <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1, margin:20  }}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0} // Adjust as needed
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
     >
       <LoadingSpinner visible={loading} />
 
       <SafeAreaView style={styles.container}>
-        <ScrollView
-          style={{ flex: 1 }}
-          contentContainerStyle={styles.scrollContainer}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
+        <Formik
+          initialValues={{
+            name: '',
+            dob: null,
+            gender: '',
+            contactNumber: '',
+            userType: 'Patient',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            doctorType: '',
+          }}
+          validationSchema={SignupSchema}
+          onSubmit={handleSignup}
         >
-          <Text style={styles.title}>Create an account :)</Text>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+            values,
+            errors,
+            touched,
+            isSubmitting,
+          }) => {
+            const [showPassword, setShowPassword] = useState(false);
+            const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-          {/* Name */}
-          <TextInput
-            style={[styles.input, errors.name ? styles.inputError : null]}
-            placeholder="User Name"
-            placeholderTextColor="#aaa"
-            value={name}
-            onChangeText={setName}
-          />
-          {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
+            return (
+              <ScrollView
+                style={{ flex: 1 }}
+                contentContainerStyle={styles.scrollContainer}
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+              >
+                <Text style={styles.title}>Create an account :)</Text>
 
-          {/* Date of Birth */}
-          <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.input}>
-            <Text style={dob ? styles.inputTextDate : styles.placeholderText}>
-              {dob ? dob.toLocaleDateString('en-GB') : 'Date of Birth'}
-            </Text>
-          </TouchableOpacity>
-          {errors.dob && <Text style={styles.errorText}>{errors.dob}</Text>}
-          {showDatePicker && (
-            <DateTimePicker
-              value={dob || new Date()}
-              mode="date"
-              display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
-              onChange={(event, selectedDate) => {
-                setShowDatePicker(false);
-                if (event.type !== 'dismissed') setDob(selectedDate);
-              }}
-            />
-          )}
+                {/* Name */}
+                <TextInput
+                  style={[styles.input, touched.name && errors.name ? styles.inputError : null]}
+                  placeholder="User Name"
+                  placeholderTextColor="#aaa"
+                  onChangeText={handleChange('name')}
+                  onBlur={handleBlur('name')}
+                  value={values.name}
+                />
+                {touched.name && errors.name && (
+                  <Text style={styles.errorText}>{errors.name}</Text>
+                )}
 
-          {/* Contact Number */}
-          <TextInput
-            style={[styles.input, errors.contactNumber ? styles.inputError : null]}
-            placeholder="Contact Number"
-            placeholderTextColor="#aaa"
-            value={contactNumber}
-            onChangeText={(text) => {
-              // Allow only numeric input
-              const numericValue = text.replace(/[^0-9]/g, '');
-              // Update state only if input length is within limit
-              if (numericValue.length <= 10) {
-                setContactNumber(numericValue);
-              }
-            }}
-            keyboardType="numeric" // Ensures numeric keyboard is displayed
-            maxLength={10} // Limits input to 10 characters
-          />
+                {/* Date of Birth */}
+                <TouchableOpacity
+                  onPress={() => setShowDatePicker(true)}
+                  style={[styles.input, touched.dob && errors.dob ? styles.inputError : null]}
+                >
+                  <Text style={values.dob ? styles.inputTextDate : styles.placeholderText}>
+                    {values.dob ? values.dob.toLocaleDateString('en-GB') : 'Date of Birth'}
+                  </Text>
+                </TouchableOpacity>
+                {touched.dob && errors.dob && (
+                  <Text style={styles.errorText}>{errors.dob}</Text>
+                )}
+                {showDatePicker && (
+                  <DateTimePicker
+                    value={values.dob || new Date()}
+                    mode="date"
+                    display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
+                    onChange={(event, selectedDate) => {
+                      setShowDatePicker(false);
+                      if (event.type !== 'dismissed') {
+                        setFieldValue('dob', selectedDate);
+                      }
+                    }}
+                    maximumDate={new Date()}
+                  />
+                )}
 
+                {/* Contact Number */}
+                <TextInput
+                  style={[
+                    styles.input,
+                    touched.contactNumber && errors.contactNumber ? styles.inputError : null,
+                  ]}
+                  placeholder="Contact Number"
+                  placeholderTextColor="#aaa"
+                  onChangeText={(text) => {
+                    const numericValue = text.replace(/[^0-9]/g, '');
+                    if (numericValue.length <= 10) {
+                      setFieldValue('contactNumber', numericValue);
+                    }
+                  }}
+                  onBlur={handleBlur('contactNumber')}
+                  value={values.contactNumber}
+                  keyboardType="numeric"
+                  maxLength={10}
+                />
+                {touched.contactNumber && errors.contactNumber && (
+                  <Text style={styles.errorText}>{errors.contactNumber}</Text>
+                )}
 
-          {errors.contactNumber && (
-            <Text style={styles.errorText}>{errors.contactNumber}</Text>
-          )}
+                {/* Email */}
+                <TextInput
+                  style={[styles.input, touched.email && errors.email ? styles.inputError : null]}
+                  placeholder="Email"
+                  placeholderTextColor="#aaa"
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                />
+                {touched.email && errors.email && (
+                  <Text style={styles.errorText}>{errors.email}</Text>
+                )}
 
-          {/* Email */}
-          <TextInput
-            style={[styles.input, errors.email ? styles.inputError : null]}
-            placeholder="Email"
-            placeholderTextColor="#aaa"
-            value={email}
-            onChangeText={setEmail}
-            autoCapitalize="none"
-            keyboardType="email-address"
-          />
-          {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+                {/* User Type Radio Buttons */}
+                <Text style={styles.label}>Who are you?</Text>
+                <RadioButtonGroup
+                  options={[
+                    { label: 'Patient', value: 'Patient' },
+                    { label: 'Doctor', value: 'Doctor' },
+                  ]}
+                  selectedValue={values.userType}
+                  onSelect={value => setFieldValue('userType', value)}
+                />
+                {values.userType === 'Doctor' && (
+                  <>
+                    <TextInput
+                      style={[
+                        styles.input,
+                        touched.doctorType && errors.doctorType ? styles.inputError : null,
+                      ]}
+                      placeholder="Specialization (e.g., Cardiologist)"
+                      placeholderTextColor="#aaa"
+                      onChangeText={handleChange('doctorType')}
+                      onBlur={handleBlur('doctorType')}
+                      value={values.doctorType}
+                    />
+                    {touched.doctorType && errors.doctorType && (
+                      <Text style={styles.errorText}>{errors.doctorType}</Text>
+                    )}
+                  </>
+                )}
 
-          {/* Radio Buttons */}
-          <Text style={styles.label}>Who are you?</Text>
-          <RadioButtonGroup
-            options={[
-              { label: 'Patient', value: 'Patient' },
-              { label: 'Doctor', value: 'Doctor' },
-            ]}
-            selectedValue={userType}
-            onSelect={setUserType}
-          />
-          {userType === 'Doctor' && (
-            <TextInput
-              style={[styles.input, errors.doctorType ? styles.inputError : null]}
-              placeholder="Specialization (e.g., Cardiologist)"
-              placeholderTextColor="#aaa"
-              value={doctorType}
-              onChangeText={setDoctorType}
-            />
-          )}
-          {errors.doctorType && (
-            <Text style={styles.errorText}>{errors.doctorType}</Text>
-          )}
+                {/* Gender Radio Buttons */}
+                <Text style={styles.label}>Gender</Text>
+                <RadioButtonGroup
+                  options={[
+                    { label: 'Male', value: 'Male' },
+                    { label: 'Female', value: 'Female' },
+                    { label: 'Other', value: 'Other' },
+                  ]}
+                  selectedValue={values.gender}
+                  onSelect={value => setFieldValue('gender', value)}
+                />
+                {touched.gender && errors.gender && (
+                  <Text style={styles.errorText}>{errors.gender}</Text>
+                )}
 
-          {/* Gender */}
-          <Text style={styles.label}>Gender</Text>
-          <RadioButtonGroup
-            options={[
-              { label: 'Male', value: 'Male' },
-              { label: 'Female', value: 'Female' },
-              { label: 'Other', value: 'Other' },
-            ]}
-            selectedValue={gender}
-            onSelect={setGender}
-          />
-          {errors.gender && <Text style={styles.errorText}>{errors.gender}</Text>}
+                {/* Password */}
+                <View style={styles.passwordContainer}>
+                  <TextInput
+                    style={[
+                      styles.passwordInput,
+                      touched.password && errors.password ? styles.inputError : null,
+                    ]}
+                    placeholder="Password"
+                    placeholderTextColor="#aaa"
+                    secureTextEntry={!showPassword}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                  />
+                  <PasswordVisibilityToggle
+                    isVisible={showPassword}
+                    onToggle={() => setShowPassword(!showPassword)}
+                  />
+                </View>
+                {touched.password && errors.password && (
+                  <Text style={styles.errorText}>{errors.password}</Text>
+                )}
 
-          {/* Password */}
-          <View style={styles.passwordContainer}>
-            <TextInput
-              style={[
-                styles.passwordInput,
-                errors.password ? styles.inputError : null,
-              ]}
-              placeholder="Password"
-              placeholderTextColor="#aaa"
-              secureTextEntry={!showPassword}
-              value={password}
-              onChangeText={setPassword}
-            />
-            <PasswordVisibilityToggle
-              isVisible={showPassword}
-              onToggle={() => setShowPassword(!showPassword)}
-            />
-          </View>
-          {errors.password && (
-            <Text style={styles.errorText}>{errors.password}</Text>
-          )}
+                {/* Confirm Password */}
+                <View style={styles.passwordContainer}>
+                  <TextInput
+                    style={[
+                      styles.passwordInput,
+                      touched.confirmPassword && errors.confirmPassword ? styles.inputError : null,
+                    ]}
+                    placeholder="Confirm Password"
+                    placeholderTextColor="#aaa"
+                    secureTextEntry={!showConfirmPassword}
+                    onChangeText={handleChange('confirmPassword')}
+                    onBlur={handleBlur('confirmPassword')}
+                    value={values.confirmPassword}
+                  />
+                  <PasswordVisibilityToggle
+                    isVisible={showConfirmPassword}
+                    onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
+                  />
+                </View>
+                {touched.confirmPassword && errors.confirmPassword && (
+                  <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+                )}
 
-          {/* Confirm Password */}
-          <View style={styles.passwordContainer}>
-            <TextInput
-              style={[
-                styles.passwordInput,
-                errors.confirmPassword ? styles.inputError : null,
-              ]}
-              placeholder="Confirm Password"
-              placeholderTextColor="#aaa"
-              secureTextEntry={!showConfirmPassword}
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-            />
-            <PasswordVisibilityToggle
-              isVisible={showConfirmPassword}
-              onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
-            />
-          </View>
-          {errors.confirmPassword && (
-            <Text style={styles.errorText}>{errors.confirmPassword}</Text>
-          )}
+                {/* Submit Button */}
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={handleSubmit}
+                  disabled={isSubmitting || loading}
+                >
+                  <Text style={styles.buttonText}>Sign Up</Text>
+                </TouchableOpacity>
 
-          {/* Submit */}
-          <TouchableOpacity style={styles.button} onPress={handleSignup}>
-            <Text style={styles.buttonText}>Sign Up</Text>
-          </TouchableOpacity>
-
-          {/* Navigation to Login */}
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.contentText}>
-              Already have an account? Go to Login
-            </Text>
-          </TouchableOpacity>
-        </ScrollView>
+                {/* Navigation to Login */}
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                  <Text style={styles.contentText}>
+                    Already have an account? Go to Login
+                  </Text>
+                </TouchableOpacity>
+              </ScrollView>
+            );
+          }}
+        </Formik>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.white
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-   marginVertical:30
-
-  },
-  input: {
-    height: 50,
-    borderColor: '#000',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginVertical: 8,
-    backgroundColor: '#F3F3F3',
-  },
-  inputError: { borderColor: 'red' },
-  inputText: { color: '#000' },
-  label: { fontSize: 16, fontWeight: 'bold', marginVertical: 10 },
-  radioGroup: { flexDirection: 'row' },
-  radioOption: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 5,
-    marginLeft: 15,
-  },
-  radioButton: {
-    flexDirection: 'row',
-    height: 20,
-    width: 20,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: '#000',
-    marginRight: 10,
-  },
-  radioSelected: { backgroundColor: '#191970', borderColor: '#fff' },
-  radioLabel: { fontSize: 16, color: '#000', marginLeft: 5 },
-  errorText: { color: 'red', fontSize: 12, marginBottom: 5 },
-
-  passwordContainer: {
-    height: 50,
-    borderColor: '#000',
-    borderWidth: 1,
-    borderRadius: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 8,
-    backgroundColor: '#F3F3F3',
-  },
-  passwordInput: {
-    flex: 0.95,
-    height: 50,
-    paddingHorizontal: 10,
-  },
-  button: {
-    backgroundColor: COLORS.primary,
-    padding: 15,
-    borderRadius: 20,
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-  buttonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
-  contentText: {
-    textAlign: 'center',
-    color: COLORS.black,
-    marginTop: 10,
-    fontWeight: "bold",
-    fontSize: 15,
-  },
-  placeholderText: {
-    color: '#aaa',
-    marginTop: 15,
-  },
-  inputTextDate: {
-    color: 'red ',
-    marginTop: 15,
-  },
-});
 
 export default SignupScreen;

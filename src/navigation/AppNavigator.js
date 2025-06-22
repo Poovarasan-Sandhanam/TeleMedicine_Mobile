@@ -26,6 +26,7 @@ import { login, logout } from '../redux/actions/authActions'; // Adjust the path
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import COLORS from '../utilis/colors';
 
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
