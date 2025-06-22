@@ -14,7 +14,7 @@ import {
 import useValidation from '../../utilis/useValidation';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import PasswordVisibilityToggle from '../../components/PasswordVisibilityToggle';
-import styles from './Style';
+import styles from '../../styles/loginStyles';
 
 
 const LoginScreen = ({ navigation }) => {
