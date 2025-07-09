@@ -9,8 +9,8 @@
 9        android:targetSdkVersion="34" />
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:3:5-67
-11-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:3:22-64
+11-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:3:5-67
+11-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:3:22-64
 12    <!--
 13    This manifest file is used only by Gradle to configure debug-only capabilities
 14    for React Native Apps.
@@ -20,97 +20,97 @@
 16-->[com.facebook.react:react-android:0.76.5] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/AndroidManifest.xml:16:22-75
 17
 18    <permission
-18-->[androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+18-->[androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:22:5-24:47
 19        android:name="com.telemedicine_mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-19-->[androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+19-->[androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:23:9-81
 20        android:protectionLevel="signature" />
-20-->[androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+20-->[androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:24:9-44
 21
 22    <uses-permission android:name="com.telemedicine_mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-22-->[androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
-22-->[androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+22-->[androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:26:5-97
+22-->[androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:26:22-94
 23
 24    <application
-24-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:5:5-25:19
+24-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:5:5-25:19
 25        android:name="com.telemedicine_mobile.MainApplication"
-25-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:6:7-38
+25-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:6:7-38
 26        android:allowBackup="false"
-26-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:10:7-34
+26-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:10:7-34
 27        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-27-->[androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+27-->[androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:28:18-86
 28        android:debuggable="true"
 29        android:extractNativeLibs="false"
 30        android:icon="@mipmap/ic_launcher"
-30-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:8:7-41
+30-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:8:7-41
 31        android:label="@string/app_name"
-31-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:7:7-39
+31-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:7:7-39
 32        android:roundIcon="@mipmap/ic_launcher_round"
-32-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:9:7-52
+32-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:9:7-52
 33        android:supportsRtl="true"
-33-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:12:7-33
+33-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:12:7-33
 34        android:theme="@style/AppTheme"
-34-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:11:7-38
+34-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:11:7-38
 35        android:usesCleartextTraffic="true" >
-35-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:6:9-44
+35-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:6:9-44
 36        <activity
-36-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:13:7-24:18
+36-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:13:7-24:18
 37            android:name="com.telemedicine_mobile.MainActivity"
-37-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:14:9-37
+37-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:14:9-37
 38            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
-38-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:16:9-118
+38-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:16:9-118
 39            android:exported="true"
-39-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:19:9-32
+39-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:19:9-32
 40            android:label="@string/app_name"
-40-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:15:9-41
+40-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:15:9-41
 41            android:launchMode="singleTask"
-41-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:17:9-40
+41-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:17:9-40
 42            android:windowSoftInputMode="adjustResize" >
-42-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:18:9-51
+42-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:18:9-51
 43            <intent-filter>
-43-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:20:9-23:25
+43-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:20:9-23:25
 44                <action android:name="android.intent.action.MAIN" />
-44-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:21:13-65
-44-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:21:21-62
+44-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:21:13-65
+44-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:21:21-62
 45
 46                <category android:name="android.intent.category.LAUNCHER" />
-46-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:22:13-73
-46-->/Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:22:23-70
+46-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:22:13-73
+46-->/Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:22:23-70
 47            </intent-filter>
 48        </activity>
 49
 50        <provider
-50-->[:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:9-16:20
+50-->[:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:9-16:20
 51            android:name="com.imagepicker.ImagePickerProvider"
-51-->[:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-63
+51-->[:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-63
 52            android:authorities="com.telemedicine_mobile.imagepickerprovider"
-52-->[:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:10:13-71
+52-->[:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:10:13-71
 53            android:exported="false"
-53-->[:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:13-37
+53-->[:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:13-37
 54            android:grantUriPermissions="true" >
-54-->[:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:13-47
+54-->[:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:13-47
 55            <meta-data
-55-->[:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:13:13-15:70
+55-->[:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:13:13-15:70
 56                android:name="android.support.FILE_PROVIDER_PATHS"
-56-->[:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:14:17-67
+56-->[:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:14:17-67
 57                android:resource="@xml/imagepicker_provider_paths" />
-57-->[:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:15:17-67
+57-->[:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:15:17-67
 58        </provider>
 59        <provider
-59-->[:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:9-16:20
+59-->[:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:9-16:20
 60            android:name="cl.json.RNShareFileProvider"
-60-->[:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-55
+60-->[:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-55
 61            android:authorities="com.telemedicine_mobile.rnshare.fileprovider"
-61-->[:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:10:13-72
+61-->[:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:10:13-72
 62            android:exported="false"
-62-->[:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:13-37
+62-->[:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:13-37
 63            android:grantUriPermissions="true" >
-63-->[:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:13-47
+63-->[:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:13-47
 64            <meta-data
-64-->[:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:13:13-15:70
+64-->[:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:13:13-15:70
 65                android:name="android.support.FILE_PROVIDER_PATHS"
-65-->[:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:14:17-67
+65-->[:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:14:17-67
 66                android:resource="@xml/share_download_paths" />
-66-->[:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:15:17-67
+66-->[:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:15:17-67
 67        </provider>
 68
 69        <activity
@@ -121,68 +121,68 @@
 71-->[com.facebook.react:react-android:0.76.5] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/AndroidManifest.xml:21:13-37
 72
 73        <provider
-73-->[androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+73-->[androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
 74            android:name="androidx.startup.InitializationProvider"
-74-->[androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+74-->[androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:25:13-67
 75            android:authorities="com.telemedicine_mobile.androidx-startup"
-75-->[androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+75-->[androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:26:13-68
 76            android:exported="false" >
-76-->[androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+76-->[androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:27:13-37
 77            <meta-data
-77-->[androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+77-->[androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
 78                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-78-->[androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+78-->[androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:30:17-75
 79                android:value="androidx.startup" />
-79-->[androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+79-->[androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:31:17-49
 80            <meta-data
-80-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2452acdc8e3299b29afac0296a7a7b59/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
+80-->[androidx.lifecycle:lifecycle-process:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d7bc1ce997ab1657c60cb7fb68ad0a11/transformed/jetified-lifecycle-process-2.6.2/AndroidManifest.xml:29:13-31:52
 81                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-81-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2452acdc8e3299b29afac0296a7a7b59/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+81-->[androidx.lifecycle:lifecycle-process:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d7bc1ce997ab1657c60cb7fb68ad0a11/transformed/jetified-lifecycle-process-2.6.2/AndroidManifest.xml:30:17-78
 82                android:value="androidx.startup" />
-82-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2452acdc8e3299b29afac0296a7a7b59/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+82-->[androidx.lifecycle:lifecycle-process:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d7bc1ce997ab1657c60cb7fb68ad0a11/transformed/jetified-lifecycle-process-2.6.2/AndroidManifest.xml:31:17-49
 83            <meta-data
-83-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+83-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
 84                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-84-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+84-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
 85                android:value="androidx.startup" />
-85-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+85-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
 86        </provider>
 87
 88        <receiver
-88-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+88-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
 89            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-89-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+89-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
 90            android:directBootAware="false"
-90-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+90-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
 91            android:enabled="true"
-91-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+91-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
 92            android:exported="true"
-92-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+92-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
 93            android:permission="android.permission.DUMP" >
-93-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+93-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
 94            <intent-filter>
-94-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+94-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
 95                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-95-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
-95-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+95-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+95-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
 96            </intent-filter>
 97            <intent-filter>
-97-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+97-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
 98                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-98-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
-98-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+98-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+98-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
 99            </intent-filter>
 100            <intent-filter>
-100-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+100-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
 101                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-101-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
-101-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+101-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+101-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
 102            </intent-filter>
 103            <intent-filter>
-103-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+103-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
 104                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-104-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
-104-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+104-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+104-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
 105            </intent-filter>
 106        </receiver>
 107
