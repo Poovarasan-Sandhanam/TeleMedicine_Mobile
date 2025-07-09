@@ -1,6 +1,9 @@
+// colors.js
+
 const calmCare = {
   light: {
     primary: "#2A9D8F",
+    secondary: "#E9C46A",
     background: "#F0FAF9",
     text: "#264653",
     border: "#A8DADC",
@@ -13,6 +16,7 @@ const calmCare = {
   },
   dark: {
     primary: "#66C2BC",
+    secondary: "#F4A261",
     background: "#112D29",
     text: "#D6F5F1",
     border: "#1E4D47",
@@ -28,6 +32,7 @@ const calmCare = {
 const sunrise = {
   light: {
     primary: "#FF6B6B",
+    secondary: "#FFD166",
     background: "#FFF5F0",
     text: "#3E2723",
     border: "#FFCCBC",
@@ -40,6 +45,7 @@ const sunrise = {
   },
   dark: {
     primary: "#FF8A80",
+    secondary: "#F6AE2D",
     background: "#2E1A1A",
     text: "#FFECEB",
     border: "#5D4037",
@@ -55,6 +61,7 @@ const sunrise = {
 const ocean = {
   light: {
     primary: "#0077B6",
+    secondary: "#90E0EF",
     background: "#E0F7FA",
     text: "#023047",
     border: "#90CAF9",
@@ -67,6 +74,7 @@ const ocean = {
   },
   dark: {
     primary: "#00B4D8",
+    secondary: "#48CAE4",
     background: "#011627",
     text: "#CAF0F8",
     border: "#1E3A5F",
@@ -82,6 +90,7 @@ const ocean = {
 const lavender = {
   light: {
     primary: "#9B5DE5",
+    secondary: "#F15BB5",
     background: "#F8F0FF",
     text: "#3D3B40",
     border: "#D0BFFF",
@@ -94,6 +103,7 @@ const lavender = {
   },
   dark: {
     primary: "#D6A2E8",
+    secondary: "#F484C6",
     background: "#1B1B2F",
     text: "#F0EFFF",
     border: "#3E3A5D",
@@ -106,17 +116,64 @@ const lavender = {
   },
 };
 
+// 🌿 Mint (Light only)
+const mint = {
+  light: {
+    primary: "#00C9A7",
+    secondary: "#B2F7EF",
+    background: "#E6FFFA",
+    text: "#0F3D3E",
+    border: "#A7FFF6",
+    white: "#FFFFFF",
+    textLight: "#5EAAA8",
+    error: "#F44336",
+    success: "#00C896",
+    card: "#FFFFFF",
+    shadow: "rgba(0, 201, 167, 0.1)",
+  },
+  dark: null,
+};
+
+// 🌑 Midnight (Dark only)
+const midnight = {
+  light: null,
+  dark: {
+    primary: "#1E1E2F",
+    secondary: "#5C5470",
+    background: "#121212",
+    text: "#E0E0E0",
+    border: "#2C2C3E",
+    white: "#1E1E2F",
+    textLight: "#AAAAAA",
+    error: "#FF5370",
+    success: "#C3E88D",
+    card: "#1E1E2F",
+    shadow: "rgba(0, 0, 0, 0.6)",
+  },
+};
+
 export const THEMES = {
   calmCare,
   sunrise,
   ocean,
   lavender,
+  mint,
+  midnight,
 };
 
-// Default theme selector
-export const getTheme = (scheme = "light", selected = "calmCare") => {
-  return THEMES[selected][scheme];
+/**
+ * Get theme colors by scheme and selected theme
+ * @param {string} scheme - "light" or "dark"
+ * @param {string} selected - theme name from THEMES keys
+ * @returns theme color object
+ */
+export const getTheme = (scheme = "light", selected = "ocean") => {
+  const theme = THEMES[selected];
+  if (!theme) return THEMES["ocean"][scheme];
+  return theme[scheme] || THEMES["ocean"][scheme]; // fallback to ocean if null
 };
 
-// Optional: Export default theme
-export const COLORS = getTheme(); // Default: calmCare light
+// Default export of the default theme (calmCare light)
+const COLORS = getTheme();
+
+export default COLORS;

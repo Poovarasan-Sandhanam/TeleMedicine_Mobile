@@ -145,7 +145,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const paitentPayment = () => {
+const PatientPayment = () => {
   return (
     <View>
       <Text>paitentPayment</Text>
@@ -153,6 +153,6 @@ const paitentPayment = () => {
   )
 }
 
-export default paitentPayment
+export default PatientPayment
 
 const styles = StyleSheet.create({})

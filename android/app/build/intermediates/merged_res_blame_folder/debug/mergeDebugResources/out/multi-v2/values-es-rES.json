@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.telemedicine_mobile.app-mergeDebugResources-40:/values-es-rES/values-es-rES.xml",
+            "outputFile": "com.telemedicine_mobile.app-mergeDebugResources-41:/values-es-rES/values-es-rES.xml",
             "map": [
                 {
                     "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/res/values-es-rES/values-es-rES.xml",

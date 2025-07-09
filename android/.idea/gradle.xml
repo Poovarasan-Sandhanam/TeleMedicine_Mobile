@@ -24,25 +24,29 @@
         <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
           <set>
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/@react-native-async-storage/async-storage/android" />
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/@react-native-community/datetimepicker/android" />
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/@react-native-community/masked-view/android" />
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android" />
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/react-native-gesture-handler/android" />
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/react-native-html-to-pdf/android" />
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android" />
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/react-native-linear-gradient/android" />
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/react-native-reanimated/android" />
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android" />
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/react-native-screens/android" />
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android" />
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/react-native-splash-screen/android" />
+            <option value="$PROJECT_DIR$/../../Mobile/TeleMedicine_Mobile/node_modules/react-native-vector-icons/android" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/../node_modules/@react-native-async-storage/async-storage/android" />
-            <option value="$PROJECT_DIR$/../node_modules/@react-native-community/datetimepicker/android" />
-            <option value="$PROJECT_DIR$/../node_modules/@react-native-community/masked-view/android" />
-            <option value="$PROJECT_DIR$/../node_modules/@react-native-picker/picker/android" />
             <option value="$PROJECT_DIR$/../node_modules/@react-native/gradle-plugin" />
             <option value="$PROJECT_DIR$/../node_modules/@react-native/gradle-plugin/react-native-gradle-plugin" />
             <option value="$PROJECT_DIR$/../node_modules/@react-native/gradle-plugin/settings-plugin" />
             <option value="$PROJECT_DIR$/../node_modules/@react-native/gradle-plugin/shared" />
             <option value="$PROJECT_DIR$/../node_modules/@react-native/gradle-plugin/shared-testutil" />
-            <option value="$PROJECT_DIR$/../node_modules/react-native-gesture-handler/android" />
-            <option value="$PROJECT_DIR$/../node_modules/react-native-reanimated/android" />
-            <option value="$PROJECT_DIR$/../node_modules/react-native-safe-area-context/android" />
-            <option value="$PROJECT_DIR$/../node_modules/react-native-screens/android" />
-            <option value="$PROJECT_DIR$/../node_modules/react-native-vector-icons/android" />
           </set>
         </option>
-        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

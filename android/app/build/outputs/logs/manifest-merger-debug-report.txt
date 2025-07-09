@@ -1,44 +1,46 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:1:1-26:12
-MERGED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:1:1-26:12
-INJECTED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:2:1-9:12
-INJECTED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:2:1-9:12
-INJECTED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:2:1-9:12
-MERGED from [:react-native-gesture-handler] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
-MERGED from [:react-native-safe-area-context] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
-MERGED from [:react-native-screens] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
-MERGED from [:react-native-vector-icons] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-vector-icons/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
-MERGED from [:react-native-async-storage_async-storage] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-async-storage/async-storage/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
-MERGED from [:react-native-community_datetimepicker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-community/datetimepicker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-9:12
-MERGED from [:react-native-community_masked-view] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-community/masked-view/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
-MERGED from [:react-native-picker_picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
-MERGED from [:react-native-html-to-pdf] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-html-to-pdf/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
-MERGED from [:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-19:12
-MERGED from [:react-native-linear-gradient] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
-MERGED from [:react-native-reanimated] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-reanimated/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
-MERGED from [:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-19:12
-MERGED from [:react-native-splash-screen] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-splash-screen/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:1:1-26:12
+MERGED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:1:1-26:12
+INJECTED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:2:1-9:12
+INJECTED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:2:1-9:12
+INJECTED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-community_datetimepicker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-community/datetimepicker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-gesture-handler] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-safe-area-context] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-screens] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-vector-icons] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-vector-icons/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-async-storage_async-storage] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-async-storage/async-storage/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-community_masked-view] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-community/masked-view/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-picker_picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-html-to-pdf] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-html-to-pdf/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-19:12
+MERGED from [:react-native-linear-gradient] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-reanimated] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-reanimated/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-19:12
+MERGED from [:react-native-splash-screen] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-splash-screen/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
 MERGED from [com.facebook.react:react-android:0.76.5] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/AndroidManifest.xml:2:1-24:12
-MERGED from [com.google.android.material:material:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/f1709b5e0039707a6aaad6ded23c7010/transformed/material-1.6.1/AndroidManifest.xml:17:1-26:12
-MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/dae3508fd33acc627413979c69c58964/transformed/jetified-appcompat-resources-1.6.1/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.material:material:1.12.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2be189f8dd11d6ad5f7555a29bddbcf7/transformed/material-1.12.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0e0f68381606e893cef78a512aba9bf5/transformed/constraintlayout-2.0.1/AndroidManifest.xml:2:1-11:12
-MERGED from [androidx.appcompat:appcompat:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ce0eadde3c2aad94442ae27f09f089b0/transformed/appcompat-1.6.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.appcompat:appcompat-resources:1.7.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/32920cadffdae3f71c8fb62cd509e0c2/transformed/jetified-appcompat-resources-1.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.appcompat:appcompat:1.7.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/861719260853aa1711de605488d2b33b/transformed/appcompat-1.7.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0639a8cbd4e55e5db7c4ffca23624d09/transformed/jetified-viewpager2-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.fragment:fragment:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/639f6a3464f430d22f928cb05a540685/transformed/fragment-1.6.1/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.fragment:fragment-ktx:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/67cd82bdd55916cac307c3a3dd31f21e/transformed/jetified-fragment-ktx-1.6.1/AndroidManifest.xml:17:1-22:12
-MERGED from [com.facebook.fresco:imagepipeline-okhttp3:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/edd2c0c57c97ce3d9bb7b69679af377a/transformed/jetified-imagepipeline-okhttp3-3.2.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/77d67d50d3124355277ef5407e99254f/transformed/coordinatorlayout-1.2.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/a0c938dccf5d217a46dd68a039d7eb55/transformed/swiperefreshlayout-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.autofill:autofill:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0b29915df527d3cfa74f57a626dc068d/transformed/jetified-autofill-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ab0f17aa0d35e2bb68f2df795f5ed2fc/transformed/jetified-emoji2-views-helper-1.2.0/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.transition:transition:1.5.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/7ad973c6e6ebb291acae7487d1890358/transformed/transition-1.5.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity-ktx:1.8.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3b20a486ce05dd43ca0a658466280c4e/transformed/jetified-activity-ktx-1.8.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity:1.8.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a8324a105d8d3a6522ef1e0adf07c0/transformed/jetified-activity-1.8.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1259f1d3954811fcb6922084f1673fe6/transformed/drawerlayout-1.1.1/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.transition:transition:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/8e00ff6ca373c77be6b4208741a0a03c/transformed/transition-1.2.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/69dd578fff177e110ff5fd9ca7e51f5a/transformed/dynamicanimation-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1288567f89a527de8a24e03af9482f31/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/70a94b00430e051def2a77de93af1731/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.emoji2:emoji2-views-helper:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/59909792dbba589f57ed1d6fb56c9b49/transformed/jetified-emoji2-views-helper-1.3.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:17:1-35:12
 MERGED from [com.facebook.fresco:fresco:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/14235413b20be985d77740d55aa6714c/transformed/jetified-fresco-3.2.0/AndroidManifest.xml:2:1-7:12
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/edd2c0c57c97ce3d9bb7b69679af377a/transformed/jetified-imagepipeline-okhttp3-3.2.0/AndroidManifest.xml:2:1-7:12
 MERGED from [com.facebook.fresco:drawee:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/11d37ed57b4edff919c58ad8e2170038/transformed/jetified-drawee-3.2.0/AndroidManifest.xml:2:1-7:12
 MERGED from [com.facebook.fresco:nativeimagefilters:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5d4bd15ed1525715182b876b464260fe/transformed/jetified-nativeimagefilters-3.2.0/AndroidManifest.xml:2:1-7:12
 MERGED from [com.facebook.fresco:memory-type-native:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/291653fd2502a70bc0a108a9afe32818/transformed/jetified-memory-type-native-3.2.0/AndroidManifest.xml:2:1-7:12
@@ -52,82 +54,81 @@ MERGED from [com.facebook.fresco:middleware:3.2.0] /Users/poovarasan/.gradle/cac
 MERGED from [com.facebook.fresco:ui-common:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9c754fc88046f74e9a59343f7dea46eb/transformed/jetified-ui-common-3.2.0/AndroidManifest.xml:2:1-7:12
 MERGED from [com.facebook.fresco:soloader:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/acfc1f848f58c72c168a9ad6865cc08d/transformed/jetified-soloader-3.2.0/AndroidManifest.xml:2:1-7:12
 MERGED from [com.facebook.fresco:fbcore:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1be23f18ab3aaa263b4a4e6757543008/transformed/jetified-fbcore-3.2.0/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.activity:activity-ktx:1.7.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/b55b693814a1815b60099c2b4bacb918/transformed/jetified-activity-ktx-1.7.2/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.activity:activity:1.7.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/66e233878ae005c785ec571e4301aa85/transformed/jetified-activity-1.7.2/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/82b899f75d624e92043f28aecbb19983/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ad425c6f18ca0dedd2f8aeb6a6716a44/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/71287545bc302a7cc6764d388bae9b91/transformed/recyclerview-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0eb217615c4ec8aa8ed1ef9b6be676f4/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/56b4909bd9b43d019e06b0dc84d8cf98/transformed/customview-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0f9248d65aa62774fae745764f4764a8/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.loader:loader:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/464f5ae9778f1a9d644e020ca647e888/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9a0b103e6c9e98d2868ecf7d37604137/transformed/jetified-lifecycle-runtime-ktx-2.6.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/e4c4b9508a14e0a85e228875a8a76bc9/transformed/lifecycle-livedata-2.6.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.lifecycle:lifecycle-process:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2452acdc8e3299b29afac0296a7a7b59/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:17:1-35:12
-MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/7f78aa4b037689788ceb38e48c1ef133/transformed/lifecycle-livedata-core-2.6.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ccb24e5dc1c43016925d3e1350d6b9ec/transformed/lifecycle-viewmodel-2.6.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/04de33e8c27524b4d1a1f8f798e059db/transformed/jetified-lifecycle-viewmodel-savedstate-2.6.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.core:core-ktx:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/a97f5059e69721d953a589635fc88841/transformed/jetified-core-ktx-1.9.0/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0eb217615c4ec8aa8ed1ef9b6be676f4/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.recyclerview:recyclerview:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/71287545bc302a7cc6764d388bae9b91/transformed/recyclerview-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.customview:customview:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/56b4909bd9b43d019e06b0dc84d8cf98/transformed/customview-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:17:1-30:12
-MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/cb21005d29b35d546850603182c78971/transformed/lifecycle-runtime-2.6.1/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/320424a9c735d1faf62782066618cca6/transformed/jetified-lifecycle-viewmodel-ktx-2.6.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5b131f50f49a9d60c7df9899bcf2e2e6/transformed/jetified-lifecycle-livedata-core-ktx-2.6.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/82b899f75d624e92043f28aecbb19983/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ad425c6f18ca0dedd2f8aeb6a6716a44/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/377ec09b48b5fcc02e475bbef0820e55/transformed/lifecycle-livedata-2.6.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/f4f2c47e9bab92cfd30c4a695b8d3a81/transformed/jetified-lifecycle-viewmodel-ktx-2.6.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0b8eb43600cce8cb8afea23d116da1d3/transformed/lifecycle-viewmodel-2.6.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/a025b9c2a4352b34bccaf4b2ea4dbb43/transformed/jetified-lifecycle-runtime-ktx-2.6.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d7bc1ce997ab1657c60cb7fb68ad0a11/transformed/jetified-lifecycle-process-2.6.2/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/521fbef77c37f5a3795c27a623acddf3/transformed/jetified-lifecycle-livedata-core-ktx-2.6.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/21351d7be148be4a1a8e79f51ebca262/transformed/lifecycle-livedata-core-2.6.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5463dedd83c8662a9288b1b3b4a1d100/transformed/lifecycle-runtime-2.6.2/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9ff4ba5e7a005e97f78029242392ea67/transformed/jetified-lifecycle-viewmodel-savedstate-2.6.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core-ktx:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d8d8917007e91524e3e85efd0df9a59d/transformed/jetified-core-ktx-1.16.0/AndroidManifest.xml:2:1-7:12
 MERGED from [com.facebook.react:hermes-android:0.76.5] /Users/poovarasan/.gradle/caches/8.10.2/transforms/06fb36c4cea55540d6efecbd866b8f61/transformed/jetified-hermes-android-0.76.5-debug/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.exifinterface:exifinterface:1.3.3] /Users/poovarasan/.gradle/caches/8.10.2/transforms/05ec3a1f22c25bd58a0110701909ded7/transformed/exifinterface-1.3.3/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:17:1-55:12
-MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/57a6f278ca27b74bbf1e7200bcf3f366/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
-MERGED from [androidx.tracing:tracing:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5aaf7e5b0b158187e77d0b572c1faa49/transformed/jetified-tracing-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/eb2e69953f3892cdd072dafd4c531efa/transformed/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1e38d66450a8b56c89b693a0506fb9b3/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.cardview:cardview:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/b014e8d1023ba92ce96be200e0c0048e/transformed/cardview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/eb2e69953f3892cdd072dafd4c531efa/transformed/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1e38d66450a8b56c89b693a0506fb9b3/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/57a6f278ca27b74bbf1e7200bcf3f366/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/282a33d4c4a9abe4e18553737075d582/transformed/jetified-tracing-1.2.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d401d610946c7f45a9f87e672e55a787/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
-MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/b3b1e8c61b4133292c677df97b0d7046/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/92cf935d8619adc32ab4de5e8456805d/transformed/documentfile-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/feb59db9ff4041a3c662b70ebc884aa9/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/dc49890000e5eb769fa70b6fa3efb1ea/transformed/print-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/560f4513a31652bab27c2c01c0696a9b/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/b3b1e8c61b4133292c677df97b0d7046/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/e12e30d5c4f8fe6abcaa1fd88415bb42/transformed/jetified-annotation-experimental-1.4.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.core:core-viewtree:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d2dd916061a7da0c65b9c126992a8937/transformed/jetified-core-viewtree-1.0.0/AndroidManifest.xml:2:1-7:12
 MERGED from [com.tom-roush:pdfbox-android:1.8.10.3] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07c7e2d60a0d6ca929a773ada16c5e89/transformed/jetified-pdfbox-android-1.8.10.3/AndroidManifest.xml:2:1-11:12
 MERGED from [com.facebook.fbjni:fbjni:0.6.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/599bd3f273fb6bafcc8e4a1dc7254107/transformed/jetified-fbjni-0.6.0/AndroidManifest.xml:2:1-7:12
 MERGED from [com.facebook.soloader:soloader:0.12.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/bd1aa88fb268d7783eacf653c776aecd/transformed/jetified-soloader-0.12.1/AndroidManifest.xml:2:1-17:12
 	package
-		INJECTED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
 	android:versionName
-		INJECTED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
 	xmlns:tools
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:3:5-51
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:3:5-51
 	android:versionCode
-		INJECTED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:1:11-69
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:1:11-69
 uses-permission#android.permission.INTERNET
-ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:3:5-67
+ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:3:5-67
 	android:name
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:3:22-64
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:3:22-64
 application
-ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:5:5-25:19
-MERGED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:5:5-25:19
-MERGED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:5:5-25:19
-INJECTED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:5:5-8:50
-MERGED from [:react-native-community_datetimepicker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-community/datetimepicker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-20
-MERGED from [:react-native-community_datetimepicker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-community/datetimepicker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-20
-MERGED from [:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-17:19
-MERGED from [:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-17:19
-MERGED from [:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-17:19
-MERGED from [:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-17:19
+ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:5:5-25:19
+MERGED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:5:5-25:19
+MERGED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:5:5-25:19
+INJECTED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:5:5-8:50
+MERGED from [:react-native-community_datetimepicker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-community/datetimepicker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-20
+MERGED from [:react-native-community_datetimepicker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-community/datetimepicker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-20
+MERGED from [:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-17:19
+MERGED from [:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-17:19
+MERGED from [:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-17:19
+MERGED from [:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-17:19
 MERGED from [com.facebook.react:react-android:0.76.5] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/AndroidManifest.xml:18:5-22:19
 MERGED from [com.facebook.react:react-android:0.76.5] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/AndroidManifest.xml:18:5-22:19
-MERGED from [com.google.android.material:material:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/f1709b5e0039707a6aaad6ded23c7010/transformed/material-1.6.1/AndroidManifest.xml:24:5-20
-MERGED from [com.google.android.material:material:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/f1709b5e0039707a6aaad6ded23c7010/transformed/material-1.6.1/AndroidManifest.xml:24:5-20
+MERGED from [com.google.android.material:material:1.12.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2be189f8dd11d6ad5f7555a29bddbcf7/transformed/material-1.12.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.12.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2be189f8dd11d6ad5f7555a29bddbcf7/transformed/material-1.12.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0e0f68381606e893cef78a512aba9bf5/transformed/constraintlayout-2.0.1/AndroidManifest.xml:9:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0e0f68381606e893cef78a512aba9bf5/transformed/constraintlayout-2.0.1/AndroidManifest.xml:9:5-20
-MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:23:5-33:19
-MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:23:5-33:19
-MERGED from [androidx.lifecycle:lifecycle-process:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2452acdc8e3299b29afac0296a7a7b59/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:23:5-33:19
-MERGED from [androidx.lifecycle:lifecycle-process:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2452acdc8e3299b29afac0296a7a7b59/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:23:5-33:19
-MERGED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:28:5-89
-MERGED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:28:5-89
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:23:5-53:19
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d7bc1ce997ab1657c60cb7fb68ad0a11/transformed/jetified-lifecycle-process-2.6.2/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d7bc1ce997ab1657c60cb7fb68ad0a11/transformed/jetified-lifecycle-process-2.6.2/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:23:5-53:19
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/57a6f278ca27b74bbf1e7200bcf3f366/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/57a6f278ca27b74bbf1e7200bcf3f366/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d401d610946c7f45a9f87e672e55a787/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
@@ -135,132 +136,136 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/poov
 MERGED from [com.facebook.soloader:soloader:0.12.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/bd1aa88fb268d7783eacf653c776aecd/transformed/jetified-soloader-0.12.1/AndroidManifest.xml:11:5-15:19
 MERGED from [com.facebook.soloader:soloader:0.12.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/bd1aa88fb268d7783eacf653c776aecd/transformed/jetified-soloader-0.12.1/AndroidManifest.xml:11:5-15:19
 	android:extractNativeLibs
-		INJECTED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
 	android:appComponentFactory
-		ADDED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+		ADDED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:12:7-33
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:12:7-33
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:12:7-33
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:12:7-33
 	android:label
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:7:7-39
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:7:7-39
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:7:7-39
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:7:7-39
 	tools:ignore
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:8:9-48
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:8:9-48
 	android:roundIcon
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:9:7-52
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:9:7-52
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:9:7-52
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:9:7-52
 	tools:targetApi
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:7:9-29
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:7:9-29
 	android:icon
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:8:7-41
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:8:7-41
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:8:7-41
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:8:7-41
 	android:allowBackup
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:10:7-34
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:10:7-34
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:10:7-34
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:10:7-34
 	android:theme
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:11:7-38
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:11:7-38
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:11:7-38
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:11:7-38
 	android:usesCleartextTraffic
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:6:9-44
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml:6:9-44
 	android:name
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:6:7-38
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:6:7-38
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:6:7-38
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:6:7-38
 activity#com.telemedicine_mobile.MainActivity
-ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:13:7-24:18
+ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:13:7-24:18
 	android:label
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:15:9-41
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:15:9-41
 	android:launchMode
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:17:9-40
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:17:9-40
 	android:windowSoftInputMode
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:18:9-51
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:18:9-51
 	android:exported
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:19:9-32
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:19:9-32
 	android:configChanges
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:16:9-118
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:16:9-118
 	android:name
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:14:9-37
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:14:9-37
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:20:9-23:25
+ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:20:9-23:25
 action#android.intent.action.MAIN
-ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:21:13-65
+ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:21:13-65
 	android:name
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:21:21-62
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:21:21-62
 category#android.intent.category.LAUNCHER
-ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:22:13-73
+ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:22:13-73
 	android:name
-		ADDED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:22:23-70
+		ADDED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/main/AndroidManifest.xml:22:23-70
 uses-sdk
-INJECTED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
-INJECTED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
-MERGED from [:react-native-gesture-handler] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-gesture-handler] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-safe-area-context] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-safe-area-context] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-screens] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-screens] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-vector-icons] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-vector-icons/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-vector-icons] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-vector-icons/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-async-storage_async-storage] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-async-storage/async-storage/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-async-storage_async-storage] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-async-storage/async-storage/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-community_datetimepicker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-community/datetimepicker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-community_datetimepicker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-community/datetimepicker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-community_masked-view] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-community/masked-view/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-community_masked-view] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-community/masked-view/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-picker_picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-picker_picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-html-to-pdf] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-html-to-pdf/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-html-to-pdf] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-html-to-pdf/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-linear-gradient] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-linear-gradient] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-reanimated] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-reanimated/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-reanimated] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-reanimated/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-splash-screen] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-splash-screen/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-splash-screen] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-splash-screen/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+INJECTED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
+INJECTED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
+MERGED from [:react-native-community_datetimepicker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-community/datetimepicker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-community_datetimepicker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-community/datetimepicker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-gesture-handler] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-gesture-handler] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-safe-area-context] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-safe-area-context] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-screens] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-screens] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-vector-icons] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-vector-icons/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-vector-icons] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-vector-icons/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-async-storage_async-storage] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-async-storage/async-storage/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-async-storage_async-storage] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-async-storage/async-storage/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-community_masked-view] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-community/masked-view/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-community_masked-view] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-community/masked-view/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-picker_picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-picker_picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/@react-native-picker/picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-html-to-pdf] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-html-to-pdf/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-html-to-pdf] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-html-to-pdf/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-linear-gradient] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-linear-gradient] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-reanimated] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-reanimated/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-reanimated] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-reanimated/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-splash-screen] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-splash-screen/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-splash-screen] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-splash-screen/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.react:react-android:0.76.5] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/AndroidManifest.xml:10:5-44
 MERGED from [com.facebook.react:react-android:0.76.5] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/AndroidManifest.xml:10:5-44
-MERGED from [com.google.android.material:material:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/f1709b5e0039707a6aaad6ded23c7010/transformed/material-1.6.1/AndroidManifest.xml:20:5-22:41
-MERGED from [com.google.android.material:material:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/f1709b5e0039707a6aaad6ded23c7010/transformed/material-1.6.1/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/dae3508fd33acc627413979c69c58964/transformed/jetified-appcompat-resources-1.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/dae3508fd33acc627413979c69c58964/transformed/jetified-appcompat-resources-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.12.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2be189f8dd11d6ad5f7555a29bddbcf7/transformed/material-1.12.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.12.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2be189f8dd11d6ad5f7555a29bddbcf7/transformed/material-1.12.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0e0f68381606e893cef78a512aba9bf5/transformed/constraintlayout-2.0.1/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0e0f68381606e893cef78a512aba9bf5/transformed/constraintlayout-2.0.1/AndroidManifest.xml:5:5-7:41
-MERGED from [androidx.appcompat:appcompat:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ce0eadde3c2aad94442ae27f09f089b0/transformed/appcompat-1.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.appcompat:appcompat:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ce0eadde3c2aad94442ae27f09f089b0/transformed/appcompat-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.7.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/32920cadffdae3f71c8fb62cd509e0c2/transformed/jetified-appcompat-resources-1.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.7.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/32920cadffdae3f71c8fb62cd509e0c2/transformed/jetified-appcompat-resources-1.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat:1.7.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/861719260853aa1711de605488d2b33b/transformed/appcompat-1.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat:1.7.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/861719260853aa1711de605488d2b33b/transformed/appcompat-1.7.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0639a8cbd4e55e5db7c4ffca23624d09/transformed/jetified-viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0639a8cbd4e55e5db7c4ffca23624d09/transformed/jetified-viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.fragment:fragment:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/639f6a3464f430d22f928cb05a540685/transformed/fragment-1.6.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/639f6a3464f430d22f928cb05a540685/transformed/fragment-1.6.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment-ktx:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/67cd82bdd55916cac307c3a3dd31f21e/transformed/jetified-fragment-ktx-1.6.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment-ktx:1.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/67cd82bdd55916cac307c3a3dd31f21e/transformed/jetified-fragment-ktx-1.6.1/AndroidManifest.xml:20:5-44
-MERGED from [com.facebook.fresco:imagepipeline-okhttp3:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/edd2c0c57c97ce3d9bb7b69679af377a/transformed/jetified-imagepipeline-okhttp3-3.2.0/AndroidManifest.xml:5:5-44
-MERGED from [com.facebook.fresco:imagepipeline-okhttp3:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/edd2c0c57c97ce3d9bb7b69679af377a/transformed/jetified-imagepipeline-okhttp3-3.2.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/77d67d50d3124355277ef5407e99254f/transformed/coordinatorlayout-1.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/77d67d50d3124355277ef5407e99254f/transformed/coordinatorlayout-1.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/a0c938dccf5d217a46dd68a039d7eb55/transformed/swiperefreshlayout-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/a0c938dccf5d217a46dd68a039d7eb55/transformed/swiperefreshlayout-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.autofill:autofill:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0b29915df527d3cfa74f57a626dc068d/transformed/jetified-autofill-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.autofill:autofill:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0b29915df527d3cfa74f57a626dc068d/transformed/jetified-autofill-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ab0f17aa0d35e2bb68f2df795f5ed2fc/transformed/jetified-emoji2-views-helper-1.2.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ab0f17aa0d35e2bb68f2df795f5ed2fc/transformed/jetified-emoji2-views-helper-1.2.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:21:5-44
-MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.transition:transition:1.5.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/7ad973c6e6ebb291acae7487d1890358/transformed/transition-1.5.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.transition:transition:1.5.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/7ad973c6e6ebb291acae7487d1890358/transformed/transition-1.5.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3b20a486ce05dd43ca0a658466280c4e/transformed/jetified-activity-ktx-1.8.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3b20a486ce05dd43ca0a658466280c4e/transformed/jetified-activity-ktx-1.8.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity:1.8.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a8324a105d8d3a6522ef1e0adf07c0/transformed/jetified-activity-1.8.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.8.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a8324a105d8d3a6522ef1e0adf07c0/transformed/jetified-activity-1.8.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1259f1d3954811fcb6922084f1673fe6/transformed/drawerlayout-1.1.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1259f1d3954811fcb6922084f1673fe6/transformed/drawerlayout-1.1.1/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.transition:transition:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/8e00ff6ca373c77be6b4208741a0a03c/transformed/transition-1.2.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.transition:transition:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/8e00ff6ca373c77be6b4208741a0a03c/transformed/transition-1.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/69dd578fff177e110ff5fd9ca7e51f5a/transformed/dynamicanimation-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/69dd578fff177e110ff5fd9ca7e51f5a/transformed/dynamicanimation-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1288567f89a527de8a24e03af9482f31/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1288567f89a527de8a24e03af9482f31/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/70a94b00430e051def2a77de93af1731/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/70a94b00430e051def2a77de93af1731/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.emoji2:emoji2-views-helper:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/59909792dbba589f57ed1d6fb56c9b49/transformed/jetified-emoji2-views-helper-1.3.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2-views-helper:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/59909792dbba589f57ed1d6fb56c9b49/transformed/jetified-emoji2-views-helper-1.3.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:21:5-44
 MERGED from [com.facebook.fresco:fresco:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/14235413b20be985d77740d55aa6714c/transformed/jetified-fresco-3.2.0/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.fresco:fresco:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/14235413b20be985d77740d55aa6714c/transformed/jetified-fresco-3.2.0/AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/edd2c0c57c97ce3d9bb7b69679af377a/transformed/jetified-imagepipeline-okhttp3-3.2.0/AndroidManifest.xml:5:5-44
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/edd2c0c57c97ce3d9bb7b69679af377a/transformed/jetified-imagepipeline-okhttp3-3.2.0/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.fresco:drawee:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/11d37ed57b4edff919c58ad8e2170038/transformed/jetified-drawee-3.2.0/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.fresco:drawee:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/11d37ed57b4edff919c58ad8e2170038/transformed/jetified-drawee-3.2.0/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.fresco:nativeimagefilters:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5d4bd15ed1525715182b876b464260fe/transformed/jetified-nativeimagefilters-3.2.0/AndroidManifest.xml:5:5-44
@@ -287,74 +292,72 @@ MERGED from [com.facebook.fresco:soloader:3.2.0] /Users/poovarasan/.gradle/cache
 MERGED from [com.facebook.fresco:soloader:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/acfc1f848f58c72c168a9ad6865cc08d/transformed/jetified-soloader-3.2.0/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.fresco:fbcore:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1be23f18ab3aaa263b4a4e6757543008/transformed/jetified-fbcore-3.2.0/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.fresco:fbcore:3.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1be23f18ab3aaa263b4a4e6757543008/transformed/jetified-fbcore-3.2.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.activity:activity-ktx:1.7.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/b55b693814a1815b60099c2b4bacb918/transformed/jetified-activity-ktx-1.7.2/AndroidManifest.xml:20:5-44
-MERGED from [androidx.activity:activity-ktx:1.7.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/b55b693814a1815b60099c2b4bacb918/transformed/jetified-activity-ktx-1.7.2/AndroidManifest.xml:20:5-44
-MERGED from [androidx.activity:activity:1.7.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/66e233878ae005c785ec571e4301aa85/transformed/jetified-activity-1.7.2/AndroidManifest.xml:20:5-44
-MERGED from [androidx.activity:activity:1.7.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/66e233878ae005c785ec571e4301aa85/transformed/jetified-activity-1.7.2/AndroidManifest.xml:20:5-44
-MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/82b899f75d624e92043f28aecbb19983/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/82b899f75d624e92043f28aecbb19983/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ad425c6f18ca0dedd2f8aeb6a6716a44/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ad425c6f18ca0dedd2f8aeb6a6716a44/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/71287545bc302a7cc6764d388bae9b91/transformed/recyclerview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/71287545bc302a7cc6764d388bae9b91/transformed/recyclerview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0eb217615c4ec8aa8ed1ef9b6be676f4/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0eb217615c4ec8aa8ed1ef9b6be676f4/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/56b4909bd9b43d019e06b0dc84d8cf98/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/56b4909bd9b43d019e06b0dc84d8cf98/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0f9248d65aa62774fae745764f4764a8/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0f9248d65aa62774fae745764f4764a8/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/464f5ae9778f1a9d644e020ca647e888/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/464f5ae9778f1a9d644e020ca647e888/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9a0b103e6c9e98d2868ecf7d37604137/transformed/jetified-lifecycle-runtime-ktx-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9a0b103e6c9e98d2868ecf7d37604137/transformed/jetified-lifecycle-runtime-ktx-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/e4c4b9508a14e0a85e228875a8a76bc9/transformed/lifecycle-livedata-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/e4c4b9508a14e0a85e228875a8a76bc9/transformed/lifecycle-livedata-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-process:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2452acdc8e3299b29afac0296a7a7b59/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:21:5-44
-MERGED from [androidx.lifecycle:lifecycle-process:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2452acdc8e3299b29afac0296a7a7b59/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:21:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/7f78aa4b037689788ceb38e48c1ef133/transformed/lifecycle-livedata-core-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/7f78aa4b037689788ceb38e48c1ef133/transformed/lifecycle-livedata-core-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ccb24e5dc1c43016925d3e1350d6b9ec/transformed/lifecycle-viewmodel-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ccb24e5dc1c43016925d3e1350d6b9ec/transformed/lifecycle-viewmodel-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/04de33e8c27524b4d1a1f8f798e059db/transformed/jetified-lifecycle-viewmodel-savedstate-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/04de33e8c27524b4d1a1f8f798e059db/transformed/jetified-lifecycle-viewmodel-savedstate-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.core:core-ktx:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/a97f5059e69721d953a589635fc88841/transformed/jetified-core-ktx-1.9.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.core:core-ktx:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/a97f5059e69721d953a589635fc88841/transformed/jetified-core-ktx-1.9.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0eb217615c4ec8aa8ed1ef9b6be676f4/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0eb217615c4ec8aa8ed1ef9b6be676f4/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.recyclerview:recyclerview:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/71287545bc302a7cc6764d388bae9b91/transformed/recyclerview-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.recyclerview:recyclerview:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/71287545bc302a7cc6764d388bae9b91/transformed/recyclerview-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.customview:customview:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/56b4909bd9b43d019e06b0dc84d8cf98/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.customview:customview:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/56b4909bd9b43d019e06b0dc84d8cf98/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/cb21005d29b35d546850603182c78971/transformed/lifecycle-runtime-2.6.1/AndroidManifest.xml:5:5-44
-MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/cb21005d29b35d546850603182c78971/transformed/lifecycle-runtime-2.6.1/AndroidManifest.xml:5:5-44
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/320424a9c735d1faf62782066618cca6/transformed/jetified-lifecycle-viewmodel-ktx-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/320424a9c735d1faf62782066618cca6/transformed/jetified-lifecycle-viewmodel-ktx-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5b131f50f49a9d60c7df9899bcf2e2e6/transformed/jetified-lifecycle-livedata-core-ktx-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5b131f50f49a9d60c7df9899bcf2e2e6/transformed/jetified-lifecycle-livedata-core-ktx-2.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/82b899f75d624e92043f28aecbb19983/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/82b899f75d624e92043f28aecbb19983/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ad425c6f18ca0dedd2f8aeb6a6716a44/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/ad425c6f18ca0dedd2f8aeb6a6716a44/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/377ec09b48b5fcc02e475bbef0820e55/transformed/lifecycle-livedata-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/377ec09b48b5fcc02e475bbef0820e55/transformed/lifecycle-livedata-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/f4f2c47e9bab92cfd30c4a695b8d3a81/transformed/jetified-lifecycle-viewmodel-ktx-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/f4f2c47e9bab92cfd30c4a695b8d3a81/transformed/jetified-lifecycle-viewmodel-ktx-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0b8eb43600cce8cb8afea23d116da1d3/transformed/lifecycle-viewmodel-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/0b8eb43600cce8cb8afea23d116da1d3/transformed/lifecycle-viewmodel-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/a025b9c2a4352b34bccaf4b2ea4dbb43/transformed/jetified-lifecycle-runtime-ktx-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/a025b9c2a4352b34bccaf4b2ea4dbb43/transformed/jetified-lifecycle-runtime-ktx-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d7bc1ce997ab1657c60cb7fb68ad0a11/transformed/jetified-lifecycle-process-2.6.2/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d7bc1ce997ab1657c60cb7fb68ad0a11/transformed/jetified-lifecycle-process-2.6.2/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/521fbef77c37f5a3795c27a623acddf3/transformed/jetified-lifecycle-livedata-core-ktx-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/521fbef77c37f5a3795c27a623acddf3/transformed/jetified-lifecycle-livedata-core-ktx-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/21351d7be148be4a1a8e79f51ebca262/transformed/lifecycle-livedata-core-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/21351d7be148be4a1a8e79f51ebca262/transformed/lifecycle-livedata-core-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5463dedd83c8662a9288b1b3b4a1d100/transformed/lifecycle-runtime-2.6.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5463dedd83c8662a9288b1b3b4a1d100/transformed/lifecycle-runtime-2.6.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9ff4ba5e7a005e97f78029242392ea67/transformed/jetified-lifecycle-viewmodel-savedstate-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9ff4ba5e7a005e97f78029242392ea67/transformed/jetified-lifecycle-viewmodel-savedstate-2.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-ktx:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d8d8917007e91524e3e85efd0df9a59d/transformed/jetified-core-ktx-1.16.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d8d8917007e91524e3e85efd0df9a59d/transformed/jetified-core-ktx-1.16.0/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.react:hermes-android:0.76.5] /Users/poovarasan/.gradle/caches/8.10.2/transforms/06fb36c4cea55540d6efecbd866b8f61/transformed/jetified-hermes-android-0.76.5-debug/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.react:hermes-android:0.76.5] /Users/poovarasan/.gradle/caches/8.10.2/transforms/06fb36c4cea55540d6efecbd866b8f61/transformed/jetified-hermes-android-0.76.5-debug/AndroidManifest.xml:5:5-44
 MERGED from [androidx.exifinterface:exifinterface:1.3.3] /Users/poovarasan/.gradle/caches/8.10.2/transforms/05ec3a1f22c25bd58a0110701909ded7/transformed/exifinterface-1.3.3/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.exifinterface:exifinterface:1.3.3] /Users/poovarasan/.gradle/caches/8.10.2/transforms/05ec3a1f22c25bd58a0110701909ded7/transformed/exifinterface-1.3.3/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:21:5-44
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:21:5-44
-MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/57a6f278ca27b74bbf1e7200bcf3f366/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
-MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/57a6f278ca27b74bbf1e7200bcf3f366/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
-MERGED from [androidx.tracing:tracing:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5aaf7e5b0b158187e77d0b572c1faa49/transformed/jetified-tracing-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.tracing:tracing:1.1.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5aaf7e5b0b158187e77d0b572c1faa49/transformed/jetified-tracing-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/eb2e69953f3892cdd072dafd4c531efa/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/eb2e69953f3892cdd072dafd4c531efa/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1e38d66450a8b56c89b693a0506fb9b3/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1e38d66450a8b56c89b693a0506fb9b3/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.cardview:cardview:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/b014e8d1023ba92ce96be200e0c0048e/transformed/cardview-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.cardview:cardview:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/b014e8d1023ba92ce96be200e0c0048e/transformed/cardview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/eb2e69953f3892cdd072dafd4c531efa/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/eb2e69953f3892cdd072dafd4c531efa/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1e38d66450a8b56c89b693a0506fb9b3/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/1e38d66450a8b56c89b693a0506fb9b3/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/57a6f278ca27b74bbf1e7200bcf3f366/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/57a6f278ca27b74bbf1e7200bcf3f366/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/282a33d4c4a9abe4e18553737075d582/transformed/jetified-tracing-1.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/282a33d4c4a9abe4e18553737075d582/transformed/jetified-tracing-1.2.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d401d610946c7f45a9f87e672e55a787/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d401d610946c7f45a9f87e672e55a787/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/b3b1e8c61b4133292c677df97b0d7046/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/b3b1e8c61b4133292c677df97b0d7046/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/92cf935d8619adc32ab4de5e8456805d/transformed/documentfile-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/92cf935d8619adc32ab4de5e8456805d/transformed/documentfile-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/feb59db9ff4041a3c662b70ebc884aa9/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/feb59db9ff4041a3c662b70ebc884aa9/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.print:print:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/dc49890000e5eb769fa70b6fa3efb1ea/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.print:print:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/dc49890000e5eb769fa70b6fa3efb1ea/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/560f4513a31652bab27c2c01c0696a9b/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/560f4513a31652bab27c2c01c0696a9b/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/b3b1e8c61b4133292c677df97b0d7046/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/b3b1e8c61b4133292c677df97b0d7046/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/e12e30d5c4f8fe6abcaa1fd88415bb42/transformed/jetified-annotation-experimental-1.4.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/e12e30d5c4f8fe6abcaa1fd88415bb42/transformed/jetified-annotation-experimental-1.4.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-viewtree:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d2dd916061a7da0c65b9c126992a8937/transformed/jetified-core-viewtree-1.0.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-viewtree:1.0.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d2dd916061a7da0c65b9c126992a8937/transformed/jetified-core-viewtree-1.0.0/AndroidManifest.xml:5:5-44
 MERGED from [com.tom-roush:pdfbox-android:1.8.10.3] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07c7e2d60a0d6ca929a773ada16c5e89/transformed/jetified-pdfbox-android-1.8.10.3/AndroidManifest.xml:7:5-9:41
 MERGED from [com.tom-roush:pdfbox-android:1.8.10.3] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07c7e2d60a0d6ca929a773ada16c5e89/transformed/jetified-pdfbox-android-1.8.10.3/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.fbjni:fbjni:0.6.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/599bd3f273fb6bafcc8e4a1dc7254107/transformed/jetified-fbjni-0.6.0/AndroidManifest.xml:5:5-44
@@ -362,35 +365,35 @@ MERGED from [com.facebook.fbjni:fbjni:0.6.0] /Users/poovarasan/.gradle/caches/8.
 MERGED from [com.facebook.soloader:soloader:0.12.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/bd1aa88fb268d7783eacf653c776aecd/transformed/jetified-soloader-0.12.1/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.soloader:soloader:0.12.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/bd1aa88fb268d7783eacf653c776aecd/transformed/jetified-soloader-0.12.1/AndroidManifest.xml:7:5-9:41
 	android:targetSdkVersion
-		INJECTED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/src/debug/AndroidManifest.xml
 provider#com.imagepicker.ImagePickerProvider
-ADDED from [:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:9-16:20
+ADDED from [:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:9-16:20
 	android:grantUriPermissions
-		ADDED from [:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:13-47
+		ADDED from [:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:13-47
 	android:authorities
-		ADDED from [:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:10:13-71
+		ADDED from [:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:10:13-71
 	android:exported
-		ADDED from [:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:13-37
+		ADDED from [:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:13-37
 	android:name
-		ADDED from [:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-63
+		ADDED from [:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-63
 meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from [:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:13:13-15:70
+ADDED from [:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:13:13-15:70
 	android:resource
-		ADDED from [:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:15:17-67
+		ADDED from [:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:15:17-67
 	android:name
-		ADDED from [:react-native-image-picker] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:14:17-67
+		ADDED from [:react-native-image-picker] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:14:17-67
 provider#cl.json.RNShareFileProvider
-ADDED from [:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:9-16:20
+ADDED from [:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:9-16:20
 	android:grantUriPermissions
-		ADDED from [:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:13-47
+		ADDED from [:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:13-47
 	android:authorities
-		ADDED from [:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:10:13-72
+		ADDED from [:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:10:13-72
 	android:exported
-		ADDED from [:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:13-37
+		ADDED from [:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:13-37
 	android:name
-		ADDED from [:react-native-share] /Users/poovarasan/Development/Mobile/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-55
+		ADDED from [:react-native-share] /Users/poovarasan/Development/TeleMedicine_Mobile/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-55
 uses-permission#android.permission.SYSTEM_ALERT_WINDOW
 ADDED from [com.facebook.react:react-android:0.76.5] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/AndroidManifest.xml:16:5-78
 	android:name
@@ -402,95 +405,95 @@ ADDED from [com.facebook.react:react-android:0.76.5] /Users/poovarasan/.gradle/c
 	android:name
 		ADDED from [com.facebook.react:react-android:0.76.5] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/AndroidManifest.xml:20:13-77
 provider#androidx.startup.InitializationProvider
-ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
-MERGED from [androidx.lifecycle:lifecycle-process:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2452acdc8e3299b29afac0296a7a7b59/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:24:9-32:20
-MERGED from [androidx.lifecycle:lifecycle-process:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2452acdc8e3299b29afac0296a7a7b59/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:24:9-32:20
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:24:9-32:20
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:24:9-32:20
+ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d7bc1ce997ab1657c60cb7fb68ad0a11/transformed/jetified-lifecycle-process-2.6.2/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d7bc1ce997ab1657c60cb7fb68ad0a11/transformed/jetified-lifecycle-process-2.6.2/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:24:9-32:20
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/57a6f278ca27b74bbf1e7200bcf3f366/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/57a6f278ca27b74bbf1e7200bcf3f366/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
 	tools:node
-		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:28:13-31
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:28:13-31
 	android:authorities
-		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:26:13-68
 	android:exported
-		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:27:13-37
 	android:name
-		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:25:13-67
 meta-data#androidx.emoji2.text.EmojiCompatInitializer
-ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
 	android:value
-		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:31:17-49
 	android:name
-		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/9018142fe9b80be6ec94d4725a4cf5e0/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
-meta-data#androidx.lifecycle.ProcessLifecycleInitializer
-ADDED from [androidx.lifecycle:lifecycle-process:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2452acdc8e3299b29afac0296a7a7b59/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
-	android:value
-		ADDED from [androidx.lifecycle:lifecycle-process:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2452acdc8e3299b29afac0296a7a7b59/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
-	android:name
-		ADDED from [androidx.lifecycle:lifecycle-process:2.6.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2452acdc8e3299b29afac0296a7a7b59/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/5bcaa6b7e3e5af346d07927977c33c15/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:30:17-75
 permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
-ADDED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+ADDED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:22:5-24:47
 	android:protectionLevel
-		ADDED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+		ADDED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:24:9-44
 	android:name
-		ADDED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+		ADDED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:23:9-81
 permission#com.telemedicine_mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
-ADDED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+ADDED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:22:5-24:47
 	android:protectionLevel
-		ADDED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+		ADDED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:24:9-44
 	android:name
-		ADDED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+		ADDED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:23:9-81
 uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
-ADDED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+ADDED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:26:5-97
 	android:name
-		ADDED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+		ADDED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:26:22-94
 uses-permission#com.telemedicine_mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
-ADDED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+ADDED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:26:5-97
 	android:name
-		ADDED from [androidx.core:core:1.9.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/128c67bf9fbf0b861436cf886470a6b1/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
-meta-data#androidx.profileinstaller.ProfileInstallerInitializer
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+		ADDED from [androidx.core:core:1.16.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/2f2f9f50ced68f74a68b290976245e7d/transformed/core-1.16.0/AndroidManifest.xml:26:22-94
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d7bc1ce997ab1657c60cb7fb68ad0a11/transformed/jetified-lifecycle-process-2.6.2/AndroidManifest.xml:29:13-31:52
 	android:value
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+		ADDED from [androidx.lifecycle:lifecycle-process:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d7bc1ce997ab1657c60cb7fb68ad0a11/transformed/jetified-lifecycle-process-2.6.2/AndroidManifest.xml:31:17-49
 	android:name
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+		ADDED from [androidx.lifecycle:lifecycle-process:2.6.2] /Users/poovarasan/.gradle/caches/8.10.2/transforms/d7bc1ce997ab1657c60cb7fb68ad0a11/transformed/jetified-lifecycle-process-2.6.2/AndroidManifest.xml:30:17-78
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
 receiver#androidx.profileinstaller.ProfileInstallReceiver
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
 	android:enabled
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
 	android:exported
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
 	android:permission
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
 	android:directBootAware
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
 	android:name
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
 intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
 action#androidx.profileinstaller.action.INSTALL_PROFILE
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
 	android:name
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
 intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
 action#androidx.profileinstaller.action.SKIP_FILE
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
 	android:name
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
 intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
 action#androidx.profileinstaller.action.SAVE_PROFILE
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
 	android:name
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
 intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
 action#androidx.profileinstaller.action.BENCHMARK_OPERATION
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
 	android:name
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/poovarasan/.gradle/caches/8.10.2/transforms/07a38d3255c42be5982fd75afc48076c/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/3823cb1ce63460930410db4db3e2841c/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
 meta-data#com.facebook.soloader.enabled
 ADDED from [com.facebook.soloader:soloader:0.12.1] /Users/poovarasan/.gradle/caches/8.10.2/transforms/bd1aa88fb268d7783eacf653c776aecd/transformed/jetified-soloader-0.12.1/AndroidManifest.xml:12:9-14:37
 	android:value

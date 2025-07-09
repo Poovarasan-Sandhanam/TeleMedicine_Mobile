@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.telemedicine_mobile.app-mergeDebugResources-40:/values-w600dp-land-v13/values-w600dp-land-v13.xml",
+            "outputFile": "com.telemedicine_mobile.app-mergeDebugResources-41:/values-w600dp-land-v13/values-w600dp-land-v13.xml",
             "map": [
                 {
-                    "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/f1709b5e0039707a6aaad6ded23c7010/transformed/material-1.6.1/res/values-w600dp-land-v13/values-w600dp-land-v13.xml",
+                    "source": "/Users/poovarasan/.gradle/caches/8.10.2/transforms/2be189f8dd11d6ad5f7555a29bddbcf7/transformed/material-1.12.0/res/values-w600dp-land-v13/values-w600dp-land-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { COLORS } from '../constants/colors';
+import COLORS  from '../constants/colors';
 
 const GoBackButton = ({ label = 'Back', style, textStyle }) => {
   const navigation = useNavigation();
