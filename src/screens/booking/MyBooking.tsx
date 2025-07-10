@@ -1,30 +1,29 @@
+// screens/BookingScreen.tsx
+
 import React, { useEffect } from 'react';
 import {
   View,
   Text,
   FlatList,
   ActivityIndicator,
-  StyleSheet,
-  Alert,
   SafeAreaView,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import { fetchBookings } from '../../redux/actions/bookingActions';
+import styles from '../../styles/bookingScreenStyle';
+import COLORS from '../../constants/colors';
 
-// Helper function to format time
-const formatTimeRange = (timeRange) => {
-  const [start, end] = timeRange.split('-').map(Number);
-
-  const formatTime = (hour) => {
-    const period = hour >= 12 ? 'PM' : 'AM';
-    const formattedHour = hour % 12 || 12; // Convert 0 or 12 to 12 for AM/PM
-    return `${formattedHour}${period}`;
-  };
-
-  return `${formatTime(start)}-${formatTime(end)}`;
+// Format checkup time range
+const formatTimeRange = (range) => {
+  const [start, end] = range.split('-').map(Number);
+  const format = (hour) => `${hour % 12 || 12}${hour >= 12 ? 'PM' : 'AM'}`;
+  return `${format(start)} - ${format(end)}`;
 };
 
 const BookingScreen = () => {
@@ -34,141 +33,101 @@ const BookingScreen = () => {
 
   useEffect(() => {
     dispatch(fetchBookings());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
-    if (error) {
-      Alert.alert('Error', error);
-    }
+    if (error) Alert.alert('Error', error);
   }, [error]);
 
-  const renderBookingItem = ({ item }) => {
-    const showPayButton = item.status !== 'Success'; // Check if "Pay" button should be displayed
-    const dynamicHeight = showPayButton ? 279 : 240; // Adjust height based on button visibility
+  const renderBooking = ({ item }) => {
+    const showPay = item.status !== 'Success';
 
     return (
-      <View style={styles.bookingCard}>
-        <LinearGradient
-          colors={['#6a11cb', '#2575fc']} // Gradient colors
-          style={[styles.bookingItemGradient, { height: dynamicHeight }]}
-        >
-          <View style={styles.bookingInfo}>
-            <Text style={styles.bookingText}>
-              Doctor: {item.userDetails?.fullName || 'N/A'}
+      <View style={styles.cardWrapper}>
+        <View style={styles.cardContent}>
+          <View style={styles.cardHeader}>
+            <Text style={styles.doctorName}>
+              {item.userDetails?.fullName || 'Doctor'}
             </Text>
-            <Text style={styles.bookingText}>
-              Contact No: {item.userDetails?.contactNo || 'N/A'}
-            </Text>
-            <Text style={styles.bookingText}>
-              Date: {new Date(item.date).toLocaleDateString()}
-            </Text>
-            <Text style={styles.bookingText}>
-              Time: {item.checkupTiming ? formatTimeRange(item.checkupTiming) : 'N/A'}
-            </Text>
-            <Text style={styles.bookingText}>
-              Status: {item.status || 'N/A'}
-            </Text>
-            <Text style={styles.bookingText} numberOfLines={2} ellipsizeMode="tail">
-              Notes: {item.notes || 'N/A'}
+            <View
+              style={[
+                styles.statusBadge,
+                item.status === 'Success' ? styles.success : styles.pending,
+              ]}
+            >
+              <Text style={styles.statusText}>{item.status}</Text>
+            </View>
+          </View>
+
+          <View style={styles.row}>
+            <Icon name="phone" size={18} color={COLORS.primary} />
+            <Text style={styles.detailText}>
+              {item.userDetails?.contactNo || '-'}
             </Text>
           </View>
-          {showPayButton && (
+
+          <View style={styles.row}>
+            <Icon name="calendar" size={18} color={COLORS.primary} />
+            <Text style={styles.detailText}>
+              {new Date(item.date).toLocaleDateString()}
+            </Text>
+          </View>
+
+          <View style={styles.row}>
+            <Icon name="clock-outline" size={18} color={COLORS.primary} />
+            <Text style={styles.detailText}>
+              {item.checkupTiming ? formatTimeRange(item.checkupTiming) : 'N/A'}
+            </Text>
+          </View>
+
+          {item.notes ? (
+            <View style={styles.notesBox}>
+              <Icon name="note-text" size={18} color={COLORS.primary} />
+              <Text style={styles.notesText}>{item.notes}</Text>
+            </View>
+          ) : null}
+
+          {showPay && (
             <TouchableOpacity
-              style={styles.payButtonContainer}
-              onPress={() => navigation.navigate('Payment', { appointmentId: item._id })}
+              style={styles.payButton}
+              onPress={() =>
+                navigation.navigate('Payment', { appointmentId: item._id })
+              }
             >
               <LinearGradient
-                colors={['#000000', '#434343']} // Black-based gradient colors
+                colors={[COLORS.primary, COLORS.secondary]}
                 style={styles.payButtonGradient}
               >
-                <Text style={styles.payButtonText}>Pay</Text>
+                <Text style={styles.payButtonText}>Pay Now</Text>
               </LinearGradient>
             </TouchableOpacity>
           )}
-        </LinearGradient>
+        </View>
       </View>
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Your Bookings</Text>
+      <Text style={styles.screenTitle}>Your Appointments</Text>
       {loading ? (
         <View style={styles.loaderContainer}>
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color={COLORS.primary} />
         </View>
       ) : bookings.length > 0 ? (
         <FlatList
           data={bookings}
           keyExtractor={(item) => item._id}
-          renderItem={renderBookingItem}
-          contentContainerStyle={styles.flatListContent}
-          showsVerticalScrollIndicator={false}
+          renderItem={renderBooking}
+          contentContainerStyle={styles.flatList}
         />
       ) : (
-        <Text style={styles.noBookingsText}>No bookings found.</Text>
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyText}>No appointments found</Text>
+        </View>
       )}
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f8f9fa',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginVertical: 16,
-    textAlign: 'center',
-  },
-  bookingCard: {
-    marginHorizontal: 16,
-    marginBottom: 16,
-    borderRadius: 10,
-    overflow: 'hidden', // Prevent gradient overflow
-  },
-  bookingItemGradient: {
-    padding: 20,
-    borderRadius: 10,
-  },
-  bookingInfo: {},
-  bookingText: {
-    fontSize: 16,
-    color: '#fff',
-    marginBottom: 4,
-  },
-  noBookingsText: {
-    fontSize: 16,
-    color: '#888',
-    textAlign: 'center',
-    marginTop: 20,
-  },
-  loaderContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  flatListContent: {
-    paddingBottom: 16,
-  },
-  payButtonContainer: {
-   left:75,
-    top:15,
-  },
-  payButtonGradient: {
-    width: 120,
-    height: 50,
-    justifyContent: 'center',
-    borderRadius: 25,
-  },
-  payButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-});
 
 export default BookingScreen;

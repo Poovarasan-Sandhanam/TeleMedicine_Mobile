@@ -3,12 +3,14 @@ import {
   View,
   Text,
   TextInput,
-  StyleSheet,
   Alert,
   ActivityIndicator,
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,41 +21,36 @@ import {
 } from "../../redux/actions/doctorActions";
 import COLORS from "../../utilis/colors";
 import CustomDropdown from "../../components/CustomDropdown";
-import { MedicalConditionsEnum } from "../../utilis/enums";
 import OptionDropdown from "../../components/OptionDropdown";
+import { MedicalConditionsEnum } from "../../utilis/enums";
+import styles from "../../styles/bookingStyle";
 
-const AppointmentBookingScreen = ({navigation}) => {
+const AppointmentBookingScreen = ({ navigation }) => {
   const [healthIssue, setHealthIssue] = useState("");
-  const [checkupTiming, setCheckupTiming] = useState(""); // Store selected slot timing
-  const [doctorId, setDoctorId] = useState(""); // Store the doctor's ID
+  const [checkupTiming, setCheckupTiming] = useState("");
+  const [doctorId, setDoctorId] = useState("");
   const [notes, setNotes] = useState("");
   const [date, setDate] = useState(new Date());
-  const [formattedDate, setFormattedDate] = useState(""); // Store formatted date
+  const [formattedDate, setFormattedDate] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [bookedSlot, setBookedSlot] = useState(null);
 
   const dispatch = useDispatch();
-
-
-  // Redux states
   const { loading, error } = useSelector((state) => state.appointment);
-  const { doctors, loading: doctorsLoading } = useSelector(
-    (state) => state.doctors
-  );
+  const { doctors, loading: doctorsLoading } = useSelector((state) => state.doctors);
   const {
     doctorDetails,
     loading: availabilityLoading,
     error: availabilityError,
   } = useSelector((state) => state.doctors);
 
-
-  // Fetch all doctors on component mount
   useEffect(() => {
     dispatch(fetchAllDoctors());
   }, [dispatch]);
+
   const handleBooking = async () => {
     if (!healthIssue || !checkupTiming || !doctorId || !formattedDate) {
-      Alert.alert("Error", "Please fill all required fields.");
+      Alert.alert("Missing Fields", "Please fill in all required fields.");
       return;
     }
 
@@ -66,95 +63,100 @@ const AppointmentBookingScreen = ({navigation}) => {
     };
 
     try {
-      const response = await dispatch(bookAppointment(appointmentData));
-      setBookedSlot(checkupTiming); // Update the booked slot
-      Alert.alert("Success", "Appointment booked successfully!");
-      navigation.navigate("MyBooking"); // Navigate to the MyBooking screen
-    } catch (error) {
-      Alert.alert("Error", error.message || "Failed to book appointment.");
+      await dispatch(bookAppointment(appointmentData));
+      setBookedSlot(checkupTiming);
+      Alert.alert("Success", "Your appointment has been booked.");
+      navigation.navigate("MyBooking");
+    } catch (err) {
+      Alert.alert("Error", err.message || "Failed to book appointment.");
     }
-  };
-
-
-
-
-  const convertTo12HourFormat = (time) => {
-    const [start, end] = time.split('-');
-    
-    const formatTime = (hour) => {
-      let period = "AM";
-      let newHour = parseInt(hour, 10);
-      
-      if (newHour >= 12) {
-        period = "PM";
-        if (newHour > 12) newHour -= 12;  // Convert to 12-hour format
-      }
-      
-      if (newHour === 0) newHour = 12;  // Handle midnight case
-      
-      return `${newHour} ${period}`;
-    };
-  
-    return `${formatTime(start)} - ${formatTime(end)}`;
   };
 
   const onDateChange = (event, selectedDate) => {
-    setShowDatePicker(false); // Close the picker
-
+    setShowDatePicker(false);
     if (selectedDate) {
       setDate(selectedDate);
-
-      // Format the date to YYYY-MM-DD
-      const formatted = selectedDate.toISOString().split("T")[0];
-      setFormattedDate(formatted); // Save the formatted date in the state
-      console.log("Selected Date (Formatted):", formatted); // Outputs: 2025-01-07
+      setFormattedDate(selectedDate.toISOString().split("T")[0]);
     }
+  };
+
+  const convertTo12HourFormat = (time) => {
+    const [start, end] = time.split("-");
+    const formatTime = (hour) => {
+      let period = "AM";
+      let h = parseInt(hour, 10);
+      if (h >= 12) {
+        period = "PM";
+        if (h > 12) h -= 12;
+      }
+      if (h === 0) h = 12;
+      return `${h} ${period}`;
+    };
+    return `${formatTime(start)} - ${formatTime(end)}`;
   };
 
   const handleCheckAvailability = () => {
     if (doctorId && formattedDate) {
       dispatch(fetchDoctorDetails(doctorId, formattedDate));
-      console.log(doctorId, formattedDate, "-------");
     } else {
-      Alert.alert("Error", "Please select a doctor and a date first.");
+      Alert.alert("Select Required Fields", "Doctor and Date must be selected.");
     }
   };
 
   const handleSlotSelection = (slotTiming) => {
-    setCheckupTiming(slotTiming); // Set the selected timing for booking
+    setCheckupTiming(slotTiming);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <Text style={styles.title}>Book an Appointment</Text>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={{ flex: 1 }}
+      >
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <Text style={styles.title}>Book an Appointment</Text>
 
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Date</Text>
-          <TouchableOpacity
-            style={styles.datePickerButton}
-            onPress={() => setShowDatePicker(true)}
-          >
-            <Text style={styles.dateText}>
-              {formattedDate || date.toDateString()}
-            </Text>
-          </TouchableOpacity>
-          {showDatePicker && (
-            <DateTimePicker
-              value={date}
-              mode="date"
-              display="default"
-              onChange={onDateChange}
-            />
-          )}
-        </View>
+          {/* DATE PICKER */}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Select Date *</Text>
+            <TouchableOpacity
+              style={styles.datePickerButton}
+              onPress={() => setShowDatePicker(true)}
+            >
+              <Text style={styles.dateText}>
+                {formattedDate || date.toDateString()}
+              </Text>
+            </TouchableOpacity>
+            {showDatePicker && (
+              <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={onDateChange}
+              />
+            )}
+          </View>
 
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Select Doctor</Text>
-          {doctorsLoading ? (
-            <ActivityIndicator size="small" color={COLORS.primary} />
-          ) : (
-            <View>
+          {/* DOCTOR DROPDOWN */}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Select Doctor *</Text>
+            {doctorsLoading ? (
+              <ActivityIndicator size="small" color={COLORS.primary} />
+            ) : doctors.length === 0 ? (
+              <View style={styles.emptyState}>
+                <Image
+                  source={{ uri: "https://cdn-icons-png.flaticon.com/512/3875/3875172.png" }}
+                  style={styles.emptyImage}
+                />
+                <Text style={styles.emptyText}>No doctors available.</Text>
+                <TouchableOpacity
+                  style={styles.retryButton}
+                  onPress={() => dispatch(fetchAllDoctors())}
+                >
+                  <Text style={styles.retryText}>Retry</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
               <OptionDropdown
                 data={doctors.map((doc) => ({
                   label: doc.fullName,
@@ -162,194 +164,108 @@ const AppointmentBookingScreen = ({navigation}) => {
                 }))}
                 selectedValue={doctorId}
                 onValueChange={setDoctorId}
-                dropdownStyle={{
-                  borderColor: COLORS.primary,
-                  borderWidth: 1,
-                  borderRadius: 5,
-                }}
+                dropdownStyle={styles.dropdown}
               />
-            </View>
-          )}
-        </View>
+            )}
+          </View>
 
-       
+          {/* CHECK AVAILABILITY BUTTON */}
+          <TouchableOpacity
+            style={styles.checkButton}
+            onPress={handleCheckAvailability}
+          >
+            <Text style={styles.checkButtonText}>Check Availability</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.bookButton}  onPress={handleCheckAvailability}>
-          <Text style={styles.bookButtonText}>Check Availability</Text>
-        </TouchableOpacity>
-  {availabilityLoading ? (
-          <ActivityIndicator size="small" color={COLORS.primary} />
-        ) : (
-          doctorDetails?.slots && (
+          {/* AVAILABLE SLOTS */}
+          {availabilityLoading ? (
+            <ActivityIndicator size="small" color={COLORS.primary} />
+          ) : doctorDetails?.slots ? (
             <View style={styles.slotsContainer}>
               <Text style={styles.label}>Available Slots</Text>
               <View style={styles.slotsWrapper}>
-                {doctorDetails.slots.map((slot) => (
-                  <TouchableOpacity
-                    key={slot.slotTiming}
-                    style={[
-                      styles.slotButton,
-                      slot.isBooked || bookedSlot === slot.slotTiming
-                        ? styles.slotButtonDisabled
-                        : null,
-                    ]}
-                    disabled={slot.isBooked || bookedSlot === slot.slotTiming}
-                    onPress={() => handleSlotSelection(slot.slotTiming)}
-                  >
-                    <Text style={styles.slotText}>
-                      {convertTo12HourFormat(slot.slotTiming)}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
+                {doctorDetails.slots.map((slot) => {
+                  const isDisabled = slot.isBooked || bookedSlot === slot.slotTiming;
+                  return (
+                    <TouchableOpacity
+                      key={slot.slotTiming}
+                      style={[
+                        styles.slotButton,
+                        isDisabled && styles.slotButtonDisabled,
+                        checkupTiming === slot.slotTiming && styles.slotButtonSelected,
+                      ]}
+                      disabled={isDisabled}
+                      onPress={() => handleSlotSelection(slot.slotTiming)}
+                    >
+                      <Text
+                        style={[
+                          styles.slotText,
+                          isDisabled && { color: "#ccc" },
+                          checkupTiming === slot.slotTiming && { color: "#fff" },
+                        ]}
+                      >
+                        {convertTo12HourFormat(slot.slotTiming)}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
             </View>
-          )
-        )}
+          ) : null}
 
-        <Text style={styles.selectedSlot}>
-          Selected Slot: {checkupTiming || "None"}
-        </Text>
+          {/* SELECTED SLOT */}
+          {checkupTiming ? (
+            <Text style={styles.selectedSlot}>
+              Selected Slot: {convertTo12HourFormat(checkupTiming)}
+            </Text>
+          ) : null}
 
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Health Issue</Text>
-          <CustomDropdown
-            data={MedicalConditionsEnum}
-            selectedValue={healthIssue}
-            onValueChange={setHealthIssue}
-            dropdownStyle={{
-              borderColor: COLORS.primary,
-              borderWidth: 1,
-              borderRadius: 5,
-            }}
-          />
-        </View>
+          {/* HEALTH ISSUE DROPDOWN */}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Health Issue *</Text>
+            <CustomDropdown
+              data={MedicalConditionsEnum}
+              selectedValue={healthIssue}
+              onValueChange={setHealthIssue}
+              dropdownStyle={styles.dropdown}
+            />
+          </View>
 
-        <View>
-          <Text style={styles.label}>Additional Notes</Text>
-          <TextInput
-            style={{
-              borderColor: COLORS.primary,
-              borderWidth: 1,
-              borderRadius: 5,
-              height: "20%",
-              padding: 10,
-            }}
-            value={notes}
-            onChangeText={setNotes}
-            placeholder="Add any specific details for the doctor"
-            multiline
-          />
+          {/* NOTES */}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Additional Notes</Text>
+            <TextInput
+              style={styles.textArea}
+              value={notes}
+              onChangeText={setNotes}
+              placeholder="Add any specific concerns or symptoms"
+              multiline
+            />
+          </View>
+
+          {/* SUBMIT BUTTON */}
           {loading ? (
             <ActivityIndicator size="large" color={COLORS.primary} />
           ) : (
-            <TouchableOpacity style={styles.bookButton} onPress={handleBooking}>
-              <Text style={styles.bookButtonText}>Book Appointment</Text>
+            <TouchableOpacity
+              style={styles.bookButton}
+              onPress={handleBooking}
+            >
+              <Text style={styles.bookButtonText}>Confirm Booking</Text>
             </TouchableOpacity>
           )}
-        </View>
 
-        {error && <Text style={styles.errorText}>Error: {error}</Text>}
-        {availabilityError && (
-          <Text style={styles.errorText}>
-            Availability Error: {availabilityError}
-          </Text>
-        )}
-      </ScrollView>
+          {/* ERROR DISPLAY */}
+          {error && <Text style={styles.errorText}>Error: {error}</Text>}
+          {availabilityError && (
+            <Text style={styles.errorText}>
+              Availability Error: {availabilityError}
+            </Text>
+          )}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.white,
-  },
-  scrollView: {
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: COLORS.black,
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  formGroup: {
-    marginBottom: 15,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "black",
-    marginBottom: 5,
-  },
-  datePickerButton: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: COLORS.primary,
-    borderRadius: 8,
-    backgroundColor: COLORS.white,
-  },
-  dateText: {
-    fontSize: 16,
-    color: COLORS.primary,
-  },
-  slotsContainer: {
-    marginTop: 20,
-  },
-  slotsWrapper: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  slotButton: {
-    width: "24%",
-    paddingVertical: 10,
-    padding: 15,
-    marginVertical:5,
-    borderWidth: 1,
-    borderColor: COLORS.primary,
-    borderRadius: 8,
-    backgroundColor: COLORS.white,
-    alignItems: "center",
-  },
-  slotButtonDisabled: {
-    backgroundColor: "red",
-    borderColor: "grey",
-  },
-  slotText: {
-    fontSize: 13,
-    textAlign: "center",
-    color: COLORS.black,
-  },
-  selectedSlot: {
-    fontSize: 16,
-    marginTop: 15,
-    fontWeight: "600",
-    textAlign: "center",
-    color: COLORS.primary,
-    marginBottom: 20,
-  },
-  errorText: {
-    color: "red",
-    fontSize: 14,
-    marginTop: 10,
-    textAlign: "center",
-  },
-  bookButton: {
-    backgroundColor: COLORS.primary,
-    paddingVertical: 14,
-    borderRadius: 8,
-    alignSelf: "center",
-    marginTop: 20,
-    width: "80%",
-  },
-  bookButtonText: {
-    color: COLORS.white,
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-});
 
 export default AppointmentBookingScreen;

@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
-  StyleSheet,
   Modal,
+  Animated,
+  Platform,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAppointments } from "../../redux/actions/: appointmentRecordActions"; // Corrected path
+import { fetchAppointments } from "../../redux/actions/: appointmentRecordActions";
 import moment from "moment";
+import styles from "../../styles/appointmentScreen.styles";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const AppointmentScreen = () => {
   const [selectedDate, setSelectedDate] = useState(moment().startOf("day"));
@@ -18,18 +21,17 @@ const AppointmentScreen = () => {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const dispatch = useDispatch();
 
-  const {
-    loading,
-    appointmentRec = [],
-    error,
-  } = useSelector((state) => state.appointmentRec);
+  const { loading, appointmentRec = [], error } = useSelector(
+    (state) => state.appointmentRec
+  );
 
   useEffect(() => {
     const formattedDate = selectedDate.format("DD-MM-YYYY");
     dispatch(fetchAppointments(formattedDate));
   }, [selectedDate]);
 
-  // Helper function to format checkup timing
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+
   const formatTimeSlot = (timeSlot) => {
     const [start, end] = timeSlot.split("-").map(Number);
     const formatTime = (hour) => {
@@ -37,7 +39,7 @@ const AppointmentScreen = () => {
       const formattedHour = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
       return `${formattedHour} ${period}`;
     };
-    return `${formatTime(start)}-${formatTime(end)}`;
+    return `${formatTime(start)} - ${formatTime(end)}`;
   };
 
   const generateDates = () => {
@@ -51,7 +53,18 @@ const AppointmentScreen = () => {
   const dates = generateDates();
 
   const handleDatePress = (date) => {
-    setSelectedDate(date);
+    Animated.sequence([
+      Animated.timing(scaleAnim, {
+        toValue: 0.9,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleAnim, {
+        toValue: 1,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start(() => setSelectedDate(date));
   };
 
   const handleAppointmentPress = (item) => {
@@ -64,46 +77,80 @@ const AppointmentScreen = () => {
     setSelectedAppointment(null);
   };
 
+  const renderDateItem = ({ item }) => {
+    const isSelected = selectedDate.isSame(item, "day");
+    const isToday = moment().isSame(item, "day");
+
+    return (
+      <TouchableOpacity
+        onPress={() => handleDatePress(item)}
+        activeOpacity={0.8}
+        style={{ marginHorizontal: 8 }}
+      >
+        <Animated.View
+          style={[
+            styles.dateCircle,
+            isSelected && styles.selectedDateCircle,
+            isToday && !isSelected && styles.todayDateCircle,
+            isSelected && { transform: [{ scale: scaleAnim }] },
+          ]}
+        >
+          <Text
+            style={[
+              styles.dateText,
+              isSelected ? styles.selectedDateText : styles.dateTextDefault,
+            ]}
+          >
+            {item.format("DD")}
+          </Text>
+          <Text
+            style={[
+              styles.dayText,
+              isSelected ? styles.selectedDateText : styles.dayTextDefault,
+            ]}
+          >
+            {item.format("ddd")}
+          </Text>
+        </Animated.View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Appointment Records</Text>
 
-      <View>
-        <FlatList
-          horizontal
-          data={dates}
-          keyExtractor={(item) => item.format("YYYY-MM-DD")}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={[
-                styles.dateItem,
-                selectedDate.isSame(item, "day") && styles.selectedDateItem,
-              ]}
-              onPress={() => handleDatePress(item)}
-            >
-              <Text style={styles.dateText}>{item.format("DD")}</Text>
-              <Text style={styles.dayText}>{item.format("ddd")}</Text>
-            </TouchableOpacity>
-          )}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
+      <FlatList
+        horizontal
+        data={dates}
+        keyExtractor={(item) => item.format("YYYY-MM-DD")}
+        renderItem={renderDateItem}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.datesContainer}
+        snapToAlignment="center"
+        decelerationRate={Platform.OS === "ios" ? 0 : 0.98}
+        snapToInterval={80}
+      />
 
-      <Text style={styles.selectedDateText}>
+      {/* <Text style={styles.selectedDateText}>
         Selected Date: {selectedDate.format("DD-MM-YYYY")}
-      </Text>
+      </Text> */}
 
-      {/* Appointments List */}
       {loading ? (
-        <ActivityIndicator size="large" color="#504DE5" />
+        <ActivityIndicator size="large" color="#4A4AFF" style={styles.loader} />
       ) : (
         <FlatList
           data={appointmentRec}
           keyExtractor={(item) => item._id}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
-              style={styles.appointmentItem}
+              style={[
+                styles.appointmentItem,
+                index !== appointmentRec.length - 1 &&
+                  styles.appointmentItemBorder,
+              ]}
               onPress={() => handleAppointmentPress(item)}
+              activeOpacity={0.7}
             >
               <Text style={styles.appointmentText}>
                 Checkup Timing: {formatTimeSlot(item.checkupTiming)}
@@ -111,54 +158,69 @@ const AppointmentScreen = () => {
             </TouchableOpacity>
           )}
           ListEmptyComponent={
-            <Text style={styles.noAppointments}>
-              No Appointments for this date.
-            </Text>
+            <View style={styles.noAppointmentsCard}>
+              <MaterialIcons
+                name="event-busy"
+                size={48}
+                color={styles.headerText.color}
+              />
+              <Text style={styles.noAppointmentsTitle}>No Appointments</Text>
+              <Text style={styles.noAppointmentsMessage}>
+                You don’t have any appointments scheduled for this date.
+              </Text>
+            </View>
           }
+          contentContainerStyle={styles.appointmentList}
         />
       )}
 
-      {/* Modal for Appointment Details */}
       <Modal
         visible={modalVisible}
         animationType="slide"
         transparent={true}
         onRequestClose={closeModal}
       >
-        <View style={styles.modalContainer}>
+        <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             {selectedAppointment && (
               <>
                 <Text style={styles.modalTitle}>Appointment Details</Text>
                 <Text style={styles.modalText}>
-                  User Name:{" "}
+                  <Text style={styles.modalLabel}>User Name: </Text>
                   {selectedAppointment.userDetails?.fullName || "N/A"}
                 </Text>
                 <Text style={styles.modalText}>
-                  Checkup Timing:{" "}
+                  <Text style={styles.modalLabel}>Checkup Timing: </Text>
                   {formatTimeSlot(selectedAppointment.checkupTiming)}
                 </Text>
                 <Text style={styles.modalText}>
-                  Notes: {selectedAppointment.notes || "None"}
+                  <Text style={styles.modalLabel}>Notes: </Text>
+                  {selectedAppointment.notes || "None"}
                 </Text>
                 <Text style={styles.modalText}>
-                  Status: {selectedAppointment.status}
+                  <Text style={styles.modalLabel}>Status: </Text>
+                  {selectedAppointment.status}
                 </Text>
                 <Text style={styles.modalText}>
-                  Date: {moment(selectedAppointment.date).format("DD-MM-YYYY")}
+                  <Text style={styles.modalLabel}>Date: </Text>
+                  {moment(selectedAppointment.date).format("DD-MM-YYYY")}
                 </Text>
                 <Text style={styles.modalText}>
-                  Email: {selectedAppointment.userDetails?.email || "N/A"}
+                  <Text style={styles.modalLabel}>Email: </Text>
+                  {selectedAppointment.userDetails?.email || "N/A"}
                 </Text>
                 <Text style={styles.modalText}>
-                  Contact: {selectedAppointment.userDetails?.contactNo || "N/A"}
+                  <Text style={styles.modalLabel}>Contact: </Text>
+                  {selectedAppointment.userDetails?.contactNo || "N/A"}
                 </Text>
                 <Text style={styles.modalText}>
-                  Gender: {selectedAppointment.userDetails?.gender || "N/A"}
+                  <Text style={styles.modalLabel}>Gender: </Text>
+                  {selectedAppointment.userDetails?.gender || "N/A"}
                 </Text>
                 <TouchableOpacity
                   style={styles.closeButton}
                   onPress={closeModal}
+                  activeOpacity={0.8}
                 >
                   <Text style={styles.closeButtonText}>Close</Text>
                 </TouchableOpacity>
@@ -170,99 +232,5 @@ const AppointmentScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F2F2F2",
-    padding: 20,
-  },
-  headerText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#504DE5",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  dateItem: {
-    padding: 10,
-    alignItems: "center",
-    borderRadius: 10,
-    backgroundColor: "#fff",
-    marginHorizontal: 5,
-    height: 70,
-    width: 60,
-    elevation: 2,
-  },
-  selectedDateItem: {
-    backgroundColor: "#504DE5",
-  },
-  dateText: {
-    fontSize: 16,
-    color: "#000",
-  },
-  dayText: {
-    fontSize: 14,
-    color: "#555",
-  },
-  selectedDateText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#504DE5",
-    marginVertical: 20,
-    textAlign: "center",
-  },
-  appointmentItem: {
-    padding: 15,
-    marginBottom: 15,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    elevation: 3,
-  },
-  appointmentText: {
-    fontSize: 16,
-    color: "#333",
-  },
-  noAppointments: {
-    textAlign: "center",
-    fontSize: 16,
-    color: "#888",
-    marginTop: 20,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  modalContent: {
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 10,
-    width: "90%",
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "#504DE5",
-  },
-  modalText: {
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  closeButton: {
-    marginTop: 20,
-    backgroundColor: "#504DE5",
-    paddingVertical: 10,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  closeButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});
 
 export default AppointmentScreen;
