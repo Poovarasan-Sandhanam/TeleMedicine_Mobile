@@ -167,7 +167,7 @@ export const THEMES = {
  * @param {string} selected - theme name from THEMES keys
  * @returns theme color object
  */
-export const getTheme = (scheme = "light", selected = "ocean") => {
+export const getTheme = (scheme = "light", selected = "calmCare") => {
   const theme = THEMES[selected];
   if (!theme) return THEMES["ocean"][scheme];
   return theme[scheme] || THEMES["ocean"][scheme]; // fallback to ocean if null

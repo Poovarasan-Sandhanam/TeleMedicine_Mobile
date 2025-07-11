@@ -72,6 +72,8 @@ const CustomDrawerContent = (props) => {
           labelStyle={styles.drawerLabel}
           icon={({ color, size }) => <Icon name="person" color={color} size={size} />}
           onPress={() => props.navigation.navigate('Profile')}
+          activeTintColor={COLORS.accent}
+          inactiveTintColor={COLORS.white}
           style={styles.drawerItem}
         />
         {!isDoctor && (
@@ -80,6 +82,8 @@ const CustomDrawerContent = (props) => {
             labelStyle={styles.drawerLabel}
             icon={({ color, size }) => <Icon name="bookmark-border" color={color} size={size} />}
             onPress={() => props.navigation.navigate('MyBooking')}
+            activeTintColor={COLORS.accent}
+            inactiveTintColor={COLORS.white}
             style={styles.drawerItem}
           />
         )}
@@ -88,6 +92,8 @@ const CustomDrawerContent = (props) => {
           labelStyle={styles.drawerLabel}
           icon={({ color, size }) => <MaterialCommunityIcons name="message-video" color={color} size={size} />}
           onPress={() => props.navigation.navigate('Consult')}
+          activeTintColor={COLORS.accent}
+          inactiveTintColor={COLORS.white}
           style={styles.drawerItem}
         />
       </DrawerContentScrollView>

@@ -369,7 +369,7 @@ const TabNavigator = ({ navigation }) => {
         ),
         tabBarStyle: { backgroundColor: COLORS.primary },
         tabBarActiveTintColor: COLORS.white,
-        tabBarInactiveTintColor: COLORS.textLight,
+        tabBarInactiveTintColor:"black",
       }}
     >
       {isDoctor ? (
