@@ -5,9 +5,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/actions/authActions";
 
-const SplashScreen = ({ navigation }) => {
+interface SplashScreenProps {
+  navigation: {
+    replace: (screen: string) => void;
+  };
+}
+
+interface UserData {
+  email: string;
+  password: string;
+}
+
+const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
   const dispatch = useDispatch();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -16,8 +27,8 @@ const SplashScreen = ({ navigation }) => {
         const userData = await AsyncStorage.getItem("user");
 
         if (token && userData) {
-          const parsedUser = JSON.parse(userData);
-          dispatch(login(parsedUser.email, parsedUser.password));
+          const parsedUser: UserData = JSON.parse(userData);
+          dispatch(login(parsedUser.email, parsedUser.password) as any);
           setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);
@@ -73,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SplashScreen;
+export default SplashScreen; 

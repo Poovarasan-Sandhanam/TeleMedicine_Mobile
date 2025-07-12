@@ -1,5 +1,5 @@
 // src/screens/SignupScreen.js
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { 
   View, 
   SafeAreaView, 
@@ -8,26 +8,46 @@ import {
   Text, 
   TouchableOpacity, 
   Platform, 
-  KeyboardAvoidingView 
+  KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Formik } from 'formik';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { Formik, FormikHelpers } from 'formik';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import Toast from 'react-native-toast-message';
 
-import SignupSchema from '../../validation/signupSchema';
+import SignupSchema, { SignupFormData } from '../../validation/signupSchema';
 import PasswordVisibilityToggle from '../../components/PasswordVisibilityToggle';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { signup } from '../../redux/actions/authActions';
 import styles from '../../styles/signupStyles';
+import { RootState } from '../../redux/store';
 
-const RadioButtonGroup = ({ options, selectedValue, onSelect }) => (
+interface RadioOption {
+  label: string;
+  value: string;
+}
+
+interface RadioButtonGroupProps {
+  options: RadioOption[];
+  selectedValue: string;
+  onSelect: (value: string) => void;
+}
+
+interface SignupScreenProps {
+  navigation: {
+    navigate: (screen: string) => void;
+  };
+}
+
+const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ options, selectedValue, onSelect }) => (
   <View style={styles.radioGroup}>
     {options.map(option => (
       <TouchableOpacity
         key={option.value}
         style={styles.radioOption}
         onPress={() => onSelect(option.value)}
+        activeOpacity={0.7}
       >
         <View
           style={[
@@ -41,14 +61,19 @@ const RadioButtonGroup = ({ options, selectedValue, onSelect }) => (
   </View>
 );
 
-const SignupScreen = ({ navigation }) => {
+const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { error, loading } = useSelector(state => state.auth);
+  const { error, loading } = useSelector((state: RootState) => state.auth);
 
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
 
-  const handleSignup = async (values, { resetForm }) => {
+  const handleSignup = useCallback(async (values: SignupFormData, { resetForm }: FormikHelpers<SignupFormData>) => {
     try {
+      if (!values.dob) {
+        Alert.alert('Error', 'Please select your date of birth');
+        return;
+      }
+
       const formattedDob = values.dob.toISOString().split('T')[0];
 
       const userData = {
@@ -62,7 +87,7 @@ const SignupScreen = ({ navigation }) => {
         gender: values.gender,
       };
 
-      await dispatch(signup(userData));
+      await dispatch(signup(userData) as any);
 
       Toast.show({
         type: 'success',
@@ -72,14 +97,32 @@ const SignupScreen = ({ navigation }) => {
 
       resetForm();
       navigation.navigate('Login');
-    } catch (err) {
+    } catch (err: any) {
       Toast.show({
         type: 'error',
         text1: 'Signup Failed',
-        text2: err.message || 'Please try again later.',
+        text2: err?.message || 'Please try again later.',
       });
     }
-  };
+  }, [dispatch, navigation]);
+
+  const handleDateChange = useCallback((event: DateTimePickerEvent, selectedDate?: Date) => {
+    setShowDatePicker(false);
+    if (event.type !== 'dismissed' && selectedDate) {
+      // This will be handled by Formik's setFieldValue
+    }
+  }, []);
+
+  const handleContactNumberChange = useCallback((text: string, setFieldValue: (field: string, value: any) => void) => {
+    const numericValue = text.replace(/[^0-9]/g, '');
+    if (numericValue.length <= 10) {
+      setFieldValue('contactNumber', numericValue);
+    }
+  }, []);
+
+  const handleLoginNavigation = useCallback(() => {
+    navigation.navigate('Login');
+  }, [navigation]);
 
   return (
     <KeyboardAvoidingView
@@ -94,9 +137,9 @@ const SignupScreen = ({ navigation }) => {
           initialValues={{
             name: '',
             dob: null,
-            gender: '',
+            gender: 'Male' as const,
             contactNumber: '',
-            userType: 'Patient',
+            userType: 'Patient' as const,
             email: '',
             password: '',
             confirmPassword: '',
@@ -115,8 +158,27 @@ const SignupScreen = ({ navigation }) => {
             touched,
             isSubmitting,
           }) => {
-            const [showPassword, setShowPassword] = useState(false);
-            const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+            const [showPassword, setShowPassword] = useState<boolean>(false);
+            const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+
+            const handlePasswordToggle = useCallback(() => {
+              setShowPassword(prev => !prev);
+            }, []);
+
+            const handleConfirmPasswordToggle = useCallback(() => {
+              setShowConfirmPassword(prev => !prev);
+            }, []);
+
+            const handleDatePickerPress = useCallback(() => {
+              setShowDatePicker(true);
+            }, []);
+
+            const handleDatePickerChange = useCallback((event: DateTimePickerEvent, selectedDate?: Date) => {
+              setShowDatePicker(false);
+              if (event.type !== 'dismissed' && selectedDate) {
+                setFieldValue('dob', selectedDate);
+              }
+            }, [setFieldValue]);
 
             return (
               <ScrollView
@@ -135,6 +197,8 @@ const SignupScreen = ({ navigation }) => {
                   onChangeText={handleChange('name')}
                   onBlur={handleBlur('name')}
                   value={values.name}
+                  autoCapitalize="words"
+                  textContentType="name"
                 />
                 {touched.name && errors.name && (
                   <Text style={styles.errorText}>{errors.name}</Text>
@@ -142,8 +206,9 @@ const SignupScreen = ({ navigation }) => {
 
                 {/* Date of Birth */}
                 <TouchableOpacity
-                  onPress={() => setShowDatePicker(true)}
+                  onPress={handleDatePickerPress}
                   style={[styles.input, touched.dob && errors.dob ? styles.inputError : null]}
+                  activeOpacity={0.7}
                 >
                   <Text style={values.dob ? styles.inputTextDate : styles.placeholderText}>
                     {values.dob ? values.dob.toLocaleDateString('en-GB') : 'Date of Birth'}
@@ -157,12 +222,7 @@ const SignupScreen = ({ navigation }) => {
                     value={values.dob || new Date()}
                     mode="date"
                     display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
-                    onChange={(event, selectedDate) => {
-                      setShowDatePicker(false);
-                      if (event.type !== 'dismissed') {
-                        setFieldValue('dob', selectedDate);
-                      }
-                    }}
+                    onChange={handleDatePickerChange}
                     maximumDate={new Date()}
                   />
                 )}
@@ -175,16 +235,12 @@ const SignupScreen = ({ navigation }) => {
                   ]}
                   placeholder="Contact Number"
                   placeholderTextColor="#aaa"
-                  onChangeText={(text) => {
-                    const numericValue = text.replace(/[^0-9]/g, '');
-                    if (numericValue.length <= 10) {
-                      setFieldValue('contactNumber', numericValue);
-                    }
-                  }}
+                  onChangeText={(text) => handleContactNumberChange(text, setFieldValue)}
                   onBlur={handleBlur('contactNumber')}
                   value={values.contactNumber}
                   keyboardType="numeric"
                   maxLength={10}
+                  textContentType="telephoneNumber"
                 />
                 {touched.contactNumber && errors.contactNumber && (
                   <Text style={styles.errorText}>{errors.contactNumber}</Text>
@@ -200,6 +256,7 @@ const SignupScreen = ({ navigation }) => {
                   value={values.email}
                   autoCapitalize="none"
                   keyboardType="email-address"
+                  textContentType="emailAddress"
                 />
                 {touched.email && errors.email && (
                   <Text style={styles.errorText}>{errors.email}</Text>
@@ -227,6 +284,7 @@ const SignupScreen = ({ navigation }) => {
                       onChangeText={handleChange('doctorType')}
                       onBlur={handleBlur('doctorType')}
                       value={values.doctorType}
+                      autoCapitalize="words"
                     />
                     {touched.doctorType && errors.doctorType && (
                       <Text style={styles.errorText}>{errors.doctorType}</Text>
@@ -262,10 +320,11 @@ const SignupScreen = ({ navigation }) => {
                     onChangeText={handleChange('password')}
                     onBlur={handleBlur('password')}
                     value={values.password}
+                    textContentType="newPassword"
                   />
                   <PasswordVisibilityToggle
                     isVisible={showPassword}
-                    onToggle={() => setShowPassword(!showPassword)}
+                    onToggle={handlePasswordToggle}
                   />
                 </View>
                 {touched.password && errors.password && (
@@ -285,10 +344,11 @@ const SignupScreen = ({ navigation }) => {
                     onChangeText={handleChange('confirmPassword')}
                     onBlur={handleBlur('confirmPassword')}
                     value={values.confirmPassword}
+                    textContentType="newPassword"
                   />
                   <PasswordVisibilityToggle
                     isVisible={showConfirmPassword}
-                    onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
+                    onToggle={handleConfirmPasswordToggle}
                   />
                 </View>
                 {touched.confirmPassword && errors.confirmPassword && (
@@ -297,15 +357,18 @@ const SignupScreen = ({ navigation }) => {
 
                 {/* Submit Button */}
                 <TouchableOpacity
-                  style={styles.button}
-                  onPress={handleSubmit}
+                  style={[styles.button, (isSubmitting || loading) && styles.buttonDisabled]}
+                  onPress={() => handleSubmit()}
                   disabled={isSubmitting || loading}
+                  activeOpacity={0.8}
                 >
-                  <Text style={styles.buttonText}>Sign Up</Text>
+                  <Text style={styles.buttonText}>
+                    {isSubmitting || loading ? 'Creating Account...' : 'Sign Up'}
+                  </Text>
                 </TouchableOpacity>
 
                 {/* Navigation to Login */}
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <TouchableOpacity onPress={handleLoginNavigation} activeOpacity={0.7}>
                   <Text style={styles.contentText}>
                     Already have an account? Go to Login
                   </Text>

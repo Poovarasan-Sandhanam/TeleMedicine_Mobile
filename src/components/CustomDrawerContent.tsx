@@ -1,44 +1,63 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerItem, DrawerContentComponentProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import COLORS from '../constants/colors'; // Your color constants
+import COLORS from '../constants/colors';
 
-const CustomDrawerContent = (props) => {
+interface User {
+  name: string;
+  email: string;
+  avatar: string | null;
+}
+
+const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
   const dispatch = useDispatch();
-  const [isDoctor, setIsDoctor] = useState(false);
-  const [user, setUser] = useState({ name: 'Guest User', email: 'guest@example.com', avatar: null });
+  const [isDoctor, setIsDoctor] = useState<boolean>(false);
+  const [user, setUser] = useState<User>({ 
+    name: 'Guest User', 
+    email: 'guest@example.com', 
+    avatar: null 
+  });
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userData = await AsyncStorage.getItem('user');
-        const isDoctorValue = await AsyncStorage.getItem('isDoctor');
-        if (userData) {
-          const parsedUser = JSON.parse(userData);
-          setUser({
-            name: parsedUser.name || parsedUser.email,
-            email: parsedUser.email,
-            avatar: parsedUser.avatar || null, // URL or local path
-          });
-        }
-        setIsDoctor(JSON.parse(isDoctorValue));
-      } catch (e) {
-        console.error('Error loading drawer user data:', e);
+  const fetchUserData = useCallback(async () => {
+    try {
+      const userData = await AsyncStorage.getItem('user');
+      const isDoctorValue = await AsyncStorage.getItem('isDoctor');
+      if (userData) {
+        const parsedUser = JSON.parse(userData);
+        setUser({
+          name: parsedUser.name || parsedUser.email,
+          email: parsedUser.email,
+          avatar: parsedUser.avatar || null,
+        });
       }
-    };
-    fetchUserData();
+      setIsDoctor(JSON.parse(isDoctorValue || 'false'));
+    } catch (e) {
+      console.error('Error loading drawer user data:', e);
+    }
   }, []);
 
-  const handleLogout = async () => {
-    await AsyncStorage.removeItem('token');
-    await AsyncStorage.removeItem('user');
-    dispatch({ type: 'LOGOUT' }); // Or your logout action
-    props.navigation.navigate('Login');
-  };
+  useEffect(() => {
+    fetchUserData();
+  }, [fetchUserData]);
+
+  const handleLogout = useCallback(async () => {
+    try {
+      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('user');
+      dispatch({ type: 'LOGOUT' } as any);
+      props.navigation.navigate('Login' as never);
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  }, [dispatch, props.navigation]);
+
+  const handleNavigation = useCallback((screen: string) => {
+    props.navigation.navigate(screen as never);
+  }, [props.navigation]);
 
   return (
     <View style={styles.drawerContainer}>
@@ -48,7 +67,7 @@ const CustomDrawerContent = (props) => {
           source={
             user.avatar
               ? { uri: user.avatar }
-              : require("../asset/profile.png") // fallback avatar
+              : require("../asset/profile.png")
           }
           style={styles.avatar}
         />
@@ -62,8 +81,8 @@ const CustomDrawerContent = (props) => {
           label="Home"
           labelStyle={styles.drawerLabel}
           icon={({ color, size }) => <Icon name="home" color={color} size={size} />}
-          onPress={() => props.navigation.navigate('Tabs')}
-          activeTintColor={COLORS.accent}
+          onPress={() => handleNavigation('Tabs')}
+          activeTintColor={COLORS.secondary}
           inactiveTintColor={COLORS.white}
           style={styles.drawerItem}
         />
@@ -71,8 +90,8 @@ const CustomDrawerContent = (props) => {
           label="Profile"
           labelStyle={styles.drawerLabel}
           icon={({ color, size }) => <Icon name="person" color={color} size={size} />}
-          onPress={() => props.navigation.navigate('Profile')}
-          activeTintColor={COLORS.accent}
+          onPress={() => handleNavigation('Profile')}
+          activeTintColor={COLORS.secondary}
           inactiveTintColor={COLORS.white}
           style={styles.drawerItem}
         />
@@ -81,8 +100,8 @@ const CustomDrawerContent = (props) => {
             label="My Booking"
             labelStyle={styles.drawerLabel}
             icon={({ color, size }) => <Icon name="bookmark-border" color={color} size={size} />}
-            onPress={() => props.navigation.navigate('MyBooking')}
-            activeTintColor={COLORS.accent}
+            onPress={() => handleNavigation('MyBooking')}
+            activeTintColor={COLORS.secondary}
             inactiveTintColor={COLORS.white}
             style={styles.drawerItem}
           />
@@ -91,8 +110,8 @@ const CustomDrawerContent = (props) => {
           label="Consult"
           labelStyle={styles.drawerLabel}
           icon={({ color, size }) => <MaterialCommunityIcons name="message-video" color={color} size={size} />}
-          onPress={() => props.navigation.navigate('Consult')}
-          activeTintColor={COLORS.accent}
+          onPress={() => handleNavigation('Consult')}
+          activeTintColor={COLORS.secondary}
           inactiveTintColor={COLORS.white}
           style={styles.drawerItem}
         />
@@ -102,8 +121,8 @@ const CustomDrawerContent = (props) => {
       <View style={styles.divider} />
 
       {/* Logout Button */}
-      <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
-        <Icon name="logout" size={22} color={COLORS.red} />
+      <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout} activeOpacity={0.7}>
+        <Icon name="logout" size={22} color={COLORS.error} />
         <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>
 
@@ -121,13 +140,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   header: {
-    marginTop:40,
+    marginTop: 40,
     paddingVertical: 40,
     paddingHorizontal: 20,
     backgroundColor: COLORS.primary,
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.accentLight,
+    borderBottomColor: COLORS.border,
     elevation: 5,
     shadowColor: '#000',
     shadowOpacity: 0.1,
@@ -139,7 +158,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     marginBottom: 10,
     borderWidth: 2,
-    borderColor: COLORS.accent,
+    borderColor: COLORS.secondary,
   },
   name: {
     color: COLORS.white,
@@ -163,7 +182,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: COLORS.accentLight,
+    backgroundColor: COLORS.border,
     marginHorizontal: 20,
     marginVertical: 10,
   },
@@ -174,7 +193,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   logoutText: {
-    color: COLORS.red,
+    color: COLORS.error,
     fontWeight: 'bold',
     fontSize: 16,
     marginLeft: 15,

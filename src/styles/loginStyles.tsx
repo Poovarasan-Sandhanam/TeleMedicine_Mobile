@@ -112,6 +112,11 @@ export default StyleSheet.create({
     fontSize: 17,
   },
 
+  buttonDisabled: {
+    backgroundColor: COLORS.textLight,
+    opacity: 0.7,
+  },
+
   contentText: {
     color: COLORS.primary,
     textAlign: 'center',

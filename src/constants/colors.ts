@@ -1,6 +1,29 @@
-// colors.js
+// colors.ts
 
-const calmCare = {
+interface ColorScheme {
+  primary: string;
+  secondary: string;
+  background: string;
+  text: string;
+  border: string;
+  white: string;
+  textLight: string;
+  error: string;
+  success: string;
+  card: string;
+  shadow: string;
+}
+
+interface Theme {
+  light: ColorScheme | null;
+  dark: ColorScheme | null;
+}
+
+interface ThemeCollection {
+  [key: string]: Theme;
+}
+
+const calmCare: Theme = {
   light: {
     primary: "#2A9D8F",
     secondary: "#E9C46A",
@@ -29,7 +52,7 @@ const calmCare = {
   },
 };
 
-const sunrise = {
+const sunrise: Theme = {
   light: {
     primary: "#FF6B6B",
     secondary: "#FFD166",
@@ -58,7 +81,7 @@ const sunrise = {
   },
 };
 
-const ocean = {
+const ocean: Theme = {
   light: {
     primary: "#0077B6",
     secondary: "#90E0EF",
@@ -87,7 +110,7 @@ const ocean = {
   },
 };
 
-const lavender = {
+const lavender: Theme = {
   light: {
     primary: "#9B5DE5",
     secondary: "#F15BB5",
@@ -116,8 +139,7 @@ const lavender = {
   },
 };
 
-// 🌿 Mint (Light only)
-const mint = {
+const mint: Theme = {
   light: {
     primary: "#00C9A7",
     secondary: "#B2F7EF",
@@ -134,8 +156,7 @@ const mint = {
   dark: null,
 };
 
-// 🌑 Midnight (Dark only)
-const midnight = {
+const midnight: Theme = {
   light: null,
   dark: {
     primary: "#1E1E2F",
@@ -152,7 +173,7 @@ const midnight = {
   },
 };
 
-export const THEMES = {
+export const THEMES: ThemeCollection = {
   calmCare,
   sunrise,
   ocean,
@@ -161,19 +182,26 @@ export const THEMES = {
   midnight,
 };
 
+type ColorSchemeType = "light" | "dark";
+type ThemeName = keyof typeof THEMES;
+
 /**
  * Get theme colors by scheme and selected theme
- * @param {string} scheme - "light" or "dark"
- * @param {string} selected - theme name from THEMES keys
+ * @param scheme - "light" or "dark"
+ * @param selected - theme name from THEMES keys
  * @returns theme color object
  */
-export const getTheme = (scheme = "light", selected = "calmCare") => {
+export const getTheme = (scheme: ColorSchemeType = "light", selected: ThemeName = "calmCare"): ColorScheme => {
   const theme = THEMES[selected];
-  if (!theme) return THEMES["ocean"][scheme];
-  return theme[scheme] || THEMES["ocean"][scheme]; // fallback to ocean if null
+  if (!theme) return THEMES["ocean"][scheme]!;
+  
+  const colorScheme = theme[scheme];
+  if (!colorScheme) return THEMES["ocean"][scheme]!; // fallback to ocean if null
+  
+  return colorScheme;
 };
 
 // Default export of the default theme (calmCare light)
-const COLORS = getTheme();
+const COLORS: ColorScheme = getTheme();
 
-export default COLORS;
+export default COLORS; 

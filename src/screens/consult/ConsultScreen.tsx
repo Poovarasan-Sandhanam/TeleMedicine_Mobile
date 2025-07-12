@@ -1,281 +1,221 @@
-// import React, { useState, useRef } from 'react';
-// import {
-//   View,
-//   Text,
-//   StyleSheet,
-//   TouchableOpacity,
-//   PermissionsAndroid,
-//   Platform,
-//   Alert,
-// } from 'react-native';
-// import { RTCView, mediaDevices, RTCPeerConnection } from 'react-native-webrtc';
+import React, { useState, useCallback } from 'react';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  TouchableOpacity, 
+  SafeAreaView,
+  Alert,
+} from 'react-native';
 
-// const EnhancedCallScreen = () => {
-//   const [localStream, setLocalStream] = useState(null);
-//   const [remoteStream, setRemoteStream] = useState(null);
-//   const [isMuted, setIsMuted] = useState(false);
-//   const [isVideoEnabled, setIsVideoEnabled] = useState(true);
-//   const [isCalling, setIsCalling] = useState(false);
+interface ConsultScreenProps {
+  navigation?: any;
+  route?: {
+    params?: {
+      appointmentId?: string;
+      doctorName?: string;
+    };
+  };
+}
 
-//   const peerConnection = useRef(null);
+const ConsultScreen: React.FC<ConsultScreenProps> = ({ navigation, route }) => {
+  const [isCallActive, setIsCallActive] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [isVideoEnabled, setIsVideoEnabled] = useState<boolean>(true);
 
-//   const startCall = async () => {
-//     setIsCalling(true);
-  
-//     try {
-//       // Request permissions for Android
-//       if (Platform.OS === 'android') {
-//         const cameraPermission = await PermissionsAndroid.request(
-//           PermissionsAndroid.PERMISSIONS.CAMERA
-//         );
-//         const audioPermission = await PermissionsAndroid.request(
-//           PermissionsAndroid.PERMISSIONS.RECORD_AUDIO
-//         );
-  
-//         if (
-//           cameraPermission !== PermissionsAndroid.RESULTS.GRANTED ||
-//           audioPermission !== PermissionsAndroid.RESULTS.GRANTED
-//         ) {
-//           Alert.alert('Permissions Denied', 'Camera and audio permissions are required to start the call.');
-//           setIsCalling(false);
-//           return;
-//         }
-//       }
-  
-//       // Get local media stream
-//       const stream = await mediaDevices.getUserMedia({
-//         audio: true,
-//         video: true,
-//       });
-  
-//       setLocalStream(stream);
-  
-//       const configuration = {
-//         iceServers: [
-//           {
-//             urls: 'stun:stun.l.google.com:19302',
-//           },
-//         ],
-//       };
-  
-//       const pc = new RTCPeerConnection(configuration);
-  
-//       // Add tracks to the peer connection
-//       stream.getTracks().forEach((track) => pc.addTrack(track, stream));
-  
-//       pc.ontrack = (event) => {
-//         console.log('Remote track received:', event.streams[0]);
-//         setRemoteStream(event.streams[0]);
-//       };
-  
-//       peerConnection.current = pc;
-  
-//       // Create and set offer
-//       const offer = await pc.createOffer();
-//       await pc.setLocalDescription(offer);
-  
-//       console.log('Offer created:', offer);
-  
-//       // TODO: Exchange the offer with signaling server
-//       // On receiving remote offer, set it:
-//       // pc.setRemoteDescription(new RTCSessionDescription(remoteOffer));
-//     } catch (error) {
-//       console.error('Failed to start the call:', error);
-//       Alert.alert('Error', 'Failed to start the call. Please check permissions and try again.');
-//       setIsCalling(false);
-//     }
-//   };
-  
+  const appointmentId = route?.params?.appointmentId;
+  const doctorName = route?.params?.doctorName || 'Doctor';
 
-//   const toggleAudio = () => {
-//     if (localStream) {
-//       const audioTracks = localStream.getAudioTracks();
-//       audioTracks.forEach((track) => {
-//         track.enabled = !track.enabled;
-//       });
-//       setIsMuted(!isMuted);
-//     } else {
-//       Alert.alert('Error', 'No local stream found.');
-//     }
-//   };
+  const handleStartCall = useCallback(() => {
+    if (!appointmentId) {
+      Alert.alert('Error', 'Appointment ID is missing');
+      return;
+    }
 
-//   const toggleVideo = () => {
-//     if (localStream) {
-//       const videoTracks = localStream.getVideoTracks();
-//       videoTracks.forEach((track) => {
-//         track.enabled = !track.enabled;
-//       });
-//       setIsVideoEnabled(!isVideoEnabled);
-//     } else {
-//       Alert.alert('Error', 'No local stream found.');
-//     }
-//   };
+    setIsCallActive(true);
+    Alert.alert(
+      'Call Started', 
+      `Connecting to ${doctorName}...`,
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            // TODO: Implement actual video call logic here
+            console.log('Starting video call with:', doctorName);
+          },
+        },
+      ]
+    );
+  }, [appointmentId, doctorName]);
 
-//   const endCall = () => {
-//     if (peerConnection.current) {
-//       peerConnection.current.close();
-//     }
-//     if (localStream) {
-//       localStream.getTracks().forEach((track) => track.stop());
-//     }
-//     setLocalStream(null);
-//     setRemoteStream(null);
-//     setIsCalling(false);
-//     setIsMuted(false);
-//     setIsVideoEnabled(true);
-//   };
+  const handleEndCall = useCallback(() => {
+    setIsCallActive(false);
+    setIsMuted(false);
+    setIsVideoEnabled(true);
+    Alert.alert('Call Ended', 'The consultation has ended.');
+  }, []);
 
-//   return (
-//     <View style={styles.container}>
-//       <View style={styles.videoContainer}>
-//         {localStream ? (
-//           <RTCView
-//             streamURL={localStream.toURL()}
-//             style={styles.localVideo}
-//             mirror
-//           />
-//         ) : (
-//           <View style={styles.placeholder}>
-//             <Text style={styles.placeholderText}>Local Video</Text>
-//           </View>
-//         )}
+  const handleToggleMute = useCallback(() => {
+    setIsMuted(prev => !prev);
+    // TODO: Implement actual mute logic
+  }, []);
 
-//         {remoteStream ? (
-//           <RTCView
-//             streamURL={remoteStream.toURL()}
-//             style={styles.remoteVideo}
-//           />
-//         ) : (
-//           <View style={styles.placeholder}>
-//             <Text style={styles.placeholderText}>Remote Video</Text>
-//           </View>
-//         )}
-//       </View>
+  const handleToggleVideo = useCallback(() => {
+    setIsVideoEnabled(prev => !prev);
+    // TODO: Implement actual video toggle logic
+  }, []);
 
-//       <View style={styles.controls}>
-//         <TouchableOpacity
-//           style={isMuted ? styles.buttonDisabled : styles.button}
-//           onPress={toggleAudio}
-//         >
-//           <Text style={styles.buttonText}>
-//             {isMuted ? 'Unmute' : 'Mute'}
-//           </Text>
-//         </TouchableOpacity>
-
-//         <TouchableOpacity
-//           style={isVideoEnabled ? styles.button : styles.buttonDisabled}
-//           onPress={toggleVideo}
-//         >
-//           <Text style={styles.buttonText}>
-//             {isVideoEnabled ? 'Stop Video' : 'Start Video'}
-//           </Text>
-//         </TouchableOpacity>
-
-//         {isCalling ? (
-//           <TouchableOpacity style={styles.buttonEnd} onPress={endCall}>
-//             <Text style={styles.buttonText}>End Call</Text>
-//           </TouchableOpacity>
-//         ) : (
-//           <TouchableOpacity style={styles.buttonStart} onPress={startCall}>
-//             <Text style={styles.buttonText}>Start Call</Text>
-//           </TouchableOpacity>
-//         )}
-//       </View>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#000',
-//   },
-//   videoContainer: {
-//     flex: 1,
-//     justifyContent: 'space-between',
-//     alignItems: 'center',
-//     padding: 20,
-//   },
-//   localVideo: {
-//     width: '40%',
-//     height: '40%',
-//     backgroundColor: '#ccc',
-//     borderRadius: 8,
-//   },
-//   remoteVideo: {
-//     width: '80%',
-//     height: '80%',
-//     backgroundColor: '#444',
-//     borderRadius: 8,
-//   },
-//   placeholder: {
-//     width: '40%',
-//     height: '40%',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: '#333',
-//     borderRadius: 8,
-//   },
-//   placeholderText: {
-//     color: '#fff',
-//     fontSize: 16,
-//   },
-//   controls: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-around',
-//     padding: 20,
-//   },
-//   button: {
-//     backgroundColor: '#4CAF50',
-//     padding: 15,
-//     borderRadius: 8,
-//     alignItems: 'center',
-//     minWidth: 100,
-//   },
-//   buttonDisabled: {
-//     backgroundColor: '#aaa',
-//     padding: 15,
-//     borderRadius: 8,
-//     alignItems: 'center',
-//     minWidth: 100,
-//   },
-//   buttonEnd: {
-//     backgroundColor: '#F44336',
-//     padding: 15,
-//     borderRadius: 8,
-//     alignItems: 'center',
-//     minWidth: 100,
-//   },
-//   buttonStart: {
-//     backgroundColor: '#4CAF50',
-//     padding: 15,
-//     borderRadius: 8,
-//     alignItems: 'center',
-//     minWidth: 100,
-//   },
-//   buttonText: {
-//     color: '#fff',
-//     fontWeight: 'bold',
-//   },
-// });
-
-// export default EnhancedCallScreen;
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
-const App = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Hello, React Native!</Text>
-      <Text style={styles.subtitle}>This is a simple text snippet.</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.videoContainer}>
+        {/* Local Video Placeholder */}
+        <View style={styles.localVideoContainer}>
+          <View style={styles.videoPlaceholder}>
+            <Text style={styles.placeholderText}>Your Video</Text>
+          </View>
+        </View>
+
+        {/* Remote Video Placeholder */}
+        <View style={styles.remoteVideoContainer}>
+          <View style={styles.videoPlaceholder}>
+            <Text style={styles.placeholderText}>{doctorName}</Text>
+            <Text style={styles.statusText}>
+              {isCallActive ? 'Connected' : 'Waiting to connect...'}
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.controls}>
+        <TouchableOpacity
+          style={[styles.controlButton, isMuted && styles.controlButtonDisabled]}
+          onPress={handleToggleMute}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.controlButtonText}>
+            {isMuted ? 'Unmute' : 'Mute'}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.controlButton, !isVideoEnabled && styles.controlButtonDisabled]}
+          onPress={handleToggleVideo}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.controlButtonText}>
+            {isVideoEnabled ? 'Stop Video' : 'Start Video'}
+          </Text>
+        </TouchableOpacity>
+
+        {isCallActive ? (
+          <TouchableOpacity 
+            style={styles.endCallButton} 
+            onPress={handleEndCall}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.endCallButtonText}>End Call</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity 
+            style={styles.startCallButton} 
+            onPress={handleStartCall}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.startCallButtonText}>Start Call</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 10 },
-  subtitle: { fontSize: 16, color: 'gray' },
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  videoContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 20,
+  },
+  localVideoContainer: {
+    width: '40%',
+    height: '30%',
+    alignSelf: 'flex-end',
+  },
+  remoteVideoContainer: {
+    width: '100%',
+    height: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  videoPlaceholder: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#333',
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#555',
+  },
+  placeholderText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  statusText: {
+    color: '#ccc',
+    fontSize: 14,
+  },
+  controls: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+  },
+  controlButton: {
+    backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 25,
+    alignItems: 'center',
+    minWidth: 80,
+  },
+  controlButtonDisabled: {
+    backgroundColor: '#666',
+  },
+  controlButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  startCallButton: {
+    backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 25,
+    alignItems: 'center',
+    minWidth: 100,
+  },
+  startCallButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  endCallButton: {
+    backgroundColor: '#F44336',
+    padding: 15,
+    borderRadius: 25,
+    alignItems: 'center',
+    minWidth: 100,
+  },
+  endCallButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
 });
 
-export default App;
+export default ConsultScreen;

@@ -1,9 +1,26 @@
-// components/ProfileField.js
-import React from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import React, { memo } from 'react';
+import { View, Text, TextInput, StyleSheet, KeyboardTypeOptions } from 'react-native';
 import CustomDropdown from './CustomDropdown';
 
-const ProfileField = ({
+interface DropdownItem {
+  label: string;
+  value: string | number;
+}
+
+interface ProfileFieldProps {
+  label: string;
+  value: string;
+  editable: boolean;
+  onChangeText?: (text: string) => void;
+  dropdown?: boolean;
+  dropdownData?: (DropdownItem | string)[];
+  dropdownValue?: string | number;
+  onDropdownChange?: (value: string | number) => void;
+  keyboardType?: KeyboardTypeOptions;
+  placeholder?: string;
+}
+
+const ProfileField: React.FC<ProfileFieldProps> = ({
   label,
   value,
   editable,
@@ -13,7 +30,10 @@ const ProfileField = ({
   dropdownValue,
   onDropdownChange,
   keyboardType = 'default',
+  placeholder,
 }) => {
+  const defaultPlaceholder = placeholder || `Enter ${label}`;
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
@@ -21,9 +41,10 @@ const ProfileField = ({
         dropdown ? (
           <CustomDropdown
             data={dropdownData}
-            selectedValue={dropdownValue}
-            onValueChange={onDropdownChange}
+            selectedValue={dropdownValue || ''}
+            onValueChange={onDropdownChange || (() => {})}
             dropdownStyle={styles.dropdown}
+            placeholder={defaultPlaceholder}
           />
         ) : (
           <TextInput
@@ -31,7 +52,8 @@ const ProfileField = ({
             value={value}
             onChangeText={onChangeText}
             keyboardType={keyboardType}
-            placeholder={`Enter ${label}`}
+            placeholder={defaultPlaceholder}
+            placeholderTextColor="#aaa"
           />
         )
       ) : (
@@ -40,8 +62,6 @@ const ProfileField = ({
     </View>
   );
 };
-
-export default React.memo(ProfileField);
 
 const styles = StyleSheet.create({
   container: {
@@ -52,6 +72,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 5,
+    fontSize: 16,
   },
   input: {
     borderWidth: 1,
@@ -60,10 +81,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: 40,
     backgroundColor: '#fff',
+    fontSize: 16,
   },
   value: {
     fontSize: 16,
     color: '#555',
+    paddingVertical: 8,
   },
   dropdown: {
     borderColor: '#aaa',
@@ -72,3 +95,5 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
+
+export default memo(ProfileField); 
