@@ -14,8 +14,8 @@ interface DropdownItem {
   value: string | number;
 }
 
-interface OptionDropdownProps {
-  data: DropdownItem[];
+interface CustomDropdownProps {
+  data: (DropdownItem | string)[];
   selectedValue: string | number;
   onValueChange: (value: string | number) => void;
   label?: string;
@@ -23,7 +23,7 @@ interface OptionDropdownProps {
   placeholder?: string;
 }
 
-const OptionDropdown: React.FC<OptionDropdownProps> = ({
+const CustomDropdown: React.FC<CustomDropdownProps> = ({
   data,
   selectedValue,
   onValueChange,
@@ -35,10 +35,9 @@ const OptionDropdown: React.FC<OptionDropdownProps> = ({
 
   // Memoized normalized data
   const normalizedData = useMemo(() => 
-    data.map((item) => ({
-      label: item.label,
-      value: item.value,
-    })), [data]
+    data.map((item) =>
+      typeof item === 'string' ? { label: item, value: item } : item
+    ), [data]
   );
 
   // Memoized selected label
@@ -144,11 +143,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   modalContent: {
     backgroundColor: '#fff',
-    width: '80%',
+    width: '90%',
     maxHeight: '80%',
     borderRadius: 10,
     padding: 20,
@@ -177,4 +176,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OptionDropdown;
+export default CustomDropdown; 

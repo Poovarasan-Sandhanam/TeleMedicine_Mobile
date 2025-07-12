@@ -1,6 +1,6 @@
 // src/screens/LoginScreen.js
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   SafeAreaView,
   View,
@@ -10,19 +10,46 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  Alert,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import { login } from '../../redux/actions/authActions';
 import PasswordVisibilityToggle from '../../components/PasswordVisibilityToggle';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import styles from '../../styles/loginStyles';
-import LoginSchema from '../../validation/loginSchema';
+import LoginSchema, { LoginFormData } from '../../validation/loginSchema';
+import { RootState } from '../../redux/store';
 
-const LoginScreen = ({ navigation }) => {
+interface LoginScreenProps {
+  navigation: {
+    reset: (config: { index: number; routes: Array<{ name: string }> }) => void;
+    navigate: (screen: string) => void;
+  };
+}
+
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { user, error, loading } = useSelector(state => state.auth);
-  const [showPassword, setShowPassword] = useState(false);
+  const { user, error, loading } = useSelector((state: RootState) => state.auth);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const handlePasswordToggle = useCallback(() => {
+    setShowPassword(prev => !prev);
+  }, []);
+
+  const handleSignupNavigation = useCallback(() => {
+    navigation.navigate('Signup');
+  }, [navigation]);
+
+  const handleSubmit = useCallback(async (values: LoginFormData, { setSubmitting }: FormikHelpers<LoginFormData>) => {
+    try {
+      await dispatch(login(values.email, values.password) as any);
+    } catch (err) {
+      Alert.alert('Login Error', 'Failed to login. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     if (user) {
@@ -39,16 +66,18 @@ const LoginScreen = ({ navigation }) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}
       >
-        <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', margin: 15 }}>
+        <ScrollView 
+          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', margin: 15 }}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
           <LoadingSpinner visible={loading} />
           <Text style={styles.title}>Login your account :)</Text>
 
           <Formik
             initialValues={{ email: '', password: '' }}
             validationSchema={LoginSchema}
-            onSubmit={async (values) => {
-              await dispatch(login(values.email, values.password));
-            }}
+            onSubmit={handleSubmit}
           >
             {({
               handleChange,
@@ -57,6 +86,7 @@ const LoginScreen = ({ navigation }) => {
               values,
               errors,
               touched,
+              isSubmitting,
             }) => (
               <>
                 <TextInput
@@ -67,6 +97,9 @@ const LoginScreen = ({ navigation }) => {
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   autoCapitalize="none"
+                  keyboardType="email-address"
+                  autoComplete="email"
+                  textContentType="emailAddress"
                 />
                 {touched.email && errors.email && (
                   <Text style={styles.errorText}>{errors.email}</Text>
@@ -84,10 +117,12 @@ const LoginScreen = ({ navigation }) => {
                     value={values.password}
                     onChangeText={handleChange('password')}
                     onBlur={handleBlur('password')}
+                    autoComplete="password"
+                    textContentType="password"
                   />
                   <PasswordVisibilityToggle
                     isVisible={showPassword}
-                    onToggle={() => setShowPassword(!showPassword)}
+                    onToggle={handlePasswordToggle}
                   />
                 </View>
                 {touched.password && errors.password && (
@@ -96,11 +131,18 @@ const LoginScreen = ({ navigation }) => {
 
                 {error && <Text style={styles.errorText}>{error}</Text>}
 
-                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                  <Text style={styles.buttonText}>Login</Text>
+                <TouchableOpacity 
+                  style={[styles.button, isSubmitting && styles.buttonDisabled]} 
+                  onPress={() => handleSubmit()}
+                  disabled={isSubmitting}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.buttonText}>
+                    {isSubmitting ? 'Logging in...' : 'Login'}
+                  </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+                <TouchableOpacity onPress={handleSignupNavigation} activeOpacity={0.7}>
                   <Text style={styles.contentText}>New user? Go to Signup</Text>
                 </TouchableOpacity>
               </>

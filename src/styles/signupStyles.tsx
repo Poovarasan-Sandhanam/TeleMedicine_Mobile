@@ -20,18 +20,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
-    backgroundColor: COLORS.light,
-    color: COLORS.textDark,
+    backgroundColor: COLORS.white,
+    color: COLORS.text,
     fontSize: 16,
     borderRadius: 8,
     paddingHorizontal: 15,
     paddingVertical: 12,
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: COLORS.light,
+    borderColor: COLORS.border,
   },
   inputTextDate: {
-    color: COLORS.textDark,
+    color: COLORS.text,
     fontSize: 16,
   },
   placeholderText: {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   label: {
-    color: COLORS.textDark,
+    color: COLORS.text,
     marginTop: 10,
     marginBottom: 5,
     fontSize: 16,
@@ -79,21 +79,21 @@ const styles = StyleSheet.create({
   },
   radioLabel: {
     fontSize: 16,
-    color: COLORS.textDark,
+    color: COLORS.text,
   },
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.light,
+    backgroundColor: COLORS.white,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: COLORS.light,
+    borderColor: COLORS.border,
     marginBottom: 10,
     paddingHorizontal: 15,
   },
   passwordInput: {
     flex: 1,
-    color: COLORS.textDark,
+    color: COLORS.text,
     fontSize: 16,
     paddingVertical: 12,
   },
@@ -106,12 +106,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   buttonText: {
-    color: COLORS.light,
+    color: COLORS.white,
     fontWeight: '700',
     fontSize: 18,
   },
+
+  buttonDisabled: {
+    backgroundColor: COLORS.textLight,
+    opacity: 0.7,
+  },
   contentText: {
-    color: COLORS.textDark,
+    color: COLORS.text,
     fontSize: 14,
     textAlign: 'center',
     marginTop: 15,

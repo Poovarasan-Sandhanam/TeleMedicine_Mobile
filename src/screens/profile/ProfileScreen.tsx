@@ -9,11 +9,12 @@ import {
   Alert,
   SafeAreaView,
   ActivityIndicator,
+  KeyboardTypeOptions,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { launchImageLibrary, ImagePickerResponse } from 'react-native-image-picker';
 
-import styles from '../../styles/ProfileScreenStyle'; // externalized styles
+import styles from '../../styles/ProfileScreenStyle';
 import CustomDropdown from '../../components/CustomDropdown';
 import GoBackButton from '../../components/BackButton';
 import {
@@ -27,17 +28,80 @@ import {
 
 import { fetchProfile, updateProfile } from '../../redux/actions/profileActions';
 import { fetchDoctorTypes } from '../../redux/actions/doctorTypeActions';
+import { RootState } from '../../redux/store';
 
-const ProfileScreen = () => {
+interface ProfileImage {
+  uri: string;
+  type: string;
+  name: string;
+}
+
+interface FormData {
+  name: string;
+  dob: string;
+  age: string;
+  gender: string;
+  email: string;
+  contactNumber: string;
+  address: string;
+  bloodGroup: string;
+  weight: string;
+  height: string;
+  ongoingTreatment: string;
+  healthIssues: string;
+  specialized: string;
+  experience: string;
+  consultationTiming: string;
+  profileImage: ProfileImage | null;
+}
+
+interface Profile {
+  fullName?: string;
+  dob?: string;
+  gender?: string;
+  email?: string;
+  contactNo?: number;
+  address?: string;
+  bloodGroup?: string;
+  weight?: number;
+  height?: number;
+  ongoingTreatment?: string;
+  healthIssues?: string;
+  specialized?: string;
+  experience?: number;
+  consultationTiming?: string;
+  profileImage?: string;
+  isDoctor?: boolean;
+}
+
+const ProfileScreen: React.FC = () => {
   const dispatch = useDispatch();
 
-  const { profile, error } = useSelector((state) => state.profile);
-  const { doctorTypes, loading: doctorTypesLoading } = useSelector((state) => state.doctorTypes);
+  const { profile } = useSelector((state: RootState) => state.profile);
+  const { doctorTypes, loading: doctorTypesLoading } = useSelector((state: RootState) => state.doctorTypes);
 
-  const [formData, setFormData] = useState({});
-  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    dob: '',
+    age: '',
+    gender: '',
+    email: '',
+    contactNumber: '',
+    address: '',
+    bloodGroup: '',
+    weight: '',
+    height: '',
+    ongoingTreatment: '',
+    healthIssues: '',
+    specialized: '',
+    experience: '',
+    consultationTiming: '',
+    profileImage: null,
+  });
 
-  const calculateAge = useCallback((dob) => {
+  const [editMode, setEditMode] = useState<boolean>(false);
+
+  const calculateAge = useCallback((dob: string): string => {
     const birthDate = new Date(dob);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -49,8 +113,8 @@ const ProfileScreen = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchProfile());
-    dispatch(fetchDoctorTypes());
+    dispatch(fetchProfile() as any);
+    dispatch(fetchDoctorTypes() as any);
   }, [dispatch]);
 
   useEffect(() => {
@@ -71,41 +135,43 @@ const ProfileScreen = () => {
         specialized: profile.specialized || '',
         experience: profile.experience?.toString() || '',
         consultationTiming: profile.consultationTiming || '',
-        profileImage: profile.profileImage || null,
+        profileImage: profile.profileImage ? { uri: profile.profileImage, type: '', name: '' } : null,
       });
     }
   }, [profile, calculateAge]);
 
-
-
-  const handleChange = (key, value) => {
+  const handleChange = useCallback((key: keyof FormData, value: string) => {
     setFormData((prev) => ({
       ...prev,
       [key]: value,
       ...(key === 'dob' && { age: calculateAge(value) }),
     }));
-  };
+  }, [calculateAge]);
 
-
-  const handleImagePicker = () => {
-    launchImageLibrary({ mediaType: 'photo' }, (res) => {
-      if (res.assets?.length > 0) {
+  const handleImagePicker = useCallback(() => {
+    launchImageLibrary({ mediaType: 'photo' }, (res: ImagePickerResponse) => {
+      if (res.assets && res.assets.length > 0) {
         const img = res.assets[0];
-        handleChange('profileImage', {
-          uri: img.uri,
-          type: img.type,
-          name: img.fileName,
-        });
+        if (img.uri) {
+          setFormData((prev) => ({
+            ...prev,
+            profileImage: {
+              uri: img.uri,
+              type: img.type || '',
+              name: img.fileName || '',
+            },
+          }));
+        }
       }
     });
-  };
+  }, []);
 
-  const validate = () => {
+  const validate = useCallback((): boolean => {
     if (!formData.name || !formData.email || !formData.contactNumber) {
       Alert.alert('Error', 'Name, Email, and Contact Number are required.');
       return false;
     }
-    if (isNaN(formData.age) || Number(formData.age) <= 0) {
+    if (isNaN(Number(formData.age)) || Number(formData.age) <= 0) {
       Alert.alert('Error', 'Age must be a valid number.');
       return false;
     }
@@ -114,22 +180,22 @@ const ProfileScreen = () => {
       return false;
     }
     return true;
-  };
+  }, [formData]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (!validate()) return;
 
     const data = new FormData();
-    Object.keys(formData).forEach((key) => {
-      if (key === 'profileImage' && formData.profileImage?.uri) {
-        data.append('image', formData.profileImage);
+    Object.entries(formData).forEach(([key, value]) => {
+      if (key === 'profileImage' && value && typeof value === 'object' && 'uri' in value) {
+        data.append('image', value as any);
       } else {
-        data.append(key, formData[key]);
+        data.append(key, value as string);
       }
     });
 
     try {
-      const res = await dispatch(updateProfile(data));
+      const res = await dispatch(updateProfile(data) as any);
       if (res?.status) {
         Alert.alert('Success', 'Profile updated successfully');
         setEditMode(false);
@@ -139,7 +205,42 @@ const ProfileScreen = () => {
     } catch (err) {
       Alert.alert('Error', 'An unexpected error occurred.');
     }
-  };
+  }, [formData, validate, dispatch]);
+
+  const handleEditModeToggle = useCallback(() => {
+    setEditMode(true);
+  }, []);
+
+  const renderField = useCallback((
+    label: string,
+    key: keyof FormData,
+    isDropdown: boolean = false,
+    data: any = null,
+    keyboardType: KeyboardTypeOptions = 'default'
+  ) => (
+    <View style={styles.fieldRow} key={key}>
+      <Text style={styles.label}>{label}</Text>
+      {editMode ? (
+        isDropdown ? (
+          <CustomDropdown
+            data={data}
+            selectedValue={formData[key] as string}
+            onValueChange={(val) => handleChange(key, val as string)}
+            dropdownStyle={styles.dropdown}
+          />
+        ) : (
+          <TextInput
+            style={styles.input}
+            value={formData[key] as string}
+            onChangeText={(val) => handleChange(key, val)}
+            keyboardType={keyboardType}
+          />
+        )
+      ) : (
+        <Text style={styles.value}>{formData[key] || 'N/A'}</Text>
+      )}
+    </View>
+  ), [editMode, formData, handleChange]);
 
   if (!profile || doctorTypesLoading) {
     return (
@@ -149,48 +250,21 @@ const ProfileScreen = () => {
     );
   }
 
-  const renderField = (label, key, isDropdown = false, data = null, keyboardType = 'default') => (
-    <View style={styles.fieldRow}>
-      <Text style={styles.label}>{label}</Text>
-      {editMode ? (
-        isDropdown ? (
-          <CustomDropdown
-            data={data}
-            selectedValue={formData[key]}
-            onValueChange={(val) => handleChange(key, val)}
-            dropdownStyle={styles.dropdown}
-          />
-        ) : (
-          <TextInput
-            style={styles.input}
-            value={formData[key]}
-            onChangeText={(val) => handleChange(key, val)}
-            keyboardType={keyboardType}
-          />
-        )
-      ) : (
-        <Text style={styles.value}>{formData[key] || 'N/A'}</Text>
-      )}
-    </View>
-  );
-
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView contentContainerStyle={styles.container}>
-         <GoBackButton />
+      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+        <GoBackButton />
         <View style={styles.profileTop}>
           <Image
             source={
               formData.profileImage?.uri
                 ? { uri: formData.profileImage.uri }
-                : profile.profileImage
-                  ? { uri: profile.profileImage }
-                  : require('../../asset/profile.png')
+                : require('../../asset/profile.png')
             }
             style={styles.avatar}
           />
           {editMode && (
-            <TouchableOpacity onPress={handleImagePicker}>
+            <TouchableOpacity onPress={handleImagePicker} activeOpacity={0.7}>
               <Text style={styles.change}>Change Image</Text>
             </TouchableOpacity>
           )}
@@ -219,7 +293,11 @@ const ProfileScreen = () => {
           </>
         )}
 
-        <TouchableOpacity style={styles.btn} onPress={editMode ? handleSubmit : () => setEditMode(true)}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={editMode ? handleSubmit : handleEditModeToggle}
+          activeOpacity={0.8}
+        >
           <Text style={styles.btnText}>{editMode ? 'Save Changes' : 'Edit Profile'}</Text>
         </TouchableOpacity>
       </ScrollView>

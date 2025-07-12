@@ -1,11 +1,39 @@
 // components/CheckBox.js
 import React from 'react';
-import { TouchableOpacity, View, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, ViewStyle } from 'react-native';
 
-const CheckBox = ({ isChecked, onToggle }) => {
+interface CheckBoxProps {
+  isChecked: boolean;
+  onToggle: () => void;
+  style?: ViewStyle;
+  size?: number;
+  color?: string;
+  disabled?: boolean;
+}
+
+const CheckBox: React.FC<CheckBoxProps> = ({ 
+  isChecked, 
+  onToggle, 
+  style,
+  size = 20,
+  color = '#007bff',
+  disabled = false 
+}) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onToggle}>
-      <View style={[styles.box, isChecked && styles.checkedBox]} />
+    <TouchableOpacity 
+      style={[styles.container, style]} 
+      onPress={onToggle}
+      disabled={disabled}
+      activeOpacity={0.7}
+    >
+      <View 
+        style={[
+          styles.box, 
+          { width: size, height: size },
+          { borderColor: color },
+          isChecked && { backgroundColor: color }
+        ]} 
+      />
     </TouchableOpacity>
   );
 };
@@ -13,17 +41,15 @@ const CheckBox = ({ isChecked, onToggle }) => {
 const styles = StyleSheet.create({
   container: {
     marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   box: {
-    width: 20,
-    height: 20,
-    borderWidth: 1,
-    borderColor: '#000',
+    borderWidth: 2,
     borderRadius: 4,
     backgroundColor: '#fff',
-  },
-  checkedBox: {
-    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

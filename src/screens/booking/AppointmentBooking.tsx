@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { useDispatch, useSelector } from "react-redux";
 import { bookAppointment } from "../../redux/actions/appointmentActions";
 import {
@@ -25,36 +25,86 @@ import OptionDropdown from "../../components/OptionDropdown";
 import { MedicalConditionsEnum } from "../../utilis/enums";
 import styles from "../../styles/bookingStyle";
 
-const AppointmentBookingScreen = ({ navigation }) => {
-  const [healthIssue, setHealthIssue] = useState("");
-  const [checkupTiming, setCheckupTiming] = useState("");
-  const [doctorId, setDoctorId] = useState("");
-  const [notes, setNotes] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [formattedDate, setFormattedDate] = useState("");
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [bookedSlot, setBookedSlot] = useState(null);
+// TypeScript interfaces
+interface Doctor {
+  _id: string;
+  fullName: string;
+  gender: string;
+  dob: string;
+  contactNo: string;
+  email: string;
+  profileDetails?: {
+    specialized?: string;
+    consultationTiming?: string;
+  };
+}
+
+interface Slot {
+  slotTiming: string;
+  isBooked: boolean;
+}
+
+interface DoctorDetails {
+  slots: Slot[];
+}
+
+interface AppointmentData {
+  healthIssue: string;
+  checkupTiming: string;
+  doctor: string;
+  notes: string;
+  date: string;
+}
+
+interface RootState {
+  appointment: {
+    loading: boolean;
+    error: string | null;
+  };
+  doctors: {
+    doctors: Doctor[];
+    loading: boolean;
+    doctorDetails: DoctorDetails | null;
+    error: string | null;
+  };
+}
+
+interface NavigationProps {
+  navigation: {
+    navigate: (screen: string, params?: any) => void;
+  };
+}
+
+const AppointmentBookingScreen: React.FC<NavigationProps> = ({ navigation }) => {
+  const [healthIssue, setHealthIssue] = useState<string>("");
+  const [checkupTiming, setCheckupTiming] = useState<string>("");
+  const [doctorId, setDoctorId] = useState<string>("");
+  const [notes, setNotes] = useState<string>("");
+  const [date, setDate] = useState<Date>(new Date());
+  const [formattedDate, setFormattedDate] = useState<string>("");
+  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+  const [bookedSlot, setBookedSlot] = useState<string | null>(null);
 
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.appointment);
-  const { doctors, loading: doctorsLoading } = useSelector((state) => state.doctors);
+  const { loading, error } = useSelector((state: RootState) => state.appointment);
+  const { doctors, loading: doctorsLoading } = useSelector((state: RootState) => state.doctors);
   const {
     doctorDetails,
     loading: availabilityLoading,
     error: availabilityError,
-  } = useSelector((state) => state.doctors);
+  } = useSelector((state: RootState) => state.doctors);
 
   useEffect(() => {
-    dispatch(fetchAllDoctors());
+    dispatch(fetchAllDoctors() as any);
   }, [dispatch]);
 
-  const handleBooking = async () => {
+  const handleBooking = useCallback(async () => {
     if (!healthIssue || !checkupTiming || !doctorId || !formattedDate) {
       Alert.alert("Missing Fields", "Please fill in all required fields.");
       return;
     }
 
-    const appointmentData = {
+    const appointmentData: AppointmentData = {
       healthIssue,
       checkupTiming,
       doctor: doctorId,
@@ -63,26 +113,26 @@ const AppointmentBookingScreen = ({ navigation }) => {
     };
 
     try {
-      await dispatch(bookAppointment(appointmentData));
+      await dispatch(bookAppointment(appointmentData) as any);
       setBookedSlot(checkupTiming);
       Alert.alert("Success", "Your appointment has been booked.");
       navigation.navigate("MyBooking");
-    } catch (err) {
-      Alert.alert("Error", err.message || "Failed to book appointment.");
+    } catch (err: any) {
+      Alert.alert("Error", err?.message || "Failed to book appointment.");
     }
-  };
+  }, [healthIssue, checkupTiming, doctorId, formattedDate, notes, dispatch, navigation]);
 
-  const onDateChange = (event, selectedDate) => {
+  const onDateChange = useCallback((event: DateTimePickerEvent, selectedDate?: Date) => {
     setShowDatePicker(false);
     if (selectedDate) {
       setDate(selectedDate);
       setFormattedDate(selectedDate.toISOString().split("T")[0]);
     }
-  };
+  }, []);
 
-  const convertTo12HourFormat = (time) => {
+  const convertTo12HourFormat = useCallback((time: string): string => {
     const [start, end] = time.split("-");
-    const formatTime = (hour) => {
+    const formatTime = (hour: string): string => {
       let period = "AM";
       let h = parseInt(hour, 10);
       if (h >= 12) {
@@ -93,19 +143,23 @@ const AppointmentBookingScreen = ({ navigation }) => {
       return `${h} ${period}`;
     };
     return `${formatTime(start)} - ${formatTime(end)}`;
-  };
+  }, []);
 
-  const handleCheckAvailability = () => {
+  const handleCheckAvailability = useCallback(() => {
     if (doctorId && formattedDate) {
-      dispatch(fetchDoctorDetails(doctorId, formattedDate));
+      dispatch(fetchDoctorDetails(doctorId, formattedDate) as any);
     } else {
       Alert.alert("Select Required Fields", "Doctor and Date must be selected.");
     }
-  };
+  }, [doctorId, formattedDate, dispatch]);
 
-  const handleSlotSelection = (slotTiming) => {
+  const handleSlotSelection = useCallback((slotTiming: string) => {
     setCheckupTiming(slotTiming);
-  };
+  }, []);
+
+  const handleRetryFetchDoctors = useCallback(() => {
+    dispatch(fetchAllDoctors() as any);
+  }, [dispatch]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -139,31 +193,27 @@ const AppointmentBookingScreen = ({ navigation }) => {
 
           {/* DOCTOR DROPDOWN */}
           <View style={styles.formGroup}>
-            <Text style={styles.label}>Select Doctor *</Text>
             {doctorsLoading ? (
               <ActivityIndicator size="small" color={COLORS.primary} />
             ) : doctors.length === 0 ? (
               <View style={styles.emptyState}>
-                <Image
-                  source={{ uri: "https://cdn-icons-png.flaticon.com/512/3875/3875172.png" }}
-                  style={styles.emptyImage}
-                />
                 <Text style={styles.emptyText}>No doctors available.</Text>
                 <TouchableOpacity
                   style={styles.retryButton}
-                  onPress={() => dispatch(fetchAllDoctors())}
+                  onPress={handleRetryFetchDoctors}
                 >
                   <Text style={styles.retryText}>Retry</Text>
                 </TouchableOpacity>
               </View>
             ) : (
               <OptionDropdown
-                data={doctors.map((doc) => ({
+                data={doctors.map((doc: Doctor) => ({
                   label: doc.fullName,
                   value: doc._id,
                 }))}
                 selectedValue={doctorId}
                 onValueChange={setDoctorId}
+                label="Select Doctor *"
                 dropdownStyle={styles.dropdown}
               />
             )}
@@ -184,7 +234,7 @@ const AppointmentBookingScreen = ({ navigation }) => {
             <View style={styles.slotsContainer}>
               <Text style={styles.label}>Available Slots</Text>
               <View style={styles.slotsWrapper}>
-                {doctorDetails.slots.map((slot) => {
+                {doctorDetails.slots.map((slot: Slot) => {
                   const isDisabled = slot.isBooked || bookedSlot === slot.slotTiming;
                   return (
                     <TouchableOpacity
@@ -227,6 +277,7 @@ const AppointmentBookingScreen = ({ navigation }) => {
               data={MedicalConditionsEnum}
               selectedValue={healthIssue}
               onValueChange={setHealthIssue}
+              label="Select Health Issue"
               dropdownStyle={styles.dropdown}
             />
           </View>

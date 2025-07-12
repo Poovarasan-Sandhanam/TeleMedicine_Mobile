@@ -1,7 +1,17 @@
-import React from 'react';
-import { TextInput, Text, View, StyleSheet } from 'react-native';
+import React, { forwardRef } from 'react';
+import { TextInput, Text, View, StyleSheet, TextInputProps } from 'react-native';
 
-const CustomTextInput = ({
+interface CustomTextInputProps extends Omit<TextInputProps, 'style'> {
+  value: string;
+  onChangeText: (text: string) => void;
+  placeholder?: string;
+  error?: string;
+  style?: object;
+  inputStyle?: object;
+  placeholderTextColor?: string;
+}
+
+const CustomTextInput = forwardRef<TextInput, CustomTextInputProps>(({
   value,
   onChangeText,
   placeholder,
@@ -15,10 +25,12 @@ const CustomTextInput = ({
   maxLength,
   onFocus,
   onBlur,
-}) => {
+  ...restProps
+}, ref) => {
   return (
     <View style={[styles.container, style]}>
       <TextInput
+        ref={ref}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
@@ -26,15 +38,22 @@ const CustomTextInput = ({
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
         autoCapitalize={autoCapitalize}
-        style={[styles.input, error ? styles.inputError : null, inputStyle]}
+        style={[
+          styles.input, 
+          error ? styles.inputError : null, 
+          inputStyle
+        ]}
         maxLength={maxLength}
         onFocus={onFocus}
         onBlur={onBlur}
+        {...restProps}
       />
       {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
-};
+});
+
+CustomTextInput.displayName = 'CustomTextInput';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,6 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     backgroundColor: '#F3F3F3',
+    fontSize: 16,
   },
   inputError: {
     borderColor: 'red',
@@ -58,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomTextInput;
+export default CustomTextInput; 

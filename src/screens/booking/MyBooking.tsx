@@ -1,6 +1,6 @@
 // screens/BookingScreen.tsx
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -18,28 +18,57 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { fetchBookings } from '../../redux/actions/bookingActions';
 import styles from '../../styles/bookingScreenStyle';
 import COLORS from '../../constants/colors';
+import { RootState } from '../../redux/store';
+
+interface UserDetails {
+  fullName?: string;
+  contactNo?: string;
+}
+
+interface Booking {
+  _id: string;
+  status: string;
+  date: string;
+  checkupTiming?: string;
+  notes?: string;
+  userDetails?: UserDetails;
+}
 
 // Format checkup time range
-const formatTimeRange = (range) => {
+const formatTimeRange = (range: string): string => {
   const [start, end] = range.split('-').map(Number);
-  const format = (hour) => `${hour % 12 || 12}${hour >= 12 ? 'PM' : 'AM'}`;
+  const format = (hour: number): string => `${hour % 12 || 12}${hour >= 12 ? 'PM' : 'AM'}`;
   return `${format(start)} - ${format(end)}`;
 };
 
-const BookingScreen = () => {
+const MyBooking: React.FC = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { loading, bookings, error } = useSelector((state) => state.bookings);
+  const { loading, bookings, error } = useSelector((state: RootState) => state.bookings);
 
   useEffect(() => {
-    dispatch(fetchBookings());
-  }, []);
+    dispatch(fetchBookings() as any);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (error) Alert.alert('Error', error);
-  }, [error]);
+    if (error) {
+      Alert.alert('Error', error, [
+        {
+          text: 'OK',
+          onPress: () => {
+            // Optionally retry fetching bookings
+            dispatch(fetchBookings() as any);
+          },
+        },
+      ]);
+    }
+  }, [error, dispatch]);
 
-  const renderBooking = ({ item }) => {
+  const handlePaymentPress = useCallback((appointmentId: string) => {
+    (navigation as any).navigate('Payment', { appointmentId });
+  }, [navigation]);
+
+  const renderBooking = useCallback(({ item }: { item: Booking }) => {
     const showPay = item.status !== 'Success';
 
     return (
@@ -90,9 +119,8 @@ const BookingScreen = () => {
           {showPay && (
             <TouchableOpacity
               style={styles.payButton}
-              onPress={() =>
-                navigation.navigate('Payment', { appointmentId: item._id })
-              }
+              onPress={() => handlePaymentPress(item._id)}
+              activeOpacity={0.8}
             >
               <LinearGradient
                 colors={[COLORS.primary, COLORS.secondary]}
@@ -105,29 +133,44 @@ const BookingScreen = () => {
         </View>
       </View>
     );
-  };
+  }, [handlePaymentPress]);
+
+  const keyExtractor = useCallback((item: Booking) => item._id, []);
+
+  const renderEmptyComponent = useMemo(() => (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>No appointments found</Text>
+    </View>
+  ), []);
+
+  const renderLoadingComponent = useMemo(() => (
+    <View style={styles.loaderContainer}>
+      <ActivityIndicator size="large" color={COLORS.primary} />
+    </View>
+  ), []);
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.screenTitle}>Your Appointments</Text>
       {loading ? (
-        <View style={styles.loaderContainer}>
-          <ActivityIndicator size="large" color={COLORS.primary} />
-        </View>
+        renderLoadingComponent
       ) : bookings.length > 0 ? (
         <FlatList
           data={bookings}
-          keyExtractor={(item) => item._id}
+          keyExtractor={keyExtractor}
           renderItem={renderBooking}
           contentContainerStyle={styles.flatList}
+          showsVerticalScrollIndicator={false}
+          initialNumToRender={5}
+          maxToRenderPerBatch={10}
+          windowSize={10}
+          removeClippedSubviews={true}
         />
       ) : (
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>No appointments found</Text>
-        </View>
+        renderEmptyComponent
       )}
     </SafeAreaView>
   );
 };
 
-export default BookingScreen;
+export default MyBooking;

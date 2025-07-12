@@ -1,17 +1,43 @@
 // components/Input.js
 import React from 'react';
-import { TextInput, Text, StyleSheet, View } from 'react-native';
+import { TextInput, Text, StyleSheet, View, ViewStyle, TextStyle, TextInputProps } from 'react-native';
 
-const Input = ({ placeholder, value, onChangeText, error, secureTextEntry, style }) => {
+interface InputProps extends Omit<TextInputProps, 'style'> {
+  placeholder: string;
+  value: string;
+  onChangeText: (text: string) => void;
+  error?: string;
+  style?: ViewStyle;
+  label?: string;
+}
+
+const Input: React.FC<InputProps> = ({ 
+  placeholder, 
+  value, 
+  onChangeText, 
+  error, 
+  secureTextEntry, 
+  style,
+  label,
+  ...restProps 
+}) => {
   return (
-    <View>
+    <View style={styles.container}>
+      {label && <Text style={styles.label}>{label}</Text>}
       <TextInput
-        style={[styles.input, error ? styles.inputError : null, style]}
+        style={[
+          styles.input, 
+          error ? styles.inputError : null, 
+          style
+        ]}
         placeholder={placeholder}
         placeholderTextColor="#aaa"
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
+        autoCapitalize="none"
+        autoCorrect={false}
+        {...restProps}
       />
       {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
@@ -19,22 +45,32 @@ const Input = ({ placeholder, value, onChangeText, error, secureTextEntry, style
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginVertical: 8,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 4,
+  },
   input: {
     height: 50,
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#ddd',
     borderRadius: 8,
-    paddingHorizontal: 10,
-    marginVertical: 8,
-    backgroundColor: '#F3F3F3',
+    paddingHorizontal: 15,
+    backgroundColor: '#fff',
+    fontSize: 16,
   },
   inputError: {
-    borderColor: 'red',
+    borderColor: '#ff4444',
   },
   errorText: {
-    color: 'red',
+    color: '#ff4444',
     fontSize: 12,
-    marginBottom: 5,
+    marginTop: 4,
+    marginLeft: 4,
   },
 });
 

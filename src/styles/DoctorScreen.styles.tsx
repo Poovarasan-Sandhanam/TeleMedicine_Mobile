@@ -66,6 +66,24 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 60,
   },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 40,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 40,
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: COLORS.textLight,
+    textAlign: "center",
+  },
 });
 
 export default styles;

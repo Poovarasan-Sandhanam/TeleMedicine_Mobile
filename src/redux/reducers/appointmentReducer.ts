@@ -1,12 +1,23 @@
-import { BOOK_APPOINTMENT, SET_APPOINTMENT_LOADING, SET_APPOINTMENT_ERROR } from '../actions/appointmentActions';
+import { 
+  BOOK_APPOINTMENT, 
+  SET_APPOINTMENT_LOADING, 
+  SET_APPOINTMENT_ERROR,
+  AppointmentActionTypes 
+} from '../actions/appointmentActions';
 
-const initialState = {
+interface AppointmentState {
+  appointment: any | null;
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: AppointmentState = {
   appointment: null,
   loading: false,
   error: null,
 };
 
-const appointmentReducer = (state = initialState, action) => {
+const appointmentReducer = (state: AppointmentState = initialState, action: AppointmentActionTypes): AppointmentState => {
   switch (action.type) {
     case SET_APPOINTMENT_LOADING:
       return {
@@ -29,4 +40,4 @@ const appointmentReducer = (state = initialState, action) => {
   }
 };
 
-export default appointmentReducer;
+export default appointmentReducer; 
