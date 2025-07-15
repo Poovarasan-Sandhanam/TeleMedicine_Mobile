@@ -8,7 +8,6 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
-  Image,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
@@ -25,7 +24,6 @@ import OptionDropdown from "../../components/OptionDropdown";
 import { MedicalConditionsEnum } from "../../utilis/enums";
 import styles from "../../styles/bookingStyle";
 
-// TypeScript interfaces
 interface Doctor {
   _id: string;
   fullName: string;
@@ -76,6 +74,7 @@ interface NavigationProps {
 }
 
 const AppointmentBookingScreen: React.FC<NavigationProps> = ({ navigation }) => {
+  const [symptomText, setSymptomText] = useState("");
   const [healthIssue, setHealthIssue] = useState<string>("");
   const [checkupTiming, setCheckupTiming] = useState<string>("");
   const [doctorId, setDoctorId] = useState<string>("");
@@ -84,6 +83,7 @@ const AppointmentBookingScreen: React.FC<NavigationProps> = ({ navigation }) => 
   const [formattedDate, setFormattedDate] = useState<string>("");
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [bookedSlot, setBookedSlot] = useState<string | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
 
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state: RootState) => state.appointment);
@@ -161,6 +161,36 @@ const AppointmentBookingScreen: React.FC<NavigationProps> = ({ navigation }) => 
     dispatch(fetchAllDoctors() as any);
   }, [dispatch]);
 
+  const handleAISymptomSuggest = useCallback(async () => {
+    if (!symptomText.trim()) {
+      Alert.alert("Input Required", "Please enter your symptoms.");
+      return;
+    }
+
+    try {
+      setAiLoading(true);
+
+      // Replace this with your actual AI endpoint
+      const response = await fetch("https://your-backend.com/api/ai/suggest-condition", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ symptoms: symptomText }),
+      });
+
+      const data = await response.json();
+
+      if (data?.condition) {
+        setHealthIssue(data.condition);
+      } else {
+        Alert.alert("AI Error", "Could not determine health issue.");
+      }
+    } catch (error) {
+      Alert.alert("Error", "Failed to fetch suggestion from AI.");
+    } finally {
+      setAiLoading(false);
+    }
+  }, [symptomText]);
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -219,7 +249,7 @@ const AppointmentBookingScreen: React.FC<NavigationProps> = ({ navigation }) => 
             )}
           </View>
 
-          {/* CHECK AVAILABILITY BUTTON */}
+          {/* CHECK AVAILABILITY */}
           <TouchableOpacity
             style={styles.checkButton}
             onPress={handleCheckAvailability}
@@ -227,7 +257,7 @@ const AppointmentBookingScreen: React.FC<NavigationProps> = ({ navigation }) => 
             <Text style={styles.checkButtonText}>Check Availability</Text>
           </TouchableOpacity>
 
-          {/* AVAILABLE SLOTS */}
+          {/* SLOTS */}
           {availabilityLoading ? (
             <ActivityIndicator size="small" color={COLORS.primary} />
           ) : doctorDetails?.slots ? (
@@ -263,14 +293,29 @@ const AppointmentBookingScreen: React.FC<NavigationProps> = ({ navigation }) => 
             </View>
           ) : null}
 
-          {/* SELECTED SLOT */}
-          {checkupTiming ? (
-            <Text style={styles.selectedSlot}>
-              Selected Slot: {convertTo12HourFormat(checkupTiming)}
-            </Text>
-          ) : null}
+          {/* SYMPTOM INPUT + AI */}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Describe Your Symptoms</Text>
+            <TextInput
+              style={styles.textArea}
+              value={symptomText}
+              onChangeText={setSymptomText}
+              placeholder="e.g. I have had a sore throat and headache for 2 days"
+              multiline
+            />
+            <TouchableOpacity
+              style={styles.aiButton}
+              onPress={handleAISymptomSuggest}
+            >
+              {aiLoading ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text style={styles.aiButtonText}>Suggest Condition</Text>
+              )}
+            </TouchableOpacity>
+          </View>
 
-          {/* HEALTH ISSUE DROPDOWN */}
+          {/* HEALTH ISSUE */}
           <View style={styles.formGroup}>
             <Text style={styles.label}>Health Issue *</Text>
             <CustomDropdown
@@ -294,7 +339,7 @@ const AppointmentBookingScreen: React.FC<NavigationProps> = ({ navigation }) => 
             />
           </View>
 
-          {/* SUBMIT BUTTON */}
+          {/* BOOK */}
           {loading ? (
             <ActivityIndicator size="large" color={COLORS.primary} />
           ) : (
@@ -306,7 +351,7 @@ const AppointmentBookingScreen: React.FC<NavigationProps> = ({ navigation }) => 
             </TouchableOpacity>
           )}
 
-          {/* ERROR DISPLAY */}
+          {/* ERRORS */}
           {error && <Text style={styles.errorText}>Error: {error}</Text>}
           {availabilityError && (
             <Text style={styles.errorText}>
