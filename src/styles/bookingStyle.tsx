@@ -160,6 +160,18 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontWeight: "600",
   },
+  aiButton: {
+  backgroundColor: COLORS.primary,
+  padding: 12,
+  marginTop: 10,
+  borderRadius: 8,
+  alignItems: "center",
+},
+aiButtonText: {
+  color: "#fff",
+  fontWeight: "600",
+},
+
 });
 
 export default styles;

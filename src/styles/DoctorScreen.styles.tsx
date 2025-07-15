@@ -19,19 +19,34 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   cardContainer: {
-    backgroundColor: COLORS.card,
-    borderRadius: 16,
-    marginBottom: 20,
-    padding: 18,
-    shadowColor: COLORS.shadow,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  card: {
-    marginBottom: 12,
-  },
+  flex:1,
+  flexDirection:"row",
+  backgroundColor: COLORS.card,
+  borderRadius: 16,
+  marginBottom: 20,
+  padding: 18,
+  shadowColor: COLORS.shadow,
+  shadowOffset: { width: 0, height: 4 },
+  shadowOpacity: 0.15,
+  shadowRadius: 8,
+  elevation: 4,
+},
+
+card: {
+  flex:0.65,
+  marginBottom: 16, // space between card and section
+},
+
+section: {
+  flex:0.35,
+alignSelf:"center"
+},
+cardImage: {
+  width: "100%",
+  height: 120,
+  borderRadius: 10,
+  marginBottom: 12,
+},
   name: {
     fontSize: 22,
     fontWeight: "700",
@@ -49,11 +64,13 @@ const styles = StyleSheet.create({
     color: COLORS.textLight,
   },
   button: {
+    width:"90%",
+    bottom:25,
     backgroundColor: COLORS.primary,
-    paddingVertical: 12,
+    paddingVertical:20,
     borderRadius: 10,
     alignItems: "center",
-    marginTop: 8,
+    alignSelf:"center"
   },
   buttonText: {
     color: COLORS.white,

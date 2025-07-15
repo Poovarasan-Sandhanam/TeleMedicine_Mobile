@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Alert,
   ActivityIndicator,
+  Image,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllDoctors } from "../../redux/actions/doctorActions";
@@ -47,12 +48,8 @@ interface NavigationProps {
   };
 }
 
-const DoctorCard: React.FC<DoctorCardProps> = ({ doctor, onBook }) => {
+const DoctorCard: React.FC<DoctorCardProps> = ({ doctor}) => {
   const { fullName, gender, dob, contactNo, email, profileDetails = {} } = doctor;
-
-  const handleBookPress = useCallback(() => {
-    onBook(doctor._id);
-  }, [doctor._id, onBook]);
 
   return (
     <View style={styles.cardContainer}>
@@ -77,10 +74,14 @@ const DoctorCard: React.FC<DoctorCardProps> = ({ doctor, onBook }) => {
           Timing: <Text style={styles.value}>{profileDetails.consultationTiming || "N/A"}</Text>
         </Text>
       </View>
+      <View style={styles.section}>
+         <Image
+    source={{ uri: `https://picsum.photos/200/120?random=${doctor._id}` }}
+    style={styles.cardImage}
+    resizeMode="cover"
+  />
 
-      <TouchableOpacity style={styles.button} onPress={handleBookPress}>
-        <Text style={styles.buttonText}>Book Appointment</Text>
-      </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -89,39 +90,38 @@ const DoctorScreen: React.FC<NavigationProps> = ({ navigation }) => {
   const dispatch = useDispatch();
   const { doctors, error, loading = false } = useSelector((state: RootState) => state.doctors);
 
-  // Memoized book handler
+  // Book handler for individual doctor cards
   const handleBook = useCallback((doctorId: string) => {
     navigation.navigate("AppointmentBooking", { doctorId });
   }, [navigation]);
 
-  // Memoized render item function
+  // Book handler for global button below the list
+  const handleBookPress = useCallback(() => {
+    navigation.navigate("AppointmentBooking"); // No doctorId passed
+  }, [navigation]);
+
   const renderDoctorItem = useCallback(({ item }: { item: Doctor }) => (
     <DoctorCard doctor={item} onBook={handleBook} />
   ), [handleBook]);
 
-  // Memoized empty component
   const renderEmptyComponent = useMemo(() => (
     <View style={styles.emptyContainer}>
       <Text style={styles.empty}>No doctors found. Please try again later.</Text>
     </View>
   ), []);
 
-  // Memoized key extractor
   const keyExtractor = useCallback((item: Doctor) => item._id, []);
 
-  // Fetch doctors on component mount
   useEffect(() => {
     dispatch(fetchAllDoctors() as any);
   }, [dispatch]);
 
-  // Handle error alerts
   useEffect(() => {
     if (error) {
       Alert.alert("Error", error, [
         {
           text: "OK",
           onPress: () => {
-            // Optionally retry fetching doctors
             dispatch(fetchAllDoctors() as any);
           },
         },
@@ -139,18 +139,25 @@ const DoctorScreen: React.FC<NavigationProps> = ({ navigation }) => {
           <Text style={styles.loadingText}>Loading doctors...</Text>
         </View>
       ) : (
-        <FlatList
-          data={doctors}
-          keyExtractor={keyExtractor}
-          contentContainerStyle={styles.list}
-          renderItem={renderDoctorItem}
-          ListEmptyComponent={renderEmptyComponent}
-          showsVerticalScrollIndicator={false}
-          initialNumToRender={5}
-          maxToRenderPerBatch={10}
-          windowSize={10}
-          removeClippedSubviews={true}
-        />
+        <>
+          <FlatList
+            data={doctors}
+            keyExtractor={keyExtractor}
+            contentContainerStyle={styles.list}
+            renderItem={renderDoctorItem}
+            ListEmptyComponent={renderEmptyComponent}
+            showsVerticalScrollIndicator={false}
+            initialNumToRender={5}
+            maxToRenderPerBatch={10}
+            windowSize={10}
+            removeClippedSubviews
+          />
+
+          {/* Button BELOW the doctor list */}
+          <TouchableOpacity style={styles.button} onPress={handleBookPress}>
+            <Text style={styles.buttonText}>Book Appointment</Text>
+          </TouchableOpacity>
+        </>
       )}
     </SafeAreaView>
   );
