@@ -55,7 +55,7 @@ export const fetchAppointments = (date: string) => async (dispatch: Dispatch<App
       params: { date },
     });
 
-    console.log(response.data.data, "API Response");
+    // console.log(response.data.data, "API Response");
     dispatch(fetchAppointmentsSuccess(response.data.data));
   } catch (error: any) {
     console.error(error, "Fetch Appointments Error");

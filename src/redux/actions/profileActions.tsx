@@ -11,6 +11,14 @@ export const fetchProfile = () => async (dispatch) => {
     const headers = { Authorization: `Bearer ${token}` };
     const response = await api.get('/profile/get-profile', { headers });
 
+    const user = response.data.data;
+
+    await AsyncStorage.setItem('user', JSON.stringify({
+      name: user.name,
+      email: user.email,
+      avatar: user.profileImage || null,
+    }));
+
     dispatch({
       type: FETCH_PROFILE_SUCCESS,
       payload: response.data.data,
@@ -27,7 +35,7 @@ export const updateProfile = (formData) => async (dispatch) => {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'multipart/form-data',
     };
-    const response = await api.post('/profile/update-profile', formData, { headers });
+    const response = await api.put('/profile/update-profile', formData, { headers });
 
     dispatch({
       type: UPDATE_PROFILE_SUCCESS,

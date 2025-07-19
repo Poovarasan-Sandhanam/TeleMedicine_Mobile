@@ -182,30 +182,42 @@ const ProfileScreen: React.FC = () => {
     return true;
   }, [formData]);
 
-  const handleSubmit = useCallback(async () => {
-    if (!validate()) return;
+const handleSubmit = useCallback(async () => {
+  if (!validate()) return;
 
-    const data = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (key === 'profileImage' && value && typeof value === 'object' && 'uri' in value) {
-        data.append('image', value as any);
-      } else {
-        data.append(key, value as string);
-      }
-    });
+  const data = new FormData();
+  
+  // Append profileImage first
+  if (formData.profileImage && formData.profileImage.uri) {
+    data.append('profileImage', {
+      uri: formData.profileImage.uri,
+      type: formData.profileImage.type || 'image/jpeg', // fallback type
+      name: formData.profileImage.name || 'profile.jpg',
+    } as any); // 'as any' needed for React Native FormData compatibility
+  }
 
-    try {
-      const res = await dispatch(updateProfile(data) as any);
-      if (res?.status) {
-        Alert.alert('Success', 'Profile updated successfully');
-        setEditMode(false);
-      } else {
-        Alert.alert('Error', res?.message || 'Update failed');
-      }
-    } catch (err) {
-      Alert.alert('Error', 'An unexpected error occurred.');
+
+  // Append other fields
+  Object.entries(formData).forEach(([key, value]) => {
+    if (key !== 'profileImage') {
+      data.append(key, value);
     }
-  }, [formData, validate, dispatch]);
+  });
+
+  try {
+    const res = await dispatch(updateProfile(data) as any);
+    
+    if (res?.status) {
+      Alert.alert('Success', 'Profile updated successfully');
+      setEditMode(false);
+    } else {
+      Alert.alert('Error', res?.message || 'Update mmmfailed');
+    }
+  } catch (err) {
+    Alert.alert('Error', 'An unexpected error occurred.');
+  }
+}, [formData, validate, dispatch]);
+
 
   const handleEditModeToggle = useCallback(() => {
     setEditMode(true);
@@ -257,12 +269,16 @@ const ProfileScreen: React.FC = () => {
         <View style={styles.profileTop}>
           <Image
             source={
-              formData.profileImage?.uri
-                ? { uri: formData.profileImage.uri }
-                : require('../../asset/profile.png')
+              typeof formData.profileImage === 'object' && formData.profileImage?.uri
+                ? { uri: formData.profileImage.uri } // new image selected from picker
+                : typeof formData.profileImage === 'string' && formData.profileImage !== ''
+                  ? { uri: formData.profileImage }   // existing image from S3 URL
+                  : require('../../asset/profile.png') // fallback default
             }
             style={styles.avatar}
           />
+
+
           {editMode && (
             <TouchableOpacity onPress={handleImagePicker} activeOpacity={0.7}>
               <Text style={styles.change}>Change Image</Text>
