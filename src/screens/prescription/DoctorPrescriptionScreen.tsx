@@ -10,15 +10,15 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { useRoute } from '@react-navigation/native';
-import { addPrescription } from '../../redux/actions/prescriptionActions';
+import { addPrescription } from '../../redux/slices/prescriptionSlice';
 
 const PrescriptionForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const route = useRoute();
   const { patientId, doctorId } = route.params || {};
-  const { loading, error } = useSelector((state) => state.prescription);
+  const { loading, error } = useAppSelector((state: any) => state.prescription);
 
   const [formData, setFormData] = useState({
     patientId: patientId || '',

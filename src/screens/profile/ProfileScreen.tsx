@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
   KeyboardTypeOptions,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { launchImageLibrary, ImagePickerResponse } from 'react-native-image-picker';
 
 import styles from '../../styles/ProfileScreenStyle';
@@ -26,9 +26,8 @@ import {
   WeightEnum,
 } from '../../utilis/enums';
 
-import { fetchProfile, updateProfile } from '../../redux/actions/profileActions';
-import { fetchDoctorTypes } from '../../redux/actions/doctorTypeActions';
-import { RootState } from '../../redux/store';
+import { fetchProfile, updateProfile } from '../../redux/slices/profileSlice';
+import { fetchDoctorTypes } from '../../redux/slices/doctorTypeSlice';
 
 interface ProfileImage {
   uri: string;
@@ -75,10 +74,10 @@ interface Profile {
 }
 
 const ProfileScreen: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { profile } = useSelector((state: RootState) => state.profile);
-  const { doctorTypes, loading: doctorTypesLoading } = useSelector((state: RootState) => state.doctorTypes);
+  const { profile } = useAppSelector((state: any) => state.profile);
+  const { doctorTypes, loading: doctorTypesLoading } = useAppSelector((state: any) => state.doctorTypes);
 
   const [formData, setFormData] = useState<FormData>({
     name: '',

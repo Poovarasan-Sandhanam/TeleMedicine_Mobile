@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../redux/hooks';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -26,7 +26,7 @@ import DoctorPayment from '../screens/payment/DoctorPayment';
 import PaitentPayment from '../screens/payment/PaitentPayment';
 import PaitentPrescriptionScreen from '../screens/prescription/PaitentPrescriptionScreen';
 
-import { login } from '../redux/actions/authActions';
+import { login } from '../redux/slices/authSlice';
 import COLORS from "../constants/colors";
 import CustomDrawerContent from '../components/CustomDrawerContent';
 
@@ -189,7 +189,7 @@ const DrawerNavigator: React.FC = () => (
 );
 
 const AppNavigator: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {

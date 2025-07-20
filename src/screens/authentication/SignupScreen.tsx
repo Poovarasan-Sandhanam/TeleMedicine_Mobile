@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
   Alert,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { Formik, FormikHelpers } from 'formik';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import Toast from 'react-native-toast-message';
@@ -19,9 +19,8 @@ import Toast from 'react-native-toast-message';
 import SignupSchema, { SignupFormData } from '../../validation/signupSchema';
 import PasswordVisibilityToggle from '../../components/PasswordVisibilityToggle';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { signup } from '../../redux/actions/authActions';
+import { signup } from '../../redux/slices/authSlice';
 import styles from '../../styles/signupStyles';
-import { RootState } from '../../redux/store';
 
 interface RadioOption {
   label: string;
@@ -62,8 +61,8 @@ const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ options, selectedVa
 );
 
 const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const { error, loading } = useSelector((state: RootState) => state.auth);
+  const dispatch = useAppDispatch();
+  const { error, loading } = useAppSelector((state: any) => state.auth);
 
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
 

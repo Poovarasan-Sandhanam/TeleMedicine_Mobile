@@ -10,12 +10,12 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { fetchBookings } from '../../redux/actions/bookingActions';
+import { fetchBookings } from '../../redux/slices/bookingSlice';
 import styles from '../../styles/bookingScreenStyle';
 import COLORS from '../../constants/colors';
 import { RootState } from '../../redux/store';
@@ -42,9 +42,9 @@ const formatTimeRange = (range: string): string => {
 };
 
 const MyBooking: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigation = useNavigation();
-  const { loading, bookings, error } = useSelector((state: RootState) => state.bookings);
+  const { loading, bookings, error } = useAppSelector((state: any) => state.bookings);
 
   useEffect(() => {
     dispatch(fetchBookings() as any);

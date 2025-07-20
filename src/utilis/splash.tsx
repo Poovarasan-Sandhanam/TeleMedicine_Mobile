@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDispatch } from "react-redux";
-import { login } from "../redux/actions/authActions";
+import { useAppDispatch } from "../redux/hooks";
+import { login } from "../redux/slices/authSlice";
 
 interface SplashScreenProps {
   navigation: {
@@ -17,7 +17,7 @@ interface UserData {
 }
 
 const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {

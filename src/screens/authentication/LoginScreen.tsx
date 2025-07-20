@@ -12,14 +12,13 @@ import {
   Platform,
   Alert,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { Formik, FormikHelpers } from 'formik';
-import { login } from '../../redux/actions/authActions';
+import { login } from '../../redux/slices/authSlice';
 import PasswordVisibilityToggle from '../../components/PasswordVisibilityToggle';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import styles from '../../styles/loginStyles';
 import LoginSchema, { LoginFormData } from '../../validation/loginSchema';
-import { RootState } from '../../redux/store';
 
 interface LoginScreenProps {
   navigation: {
@@ -29,8 +28,8 @@ interface LoginScreenProps {
 }
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const { user, error, loading } = useSelector((state: RootState) => state.auth);
+  const dispatch = useAppDispatch();
+  const { user, error, loading } = useAppSelector((state: any) => state.auth);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handlePasswordToggle = useCallback(() => {
@@ -43,7 +42,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 
   const handleSubmit = useCallback(async (values: LoginFormData, { setSubmitting }: FormikHelpers<LoginFormData>) => {
     try {
-      await dispatch(login(values.email, values.password) as any);
+      await dispatch(login({ email: values.email, password: values.password }));
     } catch (err) {
       Alert.alert('Login Error', 'Failed to login. Please try again.');
     } finally {
