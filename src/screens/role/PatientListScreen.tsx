@@ -9,8 +9,8 @@ import {
   Animated,
   Platform,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAppointments } from "../../redux/actions/appointmentRecordActions";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { fetchAppointments } from "../../redux/slices/appointmentRecordSlice";
 import moment, { Moment } from "moment";
 import styles from "../../styles/appointmentScreen.styles";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -48,10 +48,10 @@ const AppointmentScreen: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Moment>(moment().startOf("day"));
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { loading, appointmentRec = [], error } = useSelector(
-    (state: RootState) => state.appointmentRec
+  const { loading, appointmentRec = [], error } = useAppSelector(
+    (state: any) => state.appointmentRec
   );
 
   const scaleAnim = useRef(new Animated.Value(1)).current;

@@ -12,12 +12,12 @@ import {
   Platform,
 } from "react-native";
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
-import { useDispatch, useSelector } from "react-redux";
-import { bookAppointment } from "../../redux/actions/appointmentActions";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { bookAppointment } from "../../redux/slices/appointmentSlice";
 import {
   fetchAllDoctors,
   fetchDoctorDetails,
-} from "../../redux/actions/doctorActions";
+} from "../../redux/slices/doctorSlice";
 import COLORS from "../../utilis/colors";
 import CustomDropdown from "../../components/CustomDropdown";
 import OptionDropdown from "../../components/OptionDropdown";
@@ -85,14 +85,14 @@ const AppointmentBookingScreen: React.FC<NavigationProps> = ({ navigation }) => 
   const [bookedSlot, setBookedSlot] = useState<string | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
 
-  const dispatch = useDispatch();
-  const { loading, error } = useSelector((state: RootState) => state.appointment);
-  const { doctors, loading: doctorsLoading } = useSelector((state: RootState) => state.doctors);
+  const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector((state: any) => state.appointment);
+  const { doctors, loading: doctorsLoading } = useAppSelector((state: any) => state.doctors);
   const {
     doctorDetails,
     loading: availabilityLoading,
     error: availabilityError,
-  } = useSelector((state: RootState) => state.doctors);
+  } = useAppSelector((state: any) => state.doctors);
 
   useEffect(() => {
     dispatch(fetchAllDoctors() as any);

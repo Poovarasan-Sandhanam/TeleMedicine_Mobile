@@ -12,8 +12,8 @@ import {
   PermissionsAndroid,
   Platform,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { getPrescriptions } from "../../redux/actions/getPrescriptionActions";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { getPrescriptions } from "../../redux/slices/prescriptionsSlice";
 // @ts-ignore
 import RNHTMLtoPDF from "react-native-html-to-pdf";
 import Share from "react-native-share";
@@ -38,8 +38,8 @@ interface Prescription {
 }
 
 const PatientPrescriptionScreen: React.FC = () => {
-  const dispatch = useDispatch();
-  const { loading, data = [], error } = useSelector((state: RootState) => state.prescriptions || {});
+  const dispatch = useAppDispatch();
+  const { loading, data = [], error } = useAppSelector((state: any) => state.prescriptions || {});
 
   useEffect(() => {
     dispatch(getPrescriptions() as any);

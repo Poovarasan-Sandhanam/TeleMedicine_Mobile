@@ -9,8 +9,8 @@ import {
   ActivityIndicator,
   Image,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAllDoctors } from "../../redux/actions/doctorActions";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { fetchAllDoctors } from "../../redux/slices/doctorSlice";
 import styles from "../../styles/DoctorScreen.styles";
 
 // TypeScript interfaces
@@ -87,8 +87,8 @@ const DoctorCard: React.FC<DoctorCardProps> = ({ doctor}) => {
 };
 
 const DoctorScreen: React.FC<NavigationProps> = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const { doctors, error, loading = false } = useSelector((state: RootState) => state.doctors);
+  const dispatch = useAppDispatch();
+  const { doctors, error, loading = false } = useAppSelector((state: any) => state.doctors);
 
   // Book handler for individual doctor cards
   const handleBook = useCallback((doctorId: string) => {
