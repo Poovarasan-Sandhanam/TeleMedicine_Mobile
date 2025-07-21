@@ -171,6 +171,20 @@ aiButtonText: {
   color: "#fff",
   fontWeight: "600",
 },
+  resultBox: {
+    backgroundColor: COLORS.white,
+    borderRadius: 8,
+    padding: 16,
+    marginTop: 12,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    shadowColor: COLORS.shadow,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+    elevation: 1,
+  },
 
 });
 

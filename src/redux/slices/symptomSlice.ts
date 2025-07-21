@@ -1,54 +1,52 @@
-import { createSlice } from '@reduxjs/toolkit';
 
-// Types
-interface SymptomState {
-  symptoms: any[];
-  loading: boolean;
-  error: string | null;
-}
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import api from '../../utilis/api';
 
-const initialState: SymptomState = {
-  symptoms: [],
-  loading: false,
-  error: null,
-};
+export const checkSymptoms = createAsyncThunk(
+  'symptom/checkSymptoms',
+  async (symptoms, thunkAPI) => {
+    try {
+      const response = await api.post('/ai/symptom-check', { symptoms });
+      return response.data;
+    } catch (error) {
+      const message =
+        error?.response?.data?.message || error.message || 'Unexpected error';
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
-// Slice
 const symptomSlice = createSlice({
   name: 'symptom',
-  initialState,
+  initialState: {
+    symptoms: '',
+    possibleConditions: [],
+    recommendedDoctor: '',
+    status: 'idle',
+    error: null,
+  },
   reducers: {
-    setSymptoms: (state, action) => {
+    setSymptoms(state, action) {
       state.symptoms = action.payload;
     },
-    addSymptom: (state, action) => {
-      state.symptoms.push(action.payload);
-    },
-    removeSymptom: (state, action) => {
-      state.symptoms = state.symptoms.filter(symptom => symptom.id !== action.payload);
-    },
-    clearSymptoms: (state) => {
-      state.symptoms = [];
-    },
-    setSymptomLoading: (state, action) => {
-      state.loading = action.payload;
-    },
-    setSymptomError: (state, action) => {
-      state.error = action.payload;
-    },
-    clearSymptomError: (state) => {
-      state.error = null;
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(checkSymptoms.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(checkSymptoms.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.possibleConditions = action.payload.possible_conditions || [];
+        state.recommendedDoctor = action.payload.recommended_doctor || '';
+      })
+      .addCase(checkSymptoms.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload || 'Failed to fetch conditions';
+      });
   },
 });
 
-export const { 
-  setSymptoms, 
-  addSymptom, 
-  removeSymptom, 
-  clearSymptoms, 
-  setSymptomLoading, 
-  setSymptomError, 
-  clearSymptomError 
-} = symptomSlice.actions;
-export default symptomSlice.reducer; 
+export const { setSymptoms } = symptomSlice.actions;
+export default symptomSlice.reducer;
