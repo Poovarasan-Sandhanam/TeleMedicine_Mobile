@@ -42,9 +42,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 
   const handleSubmit = useCallback(async (values: LoginFormData, { setSubmitting }: FormikHelpers<LoginFormData>) => {
     try {
-      await dispatch(login({ email: values.email, password: values.password }));
-    } catch (err) {
-      Alert.alert('Login Error', 'Failed to login. Please try again.');
+      await dispatch(login({ email: values.email, password: values.password })).unwrap();
+    } catch (err: any) {
+      console.log('Login error:', err);
+      Alert.alert('Login Error', err?.message || 'Failed to login. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -131,13 +132,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
                 {error && <Text style={styles.errorText}>{error}</Text>}
 
                 <TouchableOpacity 
-                  style={[styles.button, isSubmitting && styles.buttonDisabled]} 
+                  style={[styles.button, (isSubmitting || loading) && styles.buttonDisabled]} 
                   onPress={() => handleSubmit()}
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || loading}
                   activeOpacity={0.8}
                 >
                   <Text style={styles.buttonText}>
-                    {isSubmitting ? 'Logging in...' : 'Login'}
+                    {(isSubmitting || loading) ? 'Logging in...' : 'Login'}
                   </Text>
                 </TouchableOpacity>
 

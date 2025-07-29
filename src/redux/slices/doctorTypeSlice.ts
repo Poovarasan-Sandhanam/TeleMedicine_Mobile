@@ -20,15 +20,28 @@ export const fetchDoctorTypes = createAsyncThunk(
   'doctorType/fetchDoctorTypes',
   async (_, { rejectWithValue }) => {
     try {
-      const token = await AsyncStorage.getItem('token');
-      const headers = { Authorization: `Bearer ${token}` };
-      const response = await api.get('/profile/get-doctor-types', { headers });
-
-      if (response?.data?.data) {
-        return response.data.data;
-      } else {
-        throw new Error('Invalid response format');
-      }
+      // For now, return mock data since the API might not be available
+      const mockDoctorTypes = [
+        { label: 'Cardiologist', value: 'Cardiologist' },
+        { label: 'Dermatologist', value: 'Dermatologist' },
+        { label: 'Neurologist', value: 'Neurologist' },
+        { label: 'Orthopedist', value: 'Orthopedist' },
+        { label: 'Pediatrician', value: 'Pediatrician' },
+        { label: 'Psychiatrist', value: 'Psychiatrist' },
+        { label: 'General Physician', value: 'General Physician' },
+      ];
+      
+      return mockDoctorTypes;
+      
+      // Uncomment when API is available:
+      // const token = await AsyncStorage.getItem('token');
+      // const headers = { Authorization: `Bearer ${token}` };
+      // const response = await api.get('/profile/get-doctor-types', { headers });
+      // if (response?.data?.data) {
+      //   return response.data.data;
+      // } else {
+      //   throw new Error('Invalid response format');
+      // }
     } catch (error: any) {
       return rejectWithValue(error.message || 'Failed to fetch doctor types');
     }
