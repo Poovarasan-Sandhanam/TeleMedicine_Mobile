@@ -1,6 +1,8 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
-const API_BASE_URL = 'http://localhost:3001/api/v1'; // Replace with production URL if needed
+const API_BASE_URL = 'http://10.0.2.2:3001/api/v1'; // For Android emulator
+// const API_BASE_URL = 'http://localhost:3001/api/v1'; // For iOS simulator
+// const API_BASE_URL = 'https://your-production-api.com/api/v1'; // For production
 
 interface ApiResponse<T = any> {
   data: T;
@@ -20,6 +22,21 @@ const apiClient: AxiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+// Add request interceptor to include auth token
+apiClient.interceptors.request.use(
+  (config) => {
+    // You can add auth token here if needed
+    // const token = await AsyncStorage.getItem('token');
+    // if (token) {
+    //   config.headers.Authorization = `Bearer ${token}`;
+    // }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // Add interceptors for error handling
 apiClient.interceptors.response.use(

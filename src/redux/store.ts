@@ -5,7 +5,7 @@ import doctorTypeSlice from './slices/doctorTypeSlice';
 import doctorSlice from './slices/doctorSlice';
 import appointmentSlice from './slices/appointmentSlice';
 import appointmentRecordSlice from './slices/appointmentRecordSlice';
-import paymentSlice from './slices/profileSlice';
+import paymentSlice from './slices/paymentSlice';
 import bookingSlice from './slices/bookingSlice';
 import prescriptionSlice from './slices/prescriptionSlice';
 import prescriptionsSlice from './slices/prescriptionsSlice';

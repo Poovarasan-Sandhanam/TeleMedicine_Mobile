@@ -1,381 +1,209 @@
-// src/screens/SignupScreen.js
-import React, { useState, useCallback } from 'react';
-import { 
-  View, 
-  SafeAreaView, 
-  ScrollView, 
-  TextInput, 
-  Text, 
-  TouchableOpacity, 
-  Platform, 
+import React, { useCallback, useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  SafeAreaView,
   KeyboardAvoidingView,
-  Alert,
+  Platform,
 } from 'react-native';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { Formik, FormikHelpers } from 'formik';
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import * as Yup from 'yup';
 import Toast from 'react-native-toast-message';
-
-import SignupSchema, { SignupFormData } from '../../validation/signupSchema';
-import PasswordVisibilityToggle from '../../components/PasswordVisibilityToggle';
-import LoadingSpinner from '../../components/LoadingSpinner';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { signup } from '../../redux/slices/authSlice';
 import styles from '../../styles/signupStyles';
 
-interface RadioOption {
-  label: string;
-  value: string;
+// Validation Schema
+const SignupSchema = Yup.object().shape({
+  name: Yup.string().required('Name is required'),
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  password: Yup.string().min(6, 'Min 6 characters').required('Password is required'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password')], 'Passwords must match')
+    .required('Confirm Password is required'),
+  userType: Yup.string().oneOf(['Doctor', 'Patient']).required('User type is required'),
+});
+
+// Types
+interface SignupFormData {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  userType: 'Doctor' | 'Patient';
 }
 
-interface RadioButtonGroupProps {
-  options: RadioOption[];
-  selectedValue: string;
-  onSelect: (value: string) => void;
-}
-
-interface SignupScreenProps {
-  navigation: {
-    navigate: (screen: string) => void;
-  };
-}
-
-const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ options, selectedValue, onSelect }) => (
-  <View style={styles.radioGroup}>
-    {options.map(option => (
-      <TouchableOpacity
-        key={option.value}
-        style={styles.radioOption}
-        onPress={() => onSelect(option.value)}
-        activeOpacity={0.7}
-      >
-        <View
-          style={[
-            styles.radioButton,
-            selectedValue === option.value && styles.radioSelected,
-          ]}
-        />
-        <Text style={styles.radioLabel}>{option.label}</Text>
-      </TouchableOpacity>
-    ))}
-  </View>
-);
-
-const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
+const SignupScreen = ({ navigation }: { navigation: any }) => {
   const dispatch = useAppDispatch();
-  const { error, loading } = useAppSelector((state: any) => state.auth);
+  const { loading, error, user } = useAppSelector((state) => state.auth);
 
-  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+  const handleSignup = useCallback(
+    async (values: SignupFormData, { resetForm }: FormikHelpers<SignupFormData>) => {
+      try {
+        const payload = {
+          fullName: values.name,
+          email: values.email,
+          password: values.password,
+          confirmPassword: values.confirmPassword,
+          role: values.userType.toUpperCase() as 'DOCTOR' | 'PATIENT',
+        };
 
-  const handleSignup = useCallback(async (values: SignupFormData, { resetForm }: FormikHelpers<SignupFormData>) => {
-    try {
-      if (!values.dob) {
-        Alert.alert('Error', 'Please select your date of birth');
-        return;
+        const result = await dispatch(signup(payload) as any).unwrap();
+
+        Toast.show({
+          type: 'success',
+          text1: 'Signup Successful 🎉',
+          text2: 'Welcome aboard!',
+        });
+
+        resetForm();
+        
+        // If signup automatically logs in the user, navigate to home
+        // Otherwise, navigate to login
+        if (user) {
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }],
+          });
+        } else {
+          navigation.navigate('Login');
+        }
+      } catch (err: any) {
+        Toast.show({
+          type: 'error',
+          text1: 'Signup Failed',
+          text2: err?.message || 'Something went wrong.',
+        });
       }
+    },
+    [dispatch, navigation, user]
+  );
 
-      const formattedDob = values.dob.toISOString().split('T')[0];
-
-      const userData = {
-        fullName: values.name,
-        dob: formattedDob,
-        contactNo: parseInt(values.contactNumber, 10),
-        email: values.email,
-        password: values.password,
-        isDoctor: values.userType === 'Doctor',
-        doctorType: values.userType === 'Doctor' ? values.doctorType : '',
-        gender: values.gender,
-      };
-
-      await dispatch(signup(userData) as any);
-
-      Toast.show({
-        type: 'success',
-        text1: 'Signup Successful 🎉',
-        text2: 'Welcome aboard!',
-      });
-
-      resetForm();
-      navigation.navigate('Login');
-    } catch (err: any) {
-      Toast.show({
-        type: 'error',
-        text1: 'Signup Failed',
-        text2: err?.message || 'Please try again later.',
+  // Navigate to home if user is already logged in
+  useEffect(() => {
+    if (user) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Home' }],
       });
     }
-  }, [dispatch, navigation]);
-
-  const handleDateChange = useCallback((event: DateTimePickerEvent, selectedDate?: Date) => {
-    setShowDatePicker(false);
-    if (event.type !== 'dismissed' && selectedDate) {
-      // This will be handled by Formik's setFieldValue
-    }
-  }, []);
-
-  const handleContactNumberChange = useCallback((text: string, setFieldValue: (field: string, value: any) => void) => {
-    const numericValue = text.replace(/[^0-9]/g, '');
-    if (numericValue.length <= 10) {
-      setFieldValue('contactNumber', numericValue);
-    }
-  }, []);
-
-  const handleLoginNavigation = useCallback(() => {
-    navigation.navigate('Login');
-  }, [navigation]);
+  }, [user, navigation]);
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      keyboardVerticalOffset={80}
     >
-      <LoadingSpinner visible={loading} />
-
       <SafeAreaView style={styles.container}>
-        <Formik
-          initialValues={{
-            name: '',
-            dob: null,
-            gender: 'Male' as const,
-            contactNumber: '',
-            userType: 'Patient' as const,
-            email: '',
-            password: '',
-            confirmPassword: '',
-            doctorType: '',
-          }}
-          validationSchema={SignupSchema}
-          onSubmit={handleSignup}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            setFieldValue,
-            values,
-            errors,
-            touched,
-            isSubmitting,
-          }) => {
-            const [showPassword, setShowPassword] = useState<boolean>(false);
-            const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <Text style={styles.title}>Sign Up</Text>
 
-            const handlePasswordToggle = useCallback(() => {
-              setShowPassword(prev => !prev);
-            }, []);
-
-            const handleConfirmPasswordToggle = useCallback(() => {
-              setShowConfirmPassword(prev => !prev);
-            }, []);
-
-            const handleDatePickerPress = useCallback(() => {
-              setShowDatePicker(true);
-            }, []);
-
-            const handleDatePickerChange = useCallback((event: DateTimePickerEvent, selectedDate?: Date) => {
-              setShowDatePicker(false);
-              if (event.type !== 'dismissed' && selectedDate) {
-                setFieldValue('dob', selectedDate);
-              }
-            }, [setFieldValue]);
-
-            return (
-              <ScrollView
-                style={{ flex: 1 }}
-                contentContainerStyle={styles.scrollContainer}
-                keyboardShouldPersistTaps="handled"
-                showsVerticalScrollIndicator={false}
-              >
-                <Text style={styles.title}>Create an account :)</Text>
-
-                {/* Name */}
+          <Formik
+            initialValues={{
+              name: '',
+              email: '',
+              password: '',
+              confirmPassword: '',
+              userType: 'Patient',
+            }}
+            validationSchema={SignupSchema}
+            onSubmit={handleSignup}
+          >
+            {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue }) => (
+              <>
                 <TextInput
-                  style={[styles.input, touched.name && errors.name ? styles.inputError : null]}
-                  placeholder="User Name"
-                  placeholderTextColor="#aaa"
+                  style={[styles.input, touched.name && errors.name && styles.inputError]}
+                  placeholder="Full Name"
+                  value={values.name}
                   onChangeText={handleChange('name')}
                   onBlur={handleBlur('name')}
-                  value={values.name}
-                  autoCapitalize="words"
-                  textContentType="name"
                 />
-                {touched.name && errors.name && (
-                  <Text style={styles.errorText}>{errors.name}</Text>
-                )}
+                {touched.name && errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
 
-                {/* Date of Birth */}
-                <TouchableOpacity
-                  onPress={handleDatePickerPress}
-                  style={[styles.input, touched.dob && errors.dob ? styles.inputError : null]}
-                  activeOpacity={0.7}
-                >
-                  <Text style={values.dob ? styles.inputTextDate : styles.placeholderText}>
-                    {values.dob ? values.dob.toLocaleDateString('en-GB') : 'Date of Birth'}
-                  </Text>
-                </TouchableOpacity>
-                {touched.dob && errors.dob && (
-                  <Text style={styles.errorText}>{errors.dob}</Text>
-                )}
-                {showDatePicker && (
-                  <DateTimePicker
-                    value={values.dob || new Date()}
-                    mode="date"
-                    display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
-                    onChange={handleDatePickerChange}
-                    maximumDate={new Date()}
-                  />
-                )}
-
-                {/* Contact Number */}
                 <TextInput
-                  style={[
-                    styles.input,
-                    touched.contactNumber && errors.contactNumber ? styles.inputError : null,
-                  ]}
-                  placeholder="Contact Number"
-                  placeholderTextColor="#aaa"
-                  onChangeText={(text) => handleContactNumberChange(text, setFieldValue)}
-                  onBlur={handleBlur('contactNumber')}
-                  value={values.contactNumber}
-                  keyboardType="numeric"
-                  maxLength={10}
-                  textContentType="telephoneNumber"
-                />
-                {touched.contactNumber && errors.contactNumber && (
-                  <Text style={styles.errorText}>{errors.contactNumber}</Text>
-                )}
-
-                {/* Email */}
-                <TextInput
-                  style={[styles.input, touched.email && errors.email ? styles.inputError : null]}
+                  style={[styles.input, touched.email && errors.email && styles.inputError]}
                   placeholder="Email"
-                  placeholderTextColor="#aaa"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  value={values.email}
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
-                  value={values.email}
-                  autoCapitalize="none"
-                  keyboardType="email-address"
-                  textContentType="emailAddress"
                 />
-                {touched.email && errors.email && (
-                  <Text style={styles.errorText}>{errors.email}</Text>
-                )}
+                {touched.email && errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
 
-                {/* User Type Radio Buttons */}
-                <Text style={styles.label}>Who are you?</Text>
-                <RadioButtonGroup
-                  options={[
-                    { label: 'Patient', value: 'Patient' },
-                    { label: 'Doctor', value: 'Doctor' },
-                  ]}
-                  selectedValue={values.userType}
-                  onSelect={value => setFieldValue('userType', value)}
+                <TextInput
+                  style={[styles.input, touched.password && errors.password && styles.inputError]}
+                  placeholder="Password"
+                  secureTextEntry
+                  value={values.password}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
                 />
-                {values.userType === 'Doctor' && (
-                  <>
-                    <TextInput
-                      style={[
-                        styles.input,
-                        touched.doctorType && errors.doctorType ? styles.inputError : null,
-                      ]}
-                      placeholder="Specialization (e.g., Cardiologist)"
-                      placeholderTextColor="#aaa"
-                      onChangeText={handleChange('doctorType')}
-                      onBlur={handleBlur('doctorType')}
-                      value={values.doctorType}
-                      autoCapitalize="words"
-                    />
-                    {touched.doctorType && errors.doctorType && (
-                      <Text style={styles.errorText}>{errors.doctorType}</Text>
-                    )}
-                  </>
-                )}
-
-                {/* Gender Radio Buttons */}
-                <Text style={styles.label}>Gender</Text>
-                <RadioButtonGroup
-                  options={[
-                    { label: 'Male', value: 'Male' },
-                    { label: 'Female', value: 'Female' },
-                    { label: 'Other', value: 'Other' },
-                  ]}
-                  selectedValue={values.gender}
-                  onSelect={value => setFieldValue('gender', value)}
-                />
-                {touched.gender && errors.gender && (
-                  <Text style={styles.errorText}>{errors.gender}</Text>
-                )}
-
-                {/* Password */}
-                <View style={styles.passwordContainer}>
-                  <TextInput
-                    style={[
-                      styles.passwordInput,
-                      touched.password && errors.password ? styles.inputError : null,
-                    ]}
-                    placeholder="Password"
-                    placeholderTextColor="#aaa"
-                    secureTextEntry={!showPassword}
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    value={values.password}
-                    textContentType="newPassword"
-                  />
-                  <PasswordVisibilityToggle
-                    isVisible={showPassword}
-                    onToggle={handlePasswordToggle}
-                  />
-                </View>
                 {touched.password && errors.password && (
                   <Text style={styles.errorText}>{errors.password}</Text>
                 )}
 
-                {/* Confirm Password */}
-                <View style={styles.passwordContainer}>
-                  <TextInput
-                    style={[
-                      styles.passwordInput,
-                      touched.confirmPassword && errors.confirmPassword ? styles.inputError : null,
-                    ]}
-                    placeholder="Confirm Password"
-                    placeholderTextColor="#aaa"
-                    secureTextEntry={!showConfirmPassword}
-                    onChangeText={handleChange('confirmPassword')}
-                    onBlur={handleBlur('confirmPassword')}
-                    value={values.confirmPassword}
-                    textContentType="newPassword"
-                  />
-                  <PasswordVisibilityToggle
-                    isVisible={showConfirmPassword}
-                    onToggle={handleConfirmPasswordToggle}
-                  />
-                </View>
+                <TextInput
+                  style={[
+                    styles.input,
+                    touched.confirmPassword && errors.confirmPassword && styles.inputError,
+                  ]}
+                  placeholder="Confirm Password"
+                  secureTextEntry
+                  value={values.confirmPassword}
+                  onChangeText={handleChange('confirmPassword')}
+                  onBlur={handleBlur('confirmPassword')}
+                />
                 {touched.confirmPassword && errors.confirmPassword && (
                   <Text style={styles.errorText}>{errors.confirmPassword}</Text>
                 )}
 
-                {/* Submit Button */}
-                <TouchableOpacity
-                  style={[styles.button, (isSubmitting || loading) && styles.buttonDisabled]}
+                {/* User Type */}
+                <Text style={styles.label}>I am a:</Text>
+                <View style={styles.radioGroup}>
+                  {['Patient', 'Doctor'].map((type) => (
+                    <TouchableOpacity
+                      key={type}
+                      style={styles.radioOption}
+                      onPress={() => setFieldValue('userType', type)}
+                    >
+                      <View
+                        style={[
+                          styles.radioButton,
+                          values.userType === type && styles.radioSelected,
+                        ]}
+                      />
+                      <Text style={styles.radioLabel}>{type}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+                {touched.userType && errors.userType && (
+                  <Text style={styles.errorText}>{errors.userType}</Text>
+                )}
+
+                {error && <Text style={styles.errorText}>{error}</Text>}
+
+                <TouchableOpacity 
+                  style={[styles.button, loading && styles.buttonDisabled]} 
                   onPress={() => handleSubmit()}
-                  disabled={isSubmitting || loading}
-                  activeOpacity={0.8}
+                  disabled={loading}
                 >
                   <Text style={styles.buttonText}>
-                    {isSubmitting || loading ? 'Creating Account...' : 'Sign Up'}
+                    {loading ? 'Creating Account...' : 'Sign Up'}
                   </Text>
                 </TouchableOpacity>
 
-                {/* Navigation to Login */}
-                <TouchableOpacity onPress={handleLoginNavigation} activeOpacity={0.7}>
-                  <Text style={styles.contentText}>
-                    Already have an account? Go to Login
-                  </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                  <Text style={styles.contentText}>Already have an account? Login</Text>
                 </TouchableOpacity>
-              </ScrollView>
-            );
-          }}
-        </Formik>
+              </>
+            )}
+          </Formik>
+        </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );

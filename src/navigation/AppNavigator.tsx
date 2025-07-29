@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useAppDispatch } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import LinearGradient from "react-native-linear-gradient";
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -26,9 +27,39 @@ import DoctorPayment from '../screens/payment/DoctorPayment';
 import PaitentPayment from '../screens/payment/PaitentPayment';
 import PaitentPrescriptionScreen from '../screens/prescription/PaitentPrescriptionScreen';
 
-import { login } from '../redux/slices/authSlice';
+import { loadUserFromStorage } from '../redux/slices/authSlice';
 import COLORS from "../constants/colors";
 import CustomDrawerContent from '../components/CustomDrawerContent';
+
+// Loading Component
+const LoadingScreen = () => (
+  <LinearGradient
+    colors={["#8B8BE8", "#7070D2", "#5A5ABD", "#4A4AB6", "#3A3A9E"]}
+    style={styles.loadingContainer}
+  >
+    <Text style={styles.loadingTitle}>Tele</Text>
+    <Text style={styles.loadingTitles}>Medicine</Text>
+  </LinearGradient>
+);
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingTitle: {
+    fontSize: 40,
+    fontWeight: "bold",
+    color: "#ffffff",
+  },
+  loadingTitles: {
+    fontSize: 40,
+    fontWeight: "bold",
+    color: "#ffffff",
+    letterSpacing: 3,
+  },
+});
 
 // Type definitions
 type RootStackParamList = {
@@ -190,35 +221,30 @@ const DrawerNavigator: React.FC = () => (
 
 const AppNavigator: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const { user, loading } = useAppSelector((state) => state.auth);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const initializeApp = async () => {
       try {
-        const token = await AsyncStorage.getItem('token');
-        const userData = await AsyncStorage.getItem('user');
-
-        if (token && userData) {
-          const parsedUser = JSON.parse(userData);
-          dispatch(login(parsedUser.email, parsedUser.password) as any);
-          setIsAuthenticated(true);
-        } else {
-          setIsAuthenticated(false);
-        }
+        await dispatch(loadUserFromStorage() as any);
       } catch (error) {
-        console.error("Auth check failed:", error);
-        setIsAuthenticated(false);
+        console.error("Failed to load user from storage:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    checkAuth();
+    initializeApp();
   }, [dispatch]);
 
-  if (isAuthenticated === null) return null;
+  if (isLoading || loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash">
+      <Stack.Navigator initialRouteName={user ? "Home" : "Splash"}>
         <Stack.Screen 
           name="Splash" 
           component={SplashScreen} 
