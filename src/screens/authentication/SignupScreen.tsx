@@ -1,211 +1,187 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
   SafeAreaView,
+  ScrollView,
   KeyboardAvoidingView,
   Platform,
+  TouchableOpacity,
+  View,
+  Text,
 } from 'react-native';
-import { Formik, FormikHelpers } from 'formik';
+import { Input, Button, Icon } from 'react-native-elements';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Toast from 'react-native-toast-message';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { signup } from '../../redux/slices/authSlice';
 import styles from '../../styles/signupStyles';
+import DoctorLogo from '../../asset/svgdoc.svg';
 
-// Validation Schema
 const SignupSchema = Yup.object().shape({
-  name: Yup.string().required('Name is required'),
+  name: Yup.string().required('Full name is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   password: Yup.string().min(6, 'Min 6 characters').required('Password is required'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password')], 'Passwords must match')
-    .required('Confirm Password is required'),
-  userType: Yup.string().oneOf(['Doctor', 'Patient']).required('User type is required'),
+    .required('Confirm password is required'),
+  userType: Yup.string().oneOf(['Doctor', 'Patient']).required('Select a role'),
 });
 
-// Types
-interface SignupFormData {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  userType: 'Doctor' | 'Patient';
-}
-
 const SignupScreen = ({ navigation }: { navigation: any }) => {
-  const dispatch = useAppDispatch();
-  const { loading, error, user } = useAppSelector((state) => state.auth);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
-  const handleSignup = useCallback(
-    async (values: SignupFormData, { resetForm }: FormikHelpers<SignupFormData>) => {
-      try {
-        const payload = {
-          fullName: values.name,
-          email: values.email,
-          password: values.password,
-          confirmPassword: values.confirmPassword,
-          role: values.userType.toUpperCase() as 'DOCTOR' | 'PATIENT',
-        };
-
-        const result = await dispatch(signup(payload) as any).unwrap();
-
-        Toast.show({
-          type: 'success',
-          text1: 'Signup Successful 🎉',
-          text2: 'Welcome aboard!',
-        });
-
-        resetForm();
-        
-        // If signup automatically logs in the user, navigate to home
-        // Otherwise, navigate to login
-        if (user) {
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Home' }],
-          });
-        } else {
-          navigation.navigate('Login');
-        }
-      } catch (err: any) {
-        Toast.show({
-          type: 'error',
-          text1: 'Signup Failed',
-          text2: err?.message || 'Something went wrong.',
-        });
-      }
-    },
-    [dispatch, navigation, user]
-  );
-
-  // Navigate to home if user is already logged in
-  useEffect(() => {
-    if (user) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Home' }],
+  const handleSignup = async (values: any, { resetForm }: any) => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+      Toast.show({
+        type: 'success',
+        text1: 'Signup successful!',
+        text2: `Welcome ${values.name}!`,
+      });
+      resetForm();
+      navigation.navigate('Login');
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Signup failed',
+        text2: 'Something went wrong. Try again.',
       });
     }
-  }, [user, navigation]);
+  };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={80}
-    >
-      <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <Text style={styles.title}>Sign Up</Text>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
+      >
+        <Formik
+          initialValues={{
+            name: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            userType: '',
+          }}
+          validationSchema={SignupSchema}
+          onSubmit={handleSignup}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+            isSubmitting,
+            setFieldValue,
+          }) => (
+            <>
+              <ScrollView
+                contentContainerStyle={styles.scroll}
+                keyboardShouldPersistTaps="handled"
+              >
 
-          <Formik
-            initialValues={{
-              name: '',
-              email: '',
-              password: '',
-              confirmPassword: '',
-              userType: 'Patient',
-            }}
-            validationSchema={SignupSchema}
-            onSubmit={handleSignup}
-          >
-            {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue }) => (
-              <>
-                <TextInput
-                  style={[styles.input, touched.name && errors.name && styles.inputError]}
-                  placeholder="Full Name"
+                
+                <DoctorLogo width={200} height={200} />
+                <Input
+                  placeholder="Full name"
                   value={values.name}
                   onChangeText={handleChange('name')}
                   onBlur={handleBlur('name')}
+                  errorMessage={touched.name && errors.name ? errors.name : undefined}
+                  inputStyle={styles.inputText}
                 />
-                {touched.name && errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
 
-                <TextInput
-                  style={[styles.input, touched.email && errors.email && styles.inputError]}
-                  placeholder="Email"
-                  keyboardType="email-address"
+                <Input
+                  placeholder="Email address"
                   autoCapitalize="none"
+                  keyboardType="email-address"
                   value={values.email}
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
+                  errorMessage={touched.email && errors.email ? errors.email : undefined}
+                  inputStyle={styles.inputText}
                 />
-                {touched.email && errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+<Input
+  placeholder="Enter password"
+  secureTextEntry={!showPassword}
+  rightIcon={
+    <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+      <Text style={styles.toggleText}>
+        {showPassword ? 'Hide' : 'Show'}
+      </Text>
+    </TouchableOpacity>
+  }
+  value={values.password}
+  onChangeText={handleChange('password')}
+  onBlur={handleBlur('password')}
+  errorMessage={touched.password && errors.password ? errors.password : undefined}
+  inputStyle={styles.inputText}
+/>
 
-                <TextInput
-                  style={[styles.input, touched.password && errors.password && styles.inputError]}
-                  placeholder="Password"
-                  secureTextEntry
-                  value={values.password}
-                  onChangeText={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                />
-                {touched.password && errors.password && (
-                  <Text style={styles.errorText}>{errors.password}</Text>
-                )}
+<Input
+  placeholder="Confirm password"
+  secureTextEntry={!showConfirm}
+  rightIcon={
+    <TouchableOpacity onPress={() => setShowConfirm(!showConfirm)}>
+      <Text style={styles.toggleText}>
+        {showConfirm ? 'Hide' : 'Show'}
+      </Text>
+    </TouchableOpacity>
+  }
+  value={values.confirmPassword}
+  onChangeText={handleChange('confirmPassword')}
+  onBlur={handleBlur('confirmPassword')}
+  errorMessage={
+    touched.confirmPassword && errors.confirmPassword
+      ? errors.confirmPassword
+      : undefined
+  }
+  inputStyle={styles.inputText}
+/>
 
-                <TextInput
-                  style={[
-                    styles.input,
-                    touched.confirmPassword && errors.confirmPassword && styles.inputError,
-                  ]}
-                  placeholder="Confirm Password"
-                  secureTextEntry
-                  value={values.confirmPassword}
-                  onChangeText={handleChange('confirmPassword')}
-                  onBlur={handleBlur('confirmPassword')}
-                />
-                {touched.confirmPassword && errors.confirmPassword && (
-                  <Text style={styles.errorText}>{errors.confirmPassword}</Text>
-                )}
 
-                {/* User Type */}
-                <Text style={styles.label}>I am a:</Text>
+
                 <View style={styles.radioGroup}>
-                  {['Patient', 'Doctor'].map((type) => (
+                  {['Patient', 'Doctor'].map((role) => (
                     <TouchableOpacity
-                      key={type}
+                      key={role}
                       style={styles.radioOption}
-                      onPress={() => setFieldValue('userType', type)}
+                      onPress={() => setFieldValue('userType', role)}
                     >
                       <View
                         style={[
-                          styles.radioButton,
-                          values.userType === type && styles.radioSelected,
+                          styles.radioOuter,
+                          values.userType === role && styles.radioOuterSelected,
                         ]}
-                      />
-                      <Text style={styles.radioLabel}>{type}</Text>
+                      >
+                        {values.userType === role && <View style={styles.radioInner} />}
+                      </View>
+                      <Text style={styles.radioLabel}>{role}</Text>
                     </TouchableOpacity>
                   ))}
                 </View>
                 {touched.userType && errors.userType && (
                   <Text style={styles.errorText}>{errors.userType}</Text>
                 )}
-
-                {error && <Text style={styles.errorText}>{error}</Text>}
-
-                <TouchableOpacity 
-                  style={[styles.button, loading && styles.buttonDisabled]} 
+                <Button
+                  title="Sign Up"
+                  loading={isSubmitting}
                   onPress={() => handleSubmit()}
-                  disabled={loading}
-                >
-                  <Text style={styles.buttonText}>
-                    {loading ? 'Creating Account...' : 'Sign Up'}
-                  </Text>
-                </TouchableOpacity>
-
+                  containerStyle={styles.stickyButton}
+                />
                 <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                  <Text style={styles.contentText}>Already have an account? Login</Text>
+                  <Text style={styles.linkText}>Already have an account? Log in</Text>
                 </TouchableOpacity>
-              </>
-            )}
-          </Formik>
-        </ScrollView>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+              </ScrollView>
+
+
+            </>
+          )}
+        </Formik>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

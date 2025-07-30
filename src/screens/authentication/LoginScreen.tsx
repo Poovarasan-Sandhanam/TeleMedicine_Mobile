@@ -1,154 +1,124 @@
-// src/screens/LoginScreen.js
-
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
-  View,
-  TextInput,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
   ScrollView,
+  KeyboardAvoidingView,
   Platform,
-  Alert,
+  TouchableOpacity,
+  View,
+  Text,
+  Image,
 } from 'react-native';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { Formik, FormikHelpers } from 'formik';
-import { login } from '../../redux/slices/authSlice';
-import PasswordVisibilityToggle from '../../components/PasswordVisibilityToggle';
-import LoadingSpinner from '../../components/LoadingSpinner';
-import styles from '../../styles/loginStyles';
-import LoginSchema, { LoginFormData } from '../../validation/loginSchema';
+import { Input, Button, Icon } from 'react-native-elements';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import Toast from 'react-native-toast-message';
+import styles from '../../styles/authStyles';
 
-interface LoginScreenProps {
-  navigation: {
-    reset: (config: { index: number; routes: Array<{ name: string }> }) => void;
-    navigate: (screen: string) => void;
-  };
-}
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  password: Yup.string().min(6, 'Min 6 characters').required('Password is required'),
+});
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
-  const dispatch = useAppDispatch();
-  const { user, error, loading } = useAppSelector((state: any) => state.auth);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+const LoginScreen = ({ navigation }: { navigation: any }) => {
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handlePasswordToggle = useCallback(() => {
-    setShowPassword(prev => !prev);
-  }, []);
-
-  const handleSignupNavigation = useCallback(() => {
-    navigation.navigate('Signup');
-  }, [navigation]);
-
-  const handleSubmit = useCallback(async (values: LoginFormData, { setSubmitting }: FormikHelpers<LoginFormData>) => {
+  const handleLogin = async (values: any, { setSubmitting }: any) => {
     try {
-      await dispatch(login({ email: values.email, password: values.password })).unwrap();
-    } catch (err: any) {
-      console.log('Login error:', err);
-      Alert.alert('Login Error', err?.message || 'Failed to login. Please try again.');
-    } finally {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      Toast.show({
+        type: 'success',
+        text1: 'Login successful',
+        text2: `Welcome back, ${values.email}`,
+      });
+
+      setSubmitting(false);
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Login failed',
+        text2: 'Invalid credentials',
+      });
       setSubmitting(false);
     }
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (user) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Home' }],
-      });
-    }
-  }, [user, navigation]);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
       >
-        <ScrollView 
-          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', margin: 15 }}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          validationSchema={LoginSchema}
+          onSubmit={handleLogin}
         >
-          <LoadingSpinner visible={loading} />
-          <Text style={styles.title}>Login your account :)</Text>
-
-          <Formik
-            initialValues={{ email: '', password: '' }}
-            validationSchema={LoginSchema}
-            onSubmit={handleSubmit}
-          >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              touched,
-              isSubmitting,
-            }) => (
-              <>
-                <TextInput
-                  style={[styles.input, touched.email && errors.email ? styles.inputError : null]}
-                  placeholder="Email"
-                  placeholderTextColor="#999"
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+            isSubmitting,
+          }) => (
+            <>
+              <ScrollView
+                contentContainerStyle={styles.scroll}
+                keyboardShouldPersistTaps="handled"
+              >
+                <Image resizeMode={'contain'} style={styles.imagePic} source={require('../../asset/doctor.png')} />
+                <Input
+                  placeholder="Email address"
                   value={values.email}
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   autoCapitalize="none"
                   keyboardType="email-address"
-                  autoComplete="email"
-                  textContentType="emailAddress"
+                  errorMessage={touched.email && errors.email ? errors.email : undefined}
+                  inputStyle={styles.inputText}
                 />
-                {touched.email && errors.email && (
-                  <Text style={styles.errorText}>{errors.email}</Text>
-                )}
 
-                <View style={styles.passwordContainer}>
-                  <TextInput
-                    style={[
-                      styles.passwordInput,
-                      touched.password && errors.password ? styles.inputError : null,
-                    ]}
-                    placeholder="Password"
-                    placeholderTextColor="#999"
-                    secureTextEntry={!showPassword}
-                    value={values.password}
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    autoComplete="password"
-                    textContentType="password"
-                  />
-                  <PasswordVisibilityToggle
-                    isVisible={showPassword}
-                    onToggle={handlePasswordToggle}
-                  />
-                </View>
-                {touched.password && errors.password && (
-                  <Text style={styles.errorText}>{errors.password}</Text>
-                )}
+                <Input
+                  placeholder="Password"
+                  secureTextEntry={!showPassword}
+                  rightIcon={
+                    <Icon
+                      type="material"
+                      name={showPassword ? 'visibility' : 'visibility-off'}
+                      onPress={() => setShowPassword(!showPassword)}
+                    />
+                  }
+                  value={values.password}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  errorMessage={touched.password && errors.password ? errors.password : undefined}
+                  inputStyle={styles.inputText}
+                />
 
-                {error && <Text style={styles.errorText}>{error}</Text>}
-
-                <TouchableOpacity 
-                  style={[styles.button, (isSubmitting || loading) && styles.buttonDisabled]} 
+                <Button
+                  title="Log In"
+                  loading={isSubmitting}
                   onPress={() => handleSubmit()}
-                  disabled={isSubmitting || loading}
-                  activeOpacity={0.8}
-                >
-                  <Text style={styles.buttonText}>
-                    {(isSubmitting || loading) ? 'Logging in...' : 'Login'}
-                  </Text>
-                </TouchableOpacity>
+                  buttonStyle={styles.button}
+                  titleStyle={styles.buttonTitle}
+                  containerStyle={styles.buttonContainer}
+                />
 
-                <TouchableOpacity onPress={handleSignupNavigation} activeOpacity={0.7}>
-                  <Text style={styles.contentText}>New user? Go to Signup</Text>
+
+                <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+                  <Text style={styles.linkText}>Don't have an account? Sign up</Text>
                 </TouchableOpacity>
-              </>
-            )}
-          </Formik>
-        </ScrollView>
+              </ScrollView>
+
+              {/* ✅ Sticky bottom button */}
+
+            </>
+          )}
+        </Formik>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

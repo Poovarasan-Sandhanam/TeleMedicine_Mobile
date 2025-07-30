@@ -1,87 +1,97 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import api from '../../utilis/api'; // Axios instance
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '../../utilis/api';
 
-interface ProfileState {
-  profile: any | null;
-  loading: boolean;
-  error: string | null;
-}
+// Thunks
 
-const initialState: ProfileState = {
-  profile: null,
-  loading: false,
-  error: null,
-};
-
-// ✅ FETCH PROFILE
 export const fetchProfile = createAsyncThunk(
   'profile/fetchProfile',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await api.get('/user/get-profile');
-      return res.data?.data;
-      console.log(res.data?.data,"res.data?.data");
+      const token = await AsyncStorage.getItem('token');
+      const headers = { Authorization: `Bearer ${token}` };
+      const response = await api.get('/profile/get-profile', { headers });
+
+      const user = response.data.data;
+      console.log(user,"user");
       
-    } catch (err: any) {
-      return rejectWithValue(err?.response?.data?.message || 'Failed to fetch profile');
+
+      await AsyncStorage.setItem(
+        'user',
+        JSON.stringify({
+          name: user.name,
+          email: user.email,
+          avatar: user.profileImage || null,
+        })
+      );
+
+      return user;
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
   }
 );
 
-// ✅ UPDATE PROFILE
 export const updateProfile = createAsyncThunk(
   'profile/updateProfile',
-  async (formData: FormData, { rejectWithValue }) => {
+  async (formData, { dispatch, rejectWithValue }) => {
     try {
-      const res = await api.put('/user/update-profile', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      return res.data?.data;
-    } catch (err: any) {
-      return rejectWithValue(err?.response?.data?.message || 'Profile update failed');
+      const token = await AsyncStorage.getItem('token');
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      };
+      const response = await api.put('/profile/update-profile', formData, { headers });
+
+      // Refetch updated profile
+      dispatch(fetchProfile());
+
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
   }
 );
+
+// Slice
 
 const profileSlice = createSlice({
   name: 'profile',
-  initialState,
-  reducers: {
-    clearProfileError(state) {
-      state.error = null;
-    },
+  initialState: {
+    user: null,
+    status: 'idle',
+    error: null,
   },
+  reducers: {},
   extraReducers: (builder) => {
     builder
+      // fetchProfile
       .addCase(fetchProfile.pending, (state) => {
-        state.loading = true;
+        state.status = 'loading';
         state.error = null;
       })
-      .addCase(fetchProfile.fulfilled, (state, action: PayloadAction<any>) => {
-        state.profile = action.payload;
-        state.loading = false;
+      .addCase(fetchProfile.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.user = action.payload;
       })
       .addCase(fetchProfile.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
+        state.status = 'failed';
+        state.error = action.payload;
       })
 
+      // updateProfile
       .addCase(updateProfile.pending, (state) => {
-        state.loading = true;
+        state.status = 'loading';
         state.error = null;
       })
-      .addCase(updateProfile.fulfilled, (state, action: PayloadAction<any>) => {
-        state.profile = action.payload;
-        state.loading = false;
+      .addCase(updateProfile.fulfilled, (state) => {
+        state.status = 'succeeded';
       })
       .addCase(updateProfile.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
+        state.status = 'failed';
+        state.error = action.payload;
       });
   },
 });
 
-export const { clearProfileError } = profileSlice.actions;
 export default profileSlice.reducer;
