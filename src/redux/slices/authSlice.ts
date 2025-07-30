@@ -64,6 +64,7 @@ export const login = createAsyncThunk(
     try {
       const response = await api.post('/auth/login', { email, password });
       const user = response.data?.data;
+console.log(user,"user--");
 
       if (!user?.token) {
         throw new Error('Invalid login response: Missing token');
