@@ -171,6 +171,24 @@ const midnight: Theme = {
     card: "#1E1E2F",
     shadow: "rgba(0, 0, 0, 0.6)",
   },
+  
+};
+
+const telemedicine: Theme = {
+  light: {
+    primary: '#0555ABFF',
+    secondary: '#A0AEC0FF',
+    background: '#F7F9FCFF',
+    text: '#222222FF',
+    border: '#033E73FF',
+    white: '#FFFFFF',
+    textLight: '#555555FF',
+    error: '#E53E3EFF',
+    success: '#38A169FF',
+    card: '#FFFFFF',
+    shadow: 'rgba(5, 85, 171, 0.2)',
+  },
+  dark: null,
 };
 
 export const THEMES: ThemeCollection = {
@@ -180,6 +198,7 @@ export const THEMES: ThemeCollection = {
   lavender,
   mint,
   midnight,
+  telemedicine
 };
 
 type ColorSchemeType = "light" | "dark";
@@ -191,7 +210,7 @@ type ThemeName = keyof typeof THEMES;
  * @param selected - theme name from THEMES keys
  * @returns theme color object
  */
-export const getTheme = (scheme: ColorSchemeType = "light", selected: ThemeName = "calmCare"): ColorScheme => {
+export const getTheme = (scheme: ColorSchemeType = "light", selected: ThemeName = "telemedicine"): ColorScheme => {
   const theme = THEMES[selected];
   if (!theme) return THEMES["ocean"][scheme]!;
   

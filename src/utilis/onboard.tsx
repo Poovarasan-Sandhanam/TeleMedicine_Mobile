@@ -1,12 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
+import COLORS from "../constants/colors"; // adjust path as necessary
 
 interface Slide {
   key: string;
   title: string;
   text: string;
-  image: any;
+  image: string;
   backgroundColor: string;
 }
 
@@ -21,22 +22,22 @@ const slides: Slide[] = [
     key: "slide1",
     title: "Welcome to TeleMedicine",
     text: "Connect with healthcare professionals anytime, anywhere.",
-    image: require("../asset/one.png"),
-    backgroundColor: "#febe29",
+    image: require("../asset/onboarding/onboard-one.png"),
+    backgroundColor: COLORS.primary,
   },
   {
     key: "slide2",
     title: "Easy Appointments",
     text: "Book appointments with just a few taps and avoid long queues.",
-    image: require("../asset/doctor_image.png"),
-    backgroundColor: "#59b2ab",
+    image:require("../asset/onboarding/onboard-two.png"),
+    backgroundColor: COLORS.primary,
   },
   {
     key: "slide3",
     title: "Secure Consultations",
     text: "Get personalized and secure video consultations from experts.",
-    image: require("../asset/doctor_two.png"),
-    backgroundColor: "#9370db",
+    image: require("../asset/onboarding/onboard-three.png"),
+    backgroundColor: COLORS.primary,
   },
 ];
 
@@ -49,21 +50,15 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
     </View>
   );
 
-  const onDone = () => {
-    navigation.replace("Login");
-  };
-
-  const onSkip = () => {
-    navigation.replace("Login");
-  };
+  const handleFinish = () => navigation.replace("Login");
 
   return (
     <AppIntroSlider
       renderItem={renderSlide}
       data={slides}
-      onDone={onDone}
+      onDone={handleFinish}
       showSkipButton
-      onSkip={onSkip}
+      onSkip={handleFinish}
     />
   );
 };
@@ -79,20 +74,19 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     resizeMode: "contain",
-    zIndex: 1,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#fff",
+    color: COLORS.white,
     textAlign: "center",
     marginBottom: 10,
   },
   text: {
     fontSize: 16,
-    color: "#fff",
+    color: COLORS.white,
     textAlign: "center",
   },
 });
 
-export default OnboardingScreen; 
+export default OnboardingScreen;
