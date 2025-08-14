@@ -1,54 +1,31 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { DrawerContentScrollView, DrawerItem, DrawerContentComponentProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import COLORS from '../constants/colors';
-
-interface User {
-  name: string;
-  email: string;
-  avatar: string | null;
-}
+import { RootState } from '../redux/store';
+import { fetchProfile, initializeLocalProfile } from '../redux/slices/profileSlice';
 
 const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
   const dispatch = useDispatch();
-  const [isDoctor, setIsDoctor] = useState<boolean>(false);
-  const [user, setUser] = useState<User>({ 
-    name: 'Guest User', 
-    email: 'guest@example.com', 
-    avatar: null 
-  });
 
-  const fetchUserData = useCallback(async () => {
-    try {
-      const userData = await AsyncStorage.getItem('user');
-      const isDoctorValue = await AsyncStorage.getItem('isDoctor');
-      if (userData) {
-        const parsedUser = JSON.parse(userData);
-        setUser({
-          name: parsedUser.name || parsedUser.email,
-          email: parsedUser.email,
-          avatar: parsedUser.avatar || null,
-        });
-      }
-      setIsDoctor(JSON.parse(isDoctorValue || 'false'));
-    } catch (e) {
-      console.error('Error loading drawer user data:', e);
-    }
-  }, []);
+  const profile = useSelector((state: RootState) => state.profile.profile);
+  const isDoctor = profile?.isDoctor || false;
 
+  // Load profile on mount
   useEffect(() => {
-    fetchUserData();
-  }, [fetchUserData]);
+    dispatch(initializeLocalProfile()); // load local AsyncStorage profile first
+    dispatch(fetchProfile()); // fetch fresh profile from API
+  }, [dispatch]);
 
   const handleLogout = useCallback(async () => {
     try {
       await AsyncStorage.removeItem('token');
       await AsyncStorage.removeItem('user');
-      dispatch({ type: 'LOGOUT' } as any);
+      dispatch({ type: 'LOGOUT' }); // reset Redux state if you have a logout reducer
       props.navigation.navigate('Login' as never);
     } catch (error) {
       console.error('Error during logout:', error);
@@ -58,6 +35,14 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
   const handleNavigation = useCallback((screen: string) => {
     props.navigation.navigate(screen as never);
   }, [props.navigation]);
+
+  const user = profile
+    ? {
+        name: profile.name || profile.email,
+        email: profile.email,
+        avatar: profile.profileImage || null,
+      }
+    : { name: 'Guest User', email: 'guest@example.com', avatar: null };
 
   return (
     <View style={styles.drawerContainer}>
@@ -135,10 +120,7 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
 };
 
 const styles = StyleSheet.create({
-  drawerContainer: {
-    flex: 1,
-    backgroundColor: COLORS.primary,
-  },
+  drawerContainer: { flex: 1, backgroundColor: COLORS.primary },
   header: {
     marginTop: 40,
     paddingVertical: 40,
@@ -152,60 +134,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 10,
   },
-  avatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    marginBottom: 10,
-    borderWidth: 2,
-    borderColor: COLORS.secondary,
-  },
-  name: {
-    color: COLORS.white,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  email: {
-    color: COLORS.secondary,
-    fontSize: 14,
-    marginTop: 2,
-  },
-  drawerContent: {
-    paddingTop: 10,
-  },
-  drawerItem: {
-    marginVertical: 0,
-  },
-  drawerLabel: {
-    color: COLORS.white,
-    fontWeight: '600',
-  },
-  divider: {
-    height: 1,
-    backgroundColor: COLORS.border,
-    marginHorizontal: 20,
-    marginVertical: 10,
-  },
-  logoutBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-  },
-  logoutText: {
-    color: COLORS.error,
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginLeft: 15,
-  },
-  footer: {
-    padding: 15,
-    alignItems: 'center',
-  },
-  footerText: {
-    color: COLORS.textLight,
-    fontSize: 12,
-  },
+  avatar: { width: 80, height: 80, borderRadius: 40, marginBottom: 10, borderWidth: 2, borderColor: COLORS.secondary },
+  name: { color: COLORS.white, fontSize: 18, fontWeight: 'bold' },
+  email: { color: COLORS.secondary, fontSize: 14, marginTop: 2 },
+  drawerContent: { paddingTop: 10 },
+  drawerItem: { marginVertical: 0 },
+  drawerLabel: { color: COLORS.white, fontWeight: '600' },
+  divider: { height: 1, backgroundColor: COLORS.border, marginHorizontal: 20, marginVertical: 10 },
+  logoutBtn: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 20 },
+  logoutText: { color: COLORS.error, fontWeight: 'bold', fontSize: 16, marginLeft: 15 },
+  footer: { padding: 15, alignItems: 'center' },
+  footerText: { color: COLORS.textLight, fontSize: 12 },
 });
 
 export default CustomDrawerContent;

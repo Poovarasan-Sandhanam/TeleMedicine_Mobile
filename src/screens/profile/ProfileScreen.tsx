@@ -1,32 +1,17 @@
-
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-  SafeAreaView,
-  ActivityIndicator,
-  KeyboardTypeOptions,
+  View, Text, TextInput, Image, ScrollView, TouchableOpacity, Alert,
+  SafeAreaView, ActivityIndicator, KeyboardTypeOptions
 } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { launchImageLibrary, ImagePickerResponse } from 'react-native-image-picker';
-
 import styles from '../../styles/ProfileScreenStyle';
 import CustomDropdown from '../../components/CustomDropdown';
 import GoBackButton from '../../components/BackButton';
 import {
-  GenderEnum,
-  MedicalConditionsEnum,
-  BloodGroupEnum,
-  OngoingTreatmentEnum,
-  ConsultEnum,
-  WeightEnum,
+  GenderEnum, MedicalConditionsEnum, BloodGroupEnum,
+  OngoingTreatmentEnum, ConsultEnum, WeightEnum
 } from '../../utilis/enums';
-
 import { fetchProfile, updateProfile } from '../../redux/slices/profileSlice';
 import { fetchDoctorTypes } from '../../redux/slices/doctorTypeSlice';
 
@@ -36,9 +21,8 @@ interface ProfileImage {
   name: string;
 }
 
-interface FormData {
+interface FormDataType {
   name: string;
-  dob: string;
   age: string;
   gender: string;
   email: string;
@@ -55,62 +39,19 @@ interface FormData {
   profileImage: ProfileImage | null;
 }
 
-interface Profile {
-  fullName?: string;
-  dob?: string;
-  gender?: string;
-  email?: string;
-  contactNo?: number;
-  address?: string;
-  bloodGroup?: string;
-  weight?: number;
-  height?: number;
-  ongoingTreatment?: string;
-  healthIssues?: string;
-  specialized?: string;
-  experience?: number;
-  consultationTiming?: string;
-  profileImage?: string;
-  isDoctor?: boolean;
-}
-
 const ProfileScreen: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { profile, loading: profileLoading } = useAppSelector(state => state.profile);
+  const { doctorTypes, loading: doctorTypesLoading } = useAppSelector(state => state.doctorTypes);
 
-  const { profile } = useAppSelector((state: any) => state.profile);
-  const { doctorTypes, loading: doctorTypesLoading } = useAppSelector((state: any) => state.doctorTypes);
-
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    dob: '',
-    age: '',
-    gender: '',
-    email: '',
-    contactNumber: '',
-    address: '',
-    bloodGroup: '',
-    weight: '',
-    height: '',
-    ongoingTreatment: '',
-    healthIssues: '',
-    specialized: '',
-    experience: '',
-    consultationTiming: '',
+  const [formData, setFormData] = useState<FormDataType>({
+    name: '', age: '', gender: '', email: '', contactNumber: '',
+    address: '', bloodGroup: '', weight: '', height: '', ongoingTreatment: '',
+    healthIssues: '', specialized: '', experience: '', consultationTiming: '',
     profileImage: null,
   });
 
-  const [editMode, setEditMode] = useState<boolean>(false);
-
-  const calculateAge = useCallback((dob: string): string => {
-    const birthDate = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age.toString();
-  }, []);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     dispatch(fetchProfile() as any);
@@ -118,61 +59,66 @@ const ProfileScreen: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
+  if (profile) {
+    setFormData({
+      ...formData,
+      age: profile.age !== undefined && profile.age !== null ? String(profile.age) : '',
+    });
+  }
+}, [profile]);
+
+  useEffect(() => {
+    
     if (profile) {
+      console.log('Fetched profile:', profile); 
       setFormData({
-        name: profile.fullName || '',
-        dob: profile.dob || '',
-        age: profile.dob ? calculateAge(profile.dob) : '',
-        gender: profile.gender || '',
+        name: profile.name || '',
+        age: profile.age?.toString() || '',
         email: profile.email || '',
-        contactNumber: profile.contactNo?.toString() || '',
+        contactNumber: profile.contactNumber || '',
         address: profile.address || '',
+        gender: profile.gender || '',
         bloodGroup: profile.bloodGroup || '',
-        weight: profile.weight?.toString() || '',
+        weight: profile.weight || '',
         height: profile.height?.toString() || '',
         ongoingTreatment: profile.ongoingTreatment || '',
         healthIssues: profile.healthIssues || '',
         specialized: profile.specialized || '',
         experience: profile.experience?.toString() || '',
         consultationTiming: profile.consultationTiming || '',
-        profileImage: profile.profileImage ? { uri: profile.profileImage, type: '', name: '' } : null,
+        profileImage: profile.profileImage
+          ? { uri: profile.profileImage, type: 'image/jpeg', name: 'profile.jpg' }
+          : null,
       });
     }
-  }, [profile, calculateAge]);
+  }, [profile]);
 
-  const handleChange = useCallback((key: keyof FormData, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [key]: value,
-      ...(key === 'dob' && { age: calculateAge(value) }),
-    }));
-  }, [calculateAge]);
+  const handleChange = (key: keyof FormDataType, value: string) => {
+    setFormData(prev => ({ ...prev, [key]: value }));
+  };
 
-  const handleImagePicker = useCallback(() => {
+  const handleImagePicker = () => {
     launchImageLibrary({ mediaType: 'photo' }, (res: ImagePickerResponse) => {
       if (res.assets && res.assets.length > 0) {
         const img = res.assets[0];
         if (img.uri) {
-          setFormData((prev) => ({
+          setFormData(prev => ({
             ...prev,
-            profileImage: {
-              uri: img.uri,
-              type: img.type || '',
-              name: img.fileName || '',
-            },
+            profileImage: { uri: img.uri, type: img.type || 'image/jpeg', name: img.fileName || 'profile.jpg' },
           }));
         }
       }
     });
-  }, []);
+  };
 
-  const validate = useCallback((): boolean => {
+  const validate = () => {
     if (!formData.name || !formData.email || !formData.contactNumber) {
       Alert.alert('Error', 'Name, Email, and Contact Number are required.');
       return false;
     }
-    if (isNaN(Number(formData.age)) || Number(formData.age) <= 0) {
-      Alert.alert('Error', 'Age must be a valid number.');
+    const ageNum = Number(formData.age);
+    if (isNaN(ageNum) || ageNum <= 0 || ageNum > 120) {
+      Alert.alert('Error', 'Age must be a valid number between 1 and 120.');
       return false;
     }
     if (formData.contactNumber.length < 10) {
@@ -180,53 +126,45 @@ const ProfileScreen: React.FC = () => {
       return false;
     }
     return true;
-  }, [formData]);
+  };
 
-const handleSubmit = useCallback(async () => {
-  if (!validate()) return;
+  const handleSubmit = async () => {
+    if (!validate()) return;
 
-  const data = new FormData();
-  
-  // Append profileImage first
-  if (formData.profileImage && formData.profileImage.uri) {
-    data.append('profileImage', {
-      uri: formData.profileImage.uri,
-      type: formData.profileImage.type || 'image/jpeg', // fallback type
-      name: formData.profileImage.name || 'profile.jpg',
-    } as any); // 'as any' needed for React Native FormData compatibility
-  }
+    const data = new FormData();
 
-
-  // Append other fields
-  Object.entries(formData).forEach(([key, value]) => {
-    if (key !== 'profileImage') {
-      data.append(key, value);
+    if (formData.profileImage) {
+      data.append('profileImage', {
+        uri: formData.profileImage.uri,
+        type: formData.profileImage.type,
+        name: formData.profileImage.name,
+      } as any);
     }
-  });
 
-  try {
-    const res = await dispatch(updateProfile(data) as any);
-    
-    if (res?.status) {
-      Alert.alert('Success', 'Profile updated successfully');
-      setEditMode(false);
-    } else {
-      Alert.alert('Error', res?.message || 'Update mmmfailed');
+    Object.entries(formData).forEach(([key, value]) => {
+      if (key !== 'profileImage') {
+        data.append(key, value.toString());
+      }
+    });
+
+    try {
+      const res = await dispatch(updateProfile(data) as any);
+      if (!res.error) {
+        Alert.alert('Success', 'Profile updated successfully');
+        setEditMode(false);
+        dispatch(fetchProfile() as any);
+      } else {
+        Alert.alert('Error', res.payload || 'Update failed');
+      }
+    } catch {
+      Alert.alert('Error', 'Unexpected error occurred.');
     }
-  } catch (err) {
-    Alert.alert('Error', 'An unexpected error occurred.');
-  }
-}, [formData, validate, dispatch]);
+  };
 
-
-  const handleEditModeToggle = useCallback(() => {
-    setEditMode(true);
-  }, []);
-
-  const renderField = useCallback((
+  const renderField = (
     label: string,
-    key: keyof FormData,
-    isDropdown: boolean = false,
+    key: keyof FormDataType,
+    isDropdown = false,
     data: any = null,
     keyboardType: KeyboardTypeOptions = 'default'
   ) => (
@@ -237,14 +175,14 @@ const handleSubmit = useCallback(async () => {
           <CustomDropdown
             data={data}
             selectedValue={formData[key] as string}
-            onValueChange={(val) => handleChange(key, val as string)}
+            onValueChange={val => handleChange(key, val as string)}
             dropdownStyle={styles.dropdown}
           />
         ) : (
           <TextInput
             style={styles.input}
             value={formData[key] as string}
-            onChangeText={(val) => handleChange(key, val)}
+            onChangeText={val => handleChange(key, val)}
             keyboardType={keyboardType}
           />
         )
@@ -252,15 +190,13 @@ const handleSubmit = useCallback(async () => {
         <Text style={styles.value}>{formData[key] || 'N/A'}</Text>
       )}
     </View>
-  ), [editMode, formData, handleChange]);
+  );
 
-  if (!profile || doctorTypesLoading) {
-    return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
+  if (profileLoading || doctorTypesLoading) {
+    return <ActivityIndicator style={styles.center} size="large" />;
   }
+
+  const isDoctor = profile?.isDoctor;
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -269,16 +205,12 @@ const handleSubmit = useCallback(async () => {
         <View style={styles.profileTop}>
           <Image
             source={
-              typeof formData.profileImage === 'object' && formData.profileImage?.uri
-                ? { uri: formData.profileImage.uri } // new image selected from picker
-                : typeof formData.profileImage === 'string' && formData.profileImage !== ''
-                  ? { uri: formData.profileImage }   // existing image from S3 URL
-                  : require('../../asset/profile.png') // fallback default
+              formData.profileImage?.uri
+                ? { uri: formData.profileImage.uri }
+                : require('../../asset/profile.png')
             }
             style={styles.avatar}
           />
-
-
           {editMode && (
             <TouchableOpacity onPress={handleImagePicker} activeOpacity={0.7}>
               <Text style={styles.change}>Change Image</Text>
@@ -289,11 +221,11 @@ const handleSubmit = useCallback(async () => {
         {renderField('Name', 'name')}
         {renderField('Email', 'email')}
         {renderField('Contact Number', 'contactNumber', false, null, 'phone-pad')}
-        {renderField('Date of Birth', 'dob', false, null, 'default')}
+        {renderField('Age', 'age')}
         {renderField('Gender', 'gender', true, GenderEnum)}
-        {renderField(profile.isDoctor ? 'Clinic Address' : 'Address', 'address')}
+        {renderField(isDoctor ? 'Clinic Address' : 'Address', 'address')}
 
-        {profile.isDoctor ? (
+        {isDoctor ? (
           <>
             {renderField('Specialized In', 'specialized', true, doctorTypes)}
             {renderField('Experience (years)', 'experience', false, null, 'numeric')}
@@ -311,7 +243,7 @@ const handleSubmit = useCallback(async () => {
 
         <TouchableOpacity
           style={styles.btn}
-          onPress={editMode ? handleSubmit : handleEditModeToggle}
+          onPress={editMode ? handleSubmit : () => setEditMode(true)}
           activeOpacity={0.8}
         >
           <Text style={styles.btnText}>{editMode ? 'Save Changes' : 'Edit Profile'}</Text>

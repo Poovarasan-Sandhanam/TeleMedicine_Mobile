@@ -22,8 +22,8 @@ import ConsultScreen from '../screens/consult/ConsultScreen';
 import PatientListScreen from '../screens/role/PatientListScreen';
 import DoctorSearchScreen from '../screens/role/DoctorSearchScreen';
 import DoctorPrescriptionScreen from '../screens/prescription/DoctorPrescriptionScreen';
-import DoctorPayment from '../screens/payment/DoctorPayment';
-import PaitentPayment from '../screens/payment/PaitentPayment';
+ // import DoctorPayment from '../screens/payment/DoctorPayment';
+// import PaitentPayment from '../screens/payment/PaitentPayment';
 import PaitentPrescriptionScreen from '../screens/prescription/PaitentPrescriptionScreen';
 
 import { login } from '../redux/slices/authSlice';
@@ -140,13 +140,22 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ navigation }) => {
       />
 
       {isDoctor ? (
-        <Tab.Screen
-          name="Payment"
-          component={DoctorPayment}
-          options={{
-            tabBarIcon: ({ color, size }) => <Icon name="payment" color={color} size={size} />,
-          }}
-        />
+        // <Tab.Screen
+        //   name="Payment"
+        //   component={DoctorPayment}
+        //   options={{
+        //     tabBarIcon: ({ color, size }) => <Icon name="payment" color={color} size={size} />,
+        //   }}
+        // />
+       <Tab.Screen
+            name="MyBooking"
+            component={MyBooking}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Icon name="bookmark-border" color={color} size={30} />
+              ),
+            }}
+          />
       ) : (
         <>
           <Tab.Screen
@@ -254,11 +263,11 @@ const AppNavigator: React.FC = () => {
           component={MyBooking} 
           options={{ headerShown: false }} 
         />
-        <Stack.Screen 
+        {/* <Stack.Screen 
           name="Payment" 
           component={PaitentPayment} 
           options={{ headerShown: false }} 
-        />
+        /> */}
         <Stack.Screen 
           name="Prescription" 
           component={DoctorPrescriptionScreen} 
