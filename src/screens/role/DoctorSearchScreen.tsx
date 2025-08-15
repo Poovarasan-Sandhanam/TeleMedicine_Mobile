@@ -1,166 +1,138 @@
-import React, { useEffect, useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   View,
   Text,
-  FlatList,
-  TouchableOpacity,
-  SafeAreaView,
-  Alert,
-  ActivityIndicator,
   Image,
-} from "react-native";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { fetchAllDoctors } from "../../redux/slices/doctorSlice";
-import styles from "../../styles/DoctorScreen.styles";
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  TextInput,
+  StatusBar,
+  Dimensions,
+} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import COLORS, { getTheme } from '../../constants/colors';
 
-// TypeScript interfaces
-interface ProfileDetails {
-  specialized?: string;
-  consultationTiming?: string;
-}
+const { width } = Dimensions.get('window');
+const CARD_MARGIN = 8;
+const CARD_WIDTH = (width / 2) - (CARD_MARGIN * 2);
 
-interface Doctor {
-  _id: string;
-  fullName: string;
-  gender: string;
-  dob: string;
-  contactNo: string;
-  email: string;
-  profileDetails?: ProfileDetails;
-}
+const DOCTOR_CATEGORIES = [
+  { id: 'gp', title: 'General Practitioner (GP)', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/general.png' },
+  { id: 'cardiologist', title: 'Cardiologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Cardiologist.png' },
+  { id: 'pediatrician', title: 'Pediatrician', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Pediatrician.jpg' },
+  { id: 'orthopedic', title: 'Orthopedic Surgeon', image: "https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Orthopedic.jpg" },
+  { id: 'gynecologist', title: 'Gynecologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Gynecologist.jpg' },
+  { id: 'obstetrician', title: 'Obstetrician (OB)', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Obstetrician.jpg' },
 
-interface DoctorCardProps {
-  doctor: Doctor;
-  onBook: (doctorId: string) => void;
-}
+  { id: 'dermatologist', title: 'Dermatologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Dermatologist.jpg' },
+  { id: 'endocrinologist', title: 'Endocrinologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Endocrinologist.jpg' },
+  { id: 'neurologist', title: 'Neurologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Neurologist.jpg' },
 
-interface RootState {
-  doctors: {
-    doctors: Doctor[];
-    error: string | null;
-    loading?: boolean;
-  };
-}
 
-interface NavigationProps {
-  navigation: {
-    navigate: (screen: string, params?: any) => void;
-  };
-}
+  { id: 'pediatrician', title: 'Pediatrician', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Pediatrician.jpg' },
+  { id: 'psychiatrist', title: 'Psychiatrist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Psychiatrist.jpg' },
 
-const DoctorCard: React.FC<DoctorCardProps> = ({ doctor}) => {
-  const { fullName, gender, dob, contactNo, email, profileDetails = {} } = doctor;
+  { id: 'gastroenterologist', title: 'Gastroenterologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Gastroenterologist.jpeg' },
+  { id: 'pulmonologist', title: 'Pulmonologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Pulmonologist.jpg' },
+  { id: 'oncologist', title: 'Oncologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Oncologist.jpg' },
+  { id: 'ophthalmologist', title: 'Ophthalmologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Ophthalmologist.jpg' },
+  { id: 'urologist', title: 'Urologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Urologist.jpg' },
+];
+export default function HomeScreen({ navigation }) {
+  const [query, setQuery] = useState('');
+  const theme = getTheme('light', 'telemedicine'); // choose theme & scheme
 
-  return (
-    <View style={styles.cardContainer}>
-      <View style={styles.card}>
-        <Text style={styles.name}>{fullName}</Text>
-        <Text style={styles.label}>
-          Gender: <Text style={styles.value}>{gender}</Text>
-        </Text>
-        <Text style={styles.label}>
-          DOB: <Text style={styles.value}>{dob}</Text>
-        </Text>
-        <Text style={styles.label}>
-          Contact: <Text style={styles.value}>{contactNo}</Text>
-        </Text>
-        <Text style={styles.label}>
-          Email: <Text style={styles.value}>{email}</Text>
-        </Text>
-        <Text style={styles.label}>
-          Specialized: <Text style={styles.value}>{profileDetails.specialized || "N/A"}</Text>
-        </Text>
-        <Text style={styles.label}>
-          Timing: <Text style={styles.value}>{profileDetails.consultationTiming || "N/A"}</Text>
+  const data = useMemo(() => {
+    if (!query.trim()) return DOCTOR_CATEGORIES;
+    const q = query.toLowerCase();
+    return DOCTOR_CATEGORIES.filter(
+      (d) => d.title.toLowerCase().includes(q)
+    );
+  }, [query]);
+
+  const renderItem = useCallback(({ item }) => (
+    <TouchableOpacity
+      style={[styles.card, { backgroundColor: theme.card, shadowColor: theme.shadow }]}
+      activeOpacity={0.85}
+      onPress={() => navigation?.navigate?.('Details', { category: item })}
+    >
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: item.image }} style={styles.image} />
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={[styles.cardTitle, { color: theme.text }]} numberOfLines={2}>
+          {item.title}
         </Text>
       </View>
-      <View style={styles.section}>
-         <Image
-    source={{ uri: `https://picsum.photos/200/120?random=${doctor._id}` }}
-    style={styles.cardImage}
-    resizeMode="cover"
-  />
-
-      </View>
-    </View>
-  );
-};
-
-const DoctorScreen: React.FC<NavigationProps> = ({ navigation }) => {
-  const dispatch = useAppDispatch();
-  const { doctors, error, loading = false } = useAppSelector((state: any) => state.doctors);
-
-  // Book handler for individual doctor cards
-  const handleBook = useCallback((doctorId: string) => {
-    navigation.navigate("AppointmentBooking", { doctorId });
-  }, [navigation]);
-
-  // Book handler for global button below the list
-  const handleBookPress = useCallback(() => {
-    navigation.navigate("AppointmentBooking"); // No doctorId passed
-  }, [navigation]);
-
-  const renderDoctorItem = useCallback(({ item }: { item: Doctor }) => (
-    <DoctorCard doctor={item} onBook={handleBook} />
-  ), [handleBook]);
-
-  const renderEmptyComponent = useMemo(() => (
-    <View style={styles.emptyContainer}>
-      <Text style={styles.empty}>No doctors found. Please try again later.</Text>
-    </View>
-  ), []);
-
-  const keyExtractor = useCallback((item: Doctor) => item._id, []);
-
-  useEffect(() => {
-    dispatch(fetchAllDoctors() as any);
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (error) {
-      Alert.alert("Error", error, [
-        {
-          text: "OK",
-          onPress: () => {
-            dispatch(fetchAllDoctors() as any);
-          },
-        },
-      ]);
-    }
-  }, [error, dispatch]);
+    </TouchableOpacity>
+  ), [navigation, theme]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Available Doctors</Text>
+    <SafeAreaView style={[styles.safe, { backgroundColor: theme.background }]}>
+      <StatusBar barStyle="dark-content" backgroundColor={theme.background} />
 
-      {loading ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#4A4AFF" />
-          <Text style={styles.loadingText}>Loading doctors...</Text>
-        </View>
-      ) : (
-        <>
-          <FlatList
-            data={doctors}
-            keyExtractor={keyExtractor}
-            contentContainerStyle={styles.list}
-            renderItem={renderDoctorItem}
-            ListEmptyComponent={renderEmptyComponent}
-            showsVerticalScrollIndicator={false}
-            initialNumToRender={5}
-            maxToRenderPerBatch={10}
-            windowSize={10}
-            removeClippedSubviews
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={[styles.headerTitle, { color: theme.text }]}>Find Your Specialist</Text>
+        <View style={[styles.searchBar, { backgroundColor: theme.white, borderColor: theme.border }]}>
+          <Ionicons name="search" size={20} color={theme.textLight} style={{ marginRight: 8 }} />
+          <TextInput
+            value={query}
+            onChangeText={setQuery}
+            placeholder="Search doctors..."
+            placeholderTextColor={theme.textLight}
+            style={[styles.search, { color: theme.text }]}
           />
+        </View>
+      </View>
 
-          {/* Button BELOW the doctor list */}
-          <TouchableOpacity style={styles.button} onPress={handleBookPress}>
-            <Text style={styles.buttonText}>Book Appointment</Text>
-          </TouchableOpacity>
-        </>
-      )}
+      {/* Doctor Categories Grid */}
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+        contentContainerStyle={styles.listContent}
+        columnWrapperStyle={styles.columnWrapper}
+        numColumns={2}
+        showsVerticalScrollIndicator={false}
+      />
     </SafeAreaView>
   );
-};
+}
 
-export default DoctorScreen;
+const styles = StyleSheet.create({
+  safe: { flex: 1 },
+
+  header: { paddingHorizontal: 16, paddingVertical: 20 },
+  headerTitle: { fontSize: 26, fontWeight: '700', marginBottom: 14 },
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    height: 44,
+    borderWidth: 1,
+  },
+  search: { flex: 1, fontSize: 16 },
+
+  listContent: { paddingHorizontal: CARD_MARGIN, paddingBottom: 16 },
+  columnWrapper: { justifyContent: 'space-between' },
+
+  card: {
+    borderRadius: 14,
+    overflow: 'hidden',
+    marginBottom: CARD_MARGIN * 2,
+    width: CARD_WIDTH,
+    elevation: 4, // Android shadow
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+  },
+  imageContainer: { width: '100%', height: 120, backgroundColor: '#ccc' },
+  image: { width: '100%', height: '100%', resizeMode: 'cover' },
+
+  textContainer: { padding: 10 },
+  cardTitle: { fontSize: 15, fontWeight: '700', marginBottom: 4, textAlign: "center" },
+});
