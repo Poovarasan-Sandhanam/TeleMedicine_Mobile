@@ -1,10 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../utilis/api';
 
 // Types
+interface DoctorType {
+  _id: string;
+  id: string;
+  title: string;
+  image: string;
+}
+
 interface DoctorTypeState {
-  doctorTypes: any[];
+  doctorTypes: DoctorType[];
   loading: boolean;
   error: string | null;
 }
@@ -15,38 +21,25 @@ const initialState: DoctorTypeState = {
   error: null,
 };
 
-// Async thunks
-export const fetchDoctorTypes = createAsyncThunk(
-  'doctorType/fetchDoctorTypes',
-  async (_, { rejectWithValue }) => {
-    try {
-      // For now, return mock data since the API might not be available
-      const mockDoctorTypes = [
-        { label: 'Cardiologist', value: 'Cardiologist' },
-        { label: 'Dermatologist', value: 'Dermatologist' },
-        { label: 'Neurologist', value: 'Neurologist' },
-        { label: 'Orthopedist', value: 'Orthopedist' },
-        { label: 'Pediatrician', value: 'Pediatrician' },
-        { label: 'Psychiatrist', value: 'Psychiatrist' },
-        { label: 'General Physician', value: 'General Physician' },
-      ];
-      
-      return mockDoctorTypes;
-      
-      // Uncomment when API is available:
-      // const token = await AsyncStorage.getItem('token');
-      // const headers = { Authorization: `Bearer ${token}` };
-      // const response = await api.get('/profile/get-doctor-types', { headers });
-      // if (response?.data?.data) {
-      //   return response.data.data;
-      // } else {
-      //   throw new Error('Invalid response format');
-      // }
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to fetch doctor types');
+// Async thunk to fetch doctor types from API
+export const fetchDoctorTypes = createAsyncThunk<
+  DoctorType[],
+  void,
+  { rejectValue: string }
+>('doctorType/fetchDoctorTypes', async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.get('/doctor/getDoctorTypes');
+    console.log(response.data.data,"response");
+  
+   if (response?.data?.status && response?.data?.data) {
+      return response.data.data as DoctorType[];
+    } else {
+      throw new Error(response?.data?.message || 'Failed to fetch doctor types');
     }
+  } catch (error: any) {
+    return rejectWithValue(error.message || 'Failed to fetch doctor types');
   }
-);
+});
 
 // Slice
 const doctorTypeSlice = createSlice({
@@ -68,15 +61,15 @@ const doctorTypeSlice = createSlice({
       })
       .addCase(fetchDoctorTypes.fulfilled, (state, action) => {
         state.loading = false;
-        state.doctorTypes = action.payload || [];
+        state.doctorTypes = action.payload;
         state.error = null;
       })
       .addCase(fetchDoctorTypes.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.payload || 'Something went wrong';
       });
   },
 });
 
 export const { clearDoctorTypeError, clearDoctorTypes } = doctorTypeSlice.actions;
-export default doctorTypeSlice.reducer; 
+export default doctorTypeSlice.reducer;

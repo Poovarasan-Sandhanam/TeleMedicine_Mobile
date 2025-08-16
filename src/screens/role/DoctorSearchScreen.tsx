@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,61 +13,55 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import COLORS, { getTheme } from '../../constants/colors';
+import { fetchDoctorTypes } from '../../redux/slices/doctorTypeSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 const { width } = Dimensions.get('window');
 const CARD_MARGIN = 8;
-const CARD_WIDTH = (width / 2) - (CARD_MARGIN * 2);
+const CARD_WIDTH = width / 2 - CARD_MARGIN * 2;
 
-const DOCTOR_CATEGORIES = [
-  { id: 'gp', title: 'General Practitioner (GP)', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/general.png' },
-  { id: 'cardiologist', title: 'Cardiologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Cardiologist.png' },
-  { id: 'pediatrician', title: 'Pediatrician', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Pediatrician.jpg' },
-  { id: 'orthopedic', title: 'Orthopedic Surgeon', image: "https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Orthopedic.jpg" },
-  { id: 'gynecologist', title: 'Gynecologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Gynecologist.jpg' },
-  { id: 'obstetrician', title: 'Obstetrician (OB)', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Obstetrician.jpg' },
-
-  { id: 'dermatologist', title: 'Dermatologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Dermatologist.jpg' },
-  { id: 'endocrinologist', title: 'Endocrinologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Endocrinologist.jpg' },
-  { id: 'neurologist', title: 'Neurologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Neurologist.jpg' },
-
-
-  { id: 'pediatrician', title: 'Pediatrician', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Pediatrician.jpg' },
-  { id: 'psychiatrist', title: 'Psychiatrist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Psychiatrist.jpg' },
-
-  { id: 'gastroenterologist', title: 'Gastroenterologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Gastroenterologist.jpeg' },
-  { id: 'pulmonologist', title: 'Pulmonologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Pulmonologist.jpg' },
-  { id: 'oncologist', title: 'Oncologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Oncologist.jpg' },
-  { id: 'ophthalmologist', title: 'Ophthalmologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Ophthalmologist.jpg' },
-  { id: 'urologist', title: 'Urologist', image: 'https://telemedicine-storage-backend.s3.eu-west-2.amazonaws.com/specialization/special/Urologist.jpg' },
-];
 export default function HomeScreen({ navigation }) {
+  const dispatch = useAppDispatch();
+
+  // Fetch doctor types on mount
+  useEffect(() => {
+    dispatch(fetchDoctorTypes() as any);
+  }, [dispatch]);
+
+  // Redux state
+  const { doctorTypes: allDoctorTypes } = useAppSelector(state => state.doctorTypes);
+
+  // Search state
   const [query, setQuery] = useState('');
+
   const theme = getTheme('light', 'telemedicine'); // choose theme & scheme
 
-  const data = useMemo(() => {
-    if (!query.trim()) return DOCTOR_CATEGORIES;
+  // Filtered doctor types based on search query
+  const filteredDoctorTypes = useMemo(() => {
+    if (!query.trim()) return allDoctorTypes;
     const q = query.toLowerCase();
-    return DOCTOR_CATEGORIES.filter(
-      (d) => d.title.toLowerCase().includes(q)
-    );
-  }, [query]);
+    return allDoctorTypes.filter((d) => d.title.toLowerCase().includes(q));
+  }, [query, allDoctorTypes]);
 
-  const renderItem = useCallback(({ item }) => (
-    <TouchableOpacity
-      style={[styles.card, { backgroundColor: theme.card, shadowColor: theme.shadow }]}
-      activeOpacity={0.85}
-      onPress={() => navigation?.navigate?.('Details', { category: item })}
-    >
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: item.image }} style={styles.image} />
-      </View>
-      <View style={styles.textContainer}>
-        <Text style={[styles.cardTitle, { color: theme.text }]} numberOfLines={2}>
-          {item.title}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  ), [navigation, theme]);
+  const renderItem = useCallback(
+    ({ item }) => (
+      <TouchableOpacity
+        style={[styles.card, { backgroundColor: theme.card, shadowColor: theme.shadow }]}
+        activeOpacity={0.85}
+        onPress={() => navigation.navigate('Details', { category: item })}
+      >
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: item.image }} style={styles.image} />
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={[styles.cardTitle, { color: theme.text }]} numberOfLines={2}>
+            {item.title}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    ),
+    [navigation, theme]
+  );
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: theme.background }]}>
@@ -90,7 +84,7 @@ export default function HomeScreen({ navigation }) {
 
       {/* Doctor Categories Grid */}
       <FlatList
-        data={data}
+        data={filteredDoctorTypes}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         contentContainerStyle={styles.listContent}
@@ -134,5 +128,5 @@ const styles = StyleSheet.create({
   image: { width: '100%', height: '100%', resizeMode: 'cover' },
 
   textContainer: { padding: 10 },
-  cardTitle: { fontSize: 15, fontWeight: '700', marginBottom: 4, textAlign: "center" },
+  cardTitle: { fontSize: 15, fontWeight: '700', marginBottom: 4, textAlign: 'center' },
 });

@@ -10,24 +10,24 @@ import {
 } from 'react-native';
 
 interface DropdownItem {
-  label: string;
-  value: string | number;
+  title: string;
+  id: string | number;
 }
 
 interface CustomDropdownProps {
   data: (DropdownItem | string)[];
-  selectedValue: string | number;
-  onValueChange: (value: string | number) => void;
-  label?: string;
+  selectedid: string | number;
+  onidChange: (id: string | number) => void;
+  title?: string;
   dropdownStyle?: object;
   placeholder?: string;
 }
 
 const CustomDropdown: React.FC<CustomDropdownProps> = ({
   data,
-  selectedValue,
-  onValueChange,
-  label,
+  selectedid,
+  onidChange,
+  title,
   dropdownStyle,
   placeholder = 'Select an option',
 }) => {
@@ -36,20 +36,20 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
   // Memoized normalized data
   const normalizedData = useMemo(() => 
     data.map((item) =>
-      typeof item === 'string' ? { label: item, value: item } : item
+      typeof item === 'string' ? { title: item, id: item } : item
     ), [data]
   );
 
-  // Memoized selected label
-  const selectedLabel = useMemo(() =>
-    normalizedData.find((item) => item.value === selectedValue)?.label || placeholder,
-    [normalizedData, selectedValue, placeholder]
+  // Memoized selected title
+  const selectedtitle = useMemo(() =>
+    normalizedData.find((item) => item.id === selectedid)?.title || placeholder,
+    [normalizedData, selectedid, placeholder]
   );
 
   const handleSelectItem = useCallback((item: DropdownItem) => {
-    onValueChange(item.value);
+    onidChange(item.id);
     setIsModalVisible(false);
-  }, [onValueChange]);
+  }, [onidChange]);
 
   const handleOpenModal = useCallback(() => {
     setIsModalVisible(true);
@@ -65,23 +65,23 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
       onPress={() => handleSelectItem(item)}
       activeOpacity={0.7}
     >
-      <Text style={styles.itemText}>{item.label}</Text>
+      <Text style={styles.itemText}>{item.title}</Text>
     </TouchableOpacity>
   ), [handleSelectItem]);
 
   const keyExtractor = useCallback((item: DropdownItem) => 
-    item.value.toString(), []
+    item.id.toString(), []
   );
 
   return (
     <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
+      {title && <Text style={styles.title}>{title}</Text>}
       <TouchableOpacity
         style={[styles.dropdown, dropdownStyle]}
         onPress={handleOpenModal}
         activeOpacity={0.8}
       >
-        <Text style={styles.selectedValue}>{selectedLabel}</Text>
+        <Text style={styles.selectedid}>{selectedtitle}</Text>
       </TouchableOpacity>
 
       <Modal
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: '100%',
   },
-  label: {
+  title: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width: '100%',
   },
-  selectedValue: {
+  selectedid: {
     fontSize: 16,
     color: '#555',
   },
