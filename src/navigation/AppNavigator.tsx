@@ -20,6 +20,7 @@ import MyBooking from '../screens/booking/MyBooking';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import ConsultScreen from '../screens/consult/ConsultScreen';
 import PatientListScreen from '../screens/role/PatientListScreen';
+import DoctorListScreen from '../screens/role/DoctorListScreen';
 import DoctorSearchScreen from '../screens/role/DoctorSearchScreen';
 import DoctorPrescriptionScreen from '../screens/prescription/DoctorPrescriptionScreen';
  // import DoctorPayment from '../screens/payment/DoctorPayment';
@@ -41,6 +42,7 @@ type RootStackParamList = {
   MyBooking: undefined;
   Payment: undefined;
   Prescription: undefined;
+  DoctorListScreen: undefined;
 };
 
 type TabParamList = {
@@ -256,6 +258,11 @@ const AppNavigator: React.FC = () => {
         <Stack.Screen 
           name="AppointmentBooking" 
           component={AppointmentBooking} 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="DoctorListScreen" 
+          component={DoctorListScreen} 
           options={{ headerShown: false }} 
         />
         <Stack.Screen 

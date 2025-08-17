@@ -23,15 +23,18 @@ interface NormalizedProfile {
 
 interface ProfileState {
   profile: NormalizedProfile | null;
+  completedDoctors: any[];   // ✅ add this
   loading: boolean;
   error: string | null;
 }
 
 const initialState: ProfileState = {
   profile: null,
+  completedDoctors: [],
   loading: false,
   error: null,
 };
+
 
 // ==========================
 // FETCH PROFILE
@@ -111,6 +114,32 @@ export const updateProfile = createAsyncThunk<any, FormData, { rejectValue: stri
 );
 
 // ==========================
+// FETCH COMPLETED DOCTORS
+// ==========================
+export const fetchCompletedDoctors = createAsyncThunk<any[], void, { rejectValue: string }>(
+  'profile/fetchCompletedDoctors',
+  async (_, { rejectWithValue }) => {
+    try {
+      console.log('📡 Fetching completed doctor profiles...');
+      const token = await AsyncStorage.getItem('token');
+      if (!token) return rejectWithValue('No authentication token found');
+
+      const res = await api.get('/profile/get-completed-doctor-profiles', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      console.log('✅ Completed doctors fetched:', res.data?.data);
+      return res.data?.data || [];
+    } catch (err: any) {
+      const errorMessage = err?.response?.data?.message || 'Failed to fetch completed doctors';
+      console.error('❌ Completed doctors fetch failed:', errorMessage);
+      return rejectWithValue(errorMessage);
+    }
+  }
+);
+
+
+// ==========================
 // PROFILE SLICE
 // ==========================
 const profileSlice = createSlice({
@@ -174,7 +203,22 @@ const profileSlice = createSlice({
       .addCase(updateProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Profile update failed';
+      })
+      .addCase(fetchCompletedDoctors.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchCompletedDoctors.fulfilled, (state, action: PayloadAction<any[]>) => {
+        state.loading = false;
+        state.completedDoctors = action.payload;
+      })
+      .addCase(fetchCompletedDoctors.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Failed to fetch completed doctors';
       });
+
+
+
   },
 });
 

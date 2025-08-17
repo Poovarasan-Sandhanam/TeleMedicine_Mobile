@@ -48,7 +48,7 @@ export default function HomeScreen({ navigation }) {
       <TouchableOpacity
         style={[styles.card, { backgroundColor: theme.card, shadowColor: theme.shadow }]}
         activeOpacity={0.85}
-        onPress={() => navigation.navigate('Details', { category: item })}
+        onPress={() => navigation.navigate('DoctorListScreen', { category: item.title })}
       >
         <View style={styles.imageContainer}>
           <Image source={{ uri: item.image }} style={styles.image} />
