@@ -15,8 +15,8 @@
   --ndk-version \
   26 \
   --output \
-  /var/folders/tx/j7jmc6l93bg96hn4nn_wctk40000gn/T/agp-prefab-staging4601031834514100547/staged-cli-output \
+  /var/folders/tx/j7jmc6l93bg96hn4nn_wctk40000gn/T/agp-prefab-staging17529857667137388446/staged-cli-output \
   /Users/poovarasan/.gradle/caches/8.10.2/transforms/9dd527d969e02b55f07d1c817bf6df1a/transformed/jetified-react-android-0.76.5-debug/prefab \
-  /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/build/intermediates/cxx/refs/react-native-reanimated/h5a2a5j3 \
+  /Users/poovarasan/Development/TeleMedicine_Mobile/android/app/build/intermediates/cxx/refs/react-native-reanimated/1j121dg5 \
   /Users/poovarasan/.gradle/caches/8.10.2/transforms/06fb36c4cea55540d6efecbd866b8f61/transformed/jetified-hermes-android-0.76.5-debug/prefab \
   /Users/poovarasan/.gradle/caches/8.10.2/transforms/599bd3f273fb6bafcc8e4a1dc7254107/transformed/jetified-fbjni-0.6.0/prefab

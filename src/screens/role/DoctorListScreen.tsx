@@ -9,8 +9,9 @@ import {
   SafeAreaView,
   Image,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 export default function DoctorsScreen() {
   const dispatch = useDispatch<any>();
@@ -19,6 +20,7 @@ export default function DoctorsScreen() {
   );
 
   const route = useRoute<any>();
+  const navigation = useNavigation<any>();
   const { category } = route.params || {};
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export default function DoctorsScreen() {
         data={filteredDoctors}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
-          <View style={styles.card}>
+          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AppointmentBooking', { doctor: item })}>
             {/* Doctor Profile Image */}
             <Image
               source={{ uri: item.profileImage }}
@@ -80,7 +82,7 @@ export default function DoctorsScreen() {
                 </Text>
               )}
             </View>
-          </View>
+          </TouchableOpacity>
         )}
         ListEmptyComponent={
           <Text style={styles.empty}>No doctors found for {category}</Text>
@@ -97,7 +99,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: '#a9a4a4ff',
+    width: '80%',
     borderRadius: 12,
     marginBottom: 15,
     flexDirection: 'row',
@@ -106,6 +109,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     padding: 12,
+    alignContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: '10%',
   },
   image: {
     width: 90,

@@ -128,11 +128,11 @@ export const fetchCompletedDoctors = createAsyncThunk<any[], void, { rejectValue
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log('✅ Completed doctors fetched:', res.data?.data);
+      // console.log('✅ Completed doctors fetched:', res.data?.data);
       return res.data?.data || [];
     } catch (err: any) {
       const errorMessage = err?.response?.data?.message || 'Failed to fetch completed doctors';
-      console.error('❌ Completed doctors fetch failed:', errorMessage);
+      // console.error('❌ Completed doctors fetch failed:', errorMessage);
       return rejectWithValue(errorMessage);
     }
   }

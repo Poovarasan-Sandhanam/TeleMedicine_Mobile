@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
-//const API_BASE_URL = 'http://10.0.2.2:3001/api/v1'; // For Android emulator
- const API_BASE_URL = 'http://localhost:3001/api/v1'; // For iOS simulator
+const API_BASE_URL = 'http://10.0.2.2:3001/api/v1'; // For Android emulator
+// const API_BASE_URL = 'http://localhost:3001/api/v1'; // For iOS simulator
 // const API_BASE_URL = 'https://your-production-api.com/api/v1'; // For production
 
 interface ApiResponse<T = any> {

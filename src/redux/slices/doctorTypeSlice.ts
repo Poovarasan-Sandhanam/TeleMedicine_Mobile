@@ -29,7 +29,7 @@ export const fetchDoctorTypes = createAsyncThunk<
 >('doctorType/fetchDoctorTypes', async (_, { rejectWithValue }) => {
   try {
     const response = await api.get('/doctor/getDoctorTypes');
-    console.log(response.data.data,"response");
+    // console.log(response.data.data,"response");
   
    if (response?.data?.status && response?.data?.data) {
       return response.data.data as DoctorType[];
