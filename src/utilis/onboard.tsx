@@ -1,13 +1,13 @@
-import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
-import AppIntroSlider from "react-native-app-intro-slider";
-import COLORS from "../constants/colors"; // adjust path as necessary
+import React from 'react';
+import { StyleSheet, Text, View, Image, ImageSourcePropType } from 'react-native';
+import AppIntroSlider from 'react-native-app-intro-slider';
+import COLORS from '../constants/colors'; // adjust path as necessary
 
 interface Slide {
   key: string;
   title: string;
   text: string;
-  image: string;
+  image: ImageSourcePropType;
   backgroundColor: string;
 }
 
@@ -19,24 +19,24 @@ interface OnboardingScreenProps {
 
 const slides: Slide[] = [
   {
-    key: "slide1",
-    title: "Welcome to TeleMedicine",
-    text: "Connect with healthcare professionals anytime, anywhere.",
-    image: require("../asset/onboarding/onboard-one.png"),
+    key: 'slide1',
+    title: 'Welcome to TeleMedicine',
+    text: 'Connect with healthcare professionals anytime, anywhere.',
+    image: require('../asset/onboarding/onboard-one.png'),
     backgroundColor: COLORS.primary,
   },
   {
-    key: "slide2",
-    title: "Easy Appointments",
-    text: "Book appointments with just a few taps and avoid long queues.",
-    image:require("../asset/onboarding/onboard-two.png"),
+    key: 'slide2',
+    title: 'Easy Appointments',
+    text: 'Book appointments with just a few taps and avoid long queues.',
+    image:require('../asset/onboarding/onboard-two.png'),
     backgroundColor: COLORS.primary,
   },
   {
-    key: "slide3",
-    title: "Secure Consultations",
-    text: "Get personalized and secure video consultations from experts.",
-    image: require("../asset/onboarding/onboard-three.png"),
+    key: 'slide3',
+    title: 'Secure Consultations',
+    text: 'Get personalized and secure video consultations from experts.',
+    image: require('../asset/onboarding/onboard-three.png'),
     backgroundColor: COLORS.primary,
   },
 ];
@@ -50,7 +50,8 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
     </View>
   );
 
-  const handleFinish = () => navigation.replace("Login");
+  const handleFinish = () => navigation.replace('Login');
+  const handleSkip = () => navigation.replace('Home');
 
   return (
     <AppIntroSlider
@@ -58,7 +59,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
       data={slides}
       onDone={handleFinish}
       showSkipButton
-      onSkip={handleFinish}
+      onSkip={handleSkip}
     />
   );
 };
@@ -66,26 +67,26 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   slide: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
   },
   image: {
     width: 300,
     height: 300,
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     color: COLORS.white,
-    textAlign: "center",
+    textAlign: 'center',
     marginBottom: 10,
   },
   text: {
     fontSize: 16,
     color: COLORS.white,
-    textAlign: "center",
+    textAlign: 'center',
   },
 });
 

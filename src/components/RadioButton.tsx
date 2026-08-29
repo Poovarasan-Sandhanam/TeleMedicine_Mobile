@@ -15,13 +15,13 @@ interface RadioButtonProps {
   disabled?: boolean;
 }
 
-const RadioButton: React.FC<RadioButtonProps> = ({ 
-  options, 
-  selectedOption, 
-  onSelect, 
+const RadioButton: React.FC<RadioButtonProps> = ({
+  options,
+  selectedOption,
+  onSelect,
   style,
   color = '#007bff',
-  disabled = false 
+  disabled = false,
 }) => {
   return (
     <View style={[styles.container, style]}>

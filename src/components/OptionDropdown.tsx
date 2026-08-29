@@ -34,7 +34,7 @@ const OptionDropdown: React.FC<OptionDropdownProps> = ({
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Memoized normalized data
-  const normalizedData = useMemo(() => 
+  const normalizedData = useMemo(() =>
     data.map((item) => ({
       label: item.label,
       value: item.value,
@@ -70,7 +70,7 @@ const OptionDropdown: React.FC<OptionDropdownProps> = ({
     </TouchableOpacity>
   ), [handleSelectItem]);
 
-  const keyExtractor = useCallback((item: DropdownItem) => 
+  const keyExtractor = useCallback((item: DropdownItem) =>
     item.value.toString(), []
   );
 

@@ -13,7 +13,7 @@ interface ProfileFieldProps {
   editable: boolean;
   onChangeText?: (text: string) => void;
   dropdown?: boolean;
-  dropdownData?: (DropdownItem | string)[];
+  dropdownData?: any[];
   dropdownValue?: string | number;
   onDropdownChange?: (value: string | number) => void;
   keyboardType?: KeyboardTypeOptions;
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(ProfileField); 
+export default memo(ProfileField);

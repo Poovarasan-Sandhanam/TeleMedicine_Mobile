@@ -20,6 +20,8 @@ import styles from '../../styles/bookingScreenStyle';
 import COLORS from '../../constants/colors';
 import { RootState } from '../../redux/store';
 
+import Animated, { FadeInDown } from 'react-native-reanimated';
+
 interface UserDetails {
   fullName?: string;
   contactNo?: string;
@@ -56,7 +58,6 @@ const MyBooking: React.FC = () => {
         {
           text: 'OK',
           onPress: () => {
-            // Optionally retry fetching bookings
             dispatch(fetchBookings() as any);
           },
         },
@@ -68,70 +69,75 @@ const MyBooking: React.FC = () => {
     (navigation as any).navigate('Payment', { appointmentId });
   }, [navigation]);
 
-  const renderBooking = useCallback(({ item }: { item: Booking }) => {
-    const showPay = item.status !== 'Success';
+  const renderBooking = useCallback(({ item, index }: { item: Booking; index: number }) => {
+    const isSuccess = item.status === 'Success';
+    const showPay = !isSuccess;
 
     return (
-      <View style={styles.cardWrapper}>
-        <View style={styles.cardContent}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.doctorName}>
-              {item.userDetails?.fullName || 'Doctor'}
-            </Text>
-            <View
-              style={[
-                styles.statusBadge,
-                item.status === 'Success' ? styles.success : styles.pending,
-              ]}
-            >
-              <Text style={styles.statusText}>{item.status}</Text>
-            </View>
-          </View>
-
-          <View style={styles.row}>
-            <Icon name="phone" size={18} color={COLORS.primary} />
-            <Text style={styles.detailText}>
-              {item.userDetails?.contactNo || '-'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Icon name="calendar" size={18} color={COLORS.primary} />
-            <Text style={styles.detailText}>
-              {new Date(item.date).toLocaleDateString()}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Icon name="clock-outline" size={18} color={COLORS.primary} />
-            <Text style={styles.detailText}>
-              {item.checkupTiming ? formatTimeRange(item.checkupTiming) : 'N/A'}
-            </Text>
-          </View>
-
-          {item.notes ? (
-            <View style={styles.notesBox}>
-              <Icon name="note-text" size={18} color={COLORS.primary} />
-              <Text style={styles.notesText}>{item.notes}</Text>
-            </View>
-          ) : null}
-
-          {showPay && (
-            <TouchableOpacity
-              style={styles.payButton}
-              onPress={() => handlePaymentPress(item._id)}
-              activeOpacity={0.8}
-            >
-              <LinearGradient
-                colors={[COLORS.primary, COLORS.secondary]}
-                style={styles.payButtonGradient}
+      <Animated.View entering={FadeInDown.delay(index * 80).springify().damping(15)}>
+        <View style={styles.cardWrapper}>
+          <View style={styles.cardContent}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.doctorName}>
+                {item.userDetails?.fullName || 'Doctor'}
+              </Text>
+              <View
+                style={[
+                  styles.statusBadge,
+                  isSuccess ? styles.success : styles.pending,
+                ]}
               >
-                <Text style={styles.payButtonText}>Pay Now</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          )}
+                <Text style={[styles.statusText, { color: isSuccess ? '#059669' : '#D97706' }]}>
+                  {item.status}
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.row}>
+              <Icon name="phone-outline" size={16} color={COLORS.primary} />
+              <Text style={styles.detailText}>
+                {item.userDetails?.contactNo || '-'}
+              </Text>
+            </View>
+
+            <View style={styles.row}>
+              <Icon name="calendar-month-outline" size={16} color={COLORS.primary} />
+              <Text style={styles.detailText}>
+                {new Date(item.date).toLocaleDateString()}
+              </Text>
+            </View>
+
+            <View style={styles.row}>
+              <Icon name="clock-outline" size={16} color={COLORS.primary} />
+              <Text style={styles.detailText}>
+                {item.checkupTiming ? formatTimeRange(item.checkupTiming) : 'N/A'}
+              </Text>
+            </View>
+
+            {item.notes ? (
+              <View style={styles.notesBox}>
+                <Icon name="note-text-outline" size={16} color={COLORS.primary} />
+                <Text style={styles.notesText}>{item.notes}</Text>
+              </View>
+            ) : null}
+
+            {showPay && (
+              <TouchableOpacity
+                style={styles.payButton}
+                onPress={() => handlePaymentPress(item._id)}
+                activeOpacity={0.8}
+              >
+                <LinearGradient
+                  colors={[COLORS.primary, COLORS.secondary]}
+                  style={styles.payButtonGradient}
+                >
+                  <Text style={styles.payButtonText}>Pay Now</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
-      </View>
+      </Animated.View>
     );
   }, [handlePaymentPress]);
 

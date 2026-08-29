@@ -28,7 +28,7 @@ import DoctorPrescriptionScreen from '../screens/prescription/DoctorPrescription
 import PaitentPrescriptionScreen from '../screens/prescription/PaitentPrescriptionScreen';
 
 import { login } from '../redux/slices/authSlice';
-import COLORS from "../constants/colors";
+import COLORS from '../constants/colors';
 import CustomDrawerContent from '../components/CustomDrawerContent';
 
 // Type definitions
@@ -71,16 +71,17 @@ interface TabNavigatorProps {
 }
 
 const TabNavigator: React.FC<TabNavigatorProps> = ({ navigation }) => {
-  const [isDoctor, setIsDoctor] = useState<boolean | null>(null);
+  const [isDoctor, setIsDoctor] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchIsDoctor = async () => {
       try {
         const storedValue = await AsyncStorage.getItem('isDoctor');
-        setIsDoctor(storedValue ? JSON.parse(storedValue) : null);
+        if (storedValue !== null) {
+          setIsDoctor(JSON.parse(storedValue));
+        }
       } catch (error) {
         console.error('Error fetching isDoctor:', error);
-        setIsDoctor(null);
       }
     };
     fetchIsDoctor();
@@ -89,8 +90,6 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ navigation }) => {
   const handleMenuPress = useCallback(() => {
     navigation.openDrawer();
   }, [navigation]);
-
-  if (isDoctor === null) return null;
 
   return (
     <Tab.Navigator
@@ -106,7 +105,7 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ navigation }) => {
         ),
         tabBarStyle: { backgroundColor: COLORS.primary },
         tabBarActiveTintColor: COLORS.white,
-        tabBarInactiveTintColor: "black",
+        tabBarInactiveTintColor: 'black',
       }}
     >
       {isDoctor ? (
@@ -217,7 +216,7 @@ const AppNavigator: React.FC = () => {
           setIsAuthenticated(false);
         }
       } catch (error) {
-        console.error("Auth check failed:", error);
+        console.error('Auth check failed:', error);
         setIsAuthenticated(false);
       }
     };
@@ -225,64 +224,64 @@ const AppNavigator: React.FC = () => {
     checkAuth();
   }, [dispatch]);
 
-  if (isAuthenticated === null) return null;
+  if (isAuthenticated === null) {return null;}
 
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
-        <Stack.Screen 
-          name="Splash" 
-          component={SplashScreen} 
-          options={{ headerShown: false }} 
+        <Stack.Screen
+          name="Splash"
+          component={SplashScreen}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen 
-          name="Onboard" 
-          component={OnboardScreen} 
-          options={{ headerShown: false }} 
+        <Stack.Screen
+          name="Onboard"
+          component={OnboardScreen}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen 
-          name="Login" 
-          component={LoginScreen} 
-          options={{ headerShown: false }} 
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen 
-          name="Signup" 
-          component={SignupScreen} 
-          options={{ headerShown: false }} 
+        <Stack.Screen
+          name="Signup"
+          component={SignupScreen}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen 
-          name="Home" 
-          component={DrawerNavigator} 
-          options={{ headerShown: false }} 
+        <Stack.Screen
+          name="Home"
+          component={DrawerNavigator}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen 
-          name="AppointmentBooking" 
-          component={AppointmentBooking} 
-          options={{ headerShown: false }} 
+        <Stack.Screen
+          name="AppointmentBooking"
+          component={AppointmentBooking}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen 
-          name="DoctorListScreen" 
-          component={DoctorListScreen} 
-          options={{ headerShown: false }} 
+        <Stack.Screen
+          name="DoctorListScreen"
+          component={DoctorListScreen}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen 
-          name="MyBooking" 
-          component={MyBooking} 
-          options={{ headerShown: false }} 
+        <Stack.Screen
+          name="MyBooking"
+          component={MyBooking}
+          options={{ headerShown: false }}
         />
-        {/* <Stack.Screen 
-          name="Payment" 
-          component={PaitentPayment} 
-          options={{ headerShown: false }} 
+        {/* <Stack.Screen
+          name="Payment"
+          component={PaitentPayment}
+          options={{ headerShown: false }}
         /> */}
-        <Stack.Screen 
-          name="Prescription" 
-          component={DoctorPrescriptionScreen} 
-          options={{ headerShown: false }} 
+        <Stack.Screen
+          name="Prescription"
+          component={DoctorPrescriptionScreen}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export default AppNavigator; 
+export default AppNavigator;

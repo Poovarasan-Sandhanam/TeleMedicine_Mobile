@@ -70,4 +70,4 @@ const paymentSlice = createSlice({
 });
 
 export const { clearPaymentError, clearPaymentData } = paymentSlice.actions;
-export default paymentSlice.reducer; 
+export default paymentSlice.reducer;

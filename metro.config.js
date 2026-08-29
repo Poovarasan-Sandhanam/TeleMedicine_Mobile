@@ -13,13 +13,13 @@ const customConfig = { /* Add your custom Metro config here if needed */ };
 const config = {
   transformer: {
     babelTransformerPath: require.resolve(
-      "react-native-svg-transformer/react-native"
-    )
+      'react-native-svg-transformer/react-native'
+    ),
   },
   resolver: {
-    assetExts: assetExts.filter((ext) => ext !== "svg"),
-    sourceExts: [...sourceExts, "svg"]
-  }
+    assetExts: assetExts.filter((ext) => ext !== 'svg'),
+    sourceExts: [...sourceExts, 'svg'],
+  },
 };
 const mergedConfig = mergeConfig(defaultConfig, customConfig);
 

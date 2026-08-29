@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../utilis/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -25,7 +25,7 @@ const initialState: AuthState = {
   isDoctor: null,
   loading: false,
   error: null,
-}
+};
 export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
@@ -34,7 +34,7 @@ export const login = createAsyncThunk(
       const { token, fullName, email: userEmail, isDoctor } = response.data.data;
 
       console.log('Login successful:', response.data);
-      console.log("isDoctor", response.data.data.isDoctor);
+      console.log('isDoctor', response.data.data.isDoctor);
 
       // Construct the user object to store in Redux and AsyncStorage
       const user = {
@@ -151,4 +151,4 @@ const authSlice = createSlice({
   },
 });
 export const { setLoading, setError, clearError } = authSlice.actions;
-export default authSlice.reducer; 
+export default authSlice.reducer;

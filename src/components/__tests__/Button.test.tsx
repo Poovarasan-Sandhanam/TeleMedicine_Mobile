@@ -16,4 +16,4 @@ describe('Button', () => {
     fireEvent.press(getByText('Click me'));
     expect(onPress).toHaveBeenCalled();
   });
-}); 
+});

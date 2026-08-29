@@ -4,27 +4,37 @@ import api from '../../utilis/api';
 
 export const checkSymptoms = createAsyncThunk(
   'symptom/checkSymptoms',
-  async (symptoms, thunkAPI) => {
+  async (symptoms: string, thunkAPI) => {
     try {
       const response = await api.post('/ai/symptom-check', { symptoms });
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       const message =
-        error?.response?.data?.message || error.message || 'Unexpected error';
+        error?.response?.data?.message || error?.message || 'Unexpected error';
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+interface SymptomState {
+  symptoms: string;
+  possibleConditions: string[];
+  recommendedDoctor: string;
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
+}
+
+const initialState: SymptomState = {
+  symptoms: '',
+  possibleConditions: [],
+  recommendedDoctor: '',
+  status: 'idle',
+  error: null,
+};
+
 const symptomSlice = createSlice({
   name: 'symptom',
-  initialState: {
-    symptoms: '',
-    possibleConditions: [],
-    recommendedDoctor: '',
-    status: 'idle',
-    error: null,
-  },
+  initialState,
   reducers: {
     setSymptoms(state, action) {
       state.symptoms = action.payload;
@@ -43,7 +53,7 @@ const symptomSlice = createSlice({
       })
       .addCase(checkSymptoms.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload || 'Failed to fetch conditions';
+        state.error = (action.payload as string) || 'Failed to fetch conditions';
       });
   },
 });

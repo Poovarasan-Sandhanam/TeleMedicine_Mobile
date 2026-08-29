@@ -177,7 +177,7 @@ export const HeightEnum: EnumOption[] = [
   { title: '8.7 Ft', id: '8.7 Ft' },
   { title: '8.8 Ft', id: '8.8 Ft' },
   { title: '8.9 Ft', id: '8.9 Ft' },
-  { title: '9.0 Ft', id: '9.0 Ft' }
+  { title: '9.0 Ft', id: '9.0 Ft' },
 ];
 
 export const WeightEnum: EnumOption[] = [
@@ -278,5 +278,5 @@ export const WeightEnum: EnumOption[] = [
   { title: '98 Kg', id: '98 Kg' },
   { title: '99 Kg', id: '99 Kg' },
   { title: '100 Kg', id: '100 Kg' },
-  { title: 'Above 100 Kg', id: 'Above 100 Kg' }
-]; 
+  { title: 'Above 100 Kg', id: 'Above 100 Kg' },
+];

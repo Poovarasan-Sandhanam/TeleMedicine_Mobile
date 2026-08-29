@@ -82,4 +82,4 @@ const prescriptionSlice = createSlice({
 });
 
 export const { clearPrescriptionError, clearPrescriptionData } = prescriptionSlice.actions;
-export default prescriptionSlice.reducer; 
+export default prescriptionSlice.reducer;

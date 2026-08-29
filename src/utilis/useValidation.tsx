@@ -1,27 +1,34 @@
 // utils/useValidation.js
 import { useState } from 'react';
 
+export interface ValidationErrors {
+  email?: string;
+  password?: string;
+  [key: string]: string | undefined;
+}
+
+interface ValidateFieldsParams {
+  email?: string;
+  password?: string;
+}
+
 const useValidation = () => {
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<ValidationErrors>({});
 
   // Validate email format
-  const validateEmail = (email) => {
+  const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const validatePassword = (password) => {
-    console.log('Password to validate:', password); // Debugging line
+  const validatePassword = (password: string): boolean => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    const isValid = passwordRegex.test(password);
-    console.log('Validation Result:', isValid); // Debugging line
-    return isValid;
+    return passwordRegex.test(password);
   };
-  
 
   // Perform validation for email and password
-  const validateFields = ({ email, password }) => {
-    const newErrors = {};
+  const validateFields = ({ email = '', password = '' }: ValidateFieldsParams): boolean => {
+    const newErrors: ValidationErrors = {};
 
     // Email validation
     if (!email) {
@@ -35,7 +42,7 @@ const useValidation = () => {
       newErrors.password = 'Password is required';
     } else if (!validatePassword(password)) {
       newErrors.password =
-        'Password must be at least 6 characters, contain uppercase, lowercase, number, and special character';
+        'Password must be at least 8 characters, contain uppercase, lowercase, number, and special character';
     }
 
     setErrors(newErrors);

@@ -1,5 +1,5 @@
-import { StyleSheet, Platform } from "react-native";
-import Colors from "../constants/colors";
+import { StyleSheet, Platform } from 'react-native';
+import Colors from '../constants/colors';
 
 export default StyleSheet.create({
   container: {
@@ -10,10 +10,10 @@ export default StyleSheet.create({
   },
   headerText: {
     fontSize: 28,
-    fontWeight: "700",
+    fontWeight: '700',
     color: Colors.primaryBlue,
     marginBottom: 20,
-    textAlign: "center",
+    textAlign: 'center',
   },
 
   // Date selector container & styles
@@ -25,8 +25,8 @@ export default StyleSheet.create({
     height: 70,
     borderRadius: 35,
     backgroundColor: Colors.white,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     elevation: 3,
     shadowColor: Colors.blackShadow,
     shadowOpacity: 0.1,
@@ -45,7 +45,7 @@ export default StyleSheet.create({
 
   dateText: {
     fontSize: 20,
-    fontWeight: "700",
+    fontWeight: '700',
   },
   dateTextDefault: {
     color: Colors.grayDark,
@@ -63,14 +63,14 @@ export default StyleSheet.create({
   },
 
   selectedDateTextLabel: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
-  selectedDateText: {
+  selectedDateBannerText: {
     fontSize: 20,
-    fontWeight: "600",
+    fontWeight: '600',
     color: Colors.primaryBlue,
     marginVertical: 24,
-    textAlign: "center",
+    textAlign: 'center',
   },
 
   loader: {
@@ -95,7 +95,7 @@ export default StyleSheet.create({
   appointmentText: {
     fontSize: 17,
     color: Colors.grayDark,
-    fontWeight: "600",
+    fontWeight: '600',
   },
 
   // No appointments card styles
@@ -106,8 +106,8 @@ export default StyleSheet.create({
     paddingVertical: 30,
     paddingHorizontal: 20,
     borderRadius: 16,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     shadowColor: Colors.blackShadow,
     shadowOpacity: 0.15,
     shadowRadius: 10,
@@ -116,7 +116,7 @@ export default StyleSheet.create({
   },
   noAppointmentsTitle: {
     fontSize: 22,
-    fontWeight: "700",
+    fontWeight: '700',
     color: Colors.primaryBlue,
     marginTop: 16,
   },
@@ -124,7 +124,7 @@ export default StyleSheet.create({
     fontSize: 16,
     color: Colors.grayMedium,
     marginTop: 8,
-    textAlign: "center",
+    textAlign: 'center',
     lineHeight: 22,
     maxWidth: 280,
   },
@@ -132,8 +132,8 @@ export default StyleSheet.create({
   // Modal styles
   modalOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.35)",
-    justifyContent: "center",
+    backgroundColor: 'rgba(0,0,0,0.35)',
+    justifyContent: 'center',
     paddingHorizontal: 20,
   },
   modalContent: {
@@ -144,14 +144,14 @@ export default StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 5 },
-    elevation: Platform.OS === "android" ? 10 : 0,
+    elevation: Platform.OS === 'android' ? 10 : 0,
   },
   modalTitle: {
     fontSize: 24,
-    fontWeight: "700",
+    fontWeight: '700',
     color: Colors.primaryBlue,
     marginBottom: 18,
-    textAlign: "center",
+    textAlign: 'center',
   },
   modalText: {
     fontSize: 16,
@@ -160,7 +160,7 @@ export default StyleSheet.create({
     lineHeight: 22,
   },
   modalLabel: {
-    fontWeight: "700",
+    fontWeight: '700',
     color: Colors.primaryBlue,
   },
   closeButton: {
@@ -168,11 +168,11 @@ export default StyleSheet.create({
     backgroundColor: Colors.primaryBlue,
     borderRadius: 12,
     paddingVertical: 14,
-    alignItems: "center",
+    alignItems: 'center',
   },
   closeButtonText: {
     color: Colors.white,
     fontSize: 17,
-    fontWeight: "700",
+    fontWeight: '700',
   },
 });

@@ -16,4 +16,4 @@ describe('CheckBox', () => {
     fireEvent.press(getByRole('button'));
     expect(onToggle).toHaveBeenCalled();
   });
-}); 
+});

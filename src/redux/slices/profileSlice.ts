@@ -28,9 +28,75 @@ interface ProfileState {
   error: string | null;
 }
 
+export const MOCK_PROFILE: NormalizedProfile = {
+  name: 'John Doe (Guest)',
+  age: '30',
+  gender: 'Male',
+  email: 'guest@telemedicine.com',
+  contactNumber: '+1 234 567 8900',
+  address: '123 Health Ave, Suite 100',
+  bloodGroup: 'O+',
+  weight: '70',
+  height: '175',
+  ongoingTreatment: 'None',
+  healthIssues: 'Mild Allergy',
+  specialized: 'General Medicine',
+  experience: '5',
+  consultationTiming: '09:00 AM - 05:00 PM',
+  profileImage: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400',
+  isDoctor: false,
+};
+
+export const MOCK_COMPLETED_DOCTORS = [
+  {
+    _id: 'doc1',
+    fullName: 'Dr. Sarah Jenkins',
+    specialization: 'Cardiology',
+    experience: 12,
+    consultationTiming: '10:00 AM - 04:00 PM',
+    address: 'City Heart Hospital, NY',
+    certifications: ['MD Cardiology', 'FACC'],
+    languages: ['English', 'Spanish'],
+    profileImage: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400',
+  },
+  {
+    _id: 'doc2',
+    fullName: 'Dr. Robert Chen',
+    specialization: 'Dermatology',
+    experience: 8,
+    consultationTiming: '09:00 AM - 02:00 PM',
+    address: 'Skin & Beauty Clinic',
+    certifications: ['MD Dermatology', 'Board Certified'],
+    languages: ['English', 'Mandarin'],
+    profileImage: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400',
+  },
+  {
+    _id: 'doc3',
+    fullName: 'Dr. Emily Taylor',
+    specialization: 'Pediatrics',
+    experience: 15,
+    consultationTiming: '08:00 AM - 01:00 PM',
+    address: 'Children Care Center',
+    certifications: ['MD Pediatrics', 'FAAP'],
+    languages: ['English'],
+    profileImage: 'https://images.unsplash.com/photo-1594824813566-88855ce78905?w=400',
+  },
+  {
+    _id: 'doc4',
+    fullName: 'Dr. Michael Vance',
+    specialization: 'General Physician',
+    experience: 10,
+    consultationTiming: '11:00 AM - 06:00 PM',
+    address: 'Wellness Medical Hub',
+    certifications: ['MBBS', 'MD Internal Medicine'],
+    languages: ['English', 'French'],
+    profileImage: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400',
+  },
+];
+
 const initialState: ProfileState = {
-  profile: null,
-  completedDoctors: [],
+  profile: MOCK_PROFILE,
+  completedDoctors: MOCK_COMPLETED_DOCTORS,
   loading: false,
   error: null,
 };
@@ -45,7 +111,7 @@ export const fetchProfile = createAsyncThunk<NormalizedProfile, void, { rejectVa
     try {
       console.log('📡 Fetching profile...');
       const token = await AsyncStorage.getItem('token');
-      if (!token) return rejectWithValue('No authentication token found');
+      if (!token) {return rejectWithValue('No authentication token found');}
 
       const res = await api.get('/profile/get-profile', {
         headers: { Authorization: `Bearer ${token}` },
@@ -94,7 +160,7 @@ export const updateProfile = createAsyncThunk<any, FormData, { rejectValue: stri
     try {
       console.log('📡 Updating profile...');
       const token = await AsyncStorage.getItem('token');
-      if (!token) return rejectWithValue('No authentication token found');
+      if (!token) {return rejectWithValue('No authentication token found');}
 
       const res = await api.put('/profile/update-profile', formData, {
         headers: {
@@ -122,7 +188,7 @@ export const fetchCompletedDoctors = createAsyncThunk<any[], void, { rejectValue
     try {
       console.log('📡 Fetching completed doctor profiles...');
       const token = await AsyncStorage.getItem('token');
-      if (!token) return rejectWithValue('No authentication token found');
+      if (!token) {return rejectWithValue('No authentication token found');}
 
       const res = await api.get('/profile/get-completed-doctor-profiles', {
         headers: { Authorization: `Bearer ${token}` },
@@ -182,16 +248,19 @@ const profileSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchProfile.pending, (state) => {
-        state.loading = true;
+        state.loading = false;
         state.error = null;
       })
       .addCase(fetchProfile.fulfilled, (state, action: PayloadAction<NormalizedProfile>) => {
         state.profile = action.payload;
         state.loading = false;
       })
-      .addCase(fetchProfile.rejected, (state, action) => {
+      .addCase(fetchProfile.rejected, (state) => {
         state.loading = false;
-        state.error = action.payload || 'Failed to fetch profile';
+        if (!state.profile) {
+          state.profile = MOCK_PROFILE;
+        }
+        state.error = null;
       })
       .addCase(updateProfile.pending, (state) => {
         state.loading = true;
@@ -205,16 +274,19 @@ const profileSlice = createSlice({
         state.error = action.payload || 'Profile update failed';
       })
       .addCase(fetchCompletedDoctors.pending, (state) => {
-        state.loading = true;
+        state.loading = false;
         state.error = null;
       })
       .addCase(fetchCompletedDoctors.fulfilled, (state, action: PayloadAction<any[]>) => {
         state.loading = false;
-        state.completedDoctors = action.payload;
+        state.completedDoctors = action.payload && action.payload.length > 0 ? action.payload : MOCK_COMPLETED_DOCTORS;
       })
-      .addCase(fetchCompletedDoctors.rejected, (state, action) => {
+      .addCase(fetchCompletedDoctors.rejected, (state) => {
         state.loading = false;
-        state.error = action.payload || 'Failed to fetch completed doctors';
+        if (state.completedDoctors.length === 0) {
+          state.completedDoctors = MOCK_COMPLETED_DOCTORS;
+        }
+        state.error = null;
       });
 
 

@@ -9,15 +9,17 @@ import {
   SafeAreaView,
 } from 'react-native';
 
-interface DropdownItem {
+export interface DropdownItem {
   title: string;
   id: string | number;
 }
 
 interface CustomDropdownProps {
   data: (DropdownItem | string)[];
-  selectedid: string | number;
-  onidChange: (id: string | number) => void;
+  selectedid?: string | number;
+  selectedValue?: string | number;
+  onidChange?: (id: string | number) => void;
+  onValueChange?: (value: any) => void;
   title?: string;
   dropdownStyle?: object;
   placeholder?: string;
@@ -26,30 +28,38 @@ interface CustomDropdownProps {
 const CustomDropdown: React.FC<CustomDropdownProps> = ({
   data,
   selectedid,
+  selectedValue,
   onidChange,
+  onValueChange,
   title,
   dropdownStyle,
   placeholder = 'Select an option',
 }) => {
+  const activeSelectedId = selectedValue ?? selectedid ?? '';
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Memoized normalized data
-  const normalizedData = useMemo(() => 
-    data.map((item) =>
+  const normalizedData = useMemo(() =>
+    (data || []).map((item) =>
       typeof item === 'string' ? { title: item, id: item } : item
     ), [data]
   );
 
   // Memoized selected title
   const selectedtitle = useMemo(() =>
-    normalizedData.find((item) => item.id === selectedid)?.title || placeholder,
-    [normalizedData, selectedid, placeholder]
+    normalizedData.find((item) => item.id === activeSelectedId)?.title || placeholder,
+    [normalizedData, activeSelectedId, placeholder]
   );
 
   const handleSelectItem = useCallback((item: DropdownItem) => {
-    onidChange(item.id);
+    if (onValueChange) {
+      onValueChange(item.id);
+    }
+    if (onidChange) {
+      onidChange(item.id);
+    }
     setIsModalVisible(false);
-  }, [onidChange]);
+  }, [onValueChange, onidChange]);
 
   const handleOpenModal = useCallback(() => {
     setIsModalVisible(true);
@@ -69,7 +79,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
     </TouchableOpacity>
   ), [handleSelectItem]);
 
-  const keyExtractor = useCallback((item: DropdownItem) => 
+  const keyExtractor = useCallback((item: DropdownItem) =>
     item.id.toString(), []
   );
 
@@ -176,4 +186,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomDropdown; 
+export default CustomDropdown;

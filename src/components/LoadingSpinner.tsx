@@ -8,14 +8,14 @@ interface LoadingSpinnerProps {
   overlayColor?: string;
 }
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
-  visible, 
-  size = 'large', 
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  visible,
+  size = 'large',
   color = 'black',
-  overlayColor = 'rgba(0, 0, 0, 0.5)'
+  overlayColor = 'rgba(0, 0, 0, 0.5)',
 }) => {
-  if (!visible) return null;
-  
+  if (!visible) {return null;}
+
   return (
     <View style={[styles.overlay, { backgroundColor: overlayColor }]}>
       <ActivityIndicator size={size} color={color} />
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoadingSpinner; 
+export default LoadingSpinner;

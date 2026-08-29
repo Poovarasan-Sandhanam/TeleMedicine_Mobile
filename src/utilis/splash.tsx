@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   StyleSheet,
@@ -6,17 +6,17 @@ import {
   Text,
   Dimensions,
   Easing,
-  Platform
-} from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { useAppDispatch } from "../redux/hooks";
-import { login } from "../redux/slices/authSlice";
-import { getTheme } from "../constants/colors";
+  Platform,
+} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useAppDispatch } from '../redux/hooks';
+import { login } from '../redux/slices/authSlice';
+import { getTheme } from '../constants/colors';
 
-const SPLASH_TEXT = "Tele Medicine";
-const windowWidth = Dimensions.get("window").width;
-const COLORS = getTheme("light", "telemedicine");
+const SPLASH_TEXT = 'Tele Medicine';
+const windowWidth = Dimensions.get('window').width;
+const COLORS = getTheme('light', 'telemedicine');
 
 const SplashScreen = ({ navigation }: { navigation: { replace: (screen: string) => void } }) => {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ const SplashScreen = ({ navigation }: { navigation: { replace: (screen: string) 
   const textAnim = useRef(new Animated.Value(0)).current;
   const loginChecked = useRef(false); // track if async login finished
   const animationDone = useRef(false); // track if animation finished
-  const targetScreen = useRef("Onboard"); // default screen
+  const targetScreen = useRef('Onboard'); // default screen
 
   useEffect(() => {
     // Animate text
@@ -46,18 +46,18 @@ const SplashScreen = ({ navigation }: { navigation: { replace: (screen: string) 
     // Async login check
     const checkLogin = async () => {
       try {
-        const token = await AsyncStorage.getItem("token");
-        const userStr = await AsyncStorage.getItem("user");
+        const token = await AsyncStorage.getItem('token');
+        const userStr = await AsyncStorage.getItem('user');
 
         if (token && userStr) {
           const userData = JSON.parse(userStr);
           await dispatch(login(userData.email, userData.password) as any);
-          targetScreen.current = "Home";
+          targetScreen.current = 'Home';
         } else {
-          targetScreen.current = "Onboard";
+          targetScreen.current = 'Onboard';
         }
       } catch {
-        targetScreen.current = "Onboard";
+        targetScreen.current = 'Onboard';
       } finally {
         loginChecked.current = true;
         // Navigate if animation is done
@@ -85,14 +85,14 @@ const SplashScreen = ({ navigation }: { navigation: { replace: (screen: string) 
     >
       <Animated.View
         style={{
-          flexDirection: "row",
-          alignItems: "center",
+          flexDirection: 'row',
+          alignItems: 'center',
           opacity,
           transform: [{ translateY }],
           width: windowWidth,
-          justifyContent: "center",
+          justifyContent: 'center',
           paddingHorizontal: 20,
-          paddingTop: Platform.OS === "ios" ? 50 : 20,
+          paddingTop: Platform.OS === 'ios' ? 50 : 20,
         }}
       >
         <Icon
@@ -116,14 +116,14 @@ const SplashScreen = ({ navigation }: { navigation: { replace: (screen: string) 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     fontSize: 52,
-    fontWeight: "900",
+    fontWeight: '900',
     letterSpacing: 5,
-    textShadowColor: "rgba(0,0,0,0.15)",
+    textShadowColor: 'rgba(0,0,0,0.15)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
   },

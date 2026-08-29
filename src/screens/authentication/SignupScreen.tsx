@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
@@ -13,7 +12,7 @@ import { Input, Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Toast from 'react-native-toast-message';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../redux/hooks';
 import { signup } from '../../redux/slices/authSlice'; // Adjust path to your slice
 import styles from '../../styles/authStyles'; // Your styles
 
@@ -36,7 +35,7 @@ interface SignupValues {
 }
 
 const SignupScreen = ({ navigation }: { navigation: any }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -45,7 +44,7 @@ const SignupScreen = ({ navigation }: { navigation: any }) => {
     { resetForm, setSubmitting }: { resetForm: () => void; setSubmitting: (v: boolean) => void }
   ) => {
     try {
-      await dispatch(
+      await (dispatch(
         signup({
           fullName: values.name,
           email: values.email,
@@ -53,7 +52,7 @@ const SignupScreen = ({ navigation }: { navigation: any }) => {
           confirmPassword: values.confirmPassword,
           role: values.userType.toUpperCase() as 'DOCTOR' | 'PATIENT',
         })
-      ).unwrap();
+      ) as any).unwrap();
 
       Toast.show({ type: 'success', text1: 'Signup successful!' });
       resetForm();
@@ -183,7 +182,7 @@ const SignupScreen = ({ navigation }: { navigation: any }) => {
                 <Button
                   title="Sign Up"
                   loading={isSubmitting}
-                  onPress={handleSubmit}
+                  onPress={() => handleSubmit()}
                   buttonStyle={styles.button}
                   titleStyle={styles.buttonTitle}
                   containerStyle={styles.buttonContainer}

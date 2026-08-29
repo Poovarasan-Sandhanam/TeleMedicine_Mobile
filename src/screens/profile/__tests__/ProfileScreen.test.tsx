@@ -101,7 +101,7 @@ describe('ProfileScreen', () => {
   it('shows retry button when profile is not available', async () => {
     // Mock the fetchProfile to return null
     const mockFetchProfile = jest.fn().mockResolvedValue(null);
-    
+
     const store = createTestStore({
       profile: {
         profile: null,
@@ -155,4 +155,4 @@ describe('ProfileScreen', () => {
 
     expect(getByText('Save Changes')).toBeTruthy();
   });
-}); 
+});

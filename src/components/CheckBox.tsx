@@ -11,28 +11,28 @@ interface CheckBoxProps {
   disabled?: boolean;
 }
 
-const CheckBox: React.FC<CheckBoxProps> = ({ 
-  isChecked, 
-  onToggle, 
+const CheckBox: React.FC<CheckBoxProps> = ({
+  isChecked,
+  onToggle,
   style,
   size = 20,
   color = '#007bff',
-  disabled = false 
+  disabled = false,
 }) => {
   return (
-    <TouchableOpacity 
-      style={[styles.container, style]} 
+    <TouchableOpacity
+      style={[styles.container, style]}
       onPress={onToggle}
       disabled={disabled}
       activeOpacity={0.7}
     >
-      <View 
+      <View
         style={[
-          styles.box, 
+          styles.box,
           { width: size, height: size },
           { borderColor: color },
-          isChecked && { backgroundColor: color }
-        ]} 
+          isChecked && { backgroundColor: color },
+        ]}
       />
     </TouchableOpacity>
   );

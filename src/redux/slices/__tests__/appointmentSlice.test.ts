@@ -2,7 +2,7 @@ import reducer, { setAppointmentLoading } from '../appointmentSlice';
 
 describe('appointmentSlice', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, { type: undefined })).toEqual({
+    expect(reducer(undefined, { type: 'UNKNOWN_ACTION' })).toEqual({
       appointment: null,
       loading: false,
       error: null,
@@ -14,4 +14,4 @@ describe('appointmentSlice', () => {
     const nextState = reducer(initialState, setAppointmentLoading(true));
     expect(nextState.loading).toBe(true);
   });
-}); 
+});

@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    margin:20
+    margin:20,
   },
   title: {
     fontSize: 28,

@@ -3,22 +3,23 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { DrawerContentScrollView, DrawerItem, DrawerContentComponentProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch } from '../redux/hooks';
+import { useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import COLORS from '../constants/colors';
 import { RootState } from '../redux/store';
 import { fetchProfile, initializeLocalProfile } from '../redux/slices/profileSlice';
 
 const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const profile = useSelector((state: RootState) => state.profile.profile);
   const isDoctor = profile?.isDoctor || false;
 
   // Load profile on mount
   useEffect(() => {
-    dispatch(initializeLocalProfile()); // load local AsyncStorage profile first
-    dispatch(fetchProfile()); // fetch fresh profile from API
+    dispatch(initializeLocalProfile() as any); // load local AsyncStorage profile first
+    dispatch(fetchProfile() as any); // fetch fresh profile from API
   }, [dispatch]);
 
   const handleLogout = useCallback(async () => {
@@ -48,14 +49,19 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
     <View style={styles.drawerContainer}>
       {/* Header */}
       <View style={styles.header}>
-        <Image
-          source={
-            user.avatar
-              ? { uri: user.avatar }
-              : require("../asset/profile.png")
-          }
-          style={styles.avatar}
-        />
+        <View style={styles.avatarWrapper}>
+          <Image
+            source={
+              user.avatar
+                ? { uri: user.avatar }
+                : require('../asset/profile.png')
+            }
+            style={styles.avatar}
+          />
+          <View style={styles.roleBadge}>
+            <Text style={styles.roleBadgeText}>{isDoctor ? 'Doctor' : 'Patient'}</Text>
+          </View>
+        </View>
         <Text style={styles.name}>{user.name}</Text>
         <Text style={styles.email}>{user.email}</Text>
       </View>
@@ -65,39 +71,39 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
         <DrawerItem
           label="Home"
           labelStyle={styles.drawerLabel}
-          icon={({ color, size }) => <Icon name="home" color={color} size={size} />}
+          icon={({ size }) => <Icon name="grid-view" color="#4F46E5" size={size} />}
           onPress={() => handleNavigation('Tabs')}
-          activeTintColor={COLORS.secondary}
-          inactiveTintColor={COLORS.white}
+          activeTintColor="#4F46E5"
+          inactiveTintColor="#0F172A"
           style={styles.drawerItem}
         />
         <DrawerItem
           label="Profile"
           labelStyle={styles.drawerLabel}
-          icon={({ color, size }) => <Icon name="person" color={color} size={size} />}
+          icon={({ size }) => <Icon name="person-outline" color="#4F46E5" size={size} />}
           onPress={() => handleNavigation('Profile')}
-          activeTintColor={COLORS.secondary}
-          inactiveTintColor={COLORS.white}
+          activeTintColor="#4F46E5"
+          inactiveTintColor="#0F172A"
           style={styles.drawerItem}
         />
         {!isDoctor && (
           <DrawerItem
             label="My Booking"
             labelStyle={styles.drawerLabel}
-            icon={({ color, size }) => <Icon name="bookmark-border" color={color} size={size} />}
+            icon={({ size }) => <Icon name="calendar-today" color="#4F46E5" size={size} />}
             onPress={() => handleNavigation('MyBooking')}
-            activeTintColor={COLORS.secondary}
-            inactiveTintColor={COLORS.white}
+            activeTintColor="#4F46E5"
+            inactiveTintColor="#0F172A"
             style={styles.drawerItem}
           />
         )}
         <DrawerItem
           label="Consult"
           labelStyle={styles.drawerLabel}
-          icon={({ color, size }) => <MaterialCommunityIcons name="message-video" color={color} size={size} />}
+          icon={({ size }) => <MaterialCommunityIcons name="video-outline" color="#4F46E5" size={size} />}
           onPress={() => handleNavigation('Consult')}
-          activeTintColor={COLORS.secondary}
-          inactiveTintColor={COLORS.white}
+          activeTintColor="#4F46E5"
+          inactiveTintColor="#0F172A"
           style={styles.drawerItem}
         />
       </DrawerContentScrollView>
@@ -107,44 +113,52 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
 
       {/* Logout Button */}
       <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout} activeOpacity={0.7}>
-        <Icon name="logout" size={22} color={COLORS.error} />
+        <Icon name="logout" size={20} color="#EF4444" />
         <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>
 
       {/* Footer */}
       <View style={styles.footer}>
-        <Text style={styles.footerText}>App Version 1.0.0</Text>
+        <Text style={styles.footerText}>TeleMedicine v1.0.0</Text>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  drawerContainer: { flex: 1, backgroundColor: COLORS.primary },
+  drawerContainer: { flex: 1, backgroundColor: '#FFFFFF' },
   header: {
-    marginTop: 40,
-    paddingVertical: 40,
+    paddingTop: 50,
+    paddingBottom: 24,
     paddingHorizontal: 20,
-    backgroundColor: COLORS.primary,
+    backgroundColor: '#4F46E5',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
   },
-  avatar: { width: 80, height: 80, borderRadius: 40, marginBottom: 10, borderWidth: 2, borderColor: COLORS.secondary },
-  name: { color: COLORS.white, fontSize: 18, fontWeight: 'bold' },
-  email: { color: COLORS.secondary, fontSize: 14, marginTop: 2 },
-  drawerContent: { paddingTop: 10 },
-  drawerItem: { marginVertical: 0 },
-  drawerLabel: { color: COLORS.white, fontWeight: '600' },
-  divider: { height: 1, backgroundColor: COLORS.border, marginHorizontal: 20, marginVertical: 10 },
-  logoutBtn: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 20 },
-  logoutText: { color: COLORS.error, fontWeight: 'bold', fontSize: 16, marginLeft: 15 },
-  footer: { padding: 15, alignItems: 'center' },
-  footerText: { color: COLORS.textLight, fontSize: 12 },
+  avatarWrapper: {
+    position: 'relative',
+    marginBottom: 12,
+  },
+  avatar: { width: 72, height: 72, borderRadius: 36, borderWidth: 3, borderColor: 'rgba(255, 255, 255, 0.8)' },
+  roleBadge: {
+    position: 'absolute',
+    bottom: -4,
+    backgroundColor: '#06B6D4',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 8,
+    alignSelf: 'center',
+  },
+  roleBadgeText: { color: '#FFFFFF', fontSize: 10, fontWeight: '700' },
+  name: { color: '#FFFFFF', fontSize: 17, fontWeight: '700' },
+  email: { color: 'rgba(255, 255, 255, 0.8)', fontSize: 12, marginTop: 2 },
+  drawerContent: { paddingTop: 16 },
+  drawerItem: { marginVertical: 2, marginHorizontal: 12, borderRadius: 12 },
+  drawerLabel: { color: '#0F172A', fontWeight: '600', fontSize: 15 },
+  divider: { height: 1, backgroundColor: '#E2E8F0', marginHorizontal: 20, marginVertical: 10 },
+  logoutBtn: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 24 },
+  logoutText: { color: '#EF4444', fontWeight: '700', fontSize: 15, marginLeft: 12 },
+  footer: { padding: 16, alignItems: 'center' },
+  footerText: { color: '#94A3B8', fontSize: 12, fontWeight: '500' },
 });
 
 export default CustomDrawerContent;

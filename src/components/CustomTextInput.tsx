@@ -39,9 +39,9 @@ const CustomTextInput = forwardRef<TextInput, CustomTextInputProps>(({
         keyboardType={keyboardType}
         autoCapitalize={autoCapitalize}
         style={[
-          styles.input, 
-          error ? styles.inputError : null, 
-          inputStyle
+          styles.input,
+          error ? styles.inputError : null,
+          inputStyle,
         ]}
         maxLength={maxLength}
         onFocus={onFocus}
@@ -78,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomTextInput; 
+export default CustomTextInput;

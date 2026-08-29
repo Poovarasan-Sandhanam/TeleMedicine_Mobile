@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import {
   View,
   Text,
@@ -8,12 +8,12 @@ import {
   Modal,
   Animated,
   Platform,
-} from "react-native";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { fetchAppointments } from "../../redux/slices/appointmentRecordSlice";
-import moment, { Moment } from "moment";
-import styles from "../../styles/appointmentScreen.styles";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+} from 'react-native';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { fetchAppointments } from '../../redux/slices/appointmentRecordSlice';
+import moment, { Moment } from 'moment';
+import styles from '../../styles/appointmentScreen.styles';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // TypeScript interfaces
 interface UserDetails {
@@ -45,7 +45,7 @@ interface DateItemProps {
 }
 
 const AppointmentScreen: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState<Moment>(moment().startOf("day"));
+  const [selectedDate, setSelectedDate] = useState<Moment>(moment().startOf('day'));
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const dispatch = useAppDispatch();
@@ -60,16 +60,16 @@ const AppointmentScreen: React.FC = () => {
   const dates = useMemo(() => {
     const dateArray: Moment[] = [];
     for (let i = -3; i <= 3; i++) {
-      dateArray.push(moment().startOf("day").add(i, "days"));
+      dateArray.push(moment().startOf('day').add(i, 'days'));
     }
     return dateArray;
   }, []);
 
   // Memoized time slot formatter
   const formatTimeSlot = useCallback((timeSlot: string): string => {
-    const [start, end] = timeSlot.split("-").map(Number);
+    const [start, end] = timeSlot.split('-').map(Number);
     const formatTime = (hour: number): string => {
-      const period = hour >= 12 ? "PM" : "AM";
+      const period = hour >= 12 ? 'PM' : 'AM';
       const formattedHour = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
       return `${formattedHour} ${period}`;
     };
@@ -106,8 +106,8 @@ const AppointmentScreen: React.FC = () => {
 
   // Memoized date item renderer
   const renderDateItem = useCallback(({ item }: DateItemProps) => {
-    const isSelected = selectedDate.isSame(item, "day");
-    const isToday = moment().isSame(item, "day");
+    const isSelected = selectedDate.isSame(item, 'day');
+    const isToday = moment().isSame(item, 'day');
 
     return (
       <TouchableOpacity
@@ -129,7 +129,7 @@ const AppointmentScreen: React.FC = () => {
               isSelected ? styles.selectedDateText : styles.dateTextDefault,
             ]}
           >
-            {item.format("DD")}
+            {item.format('DD')}
           </Text>
           <Text
             style={[
@@ -137,7 +137,7 @@ const AppointmentScreen: React.FC = () => {
               isSelected ? styles.selectedDateText : styles.dayTextDefault,
             ]}
           >
-            {item.format("ddd")}
+            {item.format('ddd')}
           </Text>
         </Animated.View>
       </TouchableOpacity>
@@ -177,14 +177,14 @@ const AppointmentScreen: React.FC = () => {
 
   // Memoized modal content
   const renderModalContent = useMemo(() => {
-    if (!selectedAppointment) return null;
+    if (!selectedAppointment) {return null;}
 
     return (
       <>
         <Text style={styles.modalTitle}>Appointment Details</Text>
         <Text style={styles.modalText}>
           <Text style={styles.modalLabel}>User Name: </Text>
-          {selectedAppointment.userDetails?.fullName || "N/A"}
+          {selectedAppointment.userDetails?.fullName || 'N/A'}
         </Text>
         <Text style={styles.modalText}>
           <Text style={styles.modalLabel}>Checkup Timing: </Text>
@@ -192,7 +192,7 @@ const AppointmentScreen: React.FC = () => {
         </Text>
         <Text style={styles.modalText}>
           <Text style={styles.modalLabel}>Notes: </Text>
-          {selectedAppointment.notes || "None"}
+          {selectedAppointment.notes || 'None'}
         </Text>
         <Text style={styles.modalText}>
           <Text style={styles.modalLabel}>Status: </Text>
@@ -200,19 +200,19 @@ const AppointmentScreen: React.FC = () => {
         </Text>
         <Text style={styles.modalText}>
           <Text style={styles.modalLabel}>Date: </Text>
-          {moment(selectedAppointment.date).format("DD-MM-YYYY")}
+          {moment(selectedAppointment.date).format('DD-MM-YYYY')}
         </Text>
         <Text style={styles.modalText}>
           <Text style={styles.modalLabel}>Email: </Text>
-          {selectedAppointment.userDetails?.email || "N/A"}
+          {selectedAppointment.userDetails?.email || 'N/A'}
         </Text>
         <Text style={styles.modalText}>
           <Text style={styles.modalLabel}>Contact: </Text>
-          {selectedAppointment.userDetails?.contactNo || "N/A"}
+          {selectedAppointment.userDetails?.contactNo || 'N/A'}
         </Text>
         <Text style={styles.modalText}>
           <Text style={styles.modalLabel}>Gender: </Text>
-          {selectedAppointment.userDetails?.gender || "N/A"}
+          {selectedAppointment.userDetails?.gender || 'N/A'}
         </Text>
         <TouchableOpacity
           style={styles.closeButton}
@@ -227,7 +227,7 @@ const AppointmentScreen: React.FC = () => {
 
   // Fetch appointments when selected date changes
   useEffect(() => {
-    const formattedDate = selectedDate.format("DD-MM-YYYY");
+    const formattedDate = selectedDate.format('DD-MM-YYYY');
     dispatch(fetchAppointments(formattedDate) as any);
   }, [selectedDate, dispatch]);
 
@@ -238,12 +238,12 @@ const AppointmentScreen: React.FC = () => {
       <FlatList
         horizontal
         data={dates}
-        keyExtractor={(item) => item.format("YYYY-MM-DD")}
+        keyExtractor={(item) => item.format('YYYY-MM-DD')}
         renderItem={renderDateItem}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.datesContainer}
         snapToAlignment="center"
-        decelerationRate={Platform.OS === "ios" ? 0 : 0.98}
+        decelerationRate={Platform.OS === 'ios' ? 0 : 0.98}
         snapToInterval={80}
       />
 

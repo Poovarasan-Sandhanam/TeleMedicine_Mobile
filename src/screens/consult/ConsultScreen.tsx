@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  TouchableOpacity, 
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
   SafeAreaView,
   Alert,
 } from 'react-native';
@@ -34,7 +34,7 @@ const ConsultScreen: React.FC<ConsultScreenProps> = ({ navigation, route }) => {
 
     setIsCallActive(true);
     Alert.alert(
-      'Call Started', 
+      'Call Started',
       `Connecting to ${doctorName}...`,
       [
         {
@@ -108,16 +108,16 @@ const ConsultScreen: React.FC<ConsultScreenProps> = ({ navigation, route }) => {
         </TouchableOpacity>
 
         {isCallActive ? (
-          <TouchableOpacity 
-            style={styles.endCallButton} 
+          <TouchableOpacity
+            style={styles.endCallButton}
             onPress={handleEndCall}
             activeOpacity={0.8}
           >
             <Text style={styles.endCallButtonText}>End Call</Text>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity 
-            style={styles.startCallButton} 
+          <TouchableOpacity
+            style={styles.startCallButton}
             onPress={handleStartCall}
             activeOpacity={0.8}
           >

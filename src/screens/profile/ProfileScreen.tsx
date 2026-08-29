@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   View, Text, TextInput, Image, ScrollView, TouchableOpacity, Alert,
-  SafeAreaView, ActivityIndicator, KeyboardTypeOptions
+  SafeAreaView, ActivityIndicator, KeyboardTypeOptions,
 } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { launchImageLibrary, ImagePickerResponse } from 'react-native-image-picker';
@@ -10,7 +10,7 @@ import CustomDropdown from '../../components/CustomDropdown';
 import GoBackButton from '../../components/BackButton';
 import {
   GenderEnum, MedicalConditionsEnum, BloodGroupEnum,
-  OngoingTreatmentEnum, ConsultEnum, WeightEnum
+  OngoingTreatmentEnum, ConsultEnum, WeightEnum,
 } from '../../utilis/enums';
 import { fetchProfile, updateProfile } from '../../redux/slices/profileSlice';
 import { fetchDoctorTypes } from '../../redux/slices/doctorTypeSlice';
@@ -68,9 +68,9 @@ const ProfileScreen: React.FC = () => {
 }, [profile]);
 
   useEffect(() => {
-    
+
     if (profile) {
-      console.log('Fetched profile:', profile); 
+      console.log('Fetched profile:', profile);
       setFormData({
         name: profile.name || '',
         age: profile.age?.toString() || '',
@@ -102,9 +102,10 @@ const ProfileScreen: React.FC = () => {
       if (res.assets && res.assets.length > 0) {
         const img = res.assets[0];
         if (img.uri) {
+          const imageUri = img.uri;
           setFormData(prev => ({
             ...prev,
-            profileImage: { uri: img.uri, type: img.type || 'image/jpeg', name: img.fileName || 'profile.jpg' },
+            profileImage: { uri: imageUri, type: img.type || 'image/jpeg', name: img.fileName || 'profile.jpg' },
           }));
         }
       }
@@ -129,7 +130,7 @@ const ProfileScreen: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (!validate()) return;
+    if (!validate()) {return;}
 
     const data = new FormData();
 
@@ -187,7 +188,9 @@ const ProfileScreen: React.FC = () => {
           />
         )
       ) : (
-        <Text style={styles.value}>{formData[key] || 'N/A'}</Text>
+        <Text style={styles.value}>
+          {key === 'profileImage' ? 'N/A' : (formData[key] as string) || 'N/A'}
+        </Text>
       )}
     </View>
   );

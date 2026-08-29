@@ -4,12 +4,12 @@ import COLORS  from '../constants/colors';
 export default StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: '#F8FAFC',
   },
 
   container: {
     paddingHorizontal: 20,
-    paddingVertical: 24,
+    paddingVertical: 20,
   },
 
   center: {
@@ -20,88 +20,92 @@ export default StyleSheet.create({
 
   profileTop: {
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 28,
   },
 
   avatar: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    borderWidth: 2,
-    borderColor: COLORS.primary,
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+    borderWidth: 3,
+    borderColor: '#4F46E5',
     ...Platform.select({
       ios: {
-        shadowColor: COLORS.black,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
+        shadowColor: 'rgba(79, 70, 229, 0.25)',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 1,
+        shadowRadius: 10,
       },
       android: {
-        elevation: 4,
+        elevation: 6,
       },
     }),
   },
 
   change: {
     marginTop: 10,
-    color: COLORS.primary,
-    fontWeight: '500',
+    color: '#4F46E5',
+    fontWeight: '700',
     fontSize: 14,
-    textDecorationLine: 'underline',
   },
 
   fieldRow: {
-    marginBottom: 20,
+    marginBottom: 16,
   },
 
   label: {
     fontSize: 13,
-    color: COLORS.textLight,
+    color: '#475569',
     marginBottom: 6,
-    fontWeight: '500',
+    fontWeight: '600',
   },
 
   input: {
     borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: 8,
+    borderColor: '#E2E8F0',
+    borderRadius: 12,
     paddingVertical: 12,
-    paddingHorizontal: 14,
+    paddingHorizontal: 16,
     fontSize: 15,
-    backgroundColor: COLORS.white,
-    color: COLORS.text,
+    backgroundColor: '#FFFFFF',
+    color: '#0F172A',
+    fontWeight: '500',
   },
 
   value: {
     fontSize: 15,
-    color: COLORS.text,
-    backgroundColor: COLORS.card,
+    color: '#0F172A',
+    backgroundColor: '#FFFFFF',
     paddingVertical: 12,
-    paddingHorizontal: 14,
-    borderRadius: 8,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+    fontWeight: '500',
   },
 
   dropdown: {
     borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: 8,
-    backgroundColor: COLORS.white,
+    borderColor: '#E2E8F0',
+    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
     paddingVertical: 12,
-    paddingHorizontal: 14,
+    paddingHorizontal: 16,
   },
 
   btn: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: '#4F46E5',
     paddingVertical: 16,
-    borderRadius: 30,
-    marginTop: 32,
+    borderRadius: 16,
+    marginTop: 24,
+    marginBottom: 32,
     alignItems: 'center',
     ...Platform.select({
       ios: {
-        shadowColor: COLORS.primary,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+        shadowColor: 'rgba(79, 70, 229, 0.3)',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 1,
+        shadowRadius: 12,
       },
       android: {
         elevation: 4,
@@ -110,9 +114,9 @@ export default StyleSheet.create({
   },
 
   btnText: {
-    color: COLORS.white,
+    color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: '600',
-    letterSpacing: 0.5,
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
 });

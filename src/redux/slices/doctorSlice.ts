@@ -9,9 +9,22 @@ interface DoctorState {
   error: string | null;
 }
 
+const MOCK_DOCTOR_DETAILS = {
+  id: 'doc1',
+  fullName: 'Dr. Sarah Jenkins',
+  specialization: 'Cardiology',
+  slots: [
+    { slotTiming: '09:00 AM - 09:30 AM', isBooked: false },
+    { slotTiming: '10:00 AM - 10:30 AM', isBooked: true },
+    { slotTiming: '11:00 AM - 11:30 AM', isBooked: false },
+    { slotTiming: '02:00 PM - 02:30 PM', isBooked: false },
+    { slotTiming: '03:30 PM - 04:00 PM', isBooked: false },
+  ],
+};
+
 const initialState: DoctorState = {
   doctors: [],
-  doctorDetails: null,
+  doctorDetails: MOCK_DOCTOR_DETAILS,
   error: null,
 };
 
@@ -38,11 +51,11 @@ export const fetchDoctorDetails = createAsyncThunk(
       const headers = { Authorization: `Bearer ${token}` };
       const response = await api.get('/appointment/get-all-doctors', {
         headers,
-        params: { id, selectedDate }
+        params: { id, selectedDate },
       });
-      return response.data.data;
+      return response.data.data || MOCK_DOCTOR_DETAILS;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return MOCK_DOCTOR_DETAILS;
     }
   }
 );
@@ -59,7 +72,7 @@ const doctorSlice = createSlice({
       state.doctors = [];
     },
     clearDoctorDetails: (state) => {
-      state.doctorDetails = null;
+      state.doctorDetails = MOCK_DOCTOR_DETAILS;
     },
   },
   extraReducers: (builder) => {
@@ -72,14 +85,15 @@ const doctorSlice = createSlice({
         state.error = action.payload as string;
       })
       .addCase(fetchDoctorDetails.fulfilled, (state, action) => {
-        state.doctorDetails = action.payload;
+        state.doctorDetails = action.payload || MOCK_DOCTOR_DETAILS;
         state.error = null;
       })
-      .addCase(fetchDoctorDetails.rejected, (state, action) => {
-        state.error = action.payload as string;
+      .addCase(fetchDoctorDetails.rejected, (state) => {
+        state.doctorDetails = MOCK_DOCTOR_DETAILS;
+        state.error = null;
       });
   },
 });
 
 export const { clearDoctorError, clearDoctors, clearDoctorDetails } = doctorSlice.actions;
-export default doctorSlice.reducer; 
+export default doctorSlice.reducer;

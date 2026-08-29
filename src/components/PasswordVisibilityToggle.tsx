@@ -9,18 +9,18 @@ interface PasswordVisibilityToggleProps {
   color?: string;
 }
 
-const PasswordVisibilityToggle: React.FC<PasswordVisibilityToggleProps> = ({ 
-  isVisible, 
-  onToggle, 
-  size = 24, 
-  color = "gray" 
+const PasswordVisibilityToggle: React.FC<PasswordVisibilityToggleProps> = ({
+  isVisible,
+  onToggle,
+  size = 24,
+  color = 'gray',
 }) => {
   return (
     <TouchableOpacity onPress={onToggle} style={styles.container} activeOpacity={0.7}>
-      <Icon 
-        name={isVisible ? 'visibility' : 'visibility-off'} 
-        size={size} 
-        color={color} 
+      <Icon
+        name={isVisible ? 'visibility' : 'visibility-off'}
+        size={size}
+        color={color}
       />
     </TouchableOpacity>
   );
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PasswordVisibilityToggle; 
+export default PasswordVisibilityToggle;

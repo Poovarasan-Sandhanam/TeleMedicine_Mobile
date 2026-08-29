@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "ios": "LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest"

@@ -50,4 +50,4 @@ apiClient.interceptors.response.use(
 );
 
 export default apiClient;
-export type { ApiResponse, ApiError }; 
+export type { ApiResponse, ApiError };

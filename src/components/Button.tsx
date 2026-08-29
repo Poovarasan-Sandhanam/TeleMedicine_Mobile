@@ -10,20 +10,20 @@ interface ButtonProps {
   textStyle?: TextStyle;
 }
 
-const Button: React.FC<ButtonProps> = ({ 
-  title, 
-  onPress, 
-  style, 
+const Button: React.FC<ButtonProps> = ({
+  title,
+  onPress,
+  style,
   disabled = false,
-  textStyle 
+  textStyle,
 }) => {
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={[
-        styles.button, 
+        styles.button,
         disabled && styles.buttonDisabled,
-        style
-      ]} 
+        style,
+      ]}
       onPress={onPress}
       disabled={disabled}
       activeOpacity={0.8}

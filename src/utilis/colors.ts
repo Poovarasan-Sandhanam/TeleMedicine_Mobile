@@ -12,4 +12,4 @@ const COLORS: Colors = {
   primary: '#504DE5',
 };
 
-export default COLORS; 
+export default COLORS;

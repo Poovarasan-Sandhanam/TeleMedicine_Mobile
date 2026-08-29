@@ -59,4 +59,4 @@ const SignupSchema = Yup.object().shape({
     .trim(),
 });
 
-export default SignupSchema; 
+export default SignupSchema;

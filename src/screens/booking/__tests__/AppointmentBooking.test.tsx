@@ -17,4 +17,4 @@ describe('AppointmentBookingScreen', () => {
     fireEvent.press(getByText('Pay Now'));
     await waitFor(() => expect(navigation.navigate).toHaveBeenCalledWith('MyBooking'));
   });
-}); 
+});

@@ -11,24 +11,24 @@ interface InputProps extends Omit<TextInputProps, 'style'> {
   label?: string;
 }
 
-const Input: React.FC<InputProps> = ({ 
-  placeholder, 
-  value, 
-  onChangeText, 
-  error, 
-  secureTextEntry, 
+const Input: React.FC<InputProps> = ({
+  placeholder,
+  value,
+  onChangeText,
+  error,
+  secureTextEntry,
   style,
   label,
-  ...restProps 
+  ...restProps
 }) => {
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
       <TextInput
         style={[
-          styles.input, 
-          error ? styles.inputError : null, 
-          style
+          styles.input,
+          error ? styles.inputError : null,
+          style,
         ]}
         placeholder={placeholder}
         placeholderTextColor="#aaa"

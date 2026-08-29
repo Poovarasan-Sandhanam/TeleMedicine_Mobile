@@ -3,7 +3,13 @@ import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import COLORS  from '../constants/colors';
 
-const GoBackButton = ({ label = 'Back', style, textStyle }) => {
+interface GoBackButtonProps {
+  label?: string;
+  style?: any;
+  textStyle?: any;
+}
+
+const GoBackButton: React.FC<GoBackButtonProps> = ({ label = 'Back', style, textStyle }) => {
   const navigation = useNavigation();
 
   return (

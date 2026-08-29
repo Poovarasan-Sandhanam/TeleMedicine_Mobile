@@ -77,10 +77,10 @@ const appointmentSlice = createSlice({
   },
 });
 
-export const { 
-  setAppointmentLoading, 
-  setAppointmentError, 
-  clearAppointmentError, 
-  clearAppointment 
+export const {
+  setAppointmentLoading,
+  setAppointmentError,
+  clearAppointmentError,
+  clearAppointment,
 } = appointmentSlice.actions;
-export default appointmentSlice.reducer; 
+export default appointmentSlice.reducer;

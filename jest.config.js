@@ -4,7 +4,7 @@ module.exports = {
     '^.+\\.(js|ts|tsx)$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(react-native|@react-native|react-redux|@react-navigation|@react-native-async-storage|@react-native-community/datetimepicker)/)'
+    'node_modules/(?!(react-native|@react-native|react-redux|@react-navigation|@react-native-async-storage|@react-native-community/datetimepicker)/)',
   ],
   setupFiles: [
     './jest.setup.js',

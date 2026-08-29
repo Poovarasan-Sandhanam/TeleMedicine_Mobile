@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
-  FlatList,
   SafeAreaView,
   ScrollView,
 } from 'react-native';
@@ -14,13 +13,32 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { useRoute } from '@react-navigation/native';
 import { addPrescription } from '../../redux/slices/prescriptionSlice';
 
+interface Medication {
+  name: string;
+  dosage: string;
+  frequency: string;
+  duration: string;
+}
+
+interface PrescriptionFormData {
+  patientId: string;
+  doctorId: string;
+  patientName: string;
+  age: string;
+  symptoms: string;
+  diagnosis: string;
+  notes: string;
+  date: string;
+  medications: Medication[];
+}
+
 const PrescriptionForm = () => {
   const dispatch = useAppDispatch();
   const route = useRoute();
-  const { patientId, doctorId } = route.params || {};
+  const { patientId, doctorId } = (route.params as any) || {};
   const { loading, error } = useAppSelector((state: any) => state.prescription);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<PrescriptionFormData>({
     patientId: patientId || '',
     doctorId: doctorId || '',
     patientName: '',
@@ -32,7 +50,7 @@ const PrescriptionForm = () => {
     medications: [],
   });
 
-  const [medication, setMedication] = useState({
+  const [medication, setMedication] = useState<Medication>({
     name: '',
     dosage: '',
     frequency: '',
@@ -47,12 +65,12 @@ const PrescriptionForm = () => {
     }));
   }, [patientId, doctorId]);
 
-  const handleInputChange = (name, value) => {
-    setFormData({ ...formData, [name]: value });
+  const handleInputChange = (name: keyof PrescriptionFormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleMedicationChange = (name, value) => {
-    setMedication({ ...medication, [name]: value });
+  const handleMedicationChange = (name: keyof Medication, value: string) => {
+    setMedication((prev) => ({ ...prev, [name]: value }));
   };
 
   const addMedication = () => {
@@ -69,7 +87,7 @@ const PrescriptionForm = () => {
     setMedication({ name: '', dosage: '', frequency: '', duration: '' });
   };
 
-  const removeMedication = (index) => {
+  const removeMedication = (index: number) => {
     setFormData((prev) => ({
       ...prev,
       medications: prev.medications.filter((_, i) => i !== index),
@@ -89,7 +107,7 @@ const PrescriptionForm = () => {
         date: new Date(formData.date).toISOString(),
       };
 
-      await dispatch(addPrescription(formattedData));
+      await dispatch(addPrescription(formattedData) as any);
 
       if (!error) {
         Alert.alert('Success', 'Prescription added successfully');
@@ -183,18 +201,14 @@ const PrescriptionForm = () => {
           <Text style={styles.buttonText}>Add Medication</Text>
         </TouchableOpacity>
 
-        <FlatList
-          data={formData.medications}
-          keyExtractor={(_, index) => index.toString()}
-          renderItem={({ item, index }) => (
-            <View style={styles.medicationItem}>
-              <Text>{`${item.name}, ${item.dosage}, ${item.frequency}, ${item.duration}`}</Text>
-              <TouchableOpacity onPress={() => removeMedication(index)}>
-                <Text style={styles.removeText}>Remove</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
+        {formData.medications.map((item, index) => (
+          <View style={styles.medicationItem} key={index.toString()}>
+            <Text style={{ color: '#FFFFFF' }}>{`${item.name}, ${item.dosage}, ${item.frequency}, ${item.duration}`}</Text>
+            <TouchableOpacity onPress={() => removeMedication(index)}>
+              <Text style={styles.removeText}>Remove</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
 
         <TouchableOpacity
           style={[styles.addButton, styles.submitButton]}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,16 +11,16 @@ import {
   KeyboardAvoidingView,
   Platform,
   Modal,
-} from "react-native";
-import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { bookAppointment } from "../../redux/slices/appointmentSlice";
-import { fetchAllDoctors, fetchDoctorDetails } from "../../redux/slices/doctorSlice";
-import { setSymptoms, checkSymptoms } from "../../redux/slices/symptomSlice";
+} from 'react-native';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { bookAppointment } from '../../redux/slices/appointmentSlice';
+import { fetchAllDoctors, fetchDoctorDetails } from '../../redux/slices/doctorSlice';
+import { setSymptoms, checkSymptoms } from '../../redux/slices/symptomSlice';
 import Icon from 'react-native-vector-icons/Ionicons';
-import COLORS from "../../constants/colors";
-import styles from "../../styles/bookingStyle";
-import { useRoute } from "@react-navigation/native";
+import COLORS from '../../constants/colors';
+import styles from '../../styles/bookingStyle';
+import { useRoute } from '@react-navigation/native';
 
 interface Slot {
   slotTiming: string;
@@ -42,7 +42,7 @@ const PaymentModal = ({
     <View style={styles.modalBackground}>
       <View style={[styles.modalContainer, { padding: 24 }]}>
         <Text style={styles.modalTitle}>Payment</Text>
-        <Text style={[styles.modalText, { marginBottom: 24, textAlign: "center" }]}>
+        <Text style={[styles.modalText, { marginBottom: 24, textAlign: 'center' }]}>
           Complete your payment to confirm the appointment.
         </Text>
         {loading ? (
@@ -51,12 +51,12 @@ const PaymentModal = ({
           <>
             <TouchableOpacity
               onPress={onPay}
-              style={[styles.modalButton, { backgroundColor: COLORS.primary, width: "80%", alignSelf: "center" }]}
+              style={[styles.modalButton, { backgroundColor: COLORS.primary, width: '80%', alignSelf: 'center' }]}
             >
-              <Text style={{ color: "#fff", fontWeight: "bold" }}>Pay Now</Text>
+              <Text style={{ color: '#fff', fontWeight: 'bold' }}>Pay Now</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={onCancel} style={{ padding: 12, alignSelf: "center" }}>
-              <Text style={{ color: COLORS.primary, fontWeight: "bold" }}>Cancel</Text>
+            <TouchableOpacity onPress={onCancel} style={{ padding: 12, alignSelf: 'center' }}>
+              <Text style={{ color: COLORS.primary, fontWeight: 'bold' }}>Cancel</Text>
             </TouchableOpacity>
           </>
         )}
@@ -70,12 +70,12 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
   const route = useRoute<any>();
   const { doctor } = route.params || {};
 
-  const [symptomText, setSymptomText] = useState("");
-  const [healthIssue, setHealthIssue] = useState("");
-  const [checkupTiming, setCheckupTiming] = useState("");
-  const [notes, setNotes] = useState("");
+  const [symptomText, setSymptomText] = useState('');
+  const [healthIssue, setHealthIssue] = useState('');
+  const [checkupTiming, setCheckupTiming] = useState('');
+  const [notes, setNotes] = useState('');
   const [date, setDate] = useState(new Date());
-  const [formattedDate, setFormattedDate] = useState("");
+  const [formattedDate, setFormattedDate] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -83,7 +83,7 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
 
   const { doctorDetails } = useAppSelector((state) => state.doctors);
-  const doctor_Id = doctor?.userId || "";
+  const doctor_Id = doctor?.userId || '';
 
   useEffect(() => {
     dispatch(fetchAllDoctors() as any);
@@ -91,11 +91,11 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
 
   const validateFields = () => {
     const errors: { [key: string]: string } = {};
-    if (!healthIssue) errors.healthIssue = "Health issue is required.";
-    if (!checkupTiming) errors.checkupTiming = "Slot selection is required.";
-    if (!doctor_Id) errors.doctor_Id = "Doctor selection is required.";
-    if (!formattedDate) errors.date = "Date is required.";
-    if (date < new Date(new Date().toDateString())) errors.date = "Cannot book past dates.";
+    if (!healthIssue) {errors.healthIssue = 'Health issue is required.';}
+    if (!checkupTiming) {errors.checkupTiming = 'Slot selection is required.';}
+    if (!doctor_Id) {errors.doctor_Id = 'Doctor selection is required.';}
+    if (!formattedDate) {errors.date = 'Date is required.';}
+    if (date < new Date(new Date().toDateString())) {errors.date = 'Cannot book past dates.';}
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -103,28 +103,28 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
   // Pure function for rendering button state without updating state
   const isFormValid = () => {
     return (
-      healthIssue !== "" &&
-      checkupTiming !== "" &&
-      doctor_Id !== "" &&
-      formattedDate !== "" &&
+      healthIssue !== '' &&
+      checkupTiming !== '' &&
+      doctor_Id !== '' &&
+      formattedDate !== '' &&
       date >= new Date(new Date().toDateString())
     );
   };
 
   const handleReviewBooking = () => {
     if (!validateFields()) {
-      Alert.alert("Incomplete Fields", "Please fill all required fields correctly.");
+      Alert.alert('Incomplete Fields', 'Please fill all required fields correctly.');
       return;
     }
     setShowReviewModal(true);
   };
 
   const handlePayAndBook = async () => {
-    if (bookingInProgress) return;
+    if (bookingInProgress) {return;}
     setBookingInProgress(true);
 
     const appointmentData = {
-      doctor_Id,
+      doctorId: doctor_Id,
       date: formattedDate,
       time: checkupTiming,
       notes,
@@ -132,10 +132,10 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
 
     try {
       await dispatch(bookAppointment(appointmentData) as any).unwrap();
-      Alert.alert("Success", "Your appointment has been booked.");
-      navigation.navigate("MyBooking");
+      Alert.alert('Success', 'Your appointment has been booked.');
+      navigation.navigate('MyBooking');
     } catch (err: any) {
-      Alert.alert("Error", err?.message || "Failed to book appointment.");
+      Alert.alert('Error', err?.message || 'Failed to book appointment.');
     } finally {
       setBookingInProgress(false);
       setShowPaymentModal(false);
@@ -146,17 +146,17 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
     setShowDatePicker(false);
     if (selectedDate) {
       setDate(selectedDate);
-      setFormattedDate(selectedDate.toISOString().split("T")[0]);
+      setFormattedDate(selectedDate.toISOString().split('T')[0]);
     }
   };
 
   const convertTo12HourFormat = (time: string): string => {
-    const [start, end] = time.split("-");
+    const [start, end] = time.split('-');
     const formatTime = (hour: string) => {
       let h = parseInt(hour, 10);
-      const period = h >= 12 ? "PM" : "AM";
-      if (h > 12) h -= 12;
-      if (h === 0) h = 12;
+      const period = h >= 12 ? 'PM' : 'AM';
+      if (h > 12) {h -= 12;}
+      if (h === 0) {h = 12;}
       return `${h} ${period}`;
     };
     return `${formatTime(start)} - ${formatTime(end)}`;
@@ -164,7 +164,7 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
 
   const handleCheckAvailability = () => {
     if (!doctor_Id || !formattedDate) {
-      Alert.alert("Required Fields", "Doctor and Date must be selected.");
+      Alert.alert('Required Fields', 'Doctor and Date must be selected.');
       return;
     }
     dispatch(fetchDoctorDetails({ id: doctor_Id, selectedDate: formattedDate }) as any);
@@ -172,7 +172,7 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
 
   const handleAISymptomSuggest = async () => {
     if (!symptomText.trim()) {
-      Alert.alert("Missing Input", "Please describe your symptoms.");
+      Alert.alert('Missing Input', 'Please describe your symptoms.');
       return;
     }
     try {
@@ -185,7 +185,7 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} style={{ flex: 1 }}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={styles.scrollView} keyboardShouldPersistTaps="handled">
           <Text style={styles.title}>Book an Appointment</Text>
 
@@ -208,30 +208,34 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
 
 {doctorDetails?.slots?.length > 0 && (
   <View style={styles.formGroup}>
-    <Text style={styles.label}>Select Slot *</Text>
+    <Text style={styles.label}>Select Available Slot *</Text>
     <View style={styles.slotContainer}>
-      {doctorDetails.slots.map((slot: Slot, index: number) => (
-        <TouchableOpacity
-          key={index}
-          style={[
-            styles.slotCard,
-            slot.isBooked && styles.slotBookedCard,
-            checkupTiming === slot.slotTiming && styles.slotSelectedCard,
-          ]}
-          disabled={slot.isBooked}
-          onPress={() => setCheckupTiming(slot.slotTiming)}
-        >
-          <Text
+      {doctorDetails.slots.map((slot: Slot, index: number) => {
+        const isSelected = checkupTiming === slot.slotTiming;
+        return (
+          <TouchableOpacity
+            key={index}
+            activeOpacity={0.8}
             style={[
-              styles.slotText,
-              slot.isBooked && { color: "#aaa" },
-              checkupTiming === slot.slotTiming && { color: "#fff", fontWeight: "bold" },
+              styles.slotCard,
+              slot.isBooked && styles.slotBookedCard,
+              isSelected && styles.slotSelectedCard,
             ]}
+            disabled={slot.isBooked}
+            onPress={() => setCheckupTiming(slot.slotTiming)}
           >
-            {convertTo12HourFormat(slot.slotTiming)}
-          </Text>
-        </TouchableOpacity>
-      ))}
+            <Text
+              style={[
+                styles.slotText,
+                slot.isBooked && { color: '#94A3B8' },
+                isSelected && { color: '#FFFFFF', fontWeight: '700' },
+              ]}
+            >
+              {convertTo12HourFormat(slot.slotTiming)}
+            </Text>
+          </TouchableOpacity>
+        );
+      })}
     </View>
     {fieldErrors.checkupTiming && <Text style={styles.errorText}>{fieldErrors.checkupTiming}</Text>}
   </View>
@@ -264,7 +268,7 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
 
           {/* Review Button */}
           <TouchableOpacity
-            style={[styles.reviewButton, !isFormValid() && { backgroundColor: "gray" }]}
+            style={[styles.reviewButton, !isFormValid() && { backgroundColor: 'gray' }]}
             onPress={handleReviewBooking}
             disabled={!isFormValid()}
           >
@@ -291,7 +295,7 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
       <Text style={styles.modalText}>Date: {formattedDate}</Text>
       <Text style={styles.modalText}>Slot: {convertTo12HourFormat(checkupTiming)}</Text>
       <Text style={styles.modalText}>Health Issue: {healthIssue}</Text>
-      <Text style={styles.modalText}>Notes: {notes || "None"}</Text>
+      <Text style={styles.modalText}>Notes: {notes || 'None'}</Text>
 
       <TouchableOpacity style={styles.modalButton} onPress={() => setShowPaymentModal(true)}>
         <Text style={styles.modalButtonText}>Proceed to Payment</Text>

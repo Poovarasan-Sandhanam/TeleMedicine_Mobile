@@ -33,9 +33,9 @@ const PatientPayment: React.FC<PatientPaymentProps> = ({ navigation, route }) =>
       // TODO: Implement actual payment logic here
       // This is a placeholder for the payment implementation
       await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate API call
-      
+
       Alert.alert(
-        'Success', 
+        'Success',
         'Payment completed successfully!',
         [
           {
@@ -58,12 +58,12 @@ const PatientPayment: React.FC<PatientPaymentProps> = ({ navigation, route }) =>
         <Text style={styles.description}>
           Press the button below to complete your payment for appointment #{appointmentId}.
         </Text>
-        
+
         {loading ? (
           <ActivityIndicator size="large" color="#007bff" />
         ) : (
-          <TouchableOpacity 
-            style={styles.payButton} 
+          <TouchableOpacity
+            style={styles.payButton}
             onPress={handlePayment}
             activeOpacity={0.8}
           >

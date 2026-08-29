@@ -1,18 +1,18 @@
 
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 
 const doctorPayment = () => {
   return (
     <View>
       <Text>doctorPayment</Text>
     </View>
-  )
-}
+  );
+};
 
-export default doctorPayment
+export default doctorPayment;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
 
 // import React, { useEffect, useState } from 'react';
 // import {

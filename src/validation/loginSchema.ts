@@ -17,4 +17,4 @@ const LoginSchema = Yup.object().shape({
     .trim(),
 });
 
-export default LoginSchema; 
+export default LoginSchema;
