@@ -1,5 +1,5 @@
 // @ts-ignore
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -9,15 +9,13 @@ import {
   Alert,
   SafeAreaView,
   TouchableOpacity,
-  PermissionsAndroid,
-  Platform,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getPrescriptions } from '../../redux/slices/prescriptionsSlice';
 // @ts-ignore
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
-import { RootState } from '../../redux/store';
 
 interface Medication {
   name?: string;
@@ -37,39 +35,32 @@ interface Prescription {
   medications?: Medication[];
 }
 
+/** Prescription text is typed by doctors; escape it before placing it in the PDF's HTML. */
+const esc = (value: unknown): string =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+
 const PatientPrescriptionScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const { loading, data = [], error } = useAppSelector((state: any) => state.prescriptions || {});
 
-  useEffect(() => {
+  const load = useCallback(() => {
     dispatch(getPrescriptions() as any);
   }, [dispatch]);
 
-  useEffect(() => {
-    if (error) {
-      Alert.alert('Error', error, [
-        {
-          text: 'OK',
-          onPress: () => {
-            // Optionally retry fetching prescriptions
-            dispatch(getPrescriptions() as any);
-          },
-        },
-      ]);
-    }
-  }, [error, dispatch]);
+  // Reload whenever the tab is shown, so a prescription the doctor has just written
+  // appears without restarting the app.
+  useFocusEffect(load);
 
   const handleGeneratePDF = useCallback(async () => {
+    // This used to request WRITE_EXTERNAL_STORAGE first. The manifest never declared
+    // it and Android 13+ never grants it, so every Android download stopped at
+    // "Permission Denied". The PDF is written to the app's own Documents directory,
+    // which needs no permission.
     try {
-      if (Platform.OS === 'android') {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-        );
-        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-          Alert.alert('Permission Denied', 'Storage permission is required to save the PDF.');
-          return;
-        }
-      }
 
       const htmlContent = `
         <html>
@@ -87,11 +78,11 @@ const PatientPrescriptionScreen: React.FC = () => {
               .map(
                 (item: Prescription) => `
                   <div class="prescription">
-                    <h3>Patient: ${item.patientName || 'N/A'}</h3>
-                    <p><strong>Age:</strong> ${item.age || 'N/A'}</p>
-                    <p><strong>Diagnosis:</strong> ${item.diagnosis || 'N/A'}</p>
-                    <p><strong>Notes:</strong> ${item.notes || 'N/A'}</p>
-                    <p><strong>Date:</strong> ${new Date(item.date).toLocaleDateString()}</p>
+                    <h3>Patient: ${esc(item.patientName || 'N/A')}</h3>
+                    <p><strong>Age:</strong> ${esc(item.age || 'N/A')}</p>
+                    <p><strong>Diagnosis:</strong> ${esc(item.diagnosis || 'N/A')}</p>
+                    <p><strong>Notes:</strong> ${esc(item.notes || 'N/A')}</p>
+                    <p><strong>Date:</strong> ${esc(new Date(item.date).toLocaleDateString())}</p>
                     <p><strong>Medications:</strong></p>
                     ${
                       item.medications?.length
@@ -99,8 +90,8 @@ const PatientPrescriptionScreen: React.FC = () => {
                             .map(
                               (med: Medication) => `
                                 <div class="medication">
-                                  • ${med.name || 'N/A'} - ${med.dosage || 'N/A'} 
-                                  (${med.frequency || 'N/A'}, ${med.duration || 'N/A'})
+                                  • ${esc(med.name || 'N/A')} - ${esc(med.dosage || 'N/A')}
+                                  (${esc(med.frequency || 'N/A')}, ${esc(med.duration || 'N/A')})
                                 </div>
                               `
                             )
@@ -177,13 +168,31 @@ const PatientPrescriptionScreen: React.FC = () => {
     </View>
   ), []);
 
-  if (loading) {
+  if (loading && data.length === 0) {
     return renderLoadingComponent;
+  }
+
+  if (data.length === 0) {
+    return (
+      <SafeAreaView style={[styles.container, { justifyContent: 'center', alignItems: 'center', padding: 24 }]}>
+        <Text style={[styles.title, { textAlign: 'center' }]}>
+          {error ? error : 'No prescriptions yet'}
+        </Text>
+        <Text style={[styles.detail, { textAlign: 'center', marginTop: 8 }]}>
+          {error ? '' : 'Prescriptions from your consultations will appear here.'}
+        </Text>
+        <TouchableOpacity onPress={load} style={{ marginTop: 16 }} activeOpacity={0.8}>
+          <Text style={{ color: '#007bff', fontWeight: '600' }}>{error ? 'Try again' : 'Refresh'}</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    );
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
+        refreshing={loading}
+        onRefresh={load}
         data={data}
         keyExtractor={keyExtractor}
         renderItem={renderPrescription}

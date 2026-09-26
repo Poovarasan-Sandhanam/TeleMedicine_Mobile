@@ -128,6 +128,9 @@ export default StyleSheet.create({
     lineHeight: 22,
     maxWidth: 280,
   },
+  retryText: {
+    fontSize: 16,
+  },
 
   // Modal styles
   modalOverlay: {

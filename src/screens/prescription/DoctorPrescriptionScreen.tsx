@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { addPrescription } from '../../redux/slices/prescriptionSlice';
 
 interface Medication {
@@ -21,8 +21,6 @@ interface Medication {
 }
 
 interface PrescriptionFormData {
-  patientId: string;
-  doctorId: string;
   patientName: string;
   age: string;
   symptoms: string;
@@ -32,21 +30,24 @@ interface PrescriptionFormData {
   medications: Medication[];
 }
 
+const todayIso = () => new Date().toISOString().split('T')[0];
+
 const PrescriptionForm = () => {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation<any>();
   const route = useRoute();
-  const { patientId, doctorId } = (route.params as any) || {};
+  // Opened from an appointment in the doctor's list. The server works out the doctor
+  // and the patient itself, so only the appointment is needed.
+  const { appointmentId, patientName } = (route.params as any) || {};
   const { loading, error } = useAppSelector((state: any) => state.prescription);
 
   const [formData, setFormData] = useState<PrescriptionFormData>({
-    patientId: patientId || '',
-    doctorId: doctorId || '',
-    patientName: '',
+    patientName: patientName || '',
     age: '',
     symptoms: '',
     diagnosis: '',
     notes: '',
-    date: '',
+    date: todayIso(),
     medications: [],
   });
 
@@ -56,14 +57,6 @@ const PrescriptionForm = () => {
     frequency: '',
     duration: '',
   });
-
-  useEffect(() => {
-    setFormData((prev) => ({
-      ...prev,
-      patientId: patientId || '',
-      doctorId: doctorId || '',
-    }));
-  }, [patientId, doctorId]);
 
   const handleInputChange = (name: keyof PrescriptionFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -95,37 +88,45 @@ const PrescriptionForm = () => {
   };
 
   const handleSubmit = async () => {
+    if (!appointmentId) {
+      Alert.alert('Error', 'Open this form from an appointment in your list.');
+      return;
+    }
     if (formData.medications.length === 0) {
       Alert.alert('Error', 'Please add at least one medication.');
       return;
     }
 
+    // An empty or malformed date used to reach `new Date('').toISOString()`, which
+    // throws. Default to today and reject anything unparseable up front.
+    const parsedDate = formData.date ? new Date(formData.date) : new Date();
+    if (isNaN(parsedDate.getTime())) {
+      Alert.alert('Error', 'Date must be in YYYY-MM-DD format.');
+      return;
+    }
+
     try {
-      const formattedData = {
-        ...formData,
-        symptoms: formData.symptoms.split(',').map((symptom) => symptom.trim()),
-        date: new Date(formData.date).toISOString(),
-      };
+      // unwrap() throws when the request fails. The old code checked `error` from
+      // this render's closure after awaiting - always the stale value - so a failed
+      // save still reported success.
+      await dispatch(
+        addPrescription({
+          appointmentId,
+          patientName: formData.patientName,
+          age: formData.age ? Number(formData.age) : undefined,
+          symptoms: formData.symptoms.split(',').map((symptom) => symptom.trim()).filter(Boolean),
+          diagnosis: formData.diagnosis,
+          notes: formData.notes,
+          date: parsedDate.toISOString(),
+          medications: formData.medications,
+        }) as any
+      ).unwrap();
 
-      await dispatch(addPrescription(formattedData) as any);
-
-      if (!error) {
-        Alert.alert('Success', 'Prescription added successfully');
-        setFormData({
-          patientId: patientId || '',
-          doctorId: doctorId || '',
-          patientName: '',
-          age: '',
-          symptoms: '',
-          diagnosis: '',
-          notes: '',
-          date: '',
-          medications: [],
-        });
-      }
-    } catch (err) {
-      console.error('Error During Submission:', err);
-      Alert.alert('Error', 'An unexpected error occurred.');
+      Alert.alert('Saved', 'Prescription added and the appointment marked completed.', [
+        { text: 'OK', onPress: () => navigation.goBack() },
+      ]);
+    } catch (err: any) {
+      Alert.alert('Could not save', typeof err === 'string' ? err : err?.message || 'Please try again.');
     }
   };
 

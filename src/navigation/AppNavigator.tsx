@@ -41,7 +41,7 @@ type RootStackParamList = {
   AppointmentBooking: { doctorId?: string };
   MyBooking: undefined;
   Payment: undefined;
-  Prescription: undefined;
+  WritePrescription: { appointmentId: string; patientName?: string };
   DoctorListScreen: undefined;
 };
 
@@ -152,7 +152,7 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ navigation }) => {
             name="MyBooking"
             component={MyBooking}
             options={{
-              tabBarIcon: ({ color, size }) => (
+              tabBarIcon: ({ color }) => (
                 <Icon name="bookmark-border" color={color} size={30} />
               ),
             }}
@@ -163,7 +163,7 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ navigation }) => {
             name="MyBooking"
             component={MyBooking}
             options={{
-              tabBarIcon: ({ color, size }) => (
+              tabBarIcon: ({ color }) => (
                 <Icon name="bookmark-border" color={color} size={30} />
               ),
             }}
@@ -274,10 +274,12 @@ const AppNavigator: React.FC = () => {
           component={PaitentPayment}
           options={{ headerShown: false }}
         /> */}
+        {/* Opened from an appointment in the doctor's list. Named distinctly from the
+            patient's "Prescription" tab so navigation cannot resolve to the wrong one. */}
         <Stack.Screen
-          name="Prescription"
+          name="WritePrescription"
           component={DoctorPrescriptionScreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: true, title: 'Write Prescription' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

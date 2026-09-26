@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
+import React, { useState, useRef, useMemo, useCallback } from 'react';
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchAppointments } from '../../redux/slices/appointmentRecordSlice';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import moment, { Moment } from 'moment';
 import styles from '../../styles/appointmentScreen.styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -32,13 +33,6 @@ interface Appointment {
   userDetails?: UserDetails;
 }
 
-interface RootState {
-  appointmentRec: {
-    loading: boolean;
-    appointmentRec: Appointment[];
-    error: string;
-  };
-}
 
 interface DateItemProps {
   item: Moment;
@@ -49,6 +43,7 @@ const AppointmentScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const dispatch = useAppDispatch();
+  const navigation = useNavigation<any>();
 
   const { loading, appointmentRec = [], error } = useAppSelector(
     (state: any) => state.appointmentRec
@@ -196,7 +191,9 @@ const AppointmentScreen: React.FC = () => {
         </Text>
         <Text style={styles.modalText}>
           <Text style={styles.modalLabel}>Status: </Text>
-          {selectedAppointment.status}
+          {selectedAppointment.status
+            ? selectedAppointment.status.charAt(0).toUpperCase() + selectedAppointment.status.slice(1)
+            : 'N/A'}
         </Text>
         <Text style={styles.modalText}>
           <Text style={styles.modalLabel}>Date: </Text>
@@ -214,6 +211,22 @@ const AppointmentScreen: React.FC = () => {
           <Text style={styles.modalLabel}>Gender: </Text>
           {selectedAppointment.userDetails?.gender || 'N/A'}
         </Text>
+        {(selectedAppointment.status === 'confirmed' || selectedAppointment.status === 'completed') && (
+          <TouchableOpacity
+            style={[styles.closeButton, { marginBottom: 10 }]}
+            onPress={() => {
+              const appointment = selectedAppointment;
+              closeModal();
+              navigation.navigate('WritePrescription', {
+                appointmentId: appointment._id,
+                patientName: appointment.userDetails?.fullName ?? '',
+              });
+            }}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.closeButtonText}>Write Prescription</Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           style={styles.closeButton}
           onPress={closeModal}
@@ -223,13 +236,15 @@ const AppointmentScreen: React.FC = () => {
         </TouchableOpacity>
       </>
     );
-  }, [selectedAppointment, formatTimeSlot, closeModal]);
+  }, [selectedAppointment, formatTimeSlot, closeModal, navigation]);
 
-  // Fetch appointments when selected date changes
-  useEffect(() => {
-    const formattedDate = selectedDate.format('DD-MM-YYYY');
-    dispatch(fetchAppointments(formattedDate) as any);
-  }, [selectedDate, dispatch]);
+  // Fetch when the date changes and whenever the screen regains focus, so bookings
+  // made meanwhile, or an appointment just completed by a prescription, show up.
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(fetchAppointments(selectedDate.format('DD-MM-YYYY')) as any);
+    }, [selectedDate, dispatch])
+  );
 
   return (
     <View style={styles.container}>
@@ -249,6 +264,19 @@ const AppointmentScreen: React.FC = () => {
 
       {loading ? (
         <ActivityIndicator size="large" color="#4A4AFF" style={styles.loader} />
+      ) : error ? (
+        // A failed load used to fall through to "No Appointments", so a doctor
+        // could believe their day was empty when the server was unreachable.
+        <View style={styles.noAppointmentsCard}>
+          <Text style={styles.noAppointmentsTitle}>Couldn't load appointments</Text>
+          <Text style={styles.noAppointmentsMessage}>{error}</Text>
+          <TouchableOpacity
+            onPress={() => dispatch(fetchAppointments(selectedDate.format('DD-MM-YYYY')) as any)}
+            activeOpacity={0.8}
+          >
+            <Text style={[styles.noAppointmentsTitle, styles.retryText]}>Try again</Text>
+          </TouchableOpacity>
+        </View>
       ) : (
         <FlatList
           data={appointmentRec}
