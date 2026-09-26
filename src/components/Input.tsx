@@ -1,6 +1,6 @@
 // components/Input.js
 import React from 'react';
-import { TextInput, Text, StyleSheet, View, ViewStyle, TextStyle, TextInputProps } from 'react-native';
+import { TextInput, Text, StyleSheet, View, ViewStyle, TextInputProps } from 'react-native';
 
 interface InputProps extends Omit<TextInputProps, 'style'> {
   placeholder: string;

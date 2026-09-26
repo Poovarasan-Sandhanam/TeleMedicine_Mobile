@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Animated,
   StyleSheet,
@@ -20,7 +20,6 @@ const COLORS = getTheme('light', 'telemedicine');
 
 const SplashScreen = ({ navigation }: { navigation: { replace: (screen: string) => void } }) => {
   const dispatch = useAppDispatch();
-  const [bgChanged, setBgChanged] = useState(false);
 
   const textAnim = useRef(new Animated.Value(0)).current;
   const loginChecked = useRef(false); // track if async login finished
@@ -35,7 +34,6 @@ const SplashScreen = ({ navigation }: { navigation: { replace: (screen: string) 
       easing: Easing.out(Easing.ease),
       useNativeDriver: true,
     }).start(() => {
-      setBgChanged(true);
       animationDone.current = true;
       // Navigate if login check is done
       if (loginChecked.current) {

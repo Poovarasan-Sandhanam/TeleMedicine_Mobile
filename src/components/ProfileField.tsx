@@ -2,10 +2,6 @@ import React, { memo } from 'react';
 import { View, Text, TextInput, StyleSheet, KeyboardTypeOptions } from 'react-native';
 import CustomDropdown from './CustomDropdown';
 
-interface DropdownItem {
-  label: string;
-  value: string | number;
-}
 
 interface ProfileFieldProps {
   label: string;

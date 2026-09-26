@@ -18,7 +18,7 @@ interface ConsultScreenProps {
   };
 }
 
-const ConsultScreen: React.FC<ConsultScreenProps> = ({ navigation, route }) => {
+const ConsultScreen: React.FC<ConsultScreenProps> = ({ route }) => {
   const [isCallActive, setIsCallActive] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [isVideoEnabled, setIsVideoEnabled] = useState<boolean>(true);

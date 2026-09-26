@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import React from 'react';
 
 const doctorPayment = () => {
@@ -12,7 +12,6 @@ const doctorPayment = () => {
 
 export default doctorPayment;
 
-const styles = StyleSheet.create({});
 
 // import React, { useEffect, useState } from 'react';
 // import {

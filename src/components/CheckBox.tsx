@@ -25,6 +25,9 @@ const CheckBox: React.FC<CheckBoxProps> = ({
       onPress={onToggle}
       disabled={disabled}
       activeOpacity={0.7}
+      // Without these a screen reader announced nothing: no role, no checked state.
+      accessibilityRole="checkbox"
+      accessibilityState={{ checked: isChecked, disabled }}
     >
       <View
         style={[
