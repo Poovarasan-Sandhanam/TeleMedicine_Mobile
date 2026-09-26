@@ -58,3 +58,7 @@ yarn-error.log
 
 # Metro
 .metro-health-check*
+
+# Build logs
+*.log
+ios/Build *.txt
