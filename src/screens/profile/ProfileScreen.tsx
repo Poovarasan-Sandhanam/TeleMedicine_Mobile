@@ -36,36 +36,35 @@ interface FormDataType {
   specialized: string;
   experience: string;
   consultationTiming: string;
+  licenseNumber: string;
   profileImage: ProfileImage | null;
 }
 
 const ProfileScreen: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { profile, loading: profileLoading } = useAppSelector(state => state.profile);
+  const { profile, loading: profileLoading, error: profileError } = useAppSelector(state => state.profile);
   const { doctorTypes, loading: doctorTypesLoading } = useAppSelector(state => state.doctorTypes);
 
   const [formData, setFormData] = useState<FormDataType>({
     name: '', age: '', gender: '', email: '', contactNumber: '',
     address: '', bloodGroup: '', weight: '', height: '', ongoingTreatment: '',
     healthIssues: '', specialized: '', experience: '', consultationTiming: '',
-    profileImage: null,
+    licenseNumber: '', profileImage: null,
   });
 
   const [editMode, setEditMode] = useState(false);
+
+  // The picker submits `id`. Tile ids ("cardiologist") are not valid specialties, so
+  // use the specialty name the server returns with each tile as the value.
+  const specializationOptions = doctorTypes.map(t => ({
+    id: t.specialization ?? t.title,
+    title: t.title,
+  }));
 
   useEffect(() => {
     dispatch(fetchProfile() as any);
     dispatch(fetchDoctorTypes() as any);
   }, [dispatch]);
-
-  useEffect(() => {
-  if (profile) {
-    setFormData({
-      ...formData,
-      age: profile.age !== undefined && profile.age !== null ? String(profile.age) : '',
-    });
-  }
-}, [profile]);
 
   useEffect(() => {
 
@@ -86,6 +85,7 @@ const ProfileScreen: React.FC = () => {
         specialized: profile.specialized || '',
         experience: profile.experience?.toString() || '',
         consultationTiming: profile.consultationTiming || '',
+        licenseNumber: profile.licenseNumber || '',
         profileImage: profile.profileImage
           ? { uri: profile.profileImage, type: 'image/jpeg', name: 'profile.jpg' }
           : null,
@@ -144,7 +144,8 @@ const ProfileScreen: React.FC = () => {
 
     Object.entries(formData).forEach(([key, value]) => {
       if (key !== 'profileImage') {
-        data.append(key, value.toString());
+        // The form keeps this as `specialized`; the server field is `specialization`.
+        data.append(key === 'specialized' ? 'specialization' : key, value.toString());
       }
     });
 
@@ -196,7 +197,30 @@ const ProfileScreen: React.FC = () => {
   );
 
   if (profileLoading || doctorTypesLoading) {
-    return <ActivityIndicator style={styles.center} size="large" />;
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" />
+        <Text style={{ marginTop: 12 }}>Loading profile...</Text>
+      </View>
+    );
+  }
+
+  // With no profile loaded, an editable empty form would let a failed fetch be saved
+  // over the real profile. Offer a retry instead.
+  if (!profile) {
+    return (
+      <View style={styles.center}>
+        <Text style={{ fontSize: 16, fontWeight: '600' }}>No profile data available</Text>
+        {profileError ? <Text style={{ marginTop: 8, textAlign: 'center' }}>{profileError}</Text> : null}
+        <TouchableOpacity
+          style={[styles.btn, { marginTop: 16, paddingHorizontal: 32 }]}
+          onPress={() => dispatch(fetchProfile() as any)}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.btnText}>Retry</Text>
+        </TouchableOpacity>
+      </View>
+    );
   }
 
   const isDoctor = profile?.isDoctor;
@@ -230,9 +254,10 @@ const ProfileScreen: React.FC = () => {
 
         {isDoctor ? (
           <>
-            {renderField('Specialized In', 'specialized', true, doctorTypes)}
+            {renderField('Specialized In', 'specialized', true, specializationOptions)}
             {renderField('Experience (years)', 'experience', false, null, 'numeric')}
             {renderField('Consultation Timing', 'consultationTiming', true, ConsultEnum)}
+            {renderField('Medical License Number', 'licenseNumber')}
           </>
         ) : (
           <>

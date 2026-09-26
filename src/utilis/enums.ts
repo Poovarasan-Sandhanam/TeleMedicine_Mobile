@@ -20,10 +20,12 @@ export const BloodGroupEnum: EnumOption[] = [
   { title: 'O-', id: 'O -' },
 ];
 
+// `id` is what is saved and turned into bookable slots, so it must match the label.
+// Two entries saved an hour later than they showed (3 PM and 11 PM).
 export const ConsultEnum: EnumOption[] = [
   { title: '6 AM - 2 PM (Morning)', id: '6 AM - 2 PM (Morning)' },
-  { title: '2 PM - 10 PM (Afternoon)', id: '3 PM - 10 PM (Afternoon)' },
-  { title: '10 PM - 6 AM (Night)', id: '11 PM - 6 AM (Night)' },
+  { title: '2 PM - 10 PM (Afternoon)', id: '2 PM - 10 PM (Afternoon)' },
+  { title: '10 PM - 6 AM (Night)', id: '10 PM - 6 AM (Night)' },
 ];
 
 export const OngoingTreatmentEnum: EnumOption[] = [
