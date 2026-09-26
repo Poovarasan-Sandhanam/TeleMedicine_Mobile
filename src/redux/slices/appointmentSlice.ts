@@ -7,6 +7,7 @@ interface AppointmentData {
   doctorId: string;
   date: string;
   time: string;
+  healthIssue?: string;
   notes?: string;
   patientId?: string;
 }

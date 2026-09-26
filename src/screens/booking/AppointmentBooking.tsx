@@ -127,6 +127,7 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
       doctorId: doctor_Id,
       date: formattedDate,
       time: checkupTiming,
+      healthIssue,
       notes,
     };
 
