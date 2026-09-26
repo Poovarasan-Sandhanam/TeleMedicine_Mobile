@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authSlice from './slices/authSlice';
 import profileSlice from './slices/profileSlice';
 import doctorTypeSlice from './slices/doctorTypeSlice';
@@ -11,8 +11,10 @@ import prescriptionSlice from './slices/prescriptionSlice';
 import prescriptionsSlice from './slices/prescriptionsSlice';
 import symptomSlice from './slices/symptomSlice';
 
-export const store = configureStore({
-  reducer: {
+/** Dispatch on sign-out to wipe every slice back to its initial state. */
+export const LOGOUT = 'LOGOUT';
+
+const appReducer = combineReducers({
     auth: authSlice,
     profile: profileSlice,
     doctorTypes: doctorTypeSlice,
@@ -24,7 +26,15 @@ export const store = configureStore({
     prescription: prescriptionSlice,
     prescriptions: prescriptionsSlice,
     symptom: symptomSlice,
-  },
+});
+
+// The drawer dispatched LOGOUT, but no reducer handled it, so the previous user's
+// profile, bookings and appointments stayed in memory for whoever signed in next.
+const rootReducer: typeof appReducer = (state, action) =>
+  appReducer(action.type === LOGOUT ? undefined : state, action);
+
+export const store = configureStore({
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -33,7 +43,7 @@ export const store = configureStore({
     }),
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof appReducer>;
 export type AppDispatch = typeof store.dispatch;
 
 export default store;

@@ -6,8 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useAppDispatch } from '../redux/hooks';
 import { useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import COLORS from '../constants/colors';
-import { RootState } from '../redux/store';
+import { RootState, LOGOUT } from '../redux/store';
 import { fetchProfile, initializeLocalProfile } from '../redux/slices/profileSlice';
 
 const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
@@ -24,12 +23,17 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
 
   const handleLogout = useCallback(async () => {
     try {
-      await AsyncStorage.removeItem('token');
-      await AsyncStorage.removeItem('user');
-      dispatch({ type: 'LOGOUT' }); // reset Redux state if you have a logout reducer
-      props.navigation.navigate('Login' as never);
+      // `isDoctor` and `localProfile` were left behind before, so the next user on
+      // this device started with the previous user's role and cached profile.
+      await AsyncStorage.multiRemove(['token', 'user', 'isDoctor', 'localProfile']);
+      dispatch({ type: LOGOUT });
     } catch (error) {
       console.error('Error during logout:', error);
+    } finally {
+      // Reset rather than navigate, so the signed-in screens are unmounted and the
+      // back button cannot return to them.
+      const root = props.navigation.getParent() ?? props.navigation;
+      root.reset({ index: 0, routes: [{ name: 'Login' as never }] });
     }
   }, [dispatch, props.navigation]);
 

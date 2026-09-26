@@ -10,6 +10,8 @@ import {
   Image,
   StyleSheet,
   Pressable,
+  ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -113,7 +115,9 @@ export default function DoctorsScreen() {
       )
     : completedDoctors;
 
-  const filteredDoctors = matchedDoctors.length > 0 ? matchedDoctors : completedDoctors;
+  // When nothing matched, this used to fall back to *every* doctor, listing other
+  // specialists under the chosen specialty's heading. Show the real result.
+  const filteredDoctors = matchedDoctors;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -123,6 +127,17 @@ export default function DoctorsScreen() {
         <View style={{ width: 40 }} />
       </View>
 
+      {loading && filteredDoctors.length === 0 ? (
+        <ActivityIndicator size="large" color="#2563EB" style={styles.loader} />
+      ) : error && filteredDoctors.length === 0 ? (
+        <View style={styles.emptyContainer}>
+          <Ionicons name="cloud-offline-outline" size={48} color="#94A3B8" />
+          <Text style={styles.empty}>{error}</Text>
+          <TouchableOpacity onPress={() => dispatch(fetchCompletedDoctors())} activeOpacity={0.8}>
+            <Text style={styles.retry}>Try again</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
       <FlatList
         data={filteredDoctors}
         keyExtractor={(item) => item._id}
@@ -138,10 +153,13 @@ export default function DoctorsScreen() {
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Ionicons name="medical-outline" size={48} color="#94A3B8" />
-            <Text style={styles.empty}>No doctors found for {category}</Text>
+            <Text style={styles.empty}>
+              {category ? `No ${category} doctors are available yet` : 'No doctors are available yet'}
+            </Text>
           </View>
         }
       />
+      )}
     </SafeAreaView>
   );
 }
@@ -150,6 +168,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8FAFC',
+  },
+  loader: {
+    marginTop: 48,
+  },
+  retry: {
+    color: '#2563EB',
+    fontWeight: '600',
+    marginTop: 12,
   },
   headerRow: {
     flexDirection: 'row',

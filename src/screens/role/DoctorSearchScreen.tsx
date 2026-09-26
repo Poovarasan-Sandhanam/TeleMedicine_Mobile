@@ -93,7 +93,12 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         item={item}
         index={index}
         theme={theme}
-        onPress={() => navigation.navigate('DoctorListScreen', { category: item.title })}
+        onPress={() =>
+          // Filter on the stored specialty name. The tile title differs for GPs
+          // ("General Practitioner" vs "General Practitioner (GP)"), so that tile
+          // always showed an empty list.
+          navigation.navigate('DoctorListScreen', { category: item.specialization ?? item.title })
+        }
       />
     ),
     [navigation, theme]

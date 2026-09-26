@@ -17,6 +17,7 @@ interface NormalizedProfile {
   specialized: string;
   experience: string;
   consultationTiming: string;
+  licenseNumber: string;
   profileImage: string;
   isDoctor: boolean;
 }
@@ -28,75 +29,9 @@ interface ProfileState {
   error: string | null;
 }
 
-export const MOCK_PROFILE: NormalizedProfile = {
-  name: 'John Doe (Guest)',
-  age: '30',
-  gender: 'Male',
-  email: 'guest@telemedicine.com',
-  contactNumber: '+1 234 567 8900',
-  address: '123 Health Ave, Suite 100',
-  bloodGroup: 'O+',
-  weight: '70',
-  height: '175',
-  ongoingTreatment: 'None',
-  healthIssues: 'Mild Allergy',
-  specialized: 'General Medicine',
-  experience: '5',
-  consultationTiming: '09:00 AM - 05:00 PM',
-  profileImage: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400',
-  isDoctor: false,
-};
-
-export const MOCK_COMPLETED_DOCTORS = [
-  {
-    _id: 'doc1',
-    fullName: 'Dr. Sarah Jenkins',
-    specialization: 'Cardiology',
-    experience: 12,
-    consultationTiming: '10:00 AM - 04:00 PM',
-    address: 'City Heart Hospital, NY',
-    certifications: ['MD Cardiology', 'FACC'],
-    languages: ['English', 'Spanish'],
-    profileImage: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400',
-  },
-  {
-    _id: 'doc2',
-    fullName: 'Dr. Robert Chen',
-    specialization: 'Dermatology',
-    experience: 8,
-    consultationTiming: '09:00 AM - 02:00 PM',
-    address: 'Skin & Beauty Clinic',
-    certifications: ['MD Dermatology', 'Board Certified'],
-    languages: ['English', 'Mandarin'],
-    profileImage: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400',
-  },
-  {
-    _id: 'doc3',
-    fullName: 'Dr. Emily Taylor',
-    specialization: 'Pediatrics',
-    experience: 15,
-    consultationTiming: '08:00 AM - 01:00 PM',
-    address: 'Children Care Center',
-    certifications: ['MD Pediatrics', 'FAAP'],
-    languages: ['English'],
-    profileImage: 'https://images.unsplash.com/photo-1594824813566-88855ce78905?w=400',
-  },
-  {
-    _id: 'doc4',
-    fullName: 'Dr. Michael Vance',
-    specialization: 'General Physician',
-    experience: 10,
-    consultationTiming: '11:00 AM - 06:00 PM',
-    address: 'Wellness Medical Hub',
-    certifications: ['MBBS', 'MD Internal Medicine'],
-    languages: ['English', 'French'],
-    profileImage: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400',
-  },
-];
-
 const initialState: ProfileState = {
-  profile: MOCK_PROFILE,
-  completedDoctors: MOCK_COMPLETED_DOCTORS,
+  profile: null,
+  completedDoctors: [],
   loading: false,
   error: null,
 };
@@ -131,9 +66,10 @@ export const fetchProfile = createAsyncThunk<NormalizedProfile, void, { rejectVa
         height: raw.height?.toString() || '',
         ongoingTreatment: raw.ongoingTreatment || '',
         healthIssues: Array.isArray(raw.healthIssues) ? raw.healthIssues.join(',') : raw.healthIssues || '',
-        specialized: raw.specialized || '',
+        specialized: raw.specialization || raw.specialized || '',
         experience: raw.experience?.toString() || '',
         consultationTiming: raw.consultationTiming || '',
+        licenseNumber: raw.licenseNumber || '',
         profileImage: raw.profileImage || '',
         isDoctor: raw.isDoctor || raw.role === 'DOCTOR',
       };
@@ -248,19 +184,16 @@ const profileSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchProfile.pending, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.error = null;
       })
       .addCase(fetchProfile.fulfilled, (state, action: PayloadAction<NormalizedProfile>) => {
         state.profile = action.payload;
         state.loading = false;
       })
-      .addCase(fetchProfile.rejected, (state) => {
+      .addCase(fetchProfile.rejected, (state, action) => {
         state.loading = false;
-        if (!state.profile) {
-          state.profile = MOCK_PROFILE;
-        }
-        state.error = null;
+        state.error = action.payload || 'Failed to fetch profile';
       })
       .addCase(updateProfile.pending, (state) => {
         state.loading = true;
@@ -274,19 +207,19 @@ const profileSlice = createSlice({
         state.error = action.payload || 'Profile update failed';
       })
       .addCase(fetchCompletedDoctors.pending, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.error = null;
       })
       .addCase(fetchCompletedDoctors.fulfilled, (state, action: PayloadAction<any[]>) => {
         state.loading = false;
-        state.completedDoctors = action.payload && action.payload.length > 0 ? action.payload : MOCK_COMPLETED_DOCTORS;
+        state.completedDoctors = action.payload ?? [];
       })
-      .addCase(fetchCompletedDoctors.rejected, (state) => {
+      .addCase(fetchCompletedDoctors.rejected, (state, action) => {
         state.loading = false;
-        if (state.completedDoctors.length === 0) {
-          state.completedDoctors = MOCK_COMPLETED_DOCTORS;
-        }
-        state.error = null;
+        // The server answers 404 when no doctor has finished their profile yet;
+        // that is an empty list, not an error to show.
+        state.completedDoctors = [];
+        state.error = action.payload === 'No completed doctor profiles found' ? null : (action.payload || null);
       });
 
 

@@ -1,6 +1,6 @@
 // screens/BookingScreen.tsx
 
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -8,17 +8,14 @@ import {
   ActivityIndicator,
   SafeAreaView,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { useNavigation } from '@react-navigation/native';
-import LinearGradient from 'react-native-linear-gradient';
+import { useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { fetchBookings } from '../../redux/slices/bookingSlice';
 import styles from '../../styles/bookingScreenStyle';
 import COLORS from '../../constants/colors';
-import { RootState } from '../../redux/store';
 
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
@@ -43,35 +40,30 @@ const formatTimeRange = (range: string): string => {
   return `${format(start)} - ${format(end)}`;
 };
 
+/** Label and colours for each appointment status the server can return. */
+const STATUS_STYLE: Record<string, { label: string; text: string; bg: string }> = {
+  confirmed: { label: 'Confirmed', text: '#059669', bg: '#D1FAE5' },
+  completed: { label: 'Completed', text: '#2563EB', bg: '#DBEAFE' },
+  cancelled: { label: 'Cancelled', text: '#DC2626', bg: '#FEE2E2' },
+  held: { label: 'Awaiting payment', text: '#D97706', bg: '#FEF3C7' },
+};
+const statusStyle = (status: string) =>
+  STATUS_STYLE[status] ?? { label: status || 'Unknown', text: '#6B7280', bg: '#F3F4F6' };
+
 const MyBooking: React.FC = () => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation();
   const { loading, bookings, error } = useAppSelector((state: any) => state.bookings);
 
-  useEffect(() => {
+  const load = useCallback(() => {
     dispatch(fetchBookings() as any);
   }, [dispatch]);
 
-  useEffect(() => {
-    if (error) {
-      Alert.alert('Error', error, [
-        {
-          text: 'OK',
-          onPress: () => {
-            dispatch(fetchBookings() as any);
-          },
-        },
-      ]);
-    }
-  }, [error, dispatch]);
-
-  const handlePaymentPress = useCallback((appointmentId: string) => {
-    (navigation as any).navigate('Payment', { appointmentId });
-  }, [navigation]);
+  // Reload each time the screen is shown. Loading only on mount meant a booking made
+  // moments ago did not appear, because this tab stays mounted.
+  useFocusEffect(load);
 
   const renderBooking = useCallback(({ item, index }: { item: Booking; index: number }) => {
-    const isSuccess = item.status === 'Success';
-    const showPay = !isSuccess;
+    const badge = statusStyle(item.status);
 
     return (
       <Animated.View entering={FadeInDown.delay(index * 80).springify().damping(15)}>
@@ -79,16 +71,11 @@ const MyBooking: React.FC = () => {
           <View style={styles.cardContent}>
             <View style={styles.cardHeader}>
               <Text style={styles.doctorName}>
-                {item.userDetails?.fullName || 'Doctor'}
+                {item.userDetails?.fullName || 'Unknown'}
               </Text>
-              <View
-                style={[
-                  styles.statusBadge,
-                  isSuccess ? styles.success : styles.pending,
-                ]}
-              >
-                <Text style={[styles.statusText, { color: isSuccess ? '#059669' : '#D97706' }]}>
-                  {item.status}
+              <View style={[styles.statusBadge, { backgroundColor: badge.bg }]}>
+                <Text style={[styles.statusText, { color: badge.text }]}>
+                  {badge.label}
                 </Text>
               </View>
             </View>
@@ -121,25 +108,11 @@ const MyBooking: React.FC = () => {
               </View>
             ) : null}
 
-            {showPay && (
-              <TouchableOpacity
-                style={styles.payButton}
-                onPress={() => handlePaymentPress(item._id)}
-                activeOpacity={0.8}
-              >
-                <LinearGradient
-                  colors={[COLORS.primary, COLORS.secondary]}
-                  style={styles.payButtonGradient}
-                >
-                  <Text style={styles.payButtonText}>Pay Now</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            )}
           </View>
         </View>
       </Animated.View>
     );
-  }, [handlePaymentPress]);
+  }, []);
 
   const keyExtractor = useCallback((item: Booking) => item._id, []);
 
@@ -158,8 +131,15 @@ const MyBooking: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.screenTitle}>Your Appointments</Text>
-      {loading ? (
+      {loading && bookings.length === 0 ? (
         renderLoadingComponent
+      ) : error && bookings.length === 0 ? (
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyText}>{error}</Text>
+          <TouchableOpacity onPress={load} activeOpacity={0.8}>
+            <Text style={[styles.emptyText, { color: COLORS.primary, marginTop: 12 }]}>Try again</Text>
+          </TouchableOpacity>
+        </View>
       ) : bookings.length > 0 ? (
         <FlatList
           data={bookings}
@@ -171,6 +151,8 @@ const MyBooking: React.FC = () => {
           maxToRenderPerBatch={10}
           windowSize={10}
           removeClippedSubviews={true}
+          refreshing={loading}
+          onRefresh={load}
         />
       ) : (
         renderEmptyComponent

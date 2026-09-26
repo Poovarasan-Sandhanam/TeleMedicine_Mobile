@@ -1,73 +1,45 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '../../utilis/api';
 
-// Types
 interface BookingState {
   loading: boolean;
   bookings: any[];
   error: string | null;
 }
 
-const MOCK_BOOKINGS = [
-  {
-    _id: 'b1',
-    status: 'Success',
-    date: new Date().toISOString(),
-    checkupTiming: '9-10',
-    notes: 'Follow-up cardiology consultation.',
-    userDetails: { fullName: 'Dr. Sarah Jenkins', contactNo: '+1 800 555 0199' },
-  },
-  {
-    _id: 'b2',
-    status: 'Pending',
-    date: new Date(Date.now() + 86400000).toISOString(),
-    checkupTiming: '14-15',
-    notes: 'Skin rash inspection and prescription.',
-    userDetails: { fullName: 'Dr. Robert Chen', contactNo: '+1 800 555 0288' },
-  },
-];
-
 const initialState: BookingState = {
   loading: false,
-  bookings: MOCK_BOOKINGS,
+  bookings: [],
   error: null,
 };
 
-// Async thunks
-export const fetchBookings = createAsyncThunk(
+/**
+ * The signed-in user's bookings. Patients see appointments they booked; doctors see
+ * appointments booked with them.
+ *
+ * Goes through the shared api client. This used to call fetch() on a hardcoded
+ * http://localhost:3001, which on an Android emulator is the emulator itself, so the
+ * request never reached the server - and every failure was swapped for sample data.
+ */
+export const fetchBookings = createAsyncThunk<any[], void, { rejectValue: string }>(
   'booking/fetchBookings',
   async (_, { rejectWithValue }) => {
     try {
       const token = await AsyncStorage.getItem('token');
-      if (!token) {
-        return MOCK_BOOKINGS;
-      }
+      const isDoctor = JSON.parse((await AsyncStorage.getItem('isDoctor')) ?? 'false');
+      const path = isDoctor ? '/payment/get-bookings-users' : '/payment/get-bookings';
 
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      };
-
-      const response = await fetch('http://localhost:3001/api/v1/payment/get-bookings', {
-        method: 'GET',
-        headers,
+      const response = await api.get(path, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        return MOCK_BOOKINGS;
-      }
-
-      const bookingDetails = data.data?.bookingDetails || [];
-      return bookingDetails.length > 0 ? bookingDetails : MOCK_BOOKINGS;
+      return response.data?.data?.bookingDetails ?? [];
     } catch (error: any) {
-      return MOCK_BOOKINGS;
+      return rejectWithValue(error?.message || 'Could not load bookings');
     }
   }
 );
 
-// Slice
 const bookingSlice = createSlice({
   name: 'booking',
   initialState,
@@ -76,24 +48,22 @@ const bookingSlice = createSlice({
       state.error = null;
     },
     clearBookings: (state) => {
-      state.bookings = MOCK_BOOKINGS;
+      state.bookings = [];
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchBookings.pending, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.error = null;
       })
       .addCase(fetchBookings.fulfilled, (state, action) => {
         state.loading = false;
-        state.bookings = action.payload && action.payload.length > 0 ? action.payload : MOCK_BOOKINGS;
-        state.error = null;
+        state.bookings = action.payload;
       })
-      .addCase(fetchBookings.rejected, (state) => {
+      .addCase(fetchBookings.rejected, (state, action) => {
         state.loading = false;
-        state.bookings = MOCK_BOOKINGS;
-        state.error = null;
+        state.error = action.payload ?? 'Could not load bookings';
       });
   },
 });
