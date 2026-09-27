@@ -18,6 +18,7 @@ import DoctorListScreen from '../screens/role/DoctorListScreen';
 import DoctorSearchScreen from '../screens/role/DoctorSearchScreen';
 import DoctorPrescriptionScreen from '../screens/prescription/DoctorPrescriptionScreen';
 import PaitentPrescriptionScreen from '../screens/prescription/PaitentPrescriptionScreen';
+import FindCareScreen from '../screens/assistant/FindCareScreen';
 
 import { useAppDispatch } from '../redux/hooks';
 import { LOGOUT } from '../redux/store';
@@ -34,7 +35,8 @@ export type RootStackParamList = {
   Login: undefined;
   Signup: undefined;
   Home: { screen?: string } | undefined;
-  AppointmentBooking: { doctor?: any };
+  AppointmentBooking: { doctor?: any; date?: string; slot?: string; healthIssue?: string; autoReview?: boolean };
+  FindCare: { message?: string } | undefined;
   DoctorListScreen: { category?: string };
   WritePrescription: { appointmentId: string; patientName?: string };
 };
@@ -115,9 +117,12 @@ const AppNavigator: React.FC<{ preview?: PreviewArgs }> = ({ preview = {} }) => 
       } else {
         await clearSession();
       }
+      if (preview.storage) {
+        await AsyncStorage.multiSet(Object.entries(preview.storage));
+      }
       setReady(true);
     })();
-  }, [isPreview, preview.login]);
+  }, [isPreview, preview.login, preview.storage]);
 
   const navTheme: NavTheme = useMemo(() => {
     const base = isDark ? DarkTheme : DefaultTheme;
@@ -184,6 +189,7 @@ const AppNavigator: React.FC<{ preview?: PreviewArgs }> = ({ preview = {} }) => 
         <Stack.Screen name="AppointmentBooking" component={AppointmentBooking} />
         <Stack.Screen name="DoctorListScreen" component={DoctorListScreen} />
         <Stack.Screen name="WritePrescription" component={DoctorPrescriptionScreen} />
+        <Stack.Screen name="FindCare" component={FindCareScreen} options={{ animation: 'slide_from_bottom' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

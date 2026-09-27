@@ -21,7 +21,20 @@ export interface PreviewArgs {
   login?: string;
   /** JSON params for `screen`, e.g. -previewParams '{"category":"Cardiologist"}'. */
   params?: Record<string, unknown>;
+  /** AsyncStorage entries to set first, hex-encoded JSON via -previewStorageHex. */
+  storage?: Record<string, string>;
 }
+
+const fromHex = (hex?: string) => {
+  if (!hex || !/^[0-9a-fA-F]+$/.test(hex) || hex.length % 2) {
+    return undefined;
+  }
+  try {
+    return JSON.parse(decodeURIComponent(hex.replace(/../g, '%$&')));
+  } catch {
+    return undefined;
+  }
+};
 
 export const readPreviewArgs = (): PreviewArgs => {
   if (!__DEV__ || Platform.OS !== 'ios') {
@@ -37,6 +50,7 @@ export const readPreviewArgs = (): PreviewArgs => {
     palette: get('previewPalette'),
     scheme: get('previewScheme'),
     login: get('previewLogin'),
+    storage: fromHex(get('previewStorageHex')),
     params: (() => {
       // NSUserDefaults parses launch-argument values as old-style property lists,
       // which rejects JSON outright. Pass JSON hex-encoded instead:

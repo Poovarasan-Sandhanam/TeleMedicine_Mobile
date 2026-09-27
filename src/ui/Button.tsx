@@ -9,7 +9,8 @@ import { AppText } from './AppText';
 interface Props {
   title: string;
   onPress?: () => void;
-  variant?: 'primary' | 'soft' | 'ghost' | 'danger';
+  /** `critical` is solid red, reserved for emergency actions. */
+  variant?: 'primary' | 'soft' | 'ghost' | 'danger' | 'critical';
   icon?: string;
   loading?: boolean;
   disabled?: boolean;
@@ -27,7 +28,7 @@ export const Button: React.FC<Props> = ({
   const inactive = disabled || loading;
 
   const fg =
-    variant === 'primary' ? colors.onPrimary
+    variant === 'primary' || variant === 'critical' ? '#FFFFFF'
     : variant === 'danger' ? colors.danger
     : colors.primary;
 
@@ -55,6 +56,7 @@ export const Button: React.FC<Props> = ({
       style={[
         styles.base,
         variant === 'primary' && !inactive && elevation(colors.glow, 2),
+        variant === 'critical' && !inactive && elevation(colors.danger, 2),
         { opacity: disabled ? 0.45 : 1 },
         style,
       ]}
@@ -74,6 +76,7 @@ export const Button: React.FC<Props> = ({
             styles.fill,
             variant === 'soft' && { backgroundColor: colors.primarySoft },
             variant === 'danger' && { backgroundColor: colors.dangerSoft },
+            variant === 'critical' && { backgroundColor: colors.danger },
             variant === 'ghost' && { borderWidth: 1.5, borderColor: colors.border },
           ]}
         >

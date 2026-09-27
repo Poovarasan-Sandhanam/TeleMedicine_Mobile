@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import MCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
+import Toast from 'react-native-toast-message';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { bookAppointment } from '../../redux/slices/appointmentSlice';
 import { fetchDoctorDetails } from '../../redux/slices/doctorSlice';
@@ -61,15 +62,19 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const route = useRoute<any>();
-  const { doctor } = route.params || {};
+  // From "Find care" the day, time and reason arrive pre-chosen (autoReview opens the
+  // review sheet); the patient still confirms before anything is booked.
+  const { doctor, date: presetDate, slot: presetSlot, healthIssue: presetIssue, autoReview } = route.params || {};
   const doctorId = doctor?.userId || '';
   const doctorName = doctor?.fullName ?? doctor?.name ?? 'Doctor';
   const hue = specialtyHue(doctor?.specialization);
 
   const days = useMemo(() => Array.from({ length: DAYS_AHEAD }, (_, i) => moment().startOf('day').add(i, 'days')), []);
-  const [day, setDay] = useState(days[0]);
+  const [day, setDay] = useState(() => days.find(d => d.format('YYYY-MM-DD') === presetDate) ?? days[0]);
   const [slot, setSlot] = useState('');
-  const [healthIssue, setHealthIssue] = useState('');
+  const [healthIssue, setHealthIssue] = useState<string>(presetIssue ?? '');
+  const pendingSlot = useRef<string | undefined>(presetSlot);
+  const sawFreshLoad = useRef(false);
   const [notes, setNotes] = useState('');
   const [sheet, setSheet] = useState<'closed' | 'review' | 'done'>('closed');
   const [booking, setBooking] = useState(false);
@@ -95,6 +100,30 @@ const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
   // Times earlier today can no longer be attended.
   const isPast = (s: Slot) => isToday && startHour(s.slotTiming) <= nowHour;
   const openCount = slots.filter(s => !s.isBooked && !isPast(s)).length;
+
+  // Apply a pre-chosen slot once fresh availability for this doctor and day has loaded
+  // (not a list left in the store from a previous screen), and only if still free.
+  useEffect(() => {
+    if (loading) {
+      sawFreshLoad.current = true;
+      return;
+    }
+    const wanted = pendingSlot.current;
+    if (!wanted || !sawFreshLoad.current) {
+      return;
+    }
+    pendingSlot.current = undefined;
+    const match = slots.find(x => x.slotTiming === wanted);
+    if (match && !match.isBooked && !isPast(match)) {
+      setSlot(wanted);
+      if (autoReview && healthIssue.trim()) {
+        setSheet('review');
+      }
+    } else {
+      Toast.show({ type: 'info', text1: 'That time was just taken', text2: 'Please pick another time.' });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, slots]);
 
   const ready = !!doctorId && !!slot && healthIssue.trim().length > 0;
   const whenLabel = `${isToday ? 'Today' : day.format('ddd D MMM')}${slot ? ` · ${formatSlot(slot)}` : ''}`;

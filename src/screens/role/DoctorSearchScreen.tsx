@@ -145,6 +145,27 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
       </Reveal>
 
       {!q ? (
+        <Reveal delay={90}>
+          <PressScale
+            onPress={() => navigation.navigate('FindCare')}
+            accessibilityRole="button"
+            accessibilityLabel="Not sure who to see? Describe how you feel and we will find a doctor"
+            style={[styles.ai, { backgroundColor: colors.surface, borderColor: colors.primary }]}
+          >
+            <View style={[styles.aiIcon, { overflow: 'hidden' }]}>
+              <LinearGradient colors={colors.gradient} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
+              <Icon name="sparkles" size={20} color="#FFFFFF" />
+            </View>
+            <View style={styles.flex}>
+              <AppText variant="bodyStrong">Not sure who to see?</AppText>
+              <AppText variant="caption" color="textMuted">Describe how you feel - we'll find a doctor and a time</AppText>
+            </View>
+            <Icon name="chevron-forward" size={18} color={colors.primary} />
+          </PressScale>
+        </Reveal>
+      ) : null}
+
+      {!q ? (
         <Reveal delay={120}>
           <PressScale
             onPress={() => (next ? navigation.navigate('MyBooking') : navigation.navigate('DoctorListScreen', {}))}
@@ -244,7 +265,13 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
           renderItem={({ item, index }) => <DoctorCard doctor={item} index={index} onPress={() => openDoctor(item)} />}
         />
       ) : (
-        <EmptyState icon="medkit-outline" title={q ? 'No doctors found' : 'No doctors yet'} message={q ? 'Try another name or specialty.' : 'Doctors appear here once their profiles are complete.'} />
+        <EmptyState
+          icon="medkit-outline"
+          title={q ? 'No doctors found' : 'No doctors yet'}
+          message={q ? 'Describe it to the assistant and it will find the right specialist.' : 'Doctors appear here once their profiles are complete.'}
+          actionLabel={q ? 'Ask the assistant' : undefined}
+          onAction={q ? () => navigation.navigate('FindCare', { message: query.trim() }) : undefined}
+        />
       )}
     </Screen>
   );
@@ -253,6 +280,11 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   header: { flexDirection: 'row', alignItems: 'center', marginBottom: space.lg },
+  ai: {
+    flexDirection: 'row', alignItems: 'center', gap: space.sm, padding: space.md,
+    borderRadius: radius.lg, borderWidth: 1.5, borderStyle: 'dashed', marginBottom: space.md,
+  },
+  aiIcon: { width: 42, height: 42, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
   promo: { borderRadius: radius.xl, padding: space.xl, overflow: 'hidden', marginBottom: space.xs },
   orb: { position: 'absolute', borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.12)' },
   orbA: { width: 180, height: 180, top: -70, right: -50 },
