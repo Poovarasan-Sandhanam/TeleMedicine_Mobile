@@ -3,6 +3,7 @@ import type {} from 'jest';
 
 jest.mock('../../../utilis/api', () => ({
   __esModule: true,
+  ...jest.requireActual('../../../utilis/api'),
   default: { get: jest.fn(), post: jest.fn(), put: jest.fn() },
 }));
 

@@ -1,21 +1,27 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react-native';
-import { Provider } from 'react-redux';
+import { fireEvent, waitFor } from '@testing-library/react-native';
 import { configureStore } from '@reduxjs/toolkit';
+import { renderWithProviders } from '../../../test/providers';
 import ProfileScreen from '../ProfileScreen';
 import profileSlice from '../../../redux/slices/profileSlice';
 import doctorTypeSlice from '../../../redux/slices/doctorTypeSlice';
+
+// No network in unit tests.
+jest.mock('../../../utilis/api', () => ({
+  __esModule: true,
+  ...jest.requireActual('../../../utilis/api'),
+  default: {
+    get: jest.fn(() => Promise.reject(new Error('offline'))),
+    put: jest.fn(),
+    post: jest.fn(),
+  },
+}));
 
 // Mock the image picker
 jest.mock('react-native-image-picker', () => ({
   launchImageLibrary: jest.fn(),
 }));
 
-// Mock the back button component
-jest.mock('../../../components/BackButton', () => 'GoBackButton');
-
-// Mock the custom dropdown component
-jest.mock('../../../components/CustomDropdown', () => 'CustomDropdown');
 
 const createTestStore = (initialState = {}) => {
   return configureStore({
@@ -62,11 +68,7 @@ describe('ProfileScreen', () => {
       },
     });
 
-    const { getByText } = render(
-      <Provider store={store}>
-        <ProfileScreen />
-      </Provider>
-    );
+    const { getByText } = renderWithProviders(<ProfileScreen />, store);
 
     await waitFor(() => {
       expect(getByText('John Doe')).toBeTruthy();
@@ -89,11 +91,7 @@ describe('ProfileScreen', () => {
       },
     });
 
-    const { getByText } = render(
-      <Provider store={store}>
-        <ProfileScreen />
-      </Provider>
-    );
+    const { getByText } = renderWithProviders(<ProfileScreen />, store);
 
     expect(getByText('Loading profile...')).toBeTruthy();
   });
@@ -113,11 +111,7 @@ describe('ProfileScreen', () => {
       },
     });
 
-    const { getByText } = render(
-      <Provider store={store}>
-        <ProfileScreen />
-      </Provider>
-    );
+    const { getByText } = renderWithProviders(<ProfileScreen />, store);
 
     // Wait for the component to render and show the retry state
     await waitFor(() => {
@@ -140,11 +134,7 @@ describe('ProfileScreen', () => {
       },
     });
 
-    const { getByText } = render(
-      <Provider store={store}>
-        <ProfileScreen />
-      </Provider>
-    );
+    const { getByText } = renderWithProviders(<ProfileScreen />, store);
 
     await waitFor(() => {
       const editButton = getByText('Edit Profile');

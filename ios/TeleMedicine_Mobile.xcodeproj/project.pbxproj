@@ -12,6 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1A779B3B91F755D58657F29B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		22C321849758BEC8F9617586 /* PlusJakartaSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 466D17B1C4BFC87B2AA197FB /* PlusJakartaSans-Regular.ttf */; };
 		6FB688662D2352A400D8274F /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FB688632D2352A400D8274F /* SimpleLineIcons.ttf */; };
 		6FB688672D2352A400D8274F /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FB688602D2352A400D8274F /* MaterialCommunityIcons.ttf */; };
 		6FB688682D2352A400D8274F /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FB6885D2D2352A400D8274F /* Fontisto.ttf */; };
@@ -32,6 +33,10 @@
 		6FB688772D2352A400D8274F /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FB688562D2352A400D8274F /* FontAwesome.ttf */; };
 		6FB688782D2352A400D8274F /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FB688582D2352A400D8274F /* FontAwesome5_Regular.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		97EFBA5CF918022622AA15A0 /* PlusJakartaSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4495C079E76D1A51FBC6AADF /* PlusJakartaSans-Bold.ttf */; };
+		B32BA1A56B977A82FE0C9BEC /* PlusJakartaSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F36DD83C46F78C186D2C427E /* PlusJakartaSans-ExtraBold.ttf */; };
+		BAF3145634C8564B3C8DA5D2 /* PlusJakartaSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BCAC723D125856FC926F1016 /* PlusJakartaSans-Medium.ttf */; };
+		CF7C5ACE4ACAA45CB52D7B67 /* PlusJakartaSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B4ACAF49CC88EB751F4AD894 /* PlusJakartaSans-SemiBold.ttf */; };
 		EC5AA633FCBF6B1664879B69 /* libPods-TeleMedicine_Mobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E0329324636F5AD5AE03F47 /* libPods-TeleMedicine_Mobile.a */; };
 		F7F265A5068444DEEC2ECDA2 /* libPods-TeleMedicine_Mobile-TeleMedicine_MobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B05524D217B7BBF1225AFE0D /* libPods-TeleMedicine_Mobile-TeleMedicine_MobileTests.a */; };
 /* End PBXBuildFile section */
@@ -59,6 +64,8 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TeleMedicine_Mobile/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = TeleMedicine_Mobile/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		192DDE1161E79B33410BEF0F /* Pods-TeleMedicine_Mobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TeleMedicine_Mobile.release.xcconfig"; path = "Target Support Files/Pods-TeleMedicine_Mobile/Pods-TeleMedicine_Mobile.release.xcconfig"; sourceTree = "<group>"; };
+		4495C079E76D1A51FBC6AADF /* PlusJakartaSans-Bold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "PlusJakartaSans-Bold.ttf"; sourceTree = "<group>"; };
+		466D17B1C4BFC87B2AA197FB /* PlusJakartaSans-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "PlusJakartaSans-Regular.ttf"; sourceTree = "<group>"; };
 		6FB688522D2352A400D8274F /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
 		6FB688532D2352A400D8274F /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
 		6FB688542D2352A400D8274F /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
@@ -82,8 +89,11 @@
 		7A59D9DB1011699F838B398D /* Pods-TeleMedicine_Mobile-TeleMedicine_MobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TeleMedicine_Mobile-TeleMedicine_MobileTests.release.xcconfig"; path = "Target Support Files/Pods-TeleMedicine_Mobile-TeleMedicine_MobileTests/Pods-TeleMedicine_Mobile-TeleMedicine_MobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TeleMedicine_Mobile/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B05524D217B7BBF1225AFE0D /* libPods-TeleMedicine_Mobile-TeleMedicine_MobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TeleMedicine_Mobile-TeleMedicine_MobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4ACAF49CC88EB751F4AD894 /* PlusJakartaSans-SemiBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "PlusJakartaSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		BCAC723D125856FC926F1016 /* PlusJakartaSans-Medium.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "PlusJakartaSans-Medium.ttf"; sourceTree = "<group>"; };
 		C18E4A1F0CA092F6B5293507 /* Pods-TeleMedicine_Mobile-TeleMedicine_MobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TeleMedicine_Mobile-TeleMedicine_MobileTests.debug.xcconfig"; path = "Target Support Files/Pods-TeleMedicine_Mobile-TeleMedicine_MobileTests/Pods-TeleMedicine_Mobile-TeleMedicine_MobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F36DD83C46F78C186D2C427E /* PlusJakartaSans-ExtraBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "PlusJakartaSans-ExtraBold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +180,11 @@
 				6FB688622D2352A400D8274F /* Octicons.ttf */,
 				6FB688632D2352A400D8274F /* SimpleLineIcons.ttf */,
 				6FB688642D2352A400D8274F /* Zocial.ttf */,
+				466D17B1C4BFC87B2AA197FB /* PlusJakartaSans-Regular.ttf */,
+				BCAC723D125856FC926F1016 /* PlusJakartaSans-Medium.ttf */,
+				B4ACAF49CC88EB751F4AD894 /* PlusJakartaSans-SemiBold.ttf */,
+				4495C079E76D1A51FBC6AADF /* PlusJakartaSans-Bold.ttf */,
+				F36DD83C46F78C186D2C427E /* PlusJakartaSans-ExtraBold.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -331,6 +346,11 @@
 				6FB688772D2352A400D8274F /* FontAwesome.ttf in Resources */,
 				6FB688782D2352A400D8274F /* FontAwesome5_Regular.ttf in Resources */,
 				1A779B3B91F755D58657F29B /* PrivacyInfo.xcprivacy in Resources */,
+				22C321849758BEC8F9617586 /* PlusJakartaSans-Regular.ttf in Resources */,
+				BAF3145634C8564B3C8DA5D2 /* PlusJakartaSans-Medium.ttf in Resources */,
+				CF7C5ACE4ACAA45CB52D7B67 /* PlusJakartaSans-SemiBold.ttf in Resources */,
+				97EFBA5CF918022622AA15A0 /* PlusJakartaSans-Bold.ttf in Resources */,
+				B32BA1A56B977A82FE0C9BEC /* PlusJakartaSans-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,7 +371,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n. \"$WITH_ENVIRONMENT\"\n/bin/sh \"$REACT_NATIVE_XCODE\"\n";
 		};
 		3FA2B39BB97DFD401B94AF2A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

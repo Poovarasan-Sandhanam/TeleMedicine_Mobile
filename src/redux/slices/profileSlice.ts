@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import api from '../../utilis/api';
+import { errorMessage as toErrorMessage } from '../../utilis/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface NormalizedProfile {
@@ -80,7 +81,7 @@ export const fetchProfile = createAsyncThunk<NormalizedProfile, void, { rejectVa
       console.log('✅ Normalized profile:', normalized);
       return normalized;
     } catch (err: any) {
-      const errorMessage = err?.response?.data?.message || 'Failed to fetch profile';
+      const errorMessage = toErrorMessage(err, 'Failed to fetch profile');
       console.error('❌ Profile fetch failed:', errorMessage);
       return rejectWithValue(errorMessage);
     }
@@ -108,7 +109,7 @@ export const updateProfile = createAsyncThunk<any, FormData, { rejectValue: stri
       console.log('✅ Profile updated successfully');
       return res.data;
     } catch (err: any) {
-      const errorMessage = err?.response?.data?.message || 'Profile update failed';
+      const errorMessage = toErrorMessage(err, 'Profile update failed');
       console.error('❌ Profile update failed:', errorMessage);
       return rejectWithValue(errorMessage);
     }
@@ -133,7 +134,7 @@ export const fetchCompletedDoctors = createAsyncThunk<any[], void, { rejectValue
       // console.log('✅ Completed doctors fetched:', res.data?.data);
       return res.data?.data || [];
     } catch (err: any) {
-      const errorMessage = err?.response?.data?.message || 'Failed to fetch completed doctors';
+      const errorMessage = toErrorMessage(err, 'Failed to fetch completed doctors');
       // console.error('❌ Completed doctors fetch failed:', errorMessage);
       return rejectWithValue(errorMessage);
     }

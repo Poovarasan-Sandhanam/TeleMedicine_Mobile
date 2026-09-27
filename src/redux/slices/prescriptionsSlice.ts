@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../utilis/api';
+import { errorMessage as toErrorMessage } from '../../utilis/api';
 
 // Types
 interface PrescriptionsState {
@@ -30,7 +31,7 @@ export const getPrescriptions = createAsyncThunk(
 
       return response.data.data;
     } catch (error: any) {
-      return rejectWithValue(error.response ? error.response.data.message : error.message);
+      return rejectWithValue(toErrorMessage(error, 'Could not load prescriptions'));
     }
   }
 );

@@ -36,5 +36,19 @@ target 'TeleMedicine_Mobile' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+
+    # React Native generates this phase as `/bin/sh -c "$WITH_ENVIRONMENT $SCRIPT"`,
+    # which splits both paths on spaces - and with-environment.sh then runs its
+    # argument unquoted as well. From a path such as "/Volumes/Extreme SSD/..." the
+    # build failed with "/bin/sh: /Volumes/Extreme: No such file or directory".
+    # Load the environment into the phase and run the script with a quoted path.
+    broken = '/bin/sh -c "$WITH_ENVIRONMENT $SCRIPT_PHASES_SCRIPT"'
+    fixed = ". \"$WITH_ENVIRONMENT\"\n/bin/sh \"$SCRIPT_PHASES_SCRIPT\""
+    installer.pods_project.targets.each do |target|
+      target.shell_script_build_phases.each do |phase|
+        next unless phase.shell_script.include?(broken)
+        phase.shell_script = phase.shell_script.sub(broken, fixed)
+      end
+    end
   end
 end

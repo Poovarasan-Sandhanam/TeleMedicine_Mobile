@@ -1,7 +1,6 @@
 import React from 'react';
 import { Alert } from 'react-native';
-import { Provider } from 'react-redux';
-import { render, fireEvent } from '@testing-library/react-native';
+import { fireEvent } from '@testing-library/react-native';
 import '@testing-library/jest-native';
 import type {} from 'jest';
 
@@ -10,6 +9,7 @@ jest.mock('@react-native-community/datetimepicker', () => 'DateTimePicker');
 // No network in unit tests.
 jest.mock('../../../utilis/api', () => ({
   __esModule: true,
+  ...jest.requireActual('../../../utilis/api'),
   default: { get: jest.fn(() => Promise.resolve({ data: { data: [] } })), post: jest.fn() },
 }));
 
@@ -23,13 +23,10 @@ jest.mock('@react-navigation/native', () => ({
 import store from '../../../redux/store';
 import api from '../../../utilis/api';
 import AppointmentBookingScreen from '../AppointmentBooking';
+import { renderWithProviders } from '../../../test/providers';
 
 const renderScreen = () =>
-  render(
-    <Provider store={store}>
-      <AppointmentBookingScreen navigation={{ navigate: mockNavigate }} />
-    </Provider>
-  );
+  renderWithProviders(<AppointmentBookingScreen navigation={{ navigate: mockNavigate, goBack: jest.fn() }} />, store);
 
 describe('AppointmentBookingScreen', () => {
   beforeEach(() => {

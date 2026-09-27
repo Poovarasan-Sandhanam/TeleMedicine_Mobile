@@ -1,148 +1,108 @@
-import React, { useState } from 'react';
-import {
-  SafeAreaView,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableOpacity,
-  View,
-  Text,
-  Image,
-} from 'react-native';
-import { Input, Button, Icon } from 'react-native-elements';
+import React, { useRef } from 'react';
+import { StyleSheet, TextInput, View } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Toast from 'react-native-toast-message';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useAppDispatch } from '../../redux/hooks';
-import { login } from '../../redux/slices/authSlice'; // adjust path
-import COLORS from '../../constants/colors';
-import styles from '../../styles/authStyles'; // your styles
+import { login } from '../../redux/slices/authSlice';
+import { markOnboarded } from '../../session/session';
+import { AppText, Button, PressScale, TextField } from '../../ui';
+import { space } from '../../theme';
+import { AuthLayout } from './AuthLayout';
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  password: Yup.string().min(6, 'Min 6 characters').required('Password is required'),
+  email: Yup.string().trim().email('Enter a valid email').required('Email is required'),
+  password: Yup.string().min(6, 'At least 6 characters').required('Password is required'),
 });
 
 const LoginScreen = ({ navigation }: { navigation: any }) => {
-
   const dispatch = useAppDispatch();
-  const [showPassword, setShowPassword] = useState(false);
+  const passwordRef = useRef<TextInput>(null);
 
-  const handleLogin = (values: any, { setSubmitting }: any) => {
-
-  (dispatch(login({ email: values.email, password: values.password }) as any) as any)
-    .unwrap()
-    .then(() => {
-      Toast.show({
-        type: 'success',
-        text1: 'Login successful',
-        text2: `Welcome back, ${values.email}`,
-      });
+  const handleLogin = async (values: { email: string; password: string }, { setSubmitting }: any) => {
+    try {
+      const user = await (dispatch(login({ email: values.email.trim(), password: values.password }) as any)).unwrap();
+      markOnboarded();
+      Toast.show({ type: 'success', text1: `Welcome back${user?.fullName ? `, ${user.fullName.split(' ')[0]}` : ''}` });
+      navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
+    } catch (error: any) {
+      Toast.show({ type: 'error', text1: 'Sign in failed', text2: typeof error === 'string' ? error : 'Please try again.' });
+    } finally {
       setSubmitting(false);
-
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Home' }],
-      });
-    })
-    .catch((error: string) => {
-      Toast.show({
-        type: 'error',
-        text1: 'Login failed',
-        text2: error,
-      });
-      setSubmitting(false);
-    });
-};
-
+    }
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
-        style={styles.content}
-      >
-        <Formik
-          initialValues={{ email: '', password: '' }}
-          validationSchema={LoginSchema}
-          onSubmit={handleLogin}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-            isSubmitting,
-          }) => (
-            <>
-              <Image
-                resizeMode="contain"
-                style={styles.imagePic}
-                source={require('../../asset/doctor.png')}
-              />
-              <Input
-                placeholder="Email address"
-                value={values.email}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                errorMessage={touched.email && errors.email ? errors.email : undefined}
-                inputStyle={styles.inputText}
-              />
-              <Input
-                placeholder="Password"
-                secureTextEntry={!showPassword}
-                rightIcon={
-                  <Icon
-                    type="material"
-                    name={showPassword ? 'visibility' : 'visibility-off'}
-                    onPress={() => setShowPassword(!showPassword)}
-                  />
-                }
-                value={values.password}
-                onChangeText={handleChange('password')}
-                onBlur={handleBlur('password')}
-                errorMessage={
-                  touched.password && errors.password ? errors.password : undefined
-                }
-                inputStyle={styles.inputText}
-              />
-             <View style={styles.stickyButton}>
-               <Button
-                title="Log In"
-                loading={isSubmitting}
-                onPress={() => handleSubmit()}
-                buttonStyle={styles.button}
-                titleStyle={styles.buttonTitle}
-                containerStyle={styles.buttonContainer}
-              />
-              <Button
-                title="Skip Login"
-                type="outline"
-                onPress={() =>
-                  navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'Home' }],
-                  })
-                }
-                buttonStyle={{ borderColor: COLORS.primary, paddingVertical: 12, borderRadius: 8 }}
-                titleStyle={{ color: COLORS.primary, fontSize: 16, fontWeight: '600' }}
-                containerStyle={{ marginTop: 10 }}
-              />
-              <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-                <Text style={styles.linkText}>Don't have an account? Sign up</Text>
-              </TouchableOpacity>
-             </View>
-             </>
-
-          )}
-        </Formik>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <AuthLayout
+      title="Welcome back"
+      subtitle="Sign in to continue your care"
+      badge={
+        <View style={styles.badge}>
+          <Icon name="pulse" size={30} color="#FFFFFF" />
+        </View>
+      }
+      footer={
+        <PressScale onPress={() => navigation.navigate('Signup')} accessibilityRole="button" accessibilityLabel="Create an account">
+          <AppText variant="body" color="textMuted">
+            New here? <AppText variant="bodyStrong" color="primary">Create an account</AppText>
+          </AppText>
+        </PressScale>
+      }
+    >
+      <Formik initialValues={{ email: '', password: '' }} validationSchema={LoginSchema} onSubmit={handleLogin}>
+        {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isSubmitting }) => (
+          <>
+            <TextField
+              label="Email"
+              icon="mail-outline"
+              placeholder="you@example.com"
+              value={values.email}
+              onChangeText={handleChange('email')}
+              onBlur={handleBlur('email')}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="email-address"
+              textContentType="emailAddress"
+              returnKeyType="next"
+              onSubmitEditing={() => passwordRef.current?.focus()}
+              error={touched.email ? errors.email : null}
+            />
+            <TextField
+              ref={passwordRef}
+              label="Password"
+              icon="lock-closed-outline"
+              placeholder="Your password"
+              secureToggle
+              value={values.password}
+              onChangeText={handleChange('password')}
+              onBlur={handleBlur('password')}
+              textContentType="password"
+              returnKeyType="go"
+              onSubmitEditing={() => handleSubmit()}
+              error={touched.password ? errors.password : null}
+            />
+            <Button
+              title="Sign in"
+              icon="arrow-forward"
+              loading={isSubmitting}
+              onPress={() => handleSubmit()}
+              style={styles.cta}
+              testID="login-submit"
+            />
+          </>
+        )}
+      </Formik>
+    </AuthLayout>
   );
 };
+
+const styles = StyleSheet.create({
+  badge: {
+    width: 60, height: 60, borderRadius: 20, alignItems: 'center', justifyContent: 'center',
+    backgroundColor: 'rgba(255,255,255,0.18)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.35)',
+  },
+  cta: { marginTop: space.xs },
+});
 
 export default LoginScreen;
