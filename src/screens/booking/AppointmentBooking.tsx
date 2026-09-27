@@ -1,325 +1,359 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  Alert,
-  ActivityIndicator,
-  SafeAreaView,
-  ScrollView,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  Modal,
-} from 'react-native';
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { FlatList, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Animated, { FadeIn, SlideInDown, ZoomIn } from 'react-native-reanimated';
+import LinearGradient from 'react-native-linear-gradient';
+import MCI from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
+import Toast from 'react-native-toast-message';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { bookAppointment } from '../../redux/slices/appointmentSlice';
-import { fetchAllDoctors, fetchDoctorDetails } from '../../redux/slices/doctorSlice';
-import { setSymptoms, checkSymptoms } from '../../redux/slices/symptomSlice';
-import Icon from 'react-native-vector-icons/Ionicons';
-import COLORS from '../../constants/colors';
-import styles from '../../styles/bookingStyle';
-import { useRoute } from '@react-navigation/native';
+import { fetchDoctorDetails } from '../../redux/slices/doctorSlice';
+import { useTheme, space, radius, elevation, specialtyHue, specialtyIcon, shortSpecialty, withAlpha } from '../../theme';
+import { AppText, Avatar, Button, Card, Chip, IconButton, PressScale, Reveal, Screen, Skeleton, TextField } from '../../ui';
+import { formatSlot } from '../../utilis/format';
 
-interface Slot {
-  slotTiming: string;
-  isBooked: boolean;
-}
+interface Slot { slotTiming: string; isBooked: boolean }
 
-const PaymentModal = ({
-  visible,
-  onPay,
-  onCancel,
-  loading,
-}: {
-  visible: boolean;
-  onPay: () => void;
-  onCancel: () => void;
-  loading: boolean;
-}) => (
-  <Modal visible={visible} transparent animationType="slide" onRequestClose={onCancel}>
-    <View style={styles.modalBackground}>
-      <View style={[styles.modalContainer, { padding: 24 }]}>
-        <Text style={styles.modalTitle}>Payment</Text>
-        <Text style={[styles.modalText, { marginBottom: 24, textAlign: 'center' }]}>
-          Complete your payment to confirm the appointment.
-        </Text>
-        {loading ? (
-          <ActivityIndicator size="large" color={COLORS.primary} />
-        ) : (
-          <>
-            <TouchableOpacity
-              onPress={onPay}
-              style={[styles.modalButton, { backgroundColor: COLORS.primary, width: '80%', alignSelf: 'center' }]}
-            >
-              <Text style={{ color: '#fff', fontWeight: 'bold' }}>Pay Now</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onCancel} style={{ padding: 12, alignSelf: 'center' }}>
-              <Text style={{ color: COLORS.primary, fontWeight: 'bold' }}>Cancel</Text>
-            </TouchableOpacity>
-          </>
-        )}
+const DAYS_AHEAD = 14;
+const startHour = (slot: string) => Number(slot.split('-')[0]);
+
+const DayChip: React.FC<{ day: moment.Moment; selected: boolean; onPress: () => void }> = ({ day, selected, onPress }) => {
+  const { colors } = useTheme();
+  const isToday = day.isSame(moment(), 'day');
+  const label = isToday ? 'Today' : day.format('ddd');
+  return (
+    <PressScale
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityState={{ selected }}
+      accessibilityLabel={day.format('dddd D MMMM')}
+      style={[styles.day, { backgroundColor: colors.surface, borderColor: selected ? 'transparent' : colors.border }]}
+    >
+      {selected ? (
+        <LinearGradient colors={colors.gradient} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
+      ) : null}
+      <AppText variant="caption" rawColor={selected ? 'rgba(255,255,255,0.85)' : colors.textMuted}>{label}</AppText>
+      <AppText variant="h2" rawColor={selected ? '#FFFFFF' : colors.text}>{day.format('D')}</AppText>
+      <AppText variant="caption" rawColor={selected ? 'rgba(255,255,255,0.85)' : colors.textSubtle}>{day.format('MMM')}</AppText>
+    </PressScale>
+  );
+};
+
+const SummaryRow: React.FC<{ icon: string; label: string; value: string }> = ({ icon, label, value }) => {
+  const { colors } = useTheme();
+  return (
+    <View style={styles.summaryRow}>
+      <View style={[styles.summaryIcon, { backgroundColor: colors.primarySoft }]}>
+        <Icon name={icon} size={18} color={colors.primary} />
+      </View>
+      <View style={styles.flex}>
+        <AppText variant="caption" color="textMuted">{label}</AppText>
+        <AppText variant="bodyStrong" numberOfLines={2}>{value}</AppText>
       </View>
     </View>
-  </Modal>
-);
+  );
+};
 
 const AppointmentBookingScreen: React.FC<any> = ({ navigation }) => {
   const dispatch = useAppDispatch();
+  const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
   const route = useRoute<any>();
-  const { doctor } = route.params || {};
+  // From "Find care" the day, time and reason arrive pre-chosen (autoReview opens the
+  // review sheet); the patient still confirms before anything is booked.
+  const { doctor, date: presetDate, slot: presetSlot, healthIssue: presetIssue, autoReview } = route.params || {};
+  const doctorId = doctor?.userId || '';
+  const doctorName = doctor?.fullName ?? doctor?.name ?? 'Doctor';
+  const hue = specialtyHue(doctor?.specialization);
 
-  const [symptomText, setSymptomText] = useState('');
-  const [healthIssue, setHealthIssue] = useState('');
-  const [checkupTiming, setCheckupTiming] = useState('');
+  const days = useMemo(() => Array.from({ length: DAYS_AHEAD }, (_, i) => moment().startOf('day').add(i, 'days')), []);
+  const [day, setDay] = useState(() => days.find(d => d.format('YYYY-MM-DD') === presetDate) ?? days[0]);
+  const [slot, setSlot] = useState('');
+  const [healthIssue, setHealthIssue] = useState<string>(presetIssue ?? '');
+  const pendingSlot = useRef<string | undefined>(presetSlot);
+  const sawFreshLoad = useRef(false);
   const [notes, setNotes] = useState('');
-  const [date, setDate] = useState(new Date());
-  const [formattedDate, setFormattedDate] = useState('');
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showReviewModal, setShowReviewModal] = useState(false);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [bookingInProgress, setBookingInProgress] = useState(false);
-  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
+  const [sheet, setSheet] = useState<'closed' | 'review' | 'done'>('closed');
+  const [booking, setBooking] = useState(false);
+  const [bookError, setBookError] = useState<string | null>(null);
 
-  const { doctorDetails } = useAppSelector((state) => state.doctors);
-  const doctor_Id = doctor?.userId || '';
+  const { doctorDetails, loading } = useAppSelector(s => s.doctors);
+  // Local calendar date. toISOString() converted to UTC first, so near midnight it
+  // produced the neighbouring day.
+  const dateKey = day.format('YYYY-MM-DD');
 
+  // Slots load as soon as a day is chosen - there used to be a separate
+  // "Check Availability" step before any times appeared.
   useEffect(() => {
-    dispatch(fetchAllDoctors() as any);
-  }, [dispatch]);
+    if (doctorId) {
+      setSlot('');
+      dispatch(fetchDoctorDetails({ id: doctorId, selectedDate: dateKey }) as any);
+    }
+  }, [dispatch, doctorId, dateKey]);
 
-  const validateFields = () => {
-    const errors: { [key: string]: string } = {};
-    if (!healthIssue) {errors.healthIssue = 'Health issue is required.';}
-    if (!checkupTiming) {errors.checkupTiming = 'Slot selection is required.';}
-    if (!doctor_Id) {errors.doctor_Id = 'Doctor selection is required.';}
-    if (!formattedDate) {errors.date = 'Date is required.';}
-    if (date < new Date(new Date().toDateString())) {errors.date = 'Cannot book past dates.';}
-    setFieldErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
+  const slots: Slot[] = doctorDetails?.slots ?? [];
+  const isToday = day.isSame(moment(), 'day');
+  const nowHour = new Date().getHours();
+  // Times earlier today can no longer be attended.
+  const isPast = (s: Slot) => isToday && startHour(s.slotTiming) <= nowHour;
+  const openCount = slots.filter(s => !s.isBooked && !isPast(s)).length;
 
-  // Pure function for rendering button state without updating state
-  const isFormValid = () => {
-    return (
-      healthIssue !== '' &&
-      checkupTiming !== '' &&
-      doctor_Id !== '' &&
-      formattedDate !== '' &&
-      date >= new Date(new Date().toDateString())
-    );
-  };
-
-  const handleReviewBooking = () => {
-    if (!validateFields()) {
-      Alert.alert('Incomplete Fields', 'Please fill all required fields correctly.');
+  // Apply a pre-chosen slot once fresh availability for this doctor and day has loaded
+  // (not a list left in the store from a previous screen), and only if still free.
+  useEffect(() => {
+    if (loading) {
+      sawFreshLoad.current = true;
       return;
     }
-    setShowReviewModal(true);
-  };
+    const wanted = pendingSlot.current;
+    if (!wanted || !sawFreshLoad.current) {
+      return;
+    }
+    pendingSlot.current = undefined;
+    const match = slots.find(x => x.slotTiming === wanted);
+    if (match && !match.isBooked && !isPast(match)) {
+      setSlot(wanted);
+      if (autoReview && healthIssue.trim()) {
+        setSheet('review');
+      }
+    } else {
+      Toast.show({ type: 'info', text1: 'That time was just taken', text2: 'Please pick another time.' });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, slots]);
 
-  const handlePayAndBook = async () => {
-    if (bookingInProgress) {return;}
-    setBookingInProgress(true);
+  const ready = !!doctorId && !!slot && healthIssue.trim().length > 0;
+  const whenLabel = `${isToday ? 'Today' : day.format('ddd D MMM')}${slot ? ` · ${formatSlot(slot)}` : ''}`;
 
-    const appointmentData = {
-      doctorId: doctor_Id,
-      date: formattedDate,
-      time: checkupTiming,
-      notes,
-    };
-
+  const confirm = async () => {
+    if (booking) {
+      return;
+    }
+    setBooking(true);
+    setBookError(null);
     try {
-      await dispatch(bookAppointment(appointmentData) as any).unwrap();
-      Alert.alert('Success', 'Your appointment has been booked.');
-      navigation.navigate('MyBooking');
+      await dispatch(bookAppointment({ doctorId, date: dateKey, time: slot, healthIssue: healthIssue.trim(), notes }) as any).unwrap();
+      setSheet('done');
     } catch (err: any) {
-      Alert.alert('Error', err?.message || 'Failed to book appointment.');
+      setBookError(typeof err === 'string' ? err : err?.message || 'Failed to book appointment.');
     } finally {
-      setBookingInProgress(false);
-      setShowPaymentModal(false);
+      setBooking(false);
     }
   };
 
-  const onDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
-    setShowDatePicker(false);
-    if (selectedDate) {
-      setDate(selectedDate);
-      setFormattedDate(selectedDate.toISOString().split('T')[0]);
-    }
-  };
-
-  const convertTo12HourFormat = (time: string): string => {
-    const [start, end] = time.split('-');
-    const formatTime = (hour: string) => {
-      let h = parseInt(hour, 10);
-      const period = h >= 12 ? 'PM' : 'AM';
-      if (h > 12) {h -= 12;}
-      if (h === 0) {h = 12;}
-      return `${h} ${period}`;
-    };
-    return `${formatTime(start)} - ${formatTime(end)}`;
-  };
-
-  const handleCheckAvailability = () => {
-    if (!doctor_Id || !formattedDate) {
-      Alert.alert('Required Fields', 'Doctor and Date must be selected.');
-      return;
-    }
-    dispatch(fetchDoctorDetails({ id: doctor_Id, selectedDate: formattedDate }) as any);
-  };
-
-  const handleAISymptomSuggest = async () => {
-    if (!symptomText.trim()) {
-      Alert.alert('Missing Input', 'Please describe your symptoms.');
-      return;
-    }
-    try {
-      await dispatch(setSymptoms(symptomText));
-      await dispatch(checkSymptoms(symptomText) as any);
-    } catch (err) {
-      console.error(err);
-    }
+  const finish = () => {
+    setSheet('closed');
+    navigation.navigate('Home', { screen: 'MyBooking' });
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={styles.scrollView} keyboardShouldPersistTaps="handled">
-          <Text style={styles.title}>Book an Appointment</Text>
+    <Screen edges={['top']}>
+      <View style={styles.header}>
+        <IconButton icon="chevron-back" label="Back" onPress={() => navigation.goBack()} />
+        <AppText variant="h2" style={styles.headerTitle}>Book an Appointment</AppText>
+      </View>
 
-          {/* Date Picker */}
-          <View style={styles.formGroup}>
-            <Text style={[styles.label, fieldErrors.date && { color: COLORS.primary }]}>Select Date *</Text>
-            <TouchableOpacity style={styles.datePickerButton} onPress={() => setShowDatePicker(true)}>
-              <Text style={styles.dateText}>{formattedDate || date.toDateString()}</Text>
-            </TouchableOpacity>
-            {showDatePicker && (
-              <DateTimePicker value={date} mode="date" display="default" onChange={onDateChange} minimumDate={new Date()} />
+      <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+          <Reveal>
+            <Card style={styles.doctor}>
+              <Avatar name={doctorName} uri={doctor?.profileImage} size={60} ring />
+              <View style={styles.doctorInfo}>
+                <AppText variant="h3" numberOfLines={1}>{doctorName}</AppText>
+                <View style={[styles.spec, { backgroundColor: withAlpha(hue, 0.12) }]}>
+                  <MCI name={specialtyIcon(doctor?.specialization)} size={13} color={hue} />
+                  <AppText variant="caption" rawColor={hue} style={styles.specText}>{shortSpecialty(doctor?.specialization) || 'Specialist'}</AppText>
+                </View>
+                {doctor?.experience ? (
+                  <AppText variant="caption" color="textMuted" style={styles.exp}>{doctor.experience} years of experience</AppText>
+                ) : null}
+              </View>
+            </Card>
+          </Reveal>
+
+          <AppText variant="h3" style={styles.section}>Choose a day</AppText>
+          <FlatList
+            horizontal
+            data={days}
+            keyExtractor={d => d.format('YYYY-MM-DD')}
+            showsHorizontalScrollIndicator={false}
+            style={styles.bleed}
+            contentContainerStyle={styles.daysRow}
+            renderItem={({ item, index }) => (
+              <Reveal index={index} from="zoom">
+                <DayChip day={item} selected={item.isSame(day, 'day')} onPress={() => setDay(item)} />
+              </Reveal>
             )}
-            {fieldErrors.date && <Text style={styles.errorText}>{fieldErrors.date}</Text>}
+          />
+
+          <View style={styles.sectionRow}>
+            <AppText variant="h3">Available times</AppText>
+            {!loading && slots.length ? (
+              <AppText variant="caption" color="textMuted">{openCount} open</AppText>
+            ) : null}
           </View>
+          {loading && !slots.length ? (
+            <View style={styles.slots}>
+              {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} width="31%" height={44} />)}
+            </View>
+          ) : slots.length === 0 ? (
+            <Card style={styles.noSlots}>
+              <Icon name="moon-outline" size={22} color={colors.textMuted} />
+              <AppText variant="body" color="textMuted" style={styles.noSlotsText}>Not available on this day.</AppText>
+            </Card>
+          ) : (
+            <>
+            {openCount === 0 ? (
+              <AppText variant="caption" color="textMuted" style={styles.slotHint}>
+                {slots.some(s => !s.isBooked)
+                  ? 'No more times left today - try another day.'
+                  : 'Fully booked on this day - try another day.'}
+              </AppText>
+            ) : null}
+            <View style={styles.slots}>
+              {slots.map((s, i) => (
+                <Reveal key={s.slotTiming} index={i} style={styles.slotWrap}>
+                  <Chip
+                    label={formatSlot(s.slotTiming).split(' - ')[0]}
+                    sublabel={s.isBooked ? '' : undefined}
+                    selected={slot === s.slotTiming}
+                    disabled={s.isBooked || isPast(s)}
+                    onPress={() => setSlot(s.slotTiming)}
+                  />
+                </Reveal>
+              ))}
+            </View>
+            </>
+          )}
 
-          <TouchableOpacity style={styles.checkButton} onPress={handleCheckAvailability}>
-            <Text style={styles.checkButtonText}>Check Availability</Text>
-          </TouchableOpacity>
-
-
-{doctorDetails?.slots?.length > 0 && (
-  <View style={styles.formGroup}>
-    <Text style={styles.label}>Select Available Slot *</Text>
-    <View style={styles.slotContainer}>
-      {doctorDetails.slots.map((slot: Slot, index: number) => {
-        const isSelected = checkupTiming === slot.slotTiming;
-        return (
-          <TouchableOpacity
-            key={index}
-            activeOpacity={0.8}
-            style={[
-              styles.slotCard,
-              slot.isBooked && styles.slotBookedCard,
-              isSelected && styles.slotSelectedCard,
-            ]}
-            disabled={slot.isBooked}
-            onPress={() => setCheckupTiming(slot.slotTiming)}
-          >
-            <Text
-              style={[
-                styles.slotText,
-                slot.isBooked && { color: '#94A3B8' },
-                isSelected && { color: '#FFFFFF', fontWeight: '700' },
-              ]}
-            >
-              {convertTo12HourFormat(slot.slotTiming)}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-    {fieldErrors.checkupTiming && <Text style={styles.errorText}>{fieldErrors.checkupTiming}</Text>}
-  </View>
-)}
-
-          {/* Health Issue */}
-          <View style={styles.formGroup}>
-            <Text style={[styles.label, fieldErrors.healthIssue && { color: COLORS.primary }]}>Health Issue *</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Describe your health issue"
-              value={healthIssue}
-              onChangeText={setHealthIssue}
-            />
-            {fieldErrors.healthIssue && <Text style={styles.errorText}>{fieldErrors.healthIssue}</Text>}
-          </View>
-
-          {/* Notes */}
-          <View style={styles.formGroup}>
-            <Text style={styles.label}>Notes (Optional)</Text>
-            <TextInput
-              style={[styles.input, { height: 80 }]}
-              placeholder="Additional notes"
-              multiline
-              value={notes}
-              onChangeText={setNotes}
-            />
-          </View>
-
-
-          {/* Review Button */}
-          <TouchableOpacity
-            style={[styles.reviewButton, !isFormValid() && { backgroundColor: 'gray' }]}
-            onPress={handleReviewBooking}
-            disabled={!isFormValid()}
-          >
-            <Text style={styles.reviewButtonText}>Review Booking</Text>
-          </TouchableOpacity>
+          <AppText variant="h3" style={styles.section}>What brings you in?</AppText>
+          <TextField
+            icon="medkit-outline"
+            placeholder="e.g. Chest pain after exercise"
+            value={healthIssue}
+            onChangeText={setHealthIssue}
+            accessibilityLabel="Health issue"
+          />
+          <TextField
+            icon="create-outline"
+            placeholder="Anything else the doctor should know? (optional)"
+            value={notes}
+            onChangeText={setNotes}
+            multiline
+            style={styles.notes}
+            accessibilityLabel="Notes"
+          />
         </ScrollView>
       </KeyboardAvoidingView>
 
+      <View style={[styles.bar, { backgroundColor: colors.surface, borderTopColor: colors.border, paddingBottom: Math.max(insets.bottom, space.md) }]}>
+        <View style={styles.flex}>
+          <AppText variant="caption" color="textMuted">Your visit</AppText>
+          <AppText variant="bodyStrong" numberOfLines={1}>{slot ? whenLabel : 'Pick a time'}</AppText>
+        </View>
+        <Button
+          title="Review Booking"
+          size="md"
+          disabled={!ready}
+          onPress={() => { setBookError(null); setSheet('review'); }}
+          style={styles.barButton}
+          testID="review-booking"
+        />
+      </View>
 
-
-<Modal visible={showReviewModal} transparent animationType="slide">
-  <View style={styles.modalBackground}>
-    <View style={styles.modalContainer}>
-      {/* Close Icon */}
-      <TouchableOpacity
-        style={{ position: 'absolute', top: 12, right: 12, zIndex: 10 }}
-        onPress={() => setShowReviewModal(false)}
-      >
-        <Icon name="close" size={24} color={COLORS.danger} />
-      </TouchableOpacity>
-
-      <Text style={styles.modalTitle}>Review Appointment</Text>
-      <Text style={styles.modalText}>Doctor: {doctor?.name}</Text>
-      <Text style={styles.modalText}>Date: {formattedDate}</Text>
-      <Text style={styles.modalText}>Slot: {convertTo12HourFormat(checkupTiming)}</Text>
-      <Text style={styles.modalText}>Health Issue: {healthIssue}</Text>
-      <Text style={styles.modalText}>Notes: {notes || 'None'}</Text>
-
-      <TouchableOpacity style={styles.modalButton} onPress={() => setShowPaymentModal(true)}>
-        <Text style={styles.modalButtonText}>Proceed to Payment</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.modalButton, { backgroundColor: COLORS.primary }]}
-        onPress={() => setShowReviewModal(false)}
-      >
-        <Text style={styles.modalButtonText}>Cancel</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
-</Modal>
-
-
-      {/* Payment Modal */}
-      <PaymentModal
-        visible={showPaymentModal}
-        onPay={handlePayAndBook}
-        onCancel={() => setShowPaymentModal(false)}
-        loading={bookingInProgress}
-      />
-    </SafeAreaView>
+      <Modal visible={sheet !== 'closed'} transparent animationType="fade" onRequestClose={() => sheet === 'review' && setSheet('closed')}>
+        <Pressable
+          style={[styles.backdrop, { backgroundColor: colors.overlay }]}
+          onPress={() => sheet === 'review' && !booking && setSheet('closed')}
+          accessibilityLabel="Close"
+        />
+        <Animated.View
+          entering={SlideInDown.springify().damping(18).stiffness(180)}
+          style={[styles.sheet, { backgroundColor: colors.surface, paddingBottom: Math.max(insets.bottom, space.lg) }, elevation(colors.shadow, 3)]}
+        >
+          <View style={[styles.grabber, { backgroundColor: colors.border }]} />
+          {sheet === 'done' ? (
+            <View style={styles.done}>
+              <Animated.View entering={ZoomIn.springify().damping(10)} style={[styles.doneHalo, { backgroundColor: colors.successSoft }]}>
+                <View style={[styles.doneCore, { backgroundColor: colors.success }]}>
+                  <Icon name="checkmark" size={40} color="#FFFFFF" />
+                </View>
+              </Animated.View>
+              <Animated.View entering={FadeIn.delay(200)}>
+                <AppText variant="h2" center style={styles.doneTitle}>You're booked!</AppText>
+                <AppText variant="body" color="textMuted" center>
+                  {doctorName} · {whenLabel}
+                </AppText>
+              </Animated.View>
+              <Button title="View my bookings" icon="bookmarks-outline" onPress={finish} style={styles.sheetCta} />
+            </View>
+          ) : (
+            <>
+              <AppText variant="h2">Review Appointment</AppText>
+              <AppText variant="body" color="textMuted" style={styles.sheetSub}>Check the details before you confirm.</AppText>
+              <SummaryRow icon="person-outline" label="Doctor" value={`${doctorName}${doctor?.specialization ? ` · ${shortSpecialty(doctor.specialization)}` : ''}`} />
+              <SummaryRow icon="calendar-outline" label="When" value={whenLabel} />
+              <SummaryRow icon="medkit-outline" label="Reason" value={healthIssue.trim()} />
+              {notes.trim() ? <SummaryRow icon="create-outline" label="Notes" value={notes.trim()} /> : null}
+              {bookError ? (
+                <View style={[styles.error, { backgroundColor: colors.dangerSoft }]}>
+                  <Icon name="alert-circle" size={18} color={colors.danger} />
+                  <AppText variant="label" color="danger" style={styles.errorText}>{bookError}</AppText>
+                </View>
+              ) : null}
+              <Button title="Confirm Booking" icon="checkmark-circle-outline" loading={booking} onPress={confirm} style={styles.sheetCta} />
+              <Button title="Go back" variant="ghost" size="md" onPress={() => setSheet('closed')} disabled={booking} style={styles.sheetSecondary} />
+            </>
+          )}
+        </Animated.View>
+      </Modal>
+    </Screen>
   );
 };
+
+const styles = StyleSheet.create({
+  flex: { flex: 1 },
+  header: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: space.lg, paddingTop: space.xs, paddingBottom: space.sm },
+  headerTitle: { marginLeft: space.sm },
+  content: { paddingHorizontal: space.lg, paddingBottom: space.xxxl },
+  doctor: { flexDirection: 'row', alignItems: 'center' },
+  doctorInfo: { flex: 1, marginLeft: space.md },
+  spec: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', paddingHorizontal: 8, paddingVertical: 3, borderRadius: radius.pill, marginTop: 4 },
+  specText: { marginLeft: 4 },
+  exp: { marginTop: 4 },
+  section: { marginTop: space.xl, marginBottom: space.sm },
+  sectionRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: space.xl, marginBottom: space.sm },
+  bleed: { marginHorizontal: -space.lg },
+  daysRow: { paddingHorizontal: space.lg, gap: space.xs },
+  day: { width: 64, height: 86, borderRadius: radius.lg, borderWidth: 1, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+  slots: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  slotWrap: { width: '31.5%' },
+  noSlots: { flexDirection: 'row', alignItems: 'center' },
+  noSlotsText: { marginLeft: space.sm, flex: 1 },
+  notes: { minHeight: 70, textAlignVertical: 'top' },
+  slotHint: { marginBottom: space.sm },
+  bar: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: space.lg, paddingTop: space.md, borderTopWidth: StyleSheet.hairlineWidth },
+  barButton: { minWidth: 170, marginLeft: space.md },
+  backdrop: { ...StyleSheet.absoluteFillObject },
+  sheet: {
+    position: 'absolute', left: 0, right: 0, bottom: 0,
+    borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, paddingHorizontal: space.xl, paddingTop: space.sm,
+  },
+  grabber: { width: 44, height: 5, borderRadius: 3, alignSelf: 'center', marginBottom: space.lg },
+  sheetSub: { marginTop: 2, marginBottom: space.md },
+  summaryRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: space.xs },
+  summaryIcon: { width: 40, height: 40, borderRadius: 14, alignItems: 'center', justifyContent: 'center', marginRight: space.sm },
+  error: { flexDirection: 'row', alignItems: 'center', padding: space.sm, borderRadius: radius.md, marginTop: space.sm },
+  errorText: { marginLeft: space.xs, flex: 1 },
+  sheetCta: { marginTop: space.lg },
+  sheetSecondary: { marginTop: space.xs },
+  done: { alignItems: 'center', paddingTop: space.sm },
+  doneHalo: { width: 120, height: 120, borderRadius: 60, alignItems: 'center', justifyContent: 'center' },
+  doneCore: { width: 80, height: 80, borderRadius: 40, alignItems: 'center', justifyContent: 'center' },
+  doneTitle: { marginTop: space.lg, marginBottom: 4 },
+});
 
 export default AppointmentBookingScreen;

@@ -2,66 +2,35 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../utilis/api';
 
-// Types
 interface AppointmentRecordState {
   loading: boolean;
   appointmentRec: any[];
   error: string | null;
 }
 
-const MOCK_APPOINTMENTS = [
-  {
-    _id: 'app1',
-    doctorName: 'Dr. Sarah Jenkins',
-    patientName: 'John Doe',
-    specialization: 'Cardiology',
-    date: new Date().toISOString().split('T')[0],
-    time: '10:00 AM - 10:30 AM',
-    status: 'Confirmed',
-    notes: 'Regular heart checkup and ECG review.',
-  },
-  {
-    _id: 'app2',
-    doctorName: 'Dr. Robert Chen',
-    patientName: 'John Doe',
-    specialization: 'Dermatology',
-    date: new Date(Date.now() + 86400000).toISOString().split('T')[0],
-    time: '02:00 PM - 02:30 PM',
-    status: 'Pending',
-    notes: 'Skin rash consultation.',
-  },
-];
-
 const initialState: AppointmentRecordState = {
   loading: false,
-  appointmentRec: MOCK_APPOINTMENTS,
+  appointmentRec: [],
   error: null,
 };
 
-// Async thunks
-export const fetchAppointments = createAsyncThunk(
+/** A doctor's appointments on one day. `date` is DD-MM-YYYY. */
+export const fetchAppointments = createAsyncThunk<any[], string, { rejectValue: string }>(
   'appointmentRecord/fetchAppointments',
-  async (date: string, { rejectWithValue }) => {
+  async (date, { rejectWithValue }) => {
     try {
       const token = await AsyncStorage.getItem('token');
-      if (!token) {
-        return MOCK_APPOINTMENTS;
-      }
-
-      const headers = { Authorization: `Bearer ${token}` };
       const response = await api.get('/appointment/get-all-appointments', {
-        headers,
+        headers: { Authorization: `Bearer ${token}` },
         params: { date },
       });
-
-      return response.data.data && response.data.data.length > 0 ? response.data.data : MOCK_APPOINTMENTS;
+      return response.data?.data ?? [];
     } catch (error: any) {
-      return MOCK_APPOINTMENTS;
+      return rejectWithValue(error?.message || 'Could not load appointments');
     }
   }
 );
 
-// Slice
 const appointmentRecordSlice = createSlice({
   name: 'appointmentRecord',
   initialState,
@@ -70,24 +39,23 @@ const appointmentRecordSlice = createSlice({
       state.error = null;
     },
     clearAppointmentRecords: (state) => {
-      state.appointmentRec = MOCK_APPOINTMENTS;
+      state.appointmentRec = [];
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAppointments.pending, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.error = null;
       })
       .addCase(fetchAppointments.fulfilled, (state, action) => {
         state.loading = false;
-        state.appointmentRec = action.payload && action.payload.length > 0 ? action.payload : MOCK_APPOINTMENTS;
-        state.error = null;
+        state.appointmentRec = action.payload;
       })
-      .addCase(fetchAppointments.rejected, (state) => {
+      .addCase(fetchAppointments.rejected, (state, action) => {
         state.loading = false;
-        state.appointmentRec = MOCK_APPOINTMENTS;
-        state.error = null;
+        state.appointmentRec = [];
+        state.error = action.payload ?? 'Could not load appointments';
       });
   },
 });

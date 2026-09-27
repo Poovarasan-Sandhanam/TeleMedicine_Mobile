@@ -1,308 +1,144 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useMemo } from 'react';
+import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
+import MCI from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchCompletedDoctors } from '../../redux/slices/profileSlice';
-import { RootState } from '../../redux/store';
-import {
-  View,
-  Text,
-  FlatList,
-  SafeAreaView,
-  Image,
-  StyleSheet,
-  Pressable,
-} from 'react-native';
-import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useRoute, useNavigation } from '@react-navigation/native';
-import GoBackButton from '../../components/BackButton';
+import { useTheme, space, radius, specialtyHue, specialtyIcon, shortSpecialty, withAlpha } from '../../theme';
+import { AppText, Avatar, Card, EmptyState, IconButton, Reveal, Screen, Skeleton } from '../../ui';
 
-const DoctorListItem = ({ item, index, onPress }: { item: any; index: number; onPress: () => void }) => {
-  const scale = useSharedValue(1);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-  }));
-
-  const handlePressIn = () => {
-    scale.value = withSpring(0.97, { damping: 15, stiffness: 200 });
-  };
-
-  const handlePressOut = () => {
-    scale.value = withSpring(1, { damping: 15, stiffness: 200 });
-  };
-
+const DoctorRow: React.FC<{ doctor: any; index: number; onPress: () => void }> = ({ doctor, index, onPress }) => {
+  const { colors } = useTheme();
+  const hue = specialtyHue(doctor.specialization);
+  const name = doctor.fullName ?? doctor.name;
   return (
-    <Animated.View entering={FadeInDown.delay(index * 70).springify().damping(15)}>
-      <Pressable
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        onPress={onPress}
-      >
-        <Animated.View style={[styles.card, animatedStyle]}>
-          <View style={styles.topRow}>
-            <View style={styles.imageWrapper}>
-              <Image
-                source={{ uri: item.profileImage }}
-                style={styles.image}
-                resizeMode="cover"
-              />
-              <View style={styles.onlineBadge} />
-            </View>
-
-            <View style={styles.info}>
-              <View style={styles.nameRow}>
-                <Text style={styles.name}>{item.fullName}</Text>
-                <View style={styles.ratingChip}>
-                  <Ionicons name="star" size={12} color="#F59E0B" />
-                  <Text style={styles.ratingText}>4.9</Text>
-                </View>
-              </View>
-
-              <Text style={styles.specialization}>{item.specialization}</Text>
-              
-              <View style={styles.metaRow}>
-                <View style={styles.pillBadge}>
-                  <Ionicons name="ribbon-outline" size={12} color="#4F46E5" />
-                  <Text style={styles.pillText}>{item.experience} yrs exp</Text>
-                </View>
-
-                <View style={[styles.pillBadge, { backgroundColor: '#F0FDFA' }]}>
-                  <Ionicons name="time-outline" size={12} color="#06B6D4" />
-                  <Text style={[styles.pillText, { color: '#0891B2' }]}>{item.consultationTiming || 'Available'}</Text>
-                </View>
-              </View>
+    <Reveal index={index}>
+      <Card onPress={onPress} style={styles.card} accessibilityLabel={`${name}, ${doctor.specialization}. Book appointment`}>
+        <View style={styles.row}>
+          <Avatar name={name} uri={doctor.profileImage} size={60} ring />
+          <View style={styles.info}>
+            <AppText variant="h3" numberOfLines={1}>{name}</AppText>
+            <View style={[styles.spec, { backgroundColor: withAlpha(hue, 0.12) }]}>
+              <MCI name={specialtyIcon(doctor.specialization)} size={13} color={hue} />
+              <AppText variant="caption" rawColor={hue} style={styles.specText} numberOfLines={1}>
+                {shortSpecialty(doctor.specialization)}
+              </AppText>
             </View>
           </View>
-
-          <View style={styles.cardFooter}>
-            <View style={styles.locationRow}>
-              <Ionicons name="location-outline" size={14} color="#64748B" />
-              <Text style={styles.addressText} numberOfLines={1}>
-                {item.address || 'Medical Center'}
-              </Text>
-            </View>
-
-            <View style={styles.bookCta}>
-              <Text style={styles.bookCtaText}>Book Now</Text>
-              <Ionicons name="chevron-forward" size={14} color="#FFFFFF" />
-            </View>
+          <View style={[styles.go, { backgroundColor: colors.primary }]}>
+            <Icon name="arrow-forward" size={18} color={colors.onPrimary} />
           </View>
-        </Animated.View>
-      </Pressable>
-    </Animated.View>
+        </View>
+        <View style={[styles.meta, { borderTopColor: colors.border }]}>
+          <View style={styles.metaItem}>
+            <Icon name="ribbon-outline" size={15} color={colors.textMuted} />
+            <AppText variant="caption" color="textMuted" style={styles.metaText}>{doctor.experience ?? 0} yrs exp.</AppText>
+          </View>
+          <View style={styles.metaItem}>
+            <Icon name="time-outline" size={15} color={colors.textMuted} />
+            <AppText variant="caption" color="textMuted" style={styles.metaText} numberOfLines={1}>
+              {(doctor.consultationTiming ?? '').replace(/\s*\(.*\)$/, '')}
+            </AppText>
+          </View>
+        </View>
+        {doctor.address ? (
+          <View style={styles.metaItem}>
+            <Icon name="location-outline" size={15} color={colors.textMuted} />
+            <AppText variant="caption" color="textMuted" style={styles.metaText} numberOfLines={1}>{doctor.address}</AppText>
+          </View>
+        ) : null}
+      </Card>
+    </Reveal>
   );
 };
 
 export default function DoctorsScreen() {
-  const dispatch = useDispatch<any>();
-  const { completedDoctors, loading, error } = useSelector(
-    (state: RootState) => state.profile
-  );
-
-  const route = useRoute<any>();
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<any>();
+  const route = useRoute<any>();
+  const { colors } = useTheme();
+  const { completedDoctors, loading, error } = useAppSelector(s => s.profile);
   const { category } = route.params || {};
 
-  useEffect(() => {
-    dispatch(fetchCompletedDoctors());
+  const load = useCallback(() => {
+    dispatch(fetchCompletedDoctors() as any);
   }, [dispatch]);
+  useFocusEffect(load);
 
-  const matchedDoctors = category
-    ? completedDoctors.filter(
-        (doc) => doc.specialization?.toLowerCase() === category?.toLowerCase()
-      )
-    : completedDoctors;
+  // Only the chosen specialty. When nothing matched, this used to fall back to
+  // every doctor, listing other specialists under this heading.
+  const doctors = useMemo(
+    () => (category
+      ? completedDoctors.filter((d: any) => d.specialization?.toLowerCase() === String(category).toLowerCase())
+      : completedDoctors),
+    [completedDoctors, category],
+  );
 
-  const filteredDoctors = matchedDoctors.length > 0 ? matchedDoctors : completedDoctors;
+  const hue = category ? specialtyHue(category) : colors.primary;
+  const title = category ? shortSpecialty(category) : 'All doctors';
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.headerRow}>
-        <GoBackButton />
-        <Text style={styles.headerTitle}>{category ? `${category} Doctors` : 'Specialists'}</Text>
-        <View style={{ width: 40 }} />
+    <Screen>
+      <View style={styles.header}>
+        <IconButton icon="chevron-back" label="Back" onPress={() => navigation.goBack()} />
+        <View style={styles.headerText}>
+          <AppText variant="h2" numberOfLines={1}>{title}</AppText>
+          <AppText variant="caption" color="textMuted">
+            {loading && doctors.length === 0 ? 'Loading...' : `${doctors.length} ${doctors.length === 1 ? 'doctor' : 'doctors'} available`}
+          </AppText>
+        </View>
+        {category ? (
+          <View style={[styles.headerIcon, { backgroundColor: withAlpha(hue, 0.14) }]}>
+            <MCI name={specialtyIcon(category)} size={24} color={hue} />
+          </View>
+        ) : null}
       </View>
 
-      <FlatList
-        data={filteredDoctors}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item, index }) => (
-          <DoctorListItem
-            item={item}
-            index={index}
-            onPress={() => navigation.navigate('AppointmentBooking', { doctor: item })}
-          />
-        )}
-        contentContainerStyle={styles.listPadding}
-        showsVerticalScrollIndicator={false}
-        ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Ionicons name="medical-outline" size={48} color="#94A3B8" />
-            <Text style={styles.empty}>No doctors found for {category}</Text>
-          </View>
-        }
-      />
-    </SafeAreaView>
+      {loading && doctors.length === 0 ? (
+        <View style={styles.list}>
+          {[0, 1, 2].map(i => <Skeleton key={i} height={150} style={styles.skeleton} />)}
+        </View>
+      ) : error && doctors.length === 0 ? (
+        <EmptyState icon="cloud-offline-outline" tone="error" title="Couldn't load doctors" message={error} actionLabel="Try again" onAction={load} />
+      ) : (
+        <FlatList
+          data={doctors}
+          keyExtractor={item => item._id ?? item.userId}
+          contentContainerStyle={styles.list}
+          showsVerticalScrollIndicator={false}
+          refreshControl={<RefreshControl refreshing={false} onRefresh={load} tintColor={colors.primary} />}
+          renderItem={({ item, index }) => (
+            <DoctorRow doctor={item} index={index} onPress={() => navigation.navigate('AppointmentBooking', { doctor: item })} />
+          )}
+          ListEmptyComponent={
+            <EmptyState
+              icon="medkit-outline"
+              title={category ? `No ${title.toLowerCase()} doctors yet` : 'No doctors yet'}
+              message="Check back soon - new doctors join regularly."
+              actionLabel={category ? 'See all doctors' : undefined}
+              onAction={category ? () => navigation.setParams({ category: undefined }) : undefined}
+            />
+          }
+        />
+      )}
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F8FAFC',
-  },
-  headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '800',
-    color: '#0F172A',
-  },
-  listPadding: {
-    paddingHorizontal: 16,
-    paddingBottom: 24,
-    paddingTop: 8,
-  },
-  card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 18,
-    marginBottom: 14,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
-    shadowColor: 'rgba(15, 23, 42, 0.05)',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 10,
-    elevation: 3,
-  },
-  topRow: {
-    flexDirection: 'row',
-    marginBottom: 12,
-  },
-  imageWrapper: {
-    position: 'relative',
-    marginRight: 12,
-  },
-  image: {
-    width: 68,
-    height: 68,
-    borderRadius: 34,
-    backgroundColor: '#F1F5F9',
-  },
-  onlineBadge: {
-    position: 'absolute',
-    bottom: 2,
-    right: 2,
-    width: 14,
-    height: 14,
-    borderRadius: 7,
-    backgroundColor: '#10B981',
-    borderWidth: 2,
-    borderColor: '#FFFFFF',
-  },
-  info: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  nameRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  name: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#0F172A',
-    flex: 1,
-  },
-  ratingChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FEF3C7',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 8,
-    gap: 3,
-  },
-  ratingText: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: '#D97706',
-  },
-  specialization: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: '#4F46E5',
-    marginVertical: 2,
-  },
-  metaRow: {
-    flexDirection: 'row',
-    gap: 8,
-    marginTop: 6,
-    flexWrap: 'wrap',
-  },
-  pillBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#EEF2FF',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 8,
-    gap: 4,
-  },
-  pillText: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: '#4338CA',
-  },
-  cardFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#F1F5F9',
-  },
-  locationRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    flex: 1,
-    marginRight: 8,
-  },
-  addressText: {
-    fontSize: 12,
-    color: '#64748B',
-    fontWeight: '500',
-  },
-  bookCta: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#4F46E5',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 10,
-    gap: 4,
-  },
-  bookCtaText: {
-    color: '#FFFFFF',
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  emptyContainer: {
-    alignItems: 'center',
-    paddingTop: 60,
-    gap: 12,
-  },
-  empty: {
-    fontSize: 15,
-    color: '#64748B',
-    fontWeight: '500',
-  },
+  header: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: space.lg, paddingTop: space.xs, paddingBottom: space.md },
+  headerText: { flex: 1, marginLeft: space.sm },
+  headerIcon: { width: 48, height: 48, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
+  list: { paddingHorizontal: space.lg, paddingBottom: space.xxxl, gap: space.sm },
+  skeleton: { borderRadius: radius.lg },
+  card: {},
+  row: { flexDirection: 'row', alignItems: 'center' },
+  info: { flex: 1, marginLeft: space.sm },
+  spec: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', paddingHorizontal: 8, paddingVertical: 3, borderRadius: radius.pill, marginTop: 4 },
+  specText: { marginLeft: 4 },
+  go: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
+  meta: { flexDirection: 'row', borderTopWidth: StyleSheet.hairlineWidth, marginTop: space.md, paddingTop: space.sm, gap: space.lg, marginBottom: 6 },
+  metaItem: { flexDirection: 'row', alignItems: 'center' },
+  metaText: { marginLeft: 5, flexShrink: 1 },
 });

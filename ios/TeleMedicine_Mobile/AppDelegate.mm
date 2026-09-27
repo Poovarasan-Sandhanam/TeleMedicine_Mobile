@@ -14,6 +14,13 @@
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
+// Paint the root view in the launch-screen colour. It defaults to white, which
+// flashed between the purple launch screen and the purple animated splash.
+- (void)customizeRootView:(RCTRootView *)rootView
+{
+  rootView.backgroundColor = [UIColor colorWithRed:0.357 green:0.357 blue:0.965 alpha:1.0];
+}
+
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
   return [self bundleURL];

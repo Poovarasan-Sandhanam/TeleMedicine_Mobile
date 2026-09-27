@@ -3,8 +3,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../utilis/api';
 
 // Types
-interface PrescriptionData {
-  patientId: string;
+/**
+ * The server takes the doctor from the login and the patient from the appointment,
+ * so the request identifies the consultation rather than the people.
+ */
+export interface PrescriptionData {
+  appointmentId: string;
+  patientName?: string;
+  age?: number;
+  symptoms?: string[];
   diagnosis: string;
   medications: Array<{
     name: string;
@@ -13,6 +20,7 @@ interface PrescriptionData {
     duration: string;
   }>;
   notes?: string;
+  date?: string;
 }
 
 interface PrescriptionState {
@@ -46,7 +54,7 @@ export const addPrescription = createAsyncThunk(
 
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response ? error.response.data.message : error.message);
+      return rejectWithValue(error?.message || 'Could not save the prescription');
     }
   }
 );

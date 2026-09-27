@@ -1,182 +1,166 @@
-// screens/BookingScreen.tsx
-
-import React, { useEffect, useCallback, useMemo } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  ActivityIndicator,
-  SafeAreaView,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { useNavigation } from '@react-navigation/native';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import Icon from 'react-native-vector-icons/Ionicons';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchBookings } from '../../redux/slices/bookingSlice';
-import styles from '../../styles/bookingScreenStyle';
-import COLORS from '../../constants/colors';
-import { RootState } from '../../redux/store';
+import { useTheme, space, radius, shortSpecialty } from '../../theme';
+import { AppText, Avatar, Card, EmptyState, Reveal, Screen, Segmented, Skeleton, StatusPill } from '../../ui';
+import { TAB_BAR_CLEARANCE } from '../../navigation/FloatingTabBar';
+import { bookingStart, calendarDay, formatDay, formatSlot } from '../../utilis/format';
 
-import Animated, { FadeInDown } from 'react-native-reanimated';
+type Tab = 'upcoming' | 'past';
 
-interface UserDetails {
-  fullName?: string;
-  contactNo?: string;
-}
+const isUpcoming = (b: any) =>
+  (b.status === 'confirmed' || b.status === 'held') && bookingStart(b).valueOf() + 3600000 > Date.now();
 
-interface Booking {
-  _id: string;
-  status: string;
-  date: string;
-  checkupTiming?: string;
-  notes?: string;
-  userDetails?: UserDetails;
-}
+const DateBlock: React.FC<{ date: string; highlight: boolean }> = ({ date, highlight }) => {
+  const { colors } = useTheme();
+  const d = calendarDay(date);
+  return (
+    <View style={[styles.dateBlock, { backgroundColor: colors.surfaceAlt }]}>
+      {highlight ? <LinearGradient colors={colors.gradient} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} /> : null}
+      <AppText variant="caption" rawColor={highlight ? 'rgba(255,255,255,0.85)' : colors.textMuted}>{d.format('MMM')}</AppText>
+      <AppText variant="h2" rawColor={highlight ? '#FFFFFF' : colors.text}>{d.format('D')}</AppText>
+      <AppText variant="caption" rawColor={highlight ? 'rgba(255,255,255,0.85)' : colors.textMuted}>{d.format('ddd')}</AppText>
+    </View>
+  );
+};
 
-// Format checkup time range
-const formatTimeRange = (range: string): string => {
-  const [start, end] = range.split('-').map(Number);
-  const format = (hour: number): string => `${hour % 12 || 12}${hour >= 12 ? 'PM' : 'AM'}`;
-  return `${format(start)} - ${format(end)}`;
+const BookingCard: React.FC<{ item: any; index: number; isDoctor: boolean; upcoming: boolean }> = ({ item, index, isDoctor, upcoming }) => {
+  const { colors } = useTheme();
+  const who = item.userDetails ?? {};
+  const subtitle = isDoctor ? item.healthIssue : shortSpecialty(who.specialization) || item.healthIssue;
+  return (
+    <Reveal index={index}>
+      <Card style={styles.card}>
+        <View style={styles.row}>
+          <DateBlock date={item.date} highlight={upcoming && index === 0} />
+          <View style={styles.body}>
+            <View style={styles.nameRow}>
+              <Avatar name={who.fullName} uri={who.profileImage} size={28} />
+              <AppText variant="bodyStrong" numberOfLines={1} style={styles.name}>{who.fullName || 'Unknown'}</AppText>
+            </View>
+            {subtitle ? <AppText variant="caption" color="textMuted" numberOfLines={1} style={styles.sub}>{subtitle}</AppText> : null}
+            <View style={styles.metaRow}>
+              <View style={styles.meta}>
+                <Icon name="time-outline" size={14} color={colors.primary} />
+                <AppText variant="label" style={styles.metaText}>{formatSlot(item.checkupTiming)}</AppText>
+              </View>
+              <StatusPill status={item.status} />
+            </View>
+          </View>
+        </View>
+        {item.notes ? (
+          <View style={[styles.notes, { backgroundColor: colors.surfaceAlt }]}>
+            <Icon name="document-text-outline" size={14} color={colors.textMuted} />
+            <AppText variant="caption" color="textMuted" style={styles.notesText} numberOfLines={2}>{item.notes}</AppText>
+          </View>
+        ) : null}
+        {isDoctor && who.contactNo ? (
+          <View style={styles.contact}>
+            <Icon name="call-outline" size={14} color={colors.textMuted} />
+            <AppText variant="caption" color="textMuted" style={styles.metaText}>{who.contactNo}</AppText>
+          </View>
+        ) : null}
+      </Card>
+    </Reveal>
+  );
 };
 
 const MyBooking: React.FC = () => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation();
-  const { loading, bookings, error } = useAppSelector((state: any) => state.bookings);
+  const { colors } = useTheme();
+  const { loading, bookings, error } = useAppSelector((s: any) => s.bookings);
+  const [tab, setTab] = useState<Tab>('upcoming');
+  const [isDoctor, setIsDoctor] = useState(false);
 
   useEffect(() => {
+    AsyncStorage.getItem('isDoctor').then(v => setIsDoctor(v ? JSON.parse(v) === true : false)).catch(() => {});
+  }, []);
+
+  const load = useCallback(() => {
     dispatch(fetchBookings() as any);
   }, [dispatch]);
+  // Reload whenever shown; this tab stays mounted, so loading once missed new bookings.
+  useFocusEffect(load);
 
-  useEffect(() => {
-    if (error) {
-      Alert.alert('Error', error, [
-        {
-          text: 'OK',
-          onPress: () => {
-            dispatch(fetchBookings() as any);
-          },
-        },
-      ]);
-    }
-  }, [error, dispatch]);
-
-  const handlePaymentPress = useCallback((appointmentId: string) => {
-    (navigation as any).navigate('Payment', { appointmentId });
-  }, [navigation]);
-
-  const renderBooking = useCallback(({ item, index }: { item: Booking; index: number }) => {
-    const isSuccess = item.status === 'Success';
-    const showPay = !isSuccess;
-
-    return (
-      <Animated.View entering={FadeInDown.delay(index * 80).springify().damping(15)}>
-        <View style={styles.cardWrapper}>
-          <View style={styles.cardContent}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.doctorName}>
-                {item.userDetails?.fullName || 'Doctor'}
-              </Text>
-              <View
-                style={[
-                  styles.statusBadge,
-                  isSuccess ? styles.success : styles.pending,
-                ]}
-              >
-                <Text style={[styles.statusText, { color: isSuccess ? '#059669' : '#D97706' }]}>
-                  {item.status}
-                </Text>
-              </View>
-            </View>
-
-            <View style={styles.row}>
-              <Icon name="phone-outline" size={16} color={COLORS.primary} />
-              <Text style={styles.detailText}>
-                {item.userDetails?.contactNo || '-'}
-              </Text>
-            </View>
-
-            <View style={styles.row}>
-              <Icon name="calendar-month-outline" size={16} color={COLORS.primary} />
-              <Text style={styles.detailText}>
-                {new Date(item.date).toLocaleDateString()}
-              </Text>
-            </View>
-
-            <View style={styles.row}>
-              <Icon name="clock-outline" size={16} color={COLORS.primary} />
-              <Text style={styles.detailText}>
-                {item.checkupTiming ? formatTimeRange(item.checkupTiming) : 'N/A'}
-              </Text>
-            </View>
-
-            {item.notes ? (
-              <View style={styles.notesBox}>
-                <Icon name="note-text-outline" size={16} color={COLORS.primary} />
-                <Text style={styles.notesText}>{item.notes}</Text>
-              </View>
-            ) : null}
-
-            {showPay && (
-              <TouchableOpacity
-                style={styles.payButton}
-                onPress={() => handlePaymentPress(item._id)}
-                activeOpacity={0.8}
-              >
-                <LinearGradient
-                  colors={[COLORS.primary, COLORS.secondary]}
-                  style={styles.payButtonGradient}
-                >
-                  <Text style={styles.payButtonText}>Pay Now</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
-      </Animated.View>
-    );
-  }, [handlePaymentPress]);
-
-  const keyExtractor = useCallback((item: Booking) => item._id, []);
-
-  const renderEmptyComponent = useMemo(() => (
-    <View style={styles.emptyContainer}>
-      <Text style={styles.emptyText}>No appointments found</Text>
-    </View>
-  ), []);
-
-  const renderLoadingComponent = useMemo(() => (
-    <View style={styles.loaderContainer}>
-      <ActivityIndicator size="large" color={COLORS.primary} />
-    </View>
-  ), []);
+  const { upcoming, past } = useMemo(() => {
+    const up = bookings.filter(isUpcoming).sort((a: any, b: any) => bookingStart(a).valueOf() - bookingStart(b).valueOf());
+    const done = bookings.filter((b: any) => !isUpcoming(b)).sort((a: any, b: any) => bookingStart(b).valueOf() - bookingStart(a).valueOf());
+    return { upcoming: up, past: done };
+  }, [bookings]);
+  const data = tab === 'upcoming' ? upcoming : past;
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.screenTitle}>Your Appointments</Text>
-      {loading ? (
-        renderLoadingComponent
-      ) : bookings.length > 0 ? (
-        <FlatList
-          data={bookings}
-          keyExtractor={keyExtractor}
-          renderItem={renderBooking}
-          contentContainerStyle={styles.flatList}
-          showsVerticalScrollIndicator={false}
-          initialNumToRender={5}
-          maxToRenderPerBatch={10}
-          windowSize={10}
-          removeClippedSubviews={true}
-        />
+    <Screen>
+      <View style={styles.header}>
+        <AppText variant="h1">Bookings</AppText>
+        <AppText variant="body" color="textMuted">
+          {upcoming.length ? `${upcoming.length} upcoming · next ${formatDay(upcoming[0].date).toLowerCase()}` : 'Your appointments in one place'}
+        </AppText>
+        <View style={styles.segment}>
+          <Segmented
+            value={tab}
+            onChange={k => setTab(k as Tab)}
+            options={[
+              { key: 'upcoming', label: 'Upcoming', count: upcoming.length },
+              { key: 'past', label: 'Past', count: past.length },
+            ]}
+          />
+        </View>
+      </View>
+
+      {loading && bookings.length === 0 ? (
+        <View style={styles.list}>{[0, 1, 2].map(i => <Skeleton key={i} height={120} style={styles.skeleton} />)}</View>
+      ) : error && bookings.length === 0 ? (
+        <EmptyState icon="cloud-offline-outline" tone="error" title="Couldn't load bookings" message={error} actionLabel="Try again" onAction={load} />
       ) : (
-        renderEmptyComponent
+        <FlatList
+          key={tab}
+          data={data}
+          keyExtractor={item => item._id}
+          contentContainerStyle={[styles.list, { paddingBottom: TAB_BAR_CLEARANCE }]}
+          showsVerticalScrollIndicator={false}
+          refreshControl={<RefreshControl refreshing={loading && bookings.length > 0} onRefresh={load} tintColor={colors.primary} />}
+          renderItem={({ item, index }) => <BookingCard item={item} index={index} isDoctor={isDoctor} upcoming={tab === 'upcoming'} />}
+          ListEmptyComponent={
+            tab === 'upcoming' ? (
+              <EmptyState
+                icon="calendar-clear-outline"
+                title="No upcoming visits"
+                message={isDoctor ? 'New bookings from patients will appear here.' : 'Find a doctor and book a time that suits you.'}
+              />
+            ) : (
+              <EmptyState icon="time-outline" title="Nothing here yet" message="Completed and cancelled visits will show here." />
+            )
+          }
+        />
       )}
-    </SafeAreaView>
+    </Screen>
   );
 };
+
+const styles = StyleSheet.create({
+  header: { paddingHorizontal: space.lg, paddingTop: space.xs },
+  segment: { marginTop: space.lg, marginBottom: space.md },
+  list: { paddingHorizontal: space.lg, gap: space.sm },
+  skeleton: { borderRadius: radius.lg },
+  card: {},
+  row: { flexDirection: 'row' },
+  dateBlock: { width: 62, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center', paddingVertical: space.xs, overflow: 'hidden' },
+  body: { flex: 1, marginLeft: space.md },
+  nameRow: { flexDirection: 'row', alignItems: 'center' },
+  name: { marginLeft: space.xs, flex: 1 },
+  sub: { marginTop: 4 },
+  metaRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: space.sm },
+  meta: { flexDirection: 'row', alignItems: 'center' },
+  metaText: { marginLeft: 5 },
+  notes: { flexDirection: 'row', alignItems: 'flex-start', marginTop: space.sm, padding: space.sm, borderRadius: radius.sm },
+  notesText: { marginLeft: 6, flex: 1 },
+  contact: { flexDirection: 'row', alignItems: 'center', marginTop: space.sm },
+});
 
 export default MyBooking;

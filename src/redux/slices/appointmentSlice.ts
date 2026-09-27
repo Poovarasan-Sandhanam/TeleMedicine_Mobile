@@ -1,12 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../utilis/api';
+import { errorMessage as toErrorMessage } from '../../utilis/api';
 
 // Types
 interface AppointmentData {
   doctorId: string;
   date: string;
   time: string;
+  healthIssue?: string;
   notes?: string;
   patientId?: string;
 }
@@ -34,7 +36,7 @@ export const bookAppointment = createAsyncThunk(
       console.log('Appointment Booking Successful:', response.data);
       return response.data;
     } catch (error: any) {
-      const errorMessage = error.response?.data?.message || 'Failed to book appointment.';
+      const errorMessage = toErrorMessage(error, 'Failed to book appointment.');
       console.error('Appointment Booking Error:', errorMessage);
       return rejectWithValue(errorMessage);
     }

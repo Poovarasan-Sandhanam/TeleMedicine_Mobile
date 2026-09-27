@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../utilis/api';
+import { errorMessage as toErrorMessage } from '../../utilis/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // ---- Types ----
@@ -51,7 +52,7 @@ export const login = createAsyncThunk(
 
       return user;
     } catch (error: any) {
-      const errorMessage = error.response?.data?.message || error.message || 'Login failed.';
+      const errorMessage = toErrorMessage(error, 'Login failed.');
       console.log('Login Error:', errorMessage);
       return rejectWithValue(errorMessage);
     }
@@ -66,7 +67,7 @@ export const signup = createAsyncThunk(
       console.log('Signup success:', response.data);
       return response.data;
     } catch (error: any) {
-      const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
+      const errorMessage = toErrorMessage(error, 'An unexpected error occurred.');
       console.error('Signup failed:', errorMessage);
       return rejectWithValue(errorMessage);
     }

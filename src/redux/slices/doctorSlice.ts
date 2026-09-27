@@ -2,65 +2,53 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../utilis/api';
 
-// Types
 interface DoctorState {
   doctors: any[];
   doctorDetails: any | null;
+  loading: boolean;
   error: string | null;
 }
 
-const MOCK_DOCTOR_DETAILS = {
-  id: 'doc1',
-  fullName: 'Dr. Sarah Jenkins',
-  specialization: 'Cardiology',
-  slots: [
-    { slotTiming: '09:00 AM - 09:30 AM', isBooked: false },
-    { slotTiming: '10:00 AM - 10:30 AM', isBooked: true },
-    { slotTiming: '11:00 AM - 11:30 AM', isBooked: false },
-    { slotTiming: '02:00 PM - 02:30 PM', isBooked: false },
-    { slotTiming: '03:30 PM - 04:00 PM', isBooked: false },
-  ],
-};
-
 const initialState: DoctorState = {
   doctors: [],
-  doctorDetails: MOCK_DOCTOR_DETAILS,
+  doctorDetails: null,
+  loading: false,
   error: null,
 };
 
-// Async thunks
-export const fetchAllDoctors = createAsyncThunk(
+export const fetchAllDoctors = createAsyncThunk<any[], void, { rejectValue: string }>(
   'doctor/fetchAllDoctors',
   async (_, { rejectWithValue }) => {
     try {
       const token = await AsyncStorage.getItem('token');
-      const headers = { Authorization: `Bearer ${token}` };
-      const response = await api.get('/appointment/get-all-doctors', { headers });
-      return response.data.data;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const fetchDoctorDetails = createAsyncThunk(
-  'doctor/fetchDoctorDetails',
-  async ({ id, selectedDate }: { id: string; selectedDate: string }, { rejectWithValue }) => {
-    try {
-      const token = await AsyncStorage.getItem('token');
-      const headers = { Authorization: `Bearer ${token}` };
       const response = await api.get('/appointment/get-all-doctors', {
-        headers,
-        params: { id, selectedDate },
+        headers: { Authorization: `Bearer ${token}` },
       });
-      return response.data.data || MOCK_DOCTOR_DETAILS;
+      return response.data?.data ?? [];
     } catch (error: any) {
-      return MOCK_DOCTOR_DETAILS;
+      return rejectWithValue(error?.message || 'Could not load doctors');
     }
   }
 );
 
-// Slice
+/** Bookable slots for one doctor on one day. `selectedDate` is YYYY-MM-DD. */
+export const fetchDoctorDetails = createAsyncThunk<
+  any,
+  { id: string; selectedDate: string },
+  { rejectValue: string }
+>('doctor/fetchDoctorDetails', async ({ id, selectedDate }, { rejectWithValue }) => {
+  try {
+    const token = await AsyncStorage.getItem('token');
+    const response = await api.get('/appointment/get-all-doctors', {
+      headers: { Authorization: `Bearer ${token}` },
+      params: { id, selectedDate },
+    });
+    return response.data?.data ?? { slots: [] };
+  } catch (error: any) {
+    return rejectWithValue(error?.message || 'Could not load available slots');
+  }
+});
+
 const doctorSlice = createSlice({
   name: 'doctor',
   initialState,
@@ -72,25 +60,37 @@ const doctorSlice = createSlice({
       state.doctors = [];
     },
     clearDoctorDetails: (state) => {
-      state.doctorDetails = MOCK_DOCTOR_DETAILS;
+      state.doctorDetails = null;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllDoctors.fulfilled, (state, action) => {
-        state.doctors = action.payload;
+      .addCase(fetchAllDoctors.pending, (state) => {
+        state.loading = true;
         state.error = null;
+      })
+      .addCase(fetchAllDoctors.fulfilled, (state, action) => {
+        state.loading = false;
+        state.doctors = action.payload;
       })
       .addCase(fetchAllDoctors.rejected, (state, action) => {
-        state.error = action.payload as string;
+        state.loading = false;
+        state.error = action.payload ?? 'Could not load doctors';
+      })
+      .addCase(fetchDoctorDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        // Clear the previous doctor's or day's slots so they are never shown as current.
+        state.doctorDetails = null;
       })
       .addCase(fetchDoctorDetails.fulfilled, (state, action) => {
-        state.doctorDetails = action.payload || MOCK_DOCTOR_DETAILS;
-        state.error = null;
+        state.loading = false;
+        state.doctorDetails = action.payload;
       })
-      .addCase(fetchDoctorDetails.rejected, (state) => {
-        state.doctorDetails = MOCK_DOCTOR_DETAILS;
-        state.error = null;
+      .addCase(fetchDoctorDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.doctorDetails = null;
+        state.error = action.payload ?? 'Could not load available slots';
       });
   },
 });

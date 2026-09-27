@@ -1,284 +1,144 @@
-// @ts-ignore
-import React, { useEffect, useCallback, useMemo } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-  Alert,
-  SafeAreaView,
-  TouchableOpacity,
-  PermissionsAndroid,
-  Platform,
-} from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import MCI from 'react-native-vector-icons/MaterialCommunityIcons';
+import Share from 'react-native-share';
+import Toast from 'react-native-toast-message';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getPrescriptions } from '../../redux/slices/prescriptionsSlice';
-// @ts-ignore
-import RNHTMLtoPDF from 'react-native-html-to-pdf';
-import Share from 'react-native-share';
-import { RootState } from '../../redux/store';
+import { useTheme, space, radius } from '../../theme';
+import { AppText, Button, Card, EmptyState, Reveal, Screen, Skeleton } from '../../ui';
+import { TAB_BAR_CLEARANCE } from '../../navigation/FloatingTabBar';
+import { formatDay } from '../../utilis/format';
+import { makePrescriptionPdf } from '../../utilis/prescriptionPdf';
 
-interface Medication {
-  name?: string;
-  dosage?: string;
-  frequency?: string;
-  duration?: string;
-}
+const PrescriptionCard: React.FC<{ item: any; index: number }> = ({ item, index }) => {
+  const { colors } = useTheme();
+  const [busy, setBusy] = useState(false);
 
-interface Prescription {
-  id?: string;
-  _id?: string;
-  patientName?: string;
-  age?: number;
-  diagnosis?: string;
-  notes?: string;
-  date: string;
-  medications?: Medication[];
-}
+  const download = async () => {
+    setBusy(true);
+    try {
+      const path = await makePrescriptionPdf(item, { primary: colors.gradient[0], accent: colors.gradient[colors.gradient.length - 1] });
+      // Opens the system sheet: save to Files, print, or send.
+      await Share.open({ title: 'Prescription', url: `file://${path}`, type: 'application/pdf', failOnCancel: false });
+    } catch (e: any) {
+      Toast.show({ type: 'error', text1: 'Could not create the PDF', text2: e?.message ?? 'Please try again.' });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const symptoms: string[] = (item.symptoms ?? []).filter(Boolean);
+
+  return (
+    <Reveal index={index}>
+      <Card>
+        <View style={styles.top}>
+          <View style={[styles.rx, { backgroundColor: colors.primarySoft }]}>
+            <MCI name="prescription" size={24} color={colors.primary} />
+          </View>
+          <View style={styles.flex}>
+            <AppText variant="h3" numberOfLines={2}>{item.diagnosis || 'Prescription'}</AppText>
+            <AppText variant="caption" color="textMuted" style={styles.by}>
+              {item.doctorName ? `${item.doctorName} · ` : ''}{formatDay(item.date)}
+            </AppText>
+          </View>
+        </View>
+
+        {symptoms.length ? (
+          <View style={styles.chips}>
+            {symptoms.map(s => (
+              <View key={s} style={[styles.chip, { backgroundColor: colors.surfaceAlt }]}>
+                <AppText variant="caption" color="textMuted">{s}</AppText>
+              </View>
+            ))}
+          </View>
+        ) : null}
+
+        <AppText variant="overline" color="textSubtle" style={styles.medsLabel}>Medication</AppText>
+        {(item.medications ?? []).map((m: any, i: number) => (
+          <View key={`${m.name}-${i}`} style={[styles.med, i > 0 && { borderTopColor: colors.border, borderTopWidth: StyleSheet.hairlineWidth }]}>
+            <View style={[styles.pill, { backgroundColor: colors.successSoft }]}>
+              <MCI name="pill" size={16} color={colors.success} />
+            </View>
+            <View style={styles.flex}>
+              <AppText variant="bodyStrong">{m.name}{m.dosage ? <AppText variant="body" color="textMuted"> · {m.dosage}</AppText> : null}</AppText>
+              <AppText variant="caption" color="textMuted">{[m.frequency, m.duration].filter(Boolean).join(' for ')}</AppText>
+            </View>
+          </View>
+        ))}
+
+        {item.notes ? (
+          <View style={[styles.notes, { backgroundColor: colors.surfaceAlt }]}>
+            <Icon name="information-circle-outline" size={16} color={colors.textMuted} />
+            <AppText variant="caption" color="textMuted" style={styles.notesText}>{item.notes}</AppText>
+          </View>
+        ) : null}
+
+        <Button title="Download PDF" icon="download-outline" variant="soft" size="md" loading={busy} onPress={download} style={styles.cta} />
+      </Card>
+    </Reveal>
+  );
+};
 
 const PatientPrescriptionScreen: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { loading, data = [], error } = useAppSelector((state: any) => state.prescriptions || {});
+  const { colors } = useTheme();
+  const { loading, data = [], error } = useAppSelector((s: any) => s.prescriptions || {});
 
-  useEffect(() => {
+  const load = useCallback(() => {
     dispatch(getPrescriptions() as any);
   }, [dispatch]);
-
-  useEffect(() => {
-    if (error) {
-      Alert.alert('Error', error, [
-        {
-          text: 'OK',
-          onPress: () => {
-            // Optionally retry fetching prescriptions
-            dispatch(getPrescriptions() as any);
-          },
-        },
-      ]);
-    }
-  }, [error, dispatch]);
-
-  const handleGeneratePDF = useCallback(async () => {
-    try {
-      if (Platform.OS === 'android') {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-        );
-        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-          Alert.alert('Permission Denied', 'Storage permission is required to save the PDF.');
-          return;
-        }
-      }
-
-      const htmlContent = `
-        <html>
-          <head>
-            <style>
-              body { font-family: Arial, sans-serif; margin: 20px; }
-              h1 { color: #333; text-align: center; }
-              .prescription { border: 1px solid #ddd; margin: 10px 0; padding: 15px; border-radius: 5px; }
-              .medication { margin: 5px 0; padding-left: 20px; }
-            </style>
-          </head>
-          <body>
-            <h1>Prescriptions</h1>
-            ${data
-              .map(
-                (item: Prescription) => `
-                  <div class="prescription">
-                    <h3>Patient: ${item.patientName || 'N/A'}</h3>
-                    <p><strong>Age:</strong> ${item.age || 'N/A'}</p>
-                    <p><strong>Diagnosis:</strong> ${item.diagnosis || 'N/A'}</p>
-                    <p><strong>Notes:</strong> ${item.notes || 'N/A'}</p>
-                    <p><strong>Date:</strong> ${new Date(item.date).toLocaleDateString()}</p>
-                    <p><strong>Medications:</strong></p>
-                    ${
-                      item.medications?.length
-                        ? item.medications
-                            .map(
-                              (med: Medication) => `
-                                <div class="medication">
-                                  • ${med.name || 'N/A'} - ${med.dosage || 'N/A'} 
-                                  (${med.frequency || 'N/A'}, ${med.duration || 'N/A'})
-                                </div>
-                              `
-                            )
-                            .join('')
-                        : '<p>No Medications Prescribed</p>'
-                    }
-                  </div>
-                `
-              )
-              .join('')}
-          </body>
-        </html>
-      `;
-
-      const file = await RNHTMLtoPDF.convert({
-        html: htmlContent,
-        fileName: 'prescriptions',
-        directory: 'Documents',
-      });
-
-      if (file.filePath) {
-        Alert.alert('Success', 'PDF generated successfully!', [
-          {
-            text: 'Share',
-            onPress: async () => {
-              try {
-                await Share.open({
-                  title: 'Share PDF',
-                  url: `file://${file.filePath}`,
-                  type: 'application/pdf',
-                });
-              } catch (shareError) {
-                Alert.alert('Error', 'Failed to share PDF');
-              }
-            },
-          },
-          {
-            text: 'OK',
-            style: 'cancel',
-          },
-        ]);
-      }
-    } catch (error) {
-      Alert.alert('Error', 'An error occurred while generating the PDF.');
-      console.error(error);
-    }
-  }, [data]);
-
-  const renderPrescription = useCallback(({ item }: { item: Prescription }) => (
-    <View style={styles.prescriptionItem}>
-      <Text style={styles.title}>Patient: {item.patientName || 'N/A'}</Text>
-      <Text style={styles.detail}>Age: {item.age || 'N/A'}</Text>
-      <Text style={styles.detail}>Diagnosis: {item.diagnosis || 'N/A'}</Text>
-      <Text style={styles.detail}>Notes: {item.notes || 'N/A'}</Text>
-      <Text style={styles.detail}>Date: {new Date(item.date).toLocaleDateString()}</Text>
-      <Text style={styles.subtitle}>Medications:</Text>
-      {item.medications?.length ? (
-        item.medications.map((med: Medication, index: number) => (
-          <Text key={index} style={styles.medication}>
-            • {med.name || 'N/A'} - {med.dosage || 'N/A'} ({med.frequency || 'N/A'}, {med.duration || 'N/A'})
-          </Text>
-        ))
-      ) : (
-        <Text style={styles.noMedication}>No Medications Prescribed</Text>
-      )}
-    </View>
-  ), []);
-
-  const keyExtractor = useCallback((item: Prescription) => item.id || item._id || Math.random().toString(), []);
-
-  const renderLoadingComponent = useMemo(() => (
-    <View style={styles.loaderContainer}>
-      <ActivityIndicator size="large" color="#007bff" />
-    </View>
-  ), []);
-
-  if (loading) {
-    return renderLoadingComponent;
-  }
+  // Reload when shown so a prescription just written by the doctor appears.
+  useFocusEffect(load);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={data}
-        keyExtractor={keyExtractor}
-        renderItem={renderPrescription}
-        contentContainerStyle={styles.listContent}
-        showsVerticalScrollIndicator={false}
-        initialNumToRender={5}
-        maxToRenderPerBatch={10}
-        windowSize={10}
-        removeClippedSubviews={true}
-      />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.generateButton}
-          onPress={handleGeneratePDF}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.generateButtonText}>Generate and Share PDF</Text>
-        </TouchableOpacity>
+    <Screen>
+      <View style={styles.header}>
+        <AppText variant="h1">Prescriptions</AppText>
+        <AppText variant="body" color="textMuted">
+          {data.length ? `${data.length} from your consultations` : 'Written by your doctors after each visit'}
+        </AppText>
       </View>
-    </SafeAreaView>
+      {loading && data.length === 0 ? (
+        <View style={styles.list}>{[0, 1].map(i => <Skeleton key={i} height={220} style={styles.skeleton} />)}</View>
+      ) : error && data.length === 0 ? (
+        <EmptyState icon="cloud-offline-outline" tone="error" title="Couldn't load prescriptions" message={error} actionLabel="Try again" onAction={load} />
+      ) : (
+        <FlatList
+          data={data}
+          keyExtractor={(item: any) => item.id || item._id}
+          contentContainerStyle={[styles.list, { paddingBottom: TAB_BAR_CLEARANCE }]}
+          showsVerticalScrollIndicator={false}
+          refreshControl={<RefreshControl refreshing={loading && data.length > 0} onRefresh={load} tintColor={colors.primary} />}
+          renderItem={({ item, index }) => <PrescriptionCard item={item} index={index} />}
+          ListEmptyComponent={
+            <EmptyState icon="document-text-outline" title="No prescriptions yet" message="After a consultation, your doctor's prescription will appear here, ready to download." />
+          }
+        />
+      )}
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f9f9f9',
-  },
-  listContent: {
-    padding: 16,
-  },
-  loaderContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  prescriptionItem: {
-    backgroundColor: '#fff',
-    padding: 16,
-    marginBottom: 16,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    color: '#333',
-  },
-  detail: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginTop: 12,
-    marginBottom: 8,
-    color: '#555',
-  },
-  medication: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 4,
-    paddingLeft: 10,
-  },
-  noMedication: {
-    fontSize: 14,
-    color: '#999',
-    fontStyle: 'italic',
-  },
-  buttonContainer: {
-    padding: 16,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-  },
-  generateButton: {
-    backgroundColor: '#007bff',
-    paddingVertical: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  generateButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+  flex: { flex: 1 },
+  header: { paddingHorizontal: space.lg, paddingTop: space.xs, paddingBottom: space.md },
+  list: { paddingHorizontal: space.lg, gap: space.md },
+  skeleton: { borderRadius: radius.lg },
+  top: { flexDirection: 'row', alignItems: 'center' },
+  rx: { width: 48, height: 48, borderRadius: 16, alignItems: 'center', justifyContent: 'center', marginRight: space.sm },
+  by: { marginTop: 3 },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: space.sm },
+  chip: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.pill },
+  medsLabel: { marginTop: space.lg, marginBottom: space.xxs },
+  med: { flexDirection: 'row', alignItems: 'center', paddingVertical: space.sm },
+  pill: { width: 34, height: 34, borderRadius: 12, alignItems: 'center', justifyContent: 'center', marginRight: space.sm },
+  notes: { flexDirection: 'row', alignItems: 'flex-start', padding: space.sm, borderRadius: radius.sm, marginTop: space.xs },
+  notesText: { marginLeft: 6, flex: 1 },
+  cta: { marginTop: space.md },
 });
 
 export default PatientPrescriptionScreen;
