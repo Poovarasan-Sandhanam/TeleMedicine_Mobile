@@ -32380,7 +32380,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/RNCAsyncStorage";
 				IBSC_MODULE = RNCAsyncStorage;
 				INFOPLIST_FILE = "Target Support Files/RNCAsyncStorage/ResourceBundle-RNCAsyncStorage_resources-RNCAsyncStorage-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				PRODUCT_NAME = RNCAsyncStorage_resources;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -32397,7 +32397,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/RNCAsyncStorage";
 				IBSC_MODULE = RNCAsyncStorage;
 				INFOPLIST_FILE = "Target Support Files/RNCAsyncStorage/ResourceBundle-RNCAsyncStorage_resources-RNCAsyncStorage-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				PRODUCT_NAME = RNCAsyncStorage_resources;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -36953,7 +36953,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/react-native-image-picker";
 				IBSC_MODULE = react_native_image_picker;
 				INFOPLIST_FILE = "Target Support Files/react-native-image-picker/ResourceBundle-RNImagePickerPrivacyInfo-react-native-image-picker-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				PRODUCT_NAME = RNImagePickerPrivacyInfo;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -36970,7 +36970,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/react-native-image-picker";
 				IBSC_MODULE = react_native_image_picker;
 				INFOPLIST_FILE = "Target Support Files/react-native-image-picker/ResourceBundle-RNImagePickerPrivacyInfo-react-native-image-picker-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				PRODUCT_NAME = RNImagePickerPrivacyInfo;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;

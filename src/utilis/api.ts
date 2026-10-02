@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { API_BASE_URL, IS_PROD_URL_CONFIGURED } from '../config/env';
 
@@ -28,19 +29,32 @@ const apiClient: AxiosInstance = axios.create({
   },
 });
 
-// Add request interceptor to include auth token
+/**
+ * Attaches the saved token to every request.
+ *
+ * This used to be commented out, so each slice read the token and built the
+ * Authorization header itself - the same four lines in a dozen places, and a new
+ * screen that forgot them failed with 401 for no obvious reason.
+ *
+ * A caller that passes its own Authorization header still wins: `resolveStartRoute`
+ * validates a specific token at startup, before it is the "current" one.
+ */
 apiClient.interceptors.request.use(
-  (config) => {
-    // You can add auth token here if needed
-    // const token = await AsyncStorage.getItem('token');
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+  async (config) => {
+    if (!config.headers?.Authorization) {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+      } catch {
+        // Unreadable storage must not block the request - endpoints that need auth
+        // will answer 401 and the response interceptor routes back to sign-in.
+      }
+    }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 /** Called when the server rejects the session (expired or revoked token). */

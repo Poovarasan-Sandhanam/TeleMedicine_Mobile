@@ -74,18 +74,28 @@ export const signup = createAsyncThunk(
   }
 );
 
+/**
+ * Signs out on the server as well as on the device.
+ *
+ * Clearing AsyncStorage alone only forgets the token locally - it stays valid for
+ * the rest of its 48 hours, so anyone who captured it could keep using the account
+ * after the user thought they had signed out. POST /auth/logout revokes it.
+ *
+ * Never rejects. If the call fails (offline, server down) the user must still end up
+ * signed out on this device, so the local session is cleared either way. A token we
+ * could not revoke expires on its own.
+ */
 export const logout = createAsyncThunk(
   'auth/logout',
-  async (_, { rejectWithValue }) => {
+  async () => {
     try {
-      // Optionally make an API call here to invalidate tokens if necessary
-      console.log('User logged out successfully.');
-      return null;
+      // Cloud Run rejects a POST with no body as 411 before it reaches the API,
+      // so send an empty object rather than nothing.
+      await api.post('/auth/logout', {});
     } catch (error: any) {
-      const errorMessage = error.message || 'Logout failed.';
-      console.error('Logout Error:', errorMessage);
-      return rejectWithValue(errorMessage);
+      console.warn('Logout request failed; clearing local session anyway:', error?.message);
     }
+    return null;
   }
 );
 
