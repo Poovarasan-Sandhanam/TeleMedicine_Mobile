@@ -36,3 +36,34 @@
 }
 
 @end
+
+// iOS 26+ traps at launch unless the app adopts the UIScene lifecycle. React
+// Native 0.76 still builds its window in -application:didFinishLaunchingWithOptions:,
+// so this delegate just hands that window to the scene it is connected to.
+// Declared here rather than in its own file so the class needs no pbxproj change;
+// Info.plist references it by name under UIApplicationSceneManifest.
+@interface SceneDelegate : UIResponder <UIWindowSceneDelegate>
+@property (nonatomic, strong) UIWindow *window;
+@end
+
+@implementation SceneDelegate
+
+- (void)scene:(UIScene *)scene
+    willConnectToSession:(UISceneSession *)session
+                 options:(UISceneConnectionOptions *)connectionOptions
+{
+  if (![scene isKindOfClass:[UIWindowScene class]]) {
+    return;
+  }
+
+  UIWindow *window = ((AppDelegate *)UIApplication.sharedApplication.delegate).window;
+  if (window == nil) {
+    return;
+  }
+
+  window.windowScene = (UIWindowScene *)scene;
+  self.window = window;
+  [window makeKeyAndVisible];
+}
+
+@end

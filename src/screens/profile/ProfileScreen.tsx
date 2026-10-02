@@ -8,6 +8,7 @@ import { fetchProfile, updateProfile } from '../../redux/slices/profileSlice';
 import { fetchDoctorTypes } from '../../redux/slices/doctorTypeSlice';
 import { LOGOUT } from '../../redux/store';
 import { clearSession } from '../../session/session';
+import { logout } from '../../redux/slices/authSlice';
 import { resetTo } from '../../navigation/navigationRef';
 import { TAB_BAR_CLEARANCE } from '../../navigation/FloatingTabBar';
 import {
@@ -162,6 +163,11 @@ const ProfileScreen: React.FC = () => {
         text: 'Sign out',
         style: 'destructive',
         onPress: async () => {
+          // Order matters: logout() must run while the token is still in storage,
+          // because the request interceptor reads it from there. Clearing first
+          // would send an unauthenticated request and leave the token valid on the
+          // server for the rest of its 48 hours.
+          await dispatch(logout());
           await clearSession();
           dispatch({ type: LOGOUT });
           resetTo('Login');
